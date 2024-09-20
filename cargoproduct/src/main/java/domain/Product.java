@@ -58,7 +58,7 @@ public class Product{
 			name      = "error";
 		}
 		CommUtils.outblue("Product | created:" +this);
-		logger.info("Product  | constructor values String:" + this);
+		logger.info( this.toString() );
 	}
 	
 	/*
@@ -69,7 +69,7 @@ public class Product{
 	    this.name     = name;
 	    this.weight = weight;
 		CommUtils.outblue("Product | created:" +this);
-		logger.info("Product  | constructor values:" + this);
+		logger.info(  this.toString() );
  	}
 
 	/*
@@ -99,7 +99,7 @@ public class Product{
 	  */
 
 	 public static void main(String[] args) {
-		 Product p1 = new Product(1, "p1",  10 );
+		 Product p1 = new Product(22, "p2",  22 );
 	 }
 
  

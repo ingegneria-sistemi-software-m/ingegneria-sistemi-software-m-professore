@@ -1,0 +1,137 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+
+<head>
+<title>iss25-cargoproduct</title>
+
+<!-- 
+	<meta name="viewport" content="width=device-width, initial-scale=1"> 
+-->	
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/foundation-sites@6.7.4/dist/css/foundation.min.css" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/foundation-sites@6.7.4/dist/js/foundation.min.js" crossorigin="anonymous"></script>
+<link rel="stylesheet" type="text/css" href="./commons/resources/styles/templateISS.css">
+<link rel="stylesheet" type="text/css" href="./commons/resources/styles/main.css">
+<link rel="stylesheet" type="text/css" href="./commons/resources/styles/navbar.css">
+<link rel="stylesheet" type="text/css" href="./commons/resources/styles/table.css">
+<link rel="stylesheet" type="text/css" href="./commons/resources/styles/code.css">
+<link rel="stylesheet" type="text/css" href="./css/mystyle.css">
+</head>
+
+
+<body>  
+
+<div id="top">
+<h1>cargoproduct</h1>
+</div>  
+
+<div class="body"> 
+
+
+<h2>Il dominio</h2>
+Si tratta di rappresentare e gestire prodotti da trasportare in un cargo.
+
+<h3>Goal1</h3>
+<ul>
+
+<li>
+Introdurre una classe di dominio che descrive le proprietà dei prodotti:
+<a href=..//src//main//java//domain//Product.java target='code'>Product.java</a>
+
+
+<center>
+<img src="./img/ProductUML.JPG" alt="ProductUML" width="15%" height="15%">
+</center>
+</li><li>
+Impostare una test unit con JUnit per verificare la correttezza della classe Product:
+<a href=..//src//test//java//domain//TestProduct.java target='code'>TestProduct.java</a>
+</li><li>
+Verificare la produzione dei file di log nella cartella 
+<a href=..//logs target='code'>logs</a>
+</li>
+</ul>
+
+<h2>Goal2</h2>
+
+Introdurre una classe di dominio che descrive la <b>logica di un servizio</b> di gestione 
+dei prodotti da trasportare:
+<a href=..//src//main//java//domain//ProductServiceLogic.java target='code'>ProductServiceLogic.java</a></li>
+ 
+<p>
+<ul>
+<li>
+Questa classe potrebbe diventare ora il nuovo main. In tal caso, modifico quindi la <b>mainclass</b> in <i>gradle.build</i>:
+<tt>mainClassName    = 'main.java.domain.ProductServiceLogic'</tt>.
+</li><li>
+La classe realizza il contratto tipico di un servizio che realizza le operazioni <b>CRUD</b> 
+(<i>Create, Read, Update, Delete</i>) sui prodotti: 
+<a href=..//src//main//java//domain//ICrudOps.java target='code'>ICrudOps.java</a>.
+
+</li><li>
+Il modello introdotto nella prima versione del 'diario' 
+<a href=cargoproduct_v0.html target='code'>cargoproduct_v0.html</a> potrebbe funzionare, ma 
+<ks>introduce troppi vincoli</ks>.
+</li><li>
+Alla frase <i>La classe realizza due contratti</i> va sostituita la seguente:
+</p><p>
+la classe <ks>realizza il contratto</ks> <a href=..//src//main//java//domain//ICrudOps.java target='code'>ICrudOps.java</a>
+e <mm>IPOTIZZA</mm> che il contratto <a href=..//src//main//java//domain//IStorage.java target='code'>IStorage.java</a>
+<ks>debba essere rispettato dall'entità</ks> che si occupa di memorizzare i prodotti.
+</p> 
+</li><li>
+La classe si avvale anche di supporti per la memorizzazione dei prodotti (Storage) cui accede tramite 
+<mm>adapter</mm>, allo scopo di <ks>evitare dipendenze dirette</ks>.
+
+</li>
+</ul>
+
+<center>
+<img src="./img/ProductServiceLogicUML.JPG" alt="ProductServiceLogicUML" width="85%" height="85%"/>
+</center>
+
+
+<h3>Lo Storage</h3>
+
+La registrazione dei prodotti avviene in un repository di cui si danno due versionI:
+
+<ul>
+<li>Una versione in memoria volatile, in forma di <i>hashTable</i>:
+<a href=..//src//main//java//storage//StorageVolatile.java target='code'>StorageVolatile.java</a>
+</li>
+<li>Una versione in memoria permanente, basata sul database NoSql <ks>Mongo</ks>, che introdurremo in un momento successivo</li>
+</ul>
+
+
+La classe <a href=..//src//main//java//domain//adapter//AdapterStorage.java target='code'>AdapterStorage.java</a> 
+realizza l'adapter che permette alla logica applicativa di non dipendere dalla specifica implementazione dello storage.
+
+ <br/><br/>
+<center>
+<img src="./img/ProductServiceLogic.JPG" alt="ProductServiceLogic" width="55%" height="55%"/>
+</center>
+ 
+L'adapter realizza l'interfaccia <a href=..//src//main//java//domain//IStorage.java target='code'>IStorage.java</a>
+che viene <ks>definita  a livello di dominio</ks>: 
+in questo modo è la logica applicativa a dettare il contratto per l'uso dello storage.
+
+
+<h2>Deployment</h2>
+L'applicazione viene distribuita attraverso il file <i>jar</i> di nome <mm>cargoproduct-1.0.jar</mm>
+prodotto mediante il comando: <pre>gradlew jar</pre>
+
+
+Si può anche invocare il comando: <pre>gradlew buildFarJar</pre> che crea un file eseguibile che include
+tutte le librerie necessarie al suo funzionamento.
+
+Questo file eseguibile, piuttosto corposo, non è però necessario ai nostri scopi.
+
+
+
+<div class="bottom">
+	<div>By xxx email: xxx@studio.unibo.it
+		<img src="./img/teacher.gif" alt="xxx" width="5%" height="5%">
+	</div>  	
+	GIT repo:<b><i>https://github.com/anatali/issLab2025</i></b> 	 
+</div>
+</body>
+</html>
+	

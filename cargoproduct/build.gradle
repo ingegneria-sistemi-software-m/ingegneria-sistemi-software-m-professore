@@ -1,7 +1,7 @@
 /*
 ================================================================================
-build2025Starting.gradle
-GENERATED ONLY ONCE
+build.gradle
+defined by the application designer from build2025Starting.gradle
 ================================================================================
 */
 plugins {
@@ -16,15 +16,13 @@ plugins {
 version '1.0'
 
 java {
-    toolchain.languageVersion.set(JavaLanguageVersion.of(11))
+    toolchain.languageVersion.set(JavaLanguageVersion.of(17))
 }
 kotlin {
   jvmToolchain {
-    languageVersion.set(JavaLanguageVersion.of("11"))
+    languageVersion.set(JavaLanguageVersion.of("17"))
   }
 }
-
-//compileJava.options.encoding = 'UTF-8'
 
 repositories {
     // Use Maven Central for resolving dependencies.
@@ -46,6 +44,7 @@ dependencies {
     testImplementation 'org.jetbrains.kotlin:kotlin-test'
 
     // Use the Kotlin JUnit integration.
+    //testImplementation 'org.jetbrains.kotlin:kotlin-test-junit'
     testImplementation "org.jetbrains.kotlin:kotlin-test-junit:1.9.22"
 
     /* COROUTINES ******************************************************************************* */
@@ -102,7 +101,15 @@ dependencies {
     implementation name: 'uniboInterfaces'
     implementation name: '2p301'
 	implementation name: 'unibo.qakactor23-5.0'
-    implementation name: 'unibo.basicomm23-1.0' 
+    implementation name: 'unibo.basicomm23-1.0'
+    
+/*
+ADDED BY THE APPLICATION DESIGNER
+*/    
+    //MONGODB
+    // https://mvnrepository.com/artifact/org.mongodb/mongo-java-driver
+    implementation group: 'org.mongodb', name: 'mongo-java-driver', version: '3.12.14'
+     
 }
 	
 sourceSets {
@@ -131,10 +138,10 @@ eclipse {
  }
 
 
-
 application {
     //Define the main class for the application.
-    mainClassName    = 'main.java.domain.Product'
+    //mainClassName    = 'main.java.domain.Product'
+    mainClassName    = 'main.java.domain.ProductServiceLogic'
 }
  
  jar {
@@ -149,6 +156,32 @@ application {
         attributes 'Main-Class': "$mainClassName"
     }
 }
+
+def repoName = 'cargoproductall'
+def jarName  = "$repoName"+"-"+"$version"+".jar"
+
+task createFatJar(type: Jar) { 
+    manifest {
+        attributes 'Main-Class': "main.java.domain.ProductServiceLogic"
+    }
+    archiveBaseName = "$repoName" //'cargoproductall'
+    println("creating a FAT jar " + "$jarName"  )
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+    from { configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) } }
+    with jar
+}
+
+task buildFatJar(type: Exec) { //delete security signed files
+	commandLine 'zip', '-d', "$jarName", 'META-INF/*.RSA' 
+	commandLine 'zip', '-d', "$jarName", 'META-INF/*.DSA' 
+	commandLine 'zip', '-d', "$jarName", 'META-INF/*.SF'
+	// Directory in cui eseguire il comando (opzionale)
+    workingDir "$buildDir/libs"
+}
+
+buildFatJar.dependsOn createFatJar
+
+//java -jar build/libs/cargoproductall-1.0.jar
 
 task dovesiamo {
     println("projectDir= $projectDir")  
@@ -172,4 +205,5 @@ task run0(type: JavaExec) {
     classpath = sourceSets.main.runtimeClasspath
     main = 'TODO'
 }
+
 

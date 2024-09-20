@@ -6,7 +6,7 @@
  
 		P {
 			font-family: Tahoma;
-			font-size: 10pt;
+			
 		}
  
 		a:link{
@@ -107,10 +107,10 @@
 			font-size: 18px;
 		}
 
-		k {
+		mm {
 			color: #990000;
 			font-weight: bold;
-			font-size: 90%;
+			font-size: 150%;
 		}
 
 		h1 {
