@@ -113,7 +113,7 @@ L'adapter realizza l'interfaccia <a href=..//src//main//java//domain//IStorage.j
 che viene <ks>definita  a livello di dominio</ks>: 
 in questo modo è la logica applicativa a dettare il contratto per l'uso dello storage.
 
-
+<br/><br/>
 <h2>Deployment</h2>
 L'applicazione viene distribuita attraverso il file <i>jar</i> di nome <mm>cargoproduct-1.0.jar</mm>
 prodotto mediante il comando: <pre>gradlew jar</pre>
@@ -123,6 +123,224 @@ Si può anche invocare il comando: <pre>gradlew buildFarJar</pre> che crea un fi
 tutte le librerie necessarie al suo funzionamento.
 
 Questo file eseguibile, piuttosto corposo, non è però necessario ai nostri scopi.
+
+<br/><br/>
+<h2>Lo stack ELK</h2>
+
+Lo stack ELK soddisfa un'esigenza nello spazio di analisi dei dati di log.
+
+<center>
+<img src="./img/ELKArch.JPG" alt="ELKArch" width="55%" height="55%">
+</center>
+
+<ul>
+<li><ks>Beats</ks> agenti che permettono il collect e l’invio dei dati verso lo stack Elastic.</li>
+<li><ks>Logstash</ks> strumento open source che permette di raccogliere dati da una varietà di origini, 
+trasformarli e inviarli alla destinazione desiderata. </li>
+<li><ks>Elasticsearch</ks> è un motore di ricerca e analisi dei dati distribuito RESTful , basato su Apache Lucene che opera 
+con documenti JSON senza schema. 
+Dal 21 gennaio 2021 Elastic NV lo rende disponibile con la Licenza (non open source) Elastic o SSPL.</li>
+<li><ks>Kibana</ks> è uno strumento di visualizzazione ed esplorazione dei dati utilizzato per analisi dei dati,
+dei registri e serie temporali, monitoraggio delle applicazioni e casi d'uso di intelligenza operativa.</li>
+</ul>
+
+<h3>Attivazione dle sistema ELK</h3>
+
+L'attivazione del sistema ELK avviene all'iterno di un container docker, organizzato come descritto nel file
+<a href=..//docker-compose.yml target='code'>docker-compose.yml</a>
+<br/><br/>
+
+E' importante avere cura che i vari componenti  <em>facciano riferimento ad una stessa versione</em>.
+
+<br/><br/>
+<h4>Architettura del sistema</h4>
+
+Si tratta di un sistema distribuito, in cui i componenti ELK sono 'microservizi' attivati tutti all'interno
+di uno stesso container docker.
+<br/><br/>
+Il container del sistema ELK può essere attivato su un nodo diverso da quallo su cui gira l'applicazione.
+L'indirizzo di questo nodo deve essere specificato nel file 
+<tt>logback.xml</tt>, al posto di <b>localhost</b>.
+
+
+<center>
+<img src="./img/ProductServiceAndLog.JPG" alt="ProductServiceAndLog" width="50%" height="50%">
+</center>
+
+
+<br/><br/>
+<h3>Il lato applicativo</h3>
+
+<h4>Le librerie</h4>
+
+Il file <a href=..//build.gradle target='code'>build.gradle</a> deve includere le seguenti librerie:
+
+<pre>
+dependencies {
+    implementation 'ch.qos.logback:logback-classic:1.2.11'
+    implementation("net.logstash.logback:logstash-logback-encoder:7.3")
+}
+</pre>
+
+E' <em>importante usare versioni compatibili</em> delle ultime due librerie.
+<br/><br/>
+<h4>Il codice</h4>
+
+Una classe applicativa (come <a href=..//src//main//java//domain//Product.java target='code'>Product.java</a> 
+o <a href=..//src//main//java//domain//ProductServiceLogic.java target='code'>ProductServiceLogic.java</a>) 
+genera i log utilizzando <ks>SLF4J/Logback</ks>, e invoca il metodo <ks>logger.info(s)</ks> dove s è una stringa JSON.
+Ad esempio:
+
+<pre>
+logger.info("{\"productId\":10,\"name\":\"p10\",\"weight\":100}");
+</pre>
+
+<br/><br/>
+<h4>logback.xml</h4>
+
+
+Il file <a href=..//src//main//resources//logback.xml target='code'>logback.xml</a> 
+introduce una specifica che indica che i log vengono inviati anche a Logstash tramite un appender che usa TCP.
+
+<pre>
+&lt;appender name="logstash" class="net.logstash.logback.appender.LogstashTcpSocketAppender">
+    &lt;destination>localhost:5044&lt;/destination>
+    &lt;encoder class="net.logstash.logback.encoder.LogstashEncoder"/>
+&lt;/appender>
+
+    &lt;root level="info">      
+        &lt;appender-ref ref="FILE" />
+        &lt;appender-ref ref="LOGSTASH" /> 
+    &lt;/root>
+</pre>
+<br/><br/>
+<h4>logstash.conf</h4>
+
+In base a quanto specificato in <i>logback.xml</i>, <i>Logstash</i> è stato configurato 
+nel file <a href=..//src//main//resources//logstash.conf target='code'>logstash.conf</a>, come segue:
+
+<ul>
+<li><ks>parte di input</ks>: ascolta sulla porta <kc>5044</kc></li>
+<li><ks>parte di output</ks>: invia i log a <i>Elasticsearch</i> via <b>http</b> sulla porta <kc>9200</kc> 
+specificando  <ks>l'indice: cargo-logs-</ks>.<br/>
+Il tag (opzionale) <kc>stdout</kc>  introduce  l'uso di un debugger
+</li>
+
+</li>
+</ul>
+ 
+<br/><br/>
+<h3>Elasticsearch: i suoi document</h3>
+
+I log processati da Logstash, sono inviati in Elasticsearch, che li memorizza in documenti JSON
+all’interno dell'indice <ks>cargo-logs</ks>. Ad esempio:
+
+<pre>
+      {
+        "_index" : "cargo-logs-",
+        "_type" : "_doc",
+        "_id" : "1",
+        "_score" : 1.0,
+        "_source" : {
+          "productId" : 50,
+          "weight" : 250,
+          "name" : "p50"
+      }
+</pre>
+<br/><br/>
+
+<h3>Kibana: le sue funzioni</h3>
+
+Accedendo a a Kibana (mediante browser su <kc>http://localhost:5601</kc>), 
+è possibile creare un indice che corrisponde ai dati inviati, come <ks>cargo-logs-*</ks>. 
+<br/><br/>
+Con l’indice configurato, è possibile visualizzare i log in tempo reale, 
+eseguire ricerche su determinati campi (ad esempio <tt>productId: “10”</tt>) 
+o creare visualizzazioni e dashboard basate sui dati ricevuti. 
+<br/><br/>
+La visione di tutti i logs si ottiene come segue: 
+
+<ol>
+<li>Selezionare <tt>Analytics/Discover</tt></li>
+<li>Creare l'index <tt>cargo-logs-*</tt></li>
+<li>Selezionare il pulsante <tt>discover</tt></li>
+</ol>
+
+<h2>Interazioni con curl</h2>
+
+Eseguendo (su un terminale <tt>Cygwin64</tt> ) il comando:
+<pre>
+curl -XGET "http://localhost:9200/cargo-logs-*/_search?pretty" -H "kbn-xsrf: reporting" -H "Content-Type: application/json" -d'
+{
+  "query": {
+    "match_all": {}
+  }
+}'
+</pre>
+
+si ottiene (tra l'altro):
+
+<pre>
+      {
+        "_index" : "cargo-logs-",
+        "_type" : "_doc",
+        "_id" : "AOY1C5IBp8-SE1mysHdh",
+        "_score" : 1.0,
+        "_source" : {
+          "level" : "INFO",
+          "port" : 35464,
+          "thread_name" : "main",
+          "logger_name" : "main.java.domain.Product",
+          "host" : "172.23.0.1",
+          "@timestamp" : "2024-09-19T16:55:19.465Z",
+          "@version" : "1",
+          "message" : """Product  | constructor json:{"productId":10,"name":"p10","weight":100}""",
+          "level_value" : 20000
+        }
+</pre>
+
+Eseguendo:
+
+<pre>
+curl -X POST "http://localhost:9200/cargo-logs-/_doc/1" -H 'Content-Type: application/json' -d'
+{
+  "productId": 50,
+  "weight": 250,
+  "name": "p50"
+}'
+</pre>
+
+si ottiene:
+
+<pre>
+      {
+        "_index" : "cargo-logs-",
+        "_type" : "_doc",
+        "_id" : "1",
+        "_score" : 1.0,
+        "_source" : {
+          "productId" : 50,
+          "weight" : 250,
+          "name" : "p50"
+      }
+</pre>
+
+Con il comando che segue possiamo eliminare un dato:
+
+<pre>
+ curl -X POST "http://localhost:9200/cargo-logs-*/_delete_by_query" -H 'Content-Type: application/json' -d'
+ {
+	"query": {
+	  "match": {
+		"productId":50
+	   }
+ }
+ }'
+</pre>
+
+
+
+
 
 
 
