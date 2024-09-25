@@ -13,6 +13,11 @@ public class Product{
 	  private  int productId;
 	  private  String name;
 	  private  int weight;
+	  
+	  /*
+	   * For Jackson / Spring
+	   */
+	  private Product() {}
 
 	/*
 	 * Costructor based on a Json String
@@ -57,8 +62,8 @@ public class Product{
 			weight    = 0;
 			name      = "error";
 		}
-		CommUtils.outblue("Product | created:" +this);
-		logger.info( this.toString() );
+		CommUtils.outblue("Product | created Strings:" +this);
+		logger.info( "Product | created Strings:"+ this.toString() );
 	}
 	
 	/*
@@ -68,8 +73,8 @@ public class Product{
 	    this.productId = productId;
 	    this.name     = name;
 	    this.weight = weight;
-		CommUtils.outblue("Product | created:" +this);
-		logger.info(  this.toString() );
+		CommUtils.outblue("Product | created 3:" +this);
+		logger.info(  "Product | created 3:" + this.toString() );
  	}
 
 	/*

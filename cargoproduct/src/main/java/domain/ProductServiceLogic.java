@@ -24,7 +24,7 @@ public class ProductServiceLogic implements ICrudOps{
 			   CommUtils.outmagenta("ProductServiceLogic | WARNING - Duplicate key, Product Id: " + product.getProductId());
 			   productAnswer = wrongProduct;
 		   } 
-		   logger.info( "ProductServiceLogic |"+ productAnswer.toString() );
+		   logger.info( "ProductServiceLogic | createProduct:"+ productAnswer.toString() );
 		   return productAnswer;
 	  }
 
