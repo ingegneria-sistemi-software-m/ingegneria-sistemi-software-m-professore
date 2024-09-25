@@ -26,14 +26,18 @@
 
 <div class="body"> 
 
+<hr/>
+REVISIONE DI <a href=cargoproduct_v1.html>cargoproduct_v0.html</a> RELATIVA A 
+<em>Goal2</em>
+<hr/>
 
 <h2>Il dominio</h2>
 Si tratta di rappresentare e gestire prodotti da trasportare in un cargo.
 
 <h3>Goal1</h3>
 <ul>
-
-<li>
+<li>Sviluppare un nuovo progetto di nome <em>cargoproduct</em>
+</li><li>
 Introdurre una classe di dominio che descrive le proprietà dei prodotti:
 <a href=..//src//main//java//domain//Product.java target='code'>Product.java</a>
 
@@ -50,12 +54,39 @@ Verificare la produzione dei file di log nella cartella
 </li>
 </ul>
 
+<h4>Video</h4>
+<ul>
+<li>
+<a href="https://unibo.cloud.panopto.eu/Panopto/Pages/Viewer.aspx?id=7ab5ed80-3df7-488c-b59d-b1dd00e8583b"
+target='issvideo'>
+PRIMI PASSI</a>
+ 
+ </li>
+<li>
+<a href="https://unibo.cloud.panopto.eu/Panopto/Pages/Viewer.aspx?id=349d30ac-87b7-4890-a09b-b1e7008e50ee"
+target='issvideo'>COMPLETAMENTO WORKSPACE</a>
+ </li>
+<li>
+<a href="https://unibo.cloud.panopto.eu/Panopto/Pages/Viewer.aspx?id=d3598b13-35a6-4732-9924-b1e800f3eec0" target='issvideo'>CARGOPRODDUCT</a>
+verso metà: logback.xml CommUtils verso fine: JUnit e testlog + gradle test con report
+
+</li>
+</ul>
+
 <h2>Goal2</h2>
 
 Introdurre una classe di dominio che descrive la <b>logica di un servizio</b> di gestione 
 dei prodotti da trasportare:
 <a href=..//src//main//java//domain//ProductServiceLogic.java target='code'>ProductServiceLogic.java</a></li>
- 
+
+<h4>Video</h4>
+<ul>
+<li>
+<a href="https://unibo.cloud.panopto.eu/Panopto/Pages/Viewer.aspx?id=7ab5ed80-3df7-488c-b59d-b1dd00e8583b"
+target='issvideo'>PRODDUCTSERVICELOGICINTRODUCION</a>
+ </li>
+</ul>
+
 <p>
 <ul>
 <li>
@@ -88,6 +119,14 @@ La classe si avvale anche di supporti per la memorizzazione dei prodotti (Storag
 <img src="./img/ProductServiceLogicUML.JPG" alt="ProductServiceLogicUML" width="85%" height="85%"/>
 </center>
 
+<h4>Video</h4>
+<ul>
+<li>
+<a href="https://unibo.cloud.panopto.eu/Panopto/Pages/Viewer.aspx?id=aafd07fe-f4cb-469a-9b68-b1ea00f4ce84" 
+target='issvideo'>PRODDUCTSERVICELOGICIMPLEMENTATION</a>
+Verso la fine: test con report, distribuzione fat ed esecuzione
+</li>
+</ul>
 
 <h3>Lo Storage</h3>
 
@@ -124,13 +163,23 @@ tutte le librerie necessarie al suo funzionamento.
 
 Questo file eseguibile, piuttosto corposo, non è però necessario ai nostri scopi.
 
+<h4>Video</h4>
+<ul>
+<li>
+<a href="https://unibo.cloud.panopto.eu/Panopto/Pages/Viewer.aspx?id=ea12ece8-ff3c-41df-b160-b1ea00f6944b"
+target='issvideo'>PRODDUCTSERVICELOGICDISTRIBUTION</a>
+ </li>
+
+</ul>
+
+
 <br/><br/>
 <h2>Lo stack ELK</h2>
 
 Lo stack ELK soddisfa un'esigenza nello spazio di analisi dei dati di log.
 
 <center>
-<img src="./img/ELKArch.JPG" alt="ELKArch" width="55%" height="55%">
+<img src="./img/ELKArch.JPG" alt="ELKArch" width="35%" height="35%">
 </center>
 
 <ul>
@@ -144,10 +193,20 @@ Dal 21 gennaio 2021 Elastic NV lo rende disponibile con la Licenza (non open sou
 dei registri e serie temporali, monitoraggio delle applicazioni e casi d'uso di intelligenza operativa.</li>
 </ul>
 
+<h4>Video</h4>
+<ul>
+<li>
+<a href="https://unibo.cloud.panopto.eu/Panopto/Pages/Viewer.aspx?id=31e7d7e8-89da-46da-838e-b1f200e81058"
+target='issvideo'>
+ELKINTRODUCTION&USAGE</a>
+ </li>
+
+</ul>
+
 <h3>Attivazione dle sistema ELK</h3>
 
 L'attivazione del sistema ELK avviene all'iterno di un container docker, organizzato come descritto nel file
-<a href=..//docker-compose.yml target='code'>docker-compose.yml</a>
+<a href=..//docker-compose-ELK.yml target='code'>docker-compose-ELK.yml</a>
 <br/><br/>
 
 E' importante avere cura che i vari componenti  <em>facciano riferimento ad una stessa versione</em>.
@@ -164,7 +223,7 @@ L'indirizzo di questo nodo deve essere specificato nel file
 
 
 <center>
-<img src="./img/ProductServiceAndLog.JPG" alt="ProductServiceAndLog" width="50%" height="50%">
+<img src="./img/ProductServiceAndLog.JPG" alt="ProductServiceAndLog" width="40%" height="40%">
 </center>
 
 
@@ -177,6 +236,7 @@ Il file <a href=..//build.gradle target='code'>build.gradle</a> deve includere l
 
 <pre>
 dependencies {
+    //implementation 'org.slf4j:slf4j-api:1.7.30'  //SOLO INTERFACE
     implementation 'ch.qos.logback:logback-classic:1.2.11'
     implementation("net.logstash.logback:logstash-logback-encoder:7.3")
 }
@@ -194,7 +254,6 @@ Ad esempio:
 <pre>
 logger.info("{\"productId\":10,\"name\":\"p10\",\"weight\":100}");
 </pre>
-
 <br/><br/>
 <h4>logback.xml</h4>
 
@@ -207,11 +266,6 @@ introduce una specifica che indica che i log vengono inviati anche a Logstash tr
     &lt;destination>localhost:5044&lt;/destination>
     &lt;encoder class="net.logstash.logback.encoder.LogstashEncoder"/>
 &lt;/appender>
-
-    &lt;root level="info">      
-        &lt;appender-ref ref="FILE" />
-        &lt;appender-ref ref="LOGSTASH" /> 
-    &lt;/root>
 </pre>
 <br/><br/>
 <h4>logstash.conf</h4>
