@@ -33,6 +33,7 @@ public class Product{
 			weight=  Long.valueOf(jw).intValue(); 
 		} catch (ParseException e) {
 			CommUtils.outred("Product | creation error");
+			logger.info( "Product | creation error " + jsonStr );
 			productId = 0;
 			weight    = 0;
 			name      = "error";
@@ -61,6 +62,7 @@ public class Product{
 			productId = 0;
 			weight    = 0;
 			name      = "error";
+			logger.info( "Product | creation error:pid=" + pId + " name=" + pname + " weight=" + pweight );
 		}
 		CommUtils.outblue("Product | created Strings:" +this);
 		logger.info( "Product | created Strings:"+ this.toString() );

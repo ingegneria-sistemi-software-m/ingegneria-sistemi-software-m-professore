@@ -206,7 +206,7 @@ ELKINTRODUCTION&USAGE</a>
 <h3>Attivazione dle sistema ELK</h3>
 
 L'attivazione del sistema ELK avviene all'iterno di un container docker, organizzato come descritto nel file
-<a href=..//docker-compose-ELK.yml target='code'>docker-compose-ELK.yml</a>
+<a href=..//docker-compose.yml target='code'>docker-compose.yml</a>
 <br/><br/>
 
 E' importante avere cura che i vari componenti  <em>facciano riferimento ad una stessa versione</em>.
@@ -305,6 +305,18 @@ all’interno dell'indice <ks>cargo-logs</ks>. Ad esempio:
 
 <h3>Kibana: le sue funzioni</h3>
 
+Aggiorniamo il file che crea il sistema ELK dando un nome ai container 
+<a href=..//docker-compose-ELK.yml target='code'>docker-compose-ELK.yml</a>
+e attiviamo il sistema con il comando 
+<pre>docker-compose -f docker-compose-ELK.yml -p elk up</pre>
+per dare al container globale il nome 
+<em>elk (minuscolo)</em>.
+
+<center>
+<img src="./img/ProductServiceELKContainer.JPG" alt="ProductServiceELKContainer" width="40%" height="40%">
+</center>
+
+
 Accedendo a a Kibana (mediante browser su <kc>http://localhost:5601</kc>), 
 è possibile creare un indice che corrisponde ai dati inviati, come <ks>cargo-logs-*</ks>. 
 <br/><br/>
@@ -320,7 +332,17 @@ La visione di tutti i logs si ottiene come segue:
 <li>Selezionare il pulsante <tt>discover</tt></li>
 </ol>
 
-<h2>Interazioni con curl</h2>
+<h4>Video</h4>
+<ul>
+<li>
+<a href="https://unibo.cloud.panopto.eu/Panopto/Pages/Viewer.aspx?id=d0a56e0d-5193-47da-809e-b1f800e857ed" 
+target='issvideo'>KIBANAUSAGE</a>
+ 
+</li>
+</ul>
+
+
+<h2>Interazioni con Elastichsearch via curl</h2>
 
 Eseguendo (su un terminale <tt>Cygwin64</tt> ) il comando:
 <pre>
@@ -393,7 +415,10 @@ Con il comando che segue possiamo eliminare un dato:
 </pre>
 
 
-
+<ks>Eliminazione di tutti i dati</ks>:
+<center>
+<img src="./img/ElastichsearchCurl.JPG" alt="ElastichsearchCurl" width="90%" height="90%">
+</center>
 
 
 
