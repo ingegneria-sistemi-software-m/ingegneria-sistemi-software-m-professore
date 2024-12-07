@@ -179,35 +179,126 @@ ed esplorare <strong>Kibana in http://localhost:5601/</strong>.</p>
 </section>
 <section id="m2m-discoverable">
 <h2>M2M discoverable<a class="headerlink" href="#m2m-discoverable" title="Link to this heading">¶</a></h2>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">//</span> <span class="n">Dipendenza</span> <span class="n">per</span> <span class="n">Eureka</span> <span class="n">Client</span>
+<ol class="arabic">
+<li><p>Estendiamo le dipenendenze in <em>build.gradle</em>:</p>
+<blockquote>
+<div><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">//</span> <span class="n">Dipendenza</span> <span class="n">per</span> <span class="n">Eureka</span> <span class="n">Client</span>
 <span class="n">implementation</span> <span class="s1">&#39;com.netflix.eureka:eureka-client:1.10.18&#39;</span>
     <span class="o">//</span><span class="mf">1.10.18</span> <span class="n">compatibile</span> <span class="n">con</span> <span class="n">immagine</span> <span class="n">Spring</span> <span class="n">Cloud</span> <span class="n">Netflix</span> <span class="mf">3.</span><span class="n">x</span>
 <span class="o">//</span> <span class="n">Dipendenza</span> <span class="n">per</span> <span class="n">Jersey</span> <span class="n">Client</span> <span class="p">(</span><span class="n">per</span> <span class="n">fare</span> <span class="n">richieste</span> <span class="n">HTTP</span><span class="p">)</span>
 <span class="n">implementation</span> <span class="s1">&#39;com.sun.jersey:jersey-client:1.19.1&#39;</span>
 <span class="n">implementation</span> <span class="s1">&#39;com.netflix.servo:servo-core:0.13.2&#39;</span>
-
-<span class="n">cargoservice</span><span class="p">:</span>
+</pre></div>
+</div>
+</div></blockquote>
+</li>
+<li><p>Specifichiamo dove si trova Eureka in una variabile di ambiente di  <em>cargoserviceM2M.yml</em>:</p>
+<blockquote>
+<div><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cargoservice</span><span class="p">:</span>
     <span class="n">image</span><span class="p">:</span> <span class="n">cargoservice</span><span class="p">:</span><span class="mf">3.0</span>
     <span class="c1">#image: natbodocker/cargoservice:3.0</span>
     <span class="n">container_name</span><span class="p">:</span> <span class="n">cargoservice</span>
     <span class="n">environment</span><span class="p">:</span>
     <span class="o">-</span> <span class="n">EUREKA_CLIENT_SERVICEURL_DEFAULTZONE</span><span class="o">=</span><span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">eureka</span><span class="p">:</span><span class="mi">8761</span><span class="o">/</span><span class="n">eureka</span><span class="o">/</span>
-
-
-<span class="n">La</span> <span class="n">classe</span> <span class="n">main</span><span class="o">.</span><span class="n">java</span><span class="o">.</span><span class="n">EurekaServiceConfig</span> <span class="n">definisce</span> <span class="n">le</span> <span class="n">proprietà</span> <span class="n">rilevanti</span> <span class="k">del</span> <span class="n">servizio</span> <span class="n">da</span> <span class="n">registare</span><span class="p">:</span>
-
-
-<span class="k">if</span><span class="p">(</span> <span class="n">CommUtils</span><span class="o">.</span><span class="n">getEnvvarValue</span><span class="p">(</span><span class="s2">&quot;EUREKA_CLIENT_SERVICEURL_DEFAULTZONE&quot;</span><span class="p">)</span><span class="o">!=</span><span class="n">null</span><span class="p">)</span>
-    <span class="n">main</span><span class="o">/</span><span class="n">resources</span><span class="o">/</span><span class="n">eureka</span><span class="o">-</span><span class="n">client</span><span class="o">.</span><span class="n">properties</span>
-
-
-<span class="n">CommUtils</span><span class="o">.</span><span class="n">registerService</span><span class="p">(</span> <span class="n">main</span><span class="o">.</span><span class="n">java</span><span class="o">.</span><span class="n">EurekaServiceConfig</span><span class="p">()</span> <span class="p">)</span>
-
-<span class="n">discoveryclient</span> <span class="o">=</span> <span class="n">main</span><span class="o">.</span><span class="n">java</span><span class="o">.</span><span class="n">EurekaServiceConfig</span><span class="o">.</span><span class="n">myRegister</span><span class="p">(</span> <span class="n">main</span><span class="o">.</span><span class="n">java</span><span class="o">.</span><span class="n">EurekaServiceConfig</span><span class="p">()</span> <span class="p">)</span>
-    <span class="o">//</span><span class="n">val</span> <span class="n">discoveryclient</span> <span class="o">=</span> <span class="n">CommUtils</span><span class="o">.</span><span class="n">registerService</span><span class="p">(</span> <span class="n">main</span><span class="o">.</span><span class="n">java</span><span class="o">.</span><span class="n">EurekaServiceConfig</span><span class="p">()</span> <span class="p">)</span>
-    <span class="n">CommUtils</span><span class="o">.</span><span class="n">outblue</span><span class="p">(</span><span class="s2">&quot;discoveryclient=$discoveryclient &quot;</span><span class="p">)</span>
 </pre></div>
 </div>
+</div></blockquote>
+</li>
+<li><p>Definiamo nella classe <strong>unibo.disi.cargoserviceM2M.EurekaServiceConfig</strong>
+le proprietà rilevanti (<em>appaName</em>, <em>host</em> e <em>port</em>) del servizio da registare:</p>
+<blockquote>
+<div><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">//</span><span class="n">appaName</span>
+<span class="nd">@Override</span>
+<span class="n">public</span> <span class="n">String</span> <span class="n">getAppname</span><span class="p">(</span> <span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="s2">&quot;m2mproductservice&quot;</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="o">//</span><span class="n">host</span>
+    <span class="nd">@Override</span>
+<span class="n">public</span> <span class="n">String</span> <span class="n">getHostName</span><span class="p">(</span><span class="n">boolean</span> <span class="n">refresh</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="s2">&quot;localhost&quot;</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="o">...</span>
+</pre></div>
+</div>
+</div></blockquote>
+</li>
+<li><p>Definiamo i possibili URL del server Eureka nel file <code class="docutils literal notranslate"><span class="pre">src/main/resources/eureka-client.properties</span></code></p>
+<blockquote>
+<div><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">eureka</span><span class="o">.</span><span class="n">serviceUrl</span><span class="o">.</span><span class="n">defaultZone</span><span class="o">=</span><span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">eureka</span><span class="p">:</span><span class="mi">8761</span><span class="o">/</span><span class="n">eureka</span><span class="o">/</span><span class="p">,</span> <span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">localhost</span><span class="p">:</span><span class="mi">8761</span><span class="o">/</span><span class="n">eureka</span><span class="o">/</span>
+</pre></div>
+</div>
+</div></blockquote>
+</li>
+<li><p>Registriamo il servizio in <em>CargoserviceM2MApplication.java</em> usando una utility definita in <em>CommUtils.java</em>:</p>
+<blockquote>
+<div><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">CommUtils</span><span class="o">.</span><span class="n">registerService</span><span class="p">(</span> <span class="n">main</span><span class="o">.</span><span class="n">java</span><span class="o">.</span><span class="n">EurekaServiceConfig</span><span class="p">()</span> <span class="p">)</span>
+</pre></div>
+</div>
+</div></blockquote>
+</li>
+</ol>
+</section>
+<section id="m2m-discoverable-usage">
+<h2>M2M discoverable usage<a class="headerlink" href="#m2m-discoverable-usage" title="Link to this heading">¶</a></h2>
+<ol class="arabic">
+<li><p>Attiviamo il servizio ed eseguiamo un programma client che ne fa il discovery prima di
+invocarne le operazioni HTTP-RESTful:
+<code class="docutils literal notranslate"><span class="pre">src/unibo/disi/cargoserviceM2M/callers/PSDiscoverCallerHttp.java</span></code></p>
+<blockquote>
+<div><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">EurekaClient</span> <span class="n">eurekaClient</span>  <span class="o">=</span> <span class="n">CommUtils</span><span class="o">.</span><span class="n">createEurekaClient</span><span class="p">();</span>
+<span class="n">String</span><span class="p">[]</span>  <span class="n">hostPort</span> <span class="o">=</span> <span class="n">CommUtils</span><span class="o">.</span><span class="n">discoverService</span><span class="p">(</span><span class="n">eurekaClient</span><span class="p">,</span><span class="s2">&quot;m2mproductservice&quot;</span><span class="p">);</span>
+
+<span class="n">BASE_URL</span> <span class="o">=</span> <span class="s2">&quot;http://HOST:PORT&quot;</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;HOST&quot;</span><span class="p">,</span> <span class="n">hostPort</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;PORT&quot;</span><span class="p">,</span> <span class="n">hostPort</span><span class="p">[</span><span class="mi">1</span><span class="p">]);</span>
+
+<span class="n">String</span> <span class="n">endpoint</span> <span class="o">=</span> <span class="s2">&quot;/createProduct&quot;</span>
+        <span class="n">URL</span> <span class="n">url</span> <span class="o">=</span> <span class="n">new</span> <span class="n">URL</span><span class="p">(</span><span class="n">BASE_URL</span> <span class="o">+</span> <span class="n">endpoint</span><span class="p">);</span>
+
+<span class="o">//</span><span class="n">Escuzione</span> <span class="n">di</span> <span class="n">HTTP</span> <span class="n">POST</span>
+        <span class="n">HttpURLConnection</span> <span class="n">con</span> <span class="o">=</span> <span class="p">(</span><span class="n">HttpURLConnection</span><span class="p">)</span> <span class="n">url</span><span class="o">.</span><span class="n">openConnection</span><span class="p">();</span>
+        <span class="n">con</span><span class="o">.</span><span class="n">setRequestMethod</span><span class="p">(</span><span class="s2">&quot;POST&quot;</span><span class="p">);</span>
+        <span class="n">con</span><span class="o">.</span><span class="n">setRequestProperty</span><span class="p">(</span><span class="s2">&quot;Content-Type&quot;</span><span class="p">,</span> <span class="s2">&quot;application/json;charset=UTF-8&quot;</span><span class="p">);</span>
+
+        <span class="n">BufferedReader</span> <span class="ow">in</span> <span class="o">=</span> <span class="n">new</span> <span class="n">BufferedReader</span><span class="p">(</span><span class="n">new</span> <span class="n">InputStreamReader</span><span class="p">(</span><span class="n">con</span><span class="o">.</span><span class="n">getInputStream</span><span class="p">()));</span>
+        <span class="n">String</span> <span class="n">inputLine</span><span class="p">;</span>
+        <span class="n">StringBuffer</span> <span class="n">content</span> <span class="o">=</span> <span class="n">new</span> <span class="n">StringBuffer</span><span class="p">();</span>
+        <span class="k">while</span> <span class="p">((</span><span class="n">inputLine</span> <span class="o">=</span> <span class="ow">in</span><span class="o">.</span><span class="n">readLine</span><span class="p">())</span> <span class="o">!=</span> <span class="n">null</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">content</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">inputLine</span><span class="p">);</span>
+        <span class="p">}</span>
+<span class="o">//</span><span class="n">content</span><span class="o">.</span><span class="n">toString</span><span class="p">()</span> <span class="n">contiene</span> <span class="n">la</span> <span class="n">risposta</span> <span class="k">del</span> <span class="n">server</span>
+        <span class="ow">in</span><span class="o">.</span><span class="n">close</span><span class="p">();</span>
+        <span class="n">con</span><span class="o">.</span><span class="n">disconnect</span><span class="p">();</span>
+</pre></div>
+</div>
+</div></blockquote>
+</li>
+</ol>
+</section>
+<section id="verso-interaction">
+<h2>Verso Interaction<a class="headerlink" href="#verso-interaction" title="Link to this heading">¶</a></h2>
+<ol class="arabic">
+<li><p>Impostiamo qualche utility per la gestione delle richieste <code class="docutils literal notranslate"><span class="pre">HTTP</span></code> in <em>CommUtils.java</em> in modo da evitare
+la verbosità precedente. Ad esempio:
+scrivere:</p>
+<blockquote>
+<div><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">private</span> <span class="n">void</span> <span class="n">doHTTPCall</span><span class="p">(</span> <span class="n">String</span> <span class="n">url</span><span class="p">,</span> <span class="n">String</span> <span class="n">msg</span> <span class="p">)</span> <span class="n">throws</span> <span class="ne">Exception</span> <span class="p">{</span>
+    <span class="n">HttpConnection</span> <span class="n">httpConn</span> <span class="o">=</span> <span class="n">new</span> <span class="n">HttpConnection</span><span class="p">(</span><span class="n">url</span><span class="p">);</span>
+    <span class="n">org</span><span class="o">.</span><span class="n">json</span><span class="o">.</span><span class="n">simple</span><span class="o">.</span><span class="n">JSONObject</span> <span class="n">answer</span> <span class="o">=</span> <span class="n">httpConn</span><span class="o">.</span><span class="n">callHTTP</span><span class="p">(</span><span class="n">msg</span><span class="p">);</span>
+    <span class="n">CommUtils</span><span class="o">.</span><span class="n">outmagenta</span><span class="p">(</span><span class="s2">&quot;doHTTPCall:&quot;</span> <span class="o">+</span> <span class="n">answer</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="n">private</span> <span class="n">void</span> <span class="n">doHLCall</span><span class="p">(</span> <span class="n">String</span> <span class="n">url</span><span class="p">,</span> <span class="n">String</span> <span class="n">msg</span> <span class="p">)</span> <span class="n">throws</span> <span class="ne">Exception</span> <span class="p">{</span>
+    <span class="n">Interaction</span> <span class="n">conn</span> <span class="o">=</span> <span class="n">ConnectionFactory</span><span class="o">.</span><span class="n">createClientSupport</span><span class="p">(</span><span class="n">ProtocolType</span><span class="o">.</span><span class="n">http</span><span class="p">,</span> <span class="n">url</span><span class="p">,</span> <span class="n">msg</span><span class="p">);</span>
+    <span class="n">String</span> <span class="n">answer</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">request</span><span class="p">(</span><span class="n">msg</span><span class="p">);</span> <span class="o">//</span><span class="n">fa</span> <span class="n">httpConn</span><span class="o">.</span><span class="n">callHTTP</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+    <span class="n">CommUtils</span><span class="o">.</span><span class="n">outmagenta</span><span class="p">(</span><span class="s2">&quot;doHLCall answer=&quot;</span> <span class="o">+</span> <span class="n">answer</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div></blockquote>
+</li>
+<li><p>Il concetto di HttpConnection e quello di Interaction</p></li>
+</ol>
 </section>
 </section>
 
@@ -233,6 +324,8 @@ ed esplorare <strong>Kibana in http://localhost:5601/</strong>.</p>
 <li><a class="reference internal" href="#m2m-testing-using-elk">M2M testing using ELK</a></li>
 <li><a class="reference internal" href="#m2m-on-docker">M2M on Docker</a></li>
 <li><a class="reference internal" href="#m2m-discoverable">M2M discoverable</a></li>
+<li><a class="reference internal" href="#m2m-discoverable-usage">M2M discoverable usage</a></li>
+<li><a class="reference internal" href="#verso-interaction">Verso Interaction</a></li>
 </ul>
 </li>
 </ul>

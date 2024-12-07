@@ -174,42 +174,121 @@ M2M on Docker
     cargoserviceM2M.yml
 
     docker-compose -f cargoservicem2m.yml  -p cargoservicem2m up
-    
+
 -------------------------------
 M2M discoverable
 -------------------------------
 
-.. code::
+#. Estendiamo le dipenendenze in *build.gradle*:
 
-    // Dipendenza per Eureka Client
-    implementation 'com.netflix.eureka:eureka-client:1.10.18'   
-    	//1.10.18 compatibile con immagine Spring Cloud Netflix 3.x  
-    // Dipendenza per Jersey Client (per fare richieste HTTP)
-    implementation 'com.sun.jersey:jersey-client:1.19.1'
-    implementation 'com.netflix.servo:servo-core:0.13.2'
+    .. code::
 
-    cargoservice:
-        image: cargoservice:3.0 
-        #image: natbodocker/cargoservice:3.0 
-        container_name: cargoservice
-        environment:
-        - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://eureka:8761/eureka/
+        // Dipendenza per Eureka Client
+        implementation 'com.netflix.eureka:eureka-client:1.10.18'   
+            //1.10.18 compatibile con immagine Spring Cloud Netflix 3.x  
+        // Dipendenza per Jersey Client (per fare richieste HTTP)
+        implementation 'com.sun.jersey:jersey-client:1.19.1'
+        implementation 'com.netflix.servo:servo-core:0.13.2'
+
+#. Specifichiamo dove si trova Eureka in una variabile di ambiente di  *cargoserviceM2M.yml*:
+
+    .. code::
+
+        cargoservice: 
+            image: cargoservice:3.0 
+            #image: natbodocker/cargoservice:3.0 
+            container_name: cargoservice
+            environment:
+            - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://eureka:8761/eureka/
+
+#. Definiamo nella classe **unibo.disi.cargoserviceM2M.EurekaServiceConfig**
+   le proprietà rilevanti (*appaName*, *host* e *port*) del servizio da registare:
+
+    .. code::
+
+            //appaName
+            @Override
+            public String getAppname( ) {
+                return "m2mproductservice";
+            }
+
+            //host
+        	@Override
+            public String getHostName(boolean refresh) {
+                return "localhost";
+            }
+
+            ...
 
 
-    La classe main.java.EurekaServiceConfig definisce le proprietà rilevanti del servizio da registare:
+#. Definiamo i possibili URL del server Eureka nel file ``src/main/resources/eureka-client.properties``
+
+    .. code::
+
+        eureka.serviceUrl.defaultZone=http://eureka:8761/eureka/, http://localhost:8761/eureka/
+
+#. Registriamo il servizio in *CargoserviceM2MApplication.java* usando una utility definita in *CommUtils.java*:
+
+    .. code::
+
+        CommUtils.registerService( main.java.EurekaServiceConfig() )
+
+-------------------------------
+M2M discoverable usage
+-------------------------------
+
+#. Attiviamo il servizio ed eseguiamo un programma client che ne fa il discovery prima di 
+   invocarne le operazioni HTTP-RESTful: 
+   ``src/unibo/disi/cargoserviceM2M/callers/PSDiscoverCallerHttp.java``
+
+     .. code::
+
+        EurekaClient eurekaClient  = CommUtils.createEurekaClient(); 
+        String[]  hostPort = CommUtils.discoverService(eurekaClient,"m2mproductservice");
+		
+        BASE_URL = "http://HOST:PORT".replace("HOST", hostPort[0]).replace("PORT", hostPort[1]);
+
+        String endpoint = "/createProduct"
+ 		URL url = new URL(BASE_URL + endpoint);
+		
+        //Escuzione di HTTP POST
+		HttpURLConnection con = (HttpURLConnection) url.openConnection();
+		con.setRequestMethod("POST");
+		con.setRequestProperty("Content-Type", "application/json;charset=UTF-8");
+
+		BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
+		String inputLine;
+		StringBuffer content = new StringBuffer();
+		while ((inputLine = in.readLine()) != null) {
+		    content.append(inputLine);
+		}
+        //content.toString() contiene la risposta del server
+		in.close();	
+		con.disconnect();
+
+-------------------------------
+Verso Interaction
+-------------------------------
+
+#. Impostiamo qualche utility per la gestione delle richieste ``HTTP`` in *CommUtils.java* in modo da evitare 
+   la verbosità precedente. Ad esempio:
+   scrivere:
+
+    .. code::
+
+        private void doHTTPCall( String url, String msg ) throws Exception {
+            HttpConnection httpConn = new HttpConnection(url);
+            org.json.simple.JSONObject answer = httpConn.callHTTP(msg);
+            CommUtils.outmagenta("doHTTPCall:" + answer);          
+        }
+
+        private void doHLCall( String url, String msg ) throws Exception {
+            Interaction conn = ConnectionFactory.createClientSupport(ProtocolType.http, url, msg);
+            String answer = conn.request(msg); //fa httpConn.callHTTP(msg)
+            CommUtils.outmagenta("doHLCall answer=" + answer);         
+        }
 
 
-    if( CommUtils.getEnvvarValue("EUREKA_CLIENT_SERVICEURL_DEFAULTZONE")!=null)
-        main/resources/eureka-client.properties
-
-
-    CommUtils.registerService( main.java.EurekaServiceConfig() )
-
-    discoveryclient = main.java.EurekaServiceConfig.myRegister( main.java.EurekaServiceConfig() )
-	//val discoveryclient = CommUtils.registerService( main.java.EurekaServiceConfig() )
-	CommUtils.outblue("discoveryclient=$discoveryclient ")
-
-
-
+#. Il concetto di HttpConnection e quello di Interaction
 
 
