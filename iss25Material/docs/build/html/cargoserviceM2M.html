@@ -169,9 +169,9 @@ ed esplorare <strong>Kibana in http://localhost:5601/</strong>.</p>
 </section>
 <section id="m2m-on-docker">
 <h2>M2M on Docker<a class="headerlink" href="#m2m-on-docker" title="Link to this heading">¶</a></h2>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Dockerfile</span>
-<span class="n">cargoserviceM2M</span><span class="o">.</span><span class="n">bat</span>
-<span class="n">cargoserviceM2M</span><span class="o">.</span><span class="n">yml</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cargoserviceM2M</span>\<span class="n">Dockerfile</span>
+<span class="n">cargoserviceM2M</span>\<span class="n">cargoserviceM2M</span><span class="o">.</span><span class="n">bat</span>
+<span class="n">cargoserviceM2M</span>\<span class="n">cargoserviceM2M</span><span class="o">.</span><span class="n">yml</span>
 
 <span class="n">docker</span><span class="o">-</span><span class="n">compose</span> <span class="o">-</span><span class="n">f</span> <span class="n">cargoservicem2m</span><span class="o">.</span><span class="n">yml</span>  <span class="o">-</span><span class="n">p</span> <span class="n">cargoservicem2m</span> <span class="n">up</span>
 </pre></div>
@@ -275,14 +275,19 @@ invocarne le operazioni HTTP-RESTful:
 </li>
 </ol>
 </section>
-<section id="verso-interaction">
-<h2>Verso Interaction<a class="headerlink" href="#verso-interaction" title="Link to this heading">¶</a></h2>
+<section id="m2m-connection-e-interaction">
+<h2>M2M: Connection e Interaction<a class="headerlink" href="#m2m-connection-e-interaction" title="Link to this heading">¶</a></h2>
 <ol class="arabic">
 <li><p>Impostiamo qualche utility per la gestione delle richieste <code class="docutils literal notranslate"><span class="pre">HTTP</span></code> in <em>CommUtils.java</em> in modo da evitare
-la verbosità precedente. Ad esempio:
-scrivere:</p>
+la verbosità precedente.
+Ad esempio (si veda <code class="docutils literal notranslate"><span class="pre">src\main\java\unibo\disi\cargoserviceM2M\callers\PSLDiscoverCallerInteraction.java</span></code>)
+:</p>
 <blockquote>
-<div><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">private</span> <span class="n">void</span> <span class="n">doHTTPCall</span><span class="p">(</span> <span class="n">String</span> <span class="n">url</span><span class="p">,</span> <span class="n">String</span> <span class="n">msg</span> <span class="p">)</span> <span class="n">throws</span> <span class="ne">Exception</span> <span class="p">{</span>
+<div><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">unibo.basicomm23.http.HttpConnection</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">unibo.basicomm23.interfaces.Interaction</span><span class="p">;</span>
+<span class="o">...</span>
+
+<span class="n">private</span> <span class="n">void</span> <span class="n">doHTTPCall</span><span class="p">(</span> <span class="n">String</span> <span class="n">url</span><span class="p">,</span> <span class="n">String</span> <span class="n">msg</span> <span class="p">)</span> <span class="n">throws</span> <span class="ne">Exception</span> <span class="p">{</span>
     <span class="n">HttpConnection</span> <span class="n">httpConn</span> <span class="o">=</span> <span class="n">new</span> <span class="n">HttpConnection</span><span class="p">(</span><span class="n">url</span><span class="p">);</span>
     <span class="n">org</span><span class="o">.</span><span class="n">json</span><span class="o">.</span><span class="n">simple</span><span class="o">.</span><span class="n">JSONObject</span> <span class="n">answer</span> <span class="o">=</span> <span class="n">httpConn</span><span class="o">.</span><span class="n">callHTTP</span><span class="p">(</span><span class="n">msg</span><span class="p">);</span>
     <span class="n">CommUtils</span><span class="o">.</span><span class="n">outmagenta</span><span class="p">(</span><span class="s2">&quot;doHTTPCall:&quot;</span> <span class="o">+</span> <span class="n">answer</span><span class="p">);</span>
@@ -297,7 +302,40 @@ scrivere:</p>
 </div>
 </div></blockquote>
 </li>
-<li><p>Il concetto di HttpConnection e quello di Interaction</p></li>
+<li><p>Approfondiamo il concetto di <em>HttpConnection</em> e quello, più generale, di <strong>Interaction</strong></p></li>
+</ol>
+</section>
+<section id="m2m-su-raspberrypi">
+<h2>M2M su RaspberryPi<a class="headerlink" href="#m2m-su-raspberrypi" title="Link to this heading">¶</a></h2>
+<ol class="arabic">
+<li><p>Defnire i file:</p>
+<blockquote>
+<div><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cargoserviceM2M</span>\<span class="n">DockerfileRasp</span>
+<span class="n">cargoserviceM2M</span>\<span class="n">docker</span><span class="o">-</span><span class="n">compose</span><span class="o">-</span><span class="n">M2mRasp</span><span class="o">.</span><span class="n">yml</span>
+</pre></div>
+</div>
+</div></blockquote>
+</li>
+<li><p>Trasferire su una cartella di RaspberryPi i file:</p>
+<blockquote>
+<div><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">DockerfileRasp</span> <span class="p">(</span><span class="n">si</span> <span class="n">noti</span> <span class="n">ENV</span> <span class="n">RASP_ADDR</span><span class="o">=</span><span class="mf">192.168.1.248</span> <span class="n">per</span> <span class="n">evitare</span> <span class="n">docker</span><span class="o">-</span><span class="n">compose</span> <span class="p">)</span>
+<span class="n">docker</span><span class="o">-</span><span class="n">compose</span><span class="o">-</span><span class="n">M2mRasp</span><span class="o">.</span><span class="n">yml</span>
+<span class="n">cargoserviceM2M</span><span class="o">-</span><span class="mf">1.0</span><span class="o">.</span><span class="n">tar</span>  <span class="p">(</span><span class="n">da</span> <span class="n">cargoserviceM2M</span>\<span class="n">build</span>\<span class="n">distributions</span>\<span class="p">)</span>
+</pre></div>
+</div>
+</div></blockquote>
+</li>
+<li><p>Eseguire su RaspberryPi:</p>
+<blockquote>
+<div><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">docker</span> <span class="n">build</span> <span class="o">-</span><span class="n">f</span> <span class="n">DockerfileM2mRasp</span> <span class="o">-</span><span class="n">t</span> <span class="n">imgm2mrasp</span><span class="p">:</span><span class="mf">1.0</span> <span class="o">.</span>  <span class="p">(</span><span class="n">crea</span> <span class="n">imgm2mrasp</span><span class="p">:</span><span class="mf">1.0</span><span class="p">)</span>
+<span class="n">docker</span> <span class="n">run</span> <span class="o">-</span><span class="n">it</span> <span class="o">--</span><span class="n">rm</span> <span class="o">--</span><span class="n">name</span> <span class="n">m2mrasp</span> <span class="o">-</span><span class="n">p9111</span><span class="p">:</span><span class="mi">9111</span><span class="o">/</span><span class="n">tcp</span>  <span class="o">--</span><span class="n">privileged</span> <span class="n">imgm2mrasp</span><span class="p">:</span><span class="mf">1.0</span> <span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">bash</span>
+</pre></div>
+</div>
+</div></blockquote>
+</li>
+</ol>
+<ol class="arabic simple">
+<li><p>Eseguire <code class="docutils literal notranslate"><span class="pre">src\main\java\unibo\disi\cargoserviceM2M\callers\PSLDiscoverCallerInteraction.java</span></code></p></li>
 </ol>
 </section>
 </section>
@@ -325,7 +363,8 @@ scrivere:</p>
 <li><a class="reference internal" href="#m2m-on-docker">M2M on Docker</a></li>
 <li><a class="reference internal" href="#m2m-discoverable">M2M discoverable</a></li>
 <li><a class="reference internal" href="#m2m-discoverable-usage">M2M discoverable usage</a></li>
-<li><a class="reference internal" href="#verso-interaction">Verso Interaction</a></li>
+<li><a class="reference internal" href="#m2m-connection-e-interaction">M2M: Connection e Interaction</a></li>
+<li><a class="reference internal" href="#m2m-su-raspberrypi">M2M su RaspberryPi</a></li>
 </ul>
 </li>
 </ul>

@@ -169,9 +169,9 @@ M2M on Docker
 
 .. code::
 
-    Dockerfile
-    cargoserviceM2M.bat
-    cargoserviceM2M.yml
+    cargoserviceM2M\Dockerfile
+    cargoserviceM2M\cargoserviceM2M.bat
+    cargoserviceM2M\cargoserviceM2M.yml
 
     docker-compose -f cargoservicem2m.yml  -p cargoservicem2m up
 
@@ -267,14 +267,19 @@ M2M discoverable usage
 		con.disconnect();
 
 -------------------------------
-Verso Interaction
+M2M: Connection e Interaction
 -------------------------------
 
 #. Impostiamo qualche utility per la gestione delle richieste ``HTTP`` in *CommUtils.java* in modo da evitare 
-   la verbosità precedente. Ad esempio:
-   scrivere:
+   la verbosità precedente. 
+   Ad esempio (si veda ``src\main\java\unibo\disi\cargoserviceM2M\callers\PSLDiscoverCallerInteraction.java``)
+   :
 
     .. code::
+
+        import unibo.basicomm23.http.HttpConnection;
+        import unibo.basicomm23.interfaces.Interaction;
+        ...
 
         private void doHTTPCall( String url, String msg ) throws Exception {
             HttpConnection httpConn = new HttpConnection(url);
@@ -287,8 +292,39 @@ Verso Interaction
             String answer = conn.request(msg); //fa httpConn.callHTTP(msg)
             CommUtils.outmagenta("doHLCall answer=" + answer);         
         }
+ 
+
+#. Approfondiamo il concetto di *HttpConnection* e quello, più generale, di **Interaction**
 
 
-#. Il concetto di HttpConnection e quello di Interaction
+-------------------------------
+M2M su RaspberryPi
+-------------------------------
 
 
+#. Defnire i file:
+
+    .. code::
+        
+        
+        cargoserviceM2M\DockerfileRasp
+        cargoserviceM2M\docker-compose-M2mRasp.yml
+
+#. Trasferire su una cartella di RaspberryPi i file:
+
+    .. code::
+
+        DockerfileRasp (si noti ENV RASP_ADDR=192.168.1.248 per evitare docker-compose )
+        docker-compose-M2mRasp.yml
+        cargoserviceM2M-1.0.tar  (da cargoserviceM2M\build\distributions\)
+
+#. Eseguire su RaspberryPi:
+
+    .. code::
+
+        docker build -f DockerfileM2mRasp -t imgm2mrasp:1.0 .  (crea imgm2mrasp:1.0)
+        docker run -it --rm --name m2mrasp -p9111:9111/tcp  --privileged imgm2mrasp:1.0 /bin/bash
+
+.. docker-compose -f docker-compose-M2mRasp.yml -p m2mservicerasp up (NON VA)
+
+#. Eseguire ``src\main\java\unibo\disi\cargoserviceM2M\callers\PSLDiscoverCallerInteraction.java``
