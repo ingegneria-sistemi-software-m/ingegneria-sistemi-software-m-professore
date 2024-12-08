@@ -47,6 +47,7 @@ Inserire (necessaria per l'applicazione):
 
 .. code::
 
+
     applibs
         cargoproduct-1.0.jar
 
@@ -64,11 +65,13 @@ M2M build.gradle
             id 'application'
             
         version = '1.0'
+        
         repositories {
             mavenCentral()
             flatDir {   dirs '../unibolibs'	 }
             flatDir {	dirs 'applibs'		 }
         }        
+        
         dependencies{
             ...
             implementation 'com.googlecode.json-simple:json-simple:1.1.1'
