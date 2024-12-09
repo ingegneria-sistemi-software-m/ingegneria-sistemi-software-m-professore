@@ -254,9 +254,10 @@ M2M-GUI discoverable usage
 		in.close();	
 		con.disconnect();
 
--------------------------------
+------------------------------------
 M2M-GUI: Connection e Interaction
--------------------------------
+-------------------------------------
+
 
 #. Impostiamo qualche utility per la gestione delle richieste ``HTTP`` in *CommUtils.java* in modo da evitare 
    la verbosità precedente. 
