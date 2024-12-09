@@ -1,35 +1,33 @@
 ===================================
-cargoserviceM2M
+cargoserviceM2MGui
 ===================================
 
 
 
 -------------------------------
-M2M start
+M2M-GUI start
 -------------------------------
 
 #. Si veda: file:///C:/Didattica2024/qak24/iss24Material/docs/_build/html/SpringBootIntro.html?highlight=spring
 #. Eseguire https://spring.io/
+    
+    Theamleaf
 
-        .. image::  ./_static/img/M2M/springiostart.png
-           :align: center 
-           :width: 90%  
+    .. code::
 
-.. code::
+        unzip
+        gradlew build
 
-    unzip
-    gradlew build
+#. Creare:
 
-Creare:
+    .. code::
 
-.. code::
-
-    src\main\resources\application.properties
-    src\main\resources\banner.txt
+        src\main\resources\application.properties
+        src\main\resources\banner.txt
 
 
 -------------------------------
-M2M first run
+M2M-GUI first run
 -------------------------------
 
 .. code::
@@ -39,20 +37,9 @@ M2M first run
 
 .. eliminare src/test/java/unibo/disi/cargoserviceM2M/CargoserviceM2MApplicationTests.java
 
--------------------------------
-M2M required library
--------------------------------
-
-Inserire (necessaria per l'applicazione):
-
-.. code::
-
-
-    applibs
-        cargoproduct-1.0.jar
 
 -------------------------------
-M2M build.gradle
+M2M-GUI build.gradle
 -------------------------------
 
 .. code::
@@ -69,7 +56,6 @@ M2M build.gradle
         repositories {
             mavenCentral()
             flatDir {   dirs '../unibolibs'	 }
-            flatDir {	dirs 'applibs'		 }
         }        
         
         dependencies{
@@ -84,28 +70,27 @@ M2M build.gradle
             implementation name: 'uniboInterfaces'
             implementation name: '2p301'
             implementation name: 'unibo.basicomm23-1.0' 
-            implementation name: 'cargoproduct-1.0'
         
         application {
             //Define the main class for the application.
-            mainClassName    = 'unibo.disi.cargoserviceM2M.CargoserviceM2MApplication'
+            mainClassName    = 'unibo.disi.cargoserviceM2MGui.CargoserviceM2MGuiApplication'
         }		
     
     gradlew eclipse
     gradlew build
 
 -------------------------------
-M2M application and run
+M2M-GUI application and run
 -------------------------------
 
 .. code::
 
-    new package src\main\java\unibo\disi\cargoserviceM2M\controller
-    M2MCargoServiceController.java
+    new package src\main\java\unibo\disi\cargoserviceM2MGui\controller
+    M2MGuiController.java
     gradlew run
 
 -------------------------------
-M2M usage
+M2M-GUI usage
 -------------------------------
 
 .. code::
@@ -115,7 +100,7 @@ M2M usage
 
 
 -------------------------------
-M2M logging
+M2M-GUI logging
 -------------------------------
 
 .. code::
@@ -134,7 +119,7 @@ Definire il logger:
 Osservare i messaggi di log in  ``logs\m2m.log``
 
 -------------------------------
-M2M testing  local
+M2M-GUI testing  local
 -------------------------------
 
 .. code::
@@ -144,7 +129,7 @@ M2M testing  local
     gradlew build ESEGUE I TESTS -x test LI ESCLUDE
 
 -------------------------------
-M2M testing using ELK
+M2M-GUI testing using ELK
 -------------------------------
 
 .. code::
@@ -167,7 +152,7 @@ Eseguire ``src/test/java/unibo/disi/cargoserviceM2M/CargoserviceM2MApplicationTe
 ed esplorare **Kibana in http://localhost:5601/**.
 
 -------------------------------
-M2M on Docker
+M2M-GUI on Docker
 -------------------------------
 
 .. code::
@@ -179,7 +164,7 @@ M2M on Docker
     docker-compose -f cargoservicem2m.yml  -p cargoservicem2m up
 
 -------------------------------
-M2M discoverable
+M2M-GUI discoverable
 -------------------------------
 
 #. Estendiamo le dipenendenze in *build.gradle*:
@@ -237,7 +222,7 @@ M2M discoverable
         CommUtils.registerService( main.java.EurekaServiceConfig() )
 
 -------------------------------
-M2M discoverable usage
+M2M-GUI discoverable usage
 -------------------------------
 
 #. Attiviamo il servizio ed eseguiamo un programma client che ne fa il discovery prima di 
@@ -270,7 +255,7 @@ M2M discoverable usage
 		con.disconnect();
 
 -------------------------------
-M2M: Connection e Interaction
+M2M-GUI: Connection e Interaction
 -------------------------------
 
 #. Impostiamo qualche utility per la gestione delle richieste ``HTTP`` in *CommUtils.java* in modo da evitare 
@@ -301,7 +286,7 @@ M2M: Connection e Interaction
 
 
 -------------------------------
-M2M su RaspberryPi
+M2M-GUI su RaspberryPi
 -------------------------------
 
 

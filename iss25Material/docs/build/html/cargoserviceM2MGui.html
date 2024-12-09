@@ -5,7 +5,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>cargoserviceM2M &#8212; issLab2025 1.0 documentation</title>
+    <title>cargoserviceM2MGui &#8212; issLab2025 1.0 documentation</title>
     <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=649a27d8" />
     <link rel="stylesheet" type="text/css" href="_static/sphinxdoc.css?v=34905f61" />
     <script src="_static/documentation_options.js?v=f2a433a1"></script>
@@ -13,8 +13,8 @@
     <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="cargoserviceM2MGui" href="cargoserviceM2MGui.html" />
-    <link rel="prev" title="issLab2025" href="index.html" /> 
+    <link rel="next" title="Cargo24" href="Cargo24.html" />
+    <link rel="prev" title="cargoserviceM2M" href="cargoserviceM2M.html" /> 
   </head><body>
     <div class="related" role="navigation" aria-label="Related">
       <h3>Navigation</h3>
@@ -23,13 +23,13 @@
           <a href="genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="cargoserviceM2MGui.html" title="cargoserviceM2MGui"
+          <a href="Cargo24.html" title="Cargo24"
              accesskey="N">next</a> |</li>
         <li class="right" >
-          <a href="index.html" title="issLab2025"
+          <a href="cargoserviceM2M.html" title="cargoserviceM2M"
              accesskey="P">previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="index.html">issLab2025 1.0 documentation</a> &#187;</li>
-        <li class="nav-item nav-item-this"><a href="">cargoserviceM2M</a></li> 
+        <li class="nav-item nav-item-this"><a href="">cargoserviceM2MGui</a></li> 
       </ul>
     </div>  
 
@@ -38,46 +38,40 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <section id="cargoservicem2m">
-<h1>cargoserviceM2M<a class="headerlink" href="#cargoservicem2m" title="Link to this heading">¶</a></h1>
-<section id="m2m-start">
-<h2>M2M start<a class="headerlink" href="#m2m-start" title="Link to this heading">¶</a></h2>
+  <section id="cargoservicem2mgui">
+<h1>cargoserviceM2MGui<a class="headerlink" href="#cargoservicem2mgui" title="Link to this heading">¶</a></h1>
+<section id="m2m-gui-start">
+<h2>M2M-GUI start<a class="headerlink" href="#m2m-gui-start" title="Link to this heading">¶</a></h2>
 <ol class="arabic">
 <li><p>Si veda: <a class="reference external" href="file:///C:/Didattica2024/qak24/iss24Material/docs/_build/html/SpringBootIntro.html?highlight=spring">file:///C:/Didattica2024/qak24/iss24Material/docs/_build/html/SpringBootIntro.html?highlight=spring</a></p></li>
 <li><p>Eseguire <a class="reference external" href="https://spring.io/">https://spring.io/</a></p>
 <blockquote>
-<div><a class="reference internal image-reference" href="_images/springiostart.png"><img alt="_images/springiostart.png" class="align-center" src="_images/springiostart.png" style="width: 90%;" />
-</a>
-</div></blockquote>
-</li>
-</ol>
+<div><p>Theamleaf</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">unzip</span>
 <span class="n">gradlew</span> <span class="n">build</span>
 </pre></div>
 </div>
-<p>Creare:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">src</span>\<span class="n">main</span>\<span class="n">resources</span>\<span class="n">application</span><span class="o">.</span><span class="n">properties</span>
+</div></blockquote>
+</li>
+<li><p>Creare:</p>
+<blockquote>
+<div><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">src</span>\<span class="n">main</span>\<span class="n">resources</span>\<span class="n">application</span><span class="o">.</span><span class="n">properties</span>
 <span class="n">src</span>\<span class="n">main</span>\<span class="n">resources</span>\<span class="n">banner</span><span class="o">.</span><span class="n">txt</span>
 </pre></div>
 </div>
+</div></blockquote>
+</li>
+</ol>
 </section>
-<section id="m2m-first-run">
-<h2>M2M first run<a class="headerlink" href="#m2m-first-run" title="Link to this heading">¶</a></h2>
+<section id="m2m-gui-first-run">
+<h2>M2M-GUI first run<a class="headerlink" href="#m2m-gui-first-run" title="Link to this heading">¶</a></h2>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">gradlew</span> <span class="n">booturn</span> <span class="p">(</span><span class="n">INFO</span> <span class="n">messages</span><span class="p">)</span>
 <span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">localhost</span><span class="p">:</span><span class="mi">9111</span><span class="o">/</span> <span class="p">(</span><span class="n">Whitelabel</span> <span class="n">Error</span> <span class="n">Page</span><span class="p">)</span>
 </pre></div>
 </div>
 </section>
-<section id="m2m-required-library">
-<h2>M2M required library<a class="headerlink" href="#m2m-required-library" title="Link to this heading">¶</a></h2>
-<p>Inserire (necessaria per l’applicazione):</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">applibs</span>
-    <span class="n">cargoproduct</span><span class="o">-</span><span class="mf">1.0</span><span class="o">.</span><span class="n">jar</span>
-</pre></div>
-</div>
-</section>
-<section id="m2m-build-gradle">
-<h2>M2M build.gradle<a class="headerlink" href="#m2m-build-gradle" title="Link to this heading">¶</a></h2>
+<section id="m2m-gui-build-gradle">
+<h2>M2M-GUI build.gradle<a class="headerlink" href="#m2m-gui-build-gradle" title="Link to this heading">¶</a></h2>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">build</span><span class="o">.</span><span class="n">gradle</span>
     <span class="n">dependencies</span>
     <span class="n">plugins</span> <span class="o">...</span>
@@ -90,7 +84,6 @@
     <span class="n">repositories</span> <span class="p">{</span>
         <span class="n">mavenCentral</span><span class="p">()</span>
         <span class="n">flatDir</span> <span class="p">{</span>   <span class="n">dirs</span> <span class="s1">&#39;../unibolibs&#39;</span>      <span class="p">}</span>
-        <span class="n">flatDir</span> <span class="p">{</span>   <span class="n">dirs</span> <span class="s1">&#39;applibs&#39;</span>           <span class="p">}</span>
     <span class="p">}</span>
 
     <span class="n">dependencies</span><span class="p">{</span>
@@ -105,11 +98,10 @@
         <span class="n">implementation</span> <span class="n">name</span><span class="p">:</span> <span class="s1">&#39;uniboInterfaces&#39;</span>
         <span class="n">implementation</span> <span class="n">name</span><span class="p">:</span> <span class="s1">&#39;2p301&#39;</span>
         <span class="n">implementation</span> <span class="n">name</span><span class="p">:</span> <span class="s1">&#39;unibo.basicomm23-1.0&#39;</span>
-        <span class="n">implementation</span> <span class="n">name</span><span class="p">:</span> <span class="s1">&#39;cargoproduct-1.0&#39;</span>
 
     <span class="n">application</span> <span class="p">{</span>
         <span class="o">//</span><span class="n">Define</span> <span class="n">the</span> <span class="n">main</span> <span class="k">class</span> <span class="nc">for</span> <span class="n">the</span> <span class="n">application</span><span class="o">.</span>
-        <span class="n">mainClassName</span>    <span class="o">=</span> <span class="s1">&#39;unibo.disi.cargoserviceM2M.CargoserviceM2MApplication&#39;</span>
+        <span class="n">mainClassName</span>    <span class="o">=</span> <span class="s1">&#39;unibo.disi.cargoserviceM2MGui.CargoserviceM2MGuiApplication&#39;</span>
     <span class="p">}</span>
 
 <span class="n">gradlew</span> <span class="n">eclipse</span>
@@ -117,22 +109,22 @@
 </pre></div>
 </div>
 </section>
-<section id="m2m-application-and-run">
-<h2>M2M application and run<a class="headerlink" href="#m2m-application-and-run" title="Link to this heading">¶</a></h2>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">new</span> <span class="n">package</span> <span class="n">src</span>\<span class="n">main</span>\<span class="n">java</span>\<span class="n">unibo</span>\<span class="n">disi</span>\<span class="n">cargoserviceM2M</span>\<span class="n">controller</span>
-<span class="n">M2MCargoServiceController</span><span class="o">.</span><span class="n">java</span>
+<section id="m2m-gui-application-and-run">
+<h2>M2M-GUI application and run<a class="headerlink" href="#m2m-gui-application-and-run" title="Link to this heading">¶</a></h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">new</span> <span class="n">package</span> <span class="n">src</span>\<span class="n">main</span>\<span class="n">java</span>\<span class="n">unibo</span>\<span class="n">disi</span>\<span class="n">cargoserviceM2MGui</span>\<span class="n">controller</span>
+<span class="n">M2MGuiController</span><span class="o">.</span><span class="n">java</span>
 <span class="n">gradlew</span> <span class="n">run</span>
 </pre></div>
 </div>
 </section>
-<section id="m2m-usage">
-<h2>M2M usage<a class="headerlink" href="#m2m-usage" title="Link to this heading">¶</a></h2>
+<section id="m2m-gui-usage">
+<h2>M2M-GUI usage<a class="headerlink" href="#m2m-gui-usage" title="Link to this heading">¶</a></h2>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Eseguire</span><span class="p">:</span> <span class="n">PSLCallerHTTP</span><span class="o">.</span><span class="n">java</span>
 </pre></div>
 </div>
 </section>
-<section id="m2m-logging">
-<h2>M2M logging<a class="headerlink" href="#m2m-logging" title="Link to this heading">¶</a></h2>
+<section id="m2m-gui-logging">
+<h2>M2M-GUI logging<a class="headerlink" href="#m2m-gui-logging" title="Link to this heading">¶</a></h2>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">src</span>\<span class="n">main</span>\<span class="n">resources</span>\<span class="n">logback</span><span class="o">.</span><span class="n">xml</span>
    <span class="n">definire</span> <span class="n">i</span> <span class="o">&lt;</span><span class="n">pettern</span><span class="o">&gt;</span>
 </pre></div>
@@ -144,16 +136,16 @@
 </div>
 <p>Osservare i messaggi di log in  <code class="docutils literal notranslate"><span class="pre">logs\m2m.log</span></code></p>
 </section>
-<section id="m2m-testing-local">
-<h2>M2M testing  local<a class="headerlink" href="#m2m-testing-local" title="Link to this heading">¶</a></h2>
+<section id="m2m-gui-testing-local">
+<h2>M2M-GUI testing  local<a class="headerlink" href="#m2m-gui-testing-local" title="Link to this heading">¶</a></h2>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">src</span><span class="o">/</span><span class="n">main</span><span class="o">/</span><span class="n">java</span><span class="o">/</span><span class="n">unibo</span><span class="o">/</span><span class="n">disi</span><span class="o">/</span><span class="n">cargoserviceM2M</span><span class="o">/</span><span class="n">config</span><span class="o">/</span><span class="n">RestTemplateConfig</span><span class="o">.</span><span class="n">java</span>
 <span class="n">src</span><span class="o">/</span><span class="n">test</span><span class="o">/</span><span class="n">java</span><span class="o">/</span><span class="n">unibo</span><span class="o">/</span><span class="n">disi</span><span class="o">/</span><span class="n">cargoserviceM2M</span><span class="o">/</span><span class="n">CargoserviceM2MApplicationTests</span><span class="o">.</span><span class="n">java</span>
 <span class="n">gradlew</span> <span class="n">build</span> <span class="n">ESEGUE</span> <span class="n">I</span> <span class="n">TESTS</span> <span class="o">-</span><span class="n">x</span> <span class="n">test</span> <span class="n">LI</span> <span class="n">ESCLUDE</span>
 </pre></div>
 </div>
 </section>
-<section id="m2m-testing-using-elk">
-<h2>M2M testing using ELK<a class="headerlink" href="#m2m-testing-using-elk" title="Link to this heading">¶</a></h2>
+<section id="m2m-gui-testing-using-elk">
+<h2>M2M-GUI testing using ELK<a class="headerlink" href="#m2m-gui-testing-using-elk" title="Link to this heading">¶</a></h2>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">In</span> <span class="n">logback</span><span class="o">.</span><span class="n">xml</span>  <span class="o">-</span> <span class="n">aggiungere</span> <span class="n">ELK</span><span class="p">:</span>
 <span class="n">In</span> <span class="n">build</span><span class="o">.</span><span class="n">gradle</span> <span class="o">-</span> <span class="n">aggiungere</span> <span class="n">dipendenza</span> <span class="n">per</span> <span class="n">Elasticsearch</span>
 </pre></div>
@@ -169,8 +161,8 @@ da selezionare in <strong>Kibana</strong>:</p>
 <p>Eseguire <code class="docutils literal notranslate"><span class="pre">src/test/java/unibo/disi/cargoserviceM2M/CargoserviceM2MApplicationTests.java</span></code>
 ed esplorare <strong>Kibana in http://localhost:5601/</strong>.</p>
 </section>
-<section id="m2m-on-docker">
-<h2>M2M on Docker<a class="headerlink" href="#m2m-on-docker" title="Link to this heading">¶</a></h2>
+<section id="m2m-gui-on-docker">
+<h2>M2M-GUI on Docker<a class="headerlink" href="#m2m-gui-on-docker" title="Link to this heading">¶</a></h2>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cargoserviceM2M</span>\<span class="n">Dockerfile</span>
 <span class="n">cargoserviceM2M</span>\<span class="n">cargoserviceM2M</span><span class="o">.</span><span class="n">bat</span>
 <span class="n">cargoserviceM2M</span>\<span class="n">cargoserviceM2M</span><span class="o">.</span><span class="n">yml</span>
@@ -179,8 +171,8 @@ ed esplorare <strong>Kibana in http://localhost:5601/</strong>.</p>
 </pre></div>
 </div>
 </section>
-<section id="m2m-discoverable">
-<h2>M2M discoverable<a class="headerlink" href="#m2m-discoverable" title="Link to this heading">¶</a></h2>
+<section id="m2m-gui-discoverable">
+<h2>M2M-GUI discoverable<a class="headerlink" href="#m2m-gui-discoverable" title="Link to this heading">¶</a></h2>
 <ol class="arabic">
 <li><p>Estendiamo le dipenendenze in <em>build.gradle</em>:</p>
 <blockquote>
@@ -242,8 +234,8 @@ le proprietà rilevanti (<em>appaName</em>, <em>host</em> e <em>port</em>) del s
 </li>
 </ol>
 </section>
-<section id="m2m-discoverable-usage">
-<h2>M2M discoverable usage<a class="headerlink" href="#m2m-discoverable-usage" title="Link to this heading">¶</a></h2>
+<section id="m2m-gui-discoverable-usage">
+<h2>M2M-GUI discoverable usage<a class="headerlink" href="#m2m-gui-discoverable-usage" title="Link to this heading">¶</a></h2>
 <ol class="arabic">
 <li><p>Attiviamo il servizio ed eseguiamo un programma client che ne fa il discovery prima di
 invocarne le operazioni HTTP-RESTful:
@@ -277,8 +269,8 @@ invocarne le operazioni HTTP-RESTful:
 </li>
 </ol>
 </section>
-<section id="m2m-connection-e-interaction">
-<h2>M2M: Connection e Interaction<a class="headerlink" href="#m2m-connection-e-interaction" title="Link to this heading">¶</a></h2>
+<section id="m2m-gui-connection-e-interaction">
+<h2>M2M-GUI: Connection e Interaction<a class="headerlink" href="#m2m-gui-connection-e-interaction" title="Link to this heading">¶</a></h2>
 <ol class="arabic">
 <li><p>Impostiamo qualche utility per la gestione delle richieste <code class="docutils literal notranslate"><span class="pre">HTTP</span></code> in <em>CommUtils.java</em> in modo da evitare
 la verbosità precedente.
@@ -307,8 +299,8 @@ Ad esempio (si veda <code class="docutils literal notranslate"><span class="pre"
 <li><p>Approfondiamo il concetto di <em>HttpConnection</em> e quello, più generale, di <strong>Interaction</strong></p></li>
 </ol>
 </section>
-<section id="m2m-su-raspberrypi">
-<h2>M2M su RaspberryPi<a class="headerlink" href="#m2m-su-raspberrypi" title="Link to this heading">¶</a></h2>
+<section id="m2m-gui-su-raspberrypi">
+<h2>M2M-GUI su RaspberryPi<a class="headerlink" href="#m2m-gui-su-raspberrypi" title="Link to this heading">¶</a></h2>
 <ol class="arabic">
 <li><p>Defnire i file:</p>
 <blockquote>
@@ -352,21 +344,20 @@ Ad esempio (si veda <code class="docutils literal notranslate"><span class="pre"
   <div>
     <h3><a href="index.html">Table of Contents</a></h3>
     <ul>
-<li><a class="reference internal" href="#">cargoserviceM2M</a><ul>
-<li><a class="reference internal" href="#m2m-start">M2M start</a></li>
-<li><a class="reference internal" href="#m2m-first-run">M2M first run</a></li>
-<li><a class="reference internal" href="#m2m-required-library">M2M required library</a></li>
-<li><a class="reference internal" href="#m2m-build-gradle">M2M build.gradle</a></li>
-<li><a class="reference internal" href="#m2m-application-and-run">M2M application and run</a></li>
-<li><a class="reference internal" href="#m2m-usage">M2M usage</a></li>
-<li><a class="reference internal" href="#m2m-logging">M2M logging</a></li>
-<li><a class="reference internal" href="#m2m-testing-local">M2M testing  local</a></li>
-<li><a class="reference internal" href="#m2m-testing-using-elk">M2M testing using ELK</a></li>
-<li><a class="reference internal" href="#m2m-on-docker">M2M on Docker</a></li>
-<li><a class="reference internal" href="#m2m-discoverable">M2M discoverable</a></li>
-<li><a class="reference internal" href="#m2m-discoverable-usage">M2M discoverable usage</a></li>
-<li><a class="reference internal" href="#m2m-connection-e-interaction">M2M: Connection e Interaction</a></li>
-<li><a class="reference internal" href="#m2m-su-raspberrypi">M2M su RaspberryPi</a></li>
+<li><a class="reference internal" href="#">cargoserviceM2MGui</a><ul>
+<li><a class="reference internal" href="#m2m-gui-start">M2M-GUI start</a></li>
+<li><a class="reference internal" href="#m2m-gui-first-run">M2M-GUI first run</a></li>
+<li><a class="reference internal" href="#m2m-gui-build-gradle">M2M-GUI build.gradle</a></li>
+<li><a class="reference internal" href="#m2m-gui-application-and-run">M2M-GUI application and run</a></li>
+<li><a class="reference internal" href="#m2m-gui-usage">M2M-GUI usage</a></li>
+<li><a class="reference internal" href="#m2m-gui-logging">M2M-GUI logging</a></li>
+<li><a class="reference internal" href="#m2m-gui-testing-local">M2M-GUI testing  local</a></li>
+<li><a class="reference internal" href="#m2m-gui-testing-using-elk">M2M-GUI testing using ELK</a></li>
+<li><a class="reference internal" href="#m2m-gui-on-docker">M2M-GUI on Docker</a></li>
+<li><a class="reference internal" href="#m2m-gui-discoverable">M2M-GUI discoverable</a></li>
+<li><a class="reference internal" href="#m2m-gui-discoverable-usage">M2M-GUI discoverable usage</a></li>
+<li><a class="reference internal" href="#m2m-gui-connection-e-interaction">M2M-GUI: Connection e Interaction</a></li>
+<li><a class="reference internal" href="#m2m-gui-su-raspberrypi">M2M-GUI su RaspberryPi</a></li>
 </ul>
 </li>
 </ul>
@@ -374,18 +365,18 @@ Ad esempio (si veda <code class="docutils literal notranslate"><span class="pre"
   </div>
   <div>
     <h4>Previous topic</h4>
-    <p class="topless"><a href="index.html"
-                          title="previous chapter">issLab2025</a></p>
+    <p class="topless"><a href="cargoserviceM2M.html"
+                          title="previous chapter">cargoserviceM2M</a></p>
   </div>
   <div>
     <h4>Next topic</h4>
-    <p class="topless"><a href="cargoserviceM2MGui.html"
-                          title="next chapter">cargoserviceM2MGui</a></p>
+    <p class="topless"><a href="Cargo24.html"
+                          title="next chapter">Cargo24</a></p>
   </div>
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
     <ul class="this-page-menu">
-      <li><a href="_sources/cargoserviceM2M.rst.txt"
+      <li><a href="_sources/cargoserviceM2MGui.rst.txt"
             rel="nofollow">Show Source</a></li>
     </ul>
    </div>
@@ -410,13 +401,13 @@ Ad esempio (si veda <code class="docutils literal notranslate"><span class="pre"
           <a href="genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="cargoserviceM2MGui.html" title="cargoserviceM2MGui"
+          <a href="Cargo24.html" title="Cargo24"
              >next</a> |</li>
         <li class="right" >
-          <a href="index.html" title="issLab2025"
+          <a href="cargoserviceM2M.html" title="cargoserviceM2M"
              >previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="index.html">issLab2025 1.0 documentation</a> &#187;</li>
-        <li class="nav-item nav-item-this"><a href="">cargoserviceM2M</a></li> 
+        <li class="nav-item nav-item-this"><a href="">cargoserviceM2MGui</a></li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
