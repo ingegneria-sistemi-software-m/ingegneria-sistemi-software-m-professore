@@ -309,6 +309,32 @@ M2M: Connection e Interaction
 
 #. Approfondiamo il concetto di *HttpConnection* e quello, più generale, di **Interaction**
 
+-------------------------------
+M2M ws
+-------------------------------
+
+#. Abilitazione delle WS in Spring; file 
+  ``src\main\java\unibo\disi\cargoserviceM2M\config\WebSocketConfiguration.java``:
+
+   .. code::
+
+    
+    @Configuration
+    @EnableWebSocket
+    public class WebSocketConfiguration implements WebSocketConfigurer {
+
+        public final String wsPath  = "wsupdates";
+        
+        @Override
+        public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
+            registry.addHandler(new WSServer(), wsPath).setAllowedOrigins("*");
+        }
+    }
+
+#. Abilitazione Cors
+
+
+
 
 -------------------------------
 M2M su RaspberryPi

@@ -15,5 +15,6 @@ issLab2025
    :maxdepth: 5 
    
    cargoserviceM2M
+   cargoserviceM2MGui
    Cargo24
 
