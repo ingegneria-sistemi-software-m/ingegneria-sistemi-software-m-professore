@@ -95,6 +95,16 @@ M2M build.gradle
     gradlew build
 
 -------------------------------
+M2M .gitignore
+-------------------------------
+
+Aggiungere 
+
+.. code::
+
+    .logs
+
+-------------------------------
 M2M application and run
 -------------------------------
 
