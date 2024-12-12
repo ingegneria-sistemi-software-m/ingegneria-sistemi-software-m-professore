@@ -367,3 +367,25 @@ M2M su RaspberryPi
 .. docker-compose -f docker-compose-M2mRasp.yml -p m2mservicerasp up (NON VA)
 
 #. Eseguire ``src\main\java\unibo\disi\cargoserviceM2M\callers\PSLDiscoverCallerInteraction.java``
+
+
+-------------------------------
+M2M con Netty
+-------------------------------
+
+SpringBoot (Tomcat), Jetty or Netty?
+
+Si veda: https://www.baeldung.com/netty
+
+.. code::
+
+    // https://mvnrepository.com/artifact/io.netty/netty-all
+    implementation group: 'io.netty', name: 'netty-all', version: '4.1.24.Final'
+    implementation group: 'io.netty', name: 'netty-all', version: '4.1.115.Final'
+
+    // https://mvnrepository.com/artifact/io.netty/netty-all
+    implementation group: 'io.netty', name: 'netty-all', version: '4.0.0.CR1'
+
+
+    --add-opens=java.base/java.nio.charset=ALL-UNNAMED
+
