@@ -331,8 +331,24 @@ Ad esempio (si veda <code class="docutils literal notranslate"><span class="pre"
 </div></blockquote>
 </div></blockquote>
 <ol class="arabic simple">
-<li><p>Abilitazione Cors</p></li>
+<li><p>Abilitazione <strong>Cross-Origin Resource Sharing</strong> (CORS): file</p></li>
 </ol>
+<blockquote>
+<div><p><code class="docutils literal notranslate"><span class="pre">src\main\java\unibo\disi\cargoserviceM2M\config\WebCorsConfig.java</span></code>:</p>
+<blockquote>
+<div><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nd">@Configuration</span>
+<span class="n">public</span> <span class="k">class</span> <span class="nc">CorsConfig</span> <span class="n">implements</span> <span class="n">WebMvcConfigurer</span> <span class="p">{</span>
+    <span class="nd">@Override</span>
+    <span class="n">public</span> <span class="n">void</span> <span class="n">addCorsMappings</span><span class="p">(</span><span class="n">CorsRegistry</span> <span class="n">registry</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">registry</span><span class="o">.</span><span class="n">addMapping</span><span class="p">(</span><span class="s2">&quot;/**&quot;</span><span class="p">)</span>
+        <span class="o">.</span><span class="n">allowedOrigins</span><span class="p">(</span><span class="s2">&quot;*&quot;</span><span class="p">)</span>
+        <span class="o">.</span><span class="n">allowedMethods</span><span class="p">(</span><span class="s2">&quot;GET&quot;</span><span class="p">,</span> <span class="s2">&quot;POST&quot;</span><span class="p">,</span> <span class="s2">&quot;PUT&quot;</span><span class="p">,</span> <span class="s2">&quot;DELETE&quot;</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div></blockquote>
+</div></blockquote>
 </section>
 <section id="m2m-su-raspberrypi">
 <h2>M2M su RaspberryPi<a class="headerlink" href="#m2m-su-raspberrypi" title="Link to this heading">¶</a></h2>

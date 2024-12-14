@@ -36,8 +36,22 @@ Nuova versione che prova coi colori Latex e con il ruolo 4
 #.  Che fa parte di un insieme più ampio di microservizi
 
 ----------------------------------
+Servizi e GUI
+----------------------------------
+
+  .. list-table::
+    :widths: 30,70
+    :width: 100%
+    
+    * - a
+      - 
+        b
+
+
+----------------------------------
 Il mcrsrv ProductService 
 ----------------------------------
+
 
 - **ProductService** è una applicazione software che viene distribuita mediante una immagine 
   docker memorizzata su DockerHub.
@@ -84,60 +98,10 @@ Usando le utility di :slide2:`unibo.basicomm23`, possiamo costruire e inviare un
            :width: 80%  
 
 
-.. code::
 
 
-    MESSAGE                                                             logger_name
-    -----------------------------------------------------------------   ----------------------------------
-    storagevolatile | STARTS	                                          storageram
 
-    Product | created 3:{"productId":0,"name":"wrong","weight":0}	      main.java.domain.Product
-
-    productservice | STARTS delegating createProduct to createexecutor	productservice_actor
-
-    Product | created json:{"productId":33,"name":"p33","weight":333}	  main.java.domain.Product
-
-    Product | created 3:{"productId":33,"name":"p33","weight":333}	    main.java.domain.Product
-
-    ProductServiceLogic | creatingProduct:{"productId":33,"name":"p33","weight":333}	
-                                                                        main.java.domain.ProductServiceLogic
-
-    StorageOnRam | get:33 : null	                                      StorageOnram
-
-    get 0 from 33	                                                       storageram
-
-    createexecutor | 
-    handling msg(createProduct,request,cargoservicecaller,productservice,product('{"productId":33,"name":"p33","weight":333}'),0)	
-                                                                        createexecutor_actor
-
-    exec_get1 | ANSWR='{"productId":33,"name":"p33","weight":333}'  	  exec_get_actor
-
-    StorageOnRam | put:33 N=1	                                          StorageOnram
-
-    put '{"productId":33,"name":"p33","weight":333}' in 33	            storageram
-
-    exec_get1 | handle_getProduct ID=33	                                exec_get_actor
-
-    StorageOnRam | get:33 : '{"productId":33,"name":"p33","weight":333}'	StorageOnram
-
-    ProductServiceLogic | createProduct:{"productId":33,"name":"p33","weight":333}	
-                                                                        main.java.domain.ProductServiceLogic
-
-    get '{"productId":33,"name":"p33","weight":333}' from 33	          storageram
-
-    Product | created 3:{"productId":33,"name":"p33","weight":333}	    main.java.domain.Product
-
-    Product | created json:{"productId":33,"name":"p33","weight":333}	  main.java.domain.Product
-
-    ProductServiceLogic | creatingProduct:{"productId":33,"name":"p33","weight":333}	main.java.domain.ProductServiceLogic
-
-    createexecutor | 
-      handling msg(createProduct,request,cargoservicecaller,productservice,product('{"productId":33,"name":"p33","weight":333}'),0)	
-                                                                        createexecutor_actor
-
-    StorageOnRam | get:33 : '{"productId":33,"name":"p33","weight":333}'	StorageOnram
-
-    exec_get2 | handle_getProduct ID=33	                                 exec_get_actor
+ 
 
 
 

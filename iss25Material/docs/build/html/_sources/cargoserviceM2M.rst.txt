@@ -321,7 +321,21 @@ M2M ws
         }
     }
 
-#. Abilitazione Cors
+#. Abilitazione **Cross-Origin Resource Sharing** (CORS): file 
+  ``src\main\java\unibo\disi\cargoserviceM2M\config\WebCorsConfig.java``:
+
+   .. code::
+
+    
+    @Configuration
+    public class CorsConfig implements WebMvcConfigurer {
+        @Override
+        public void addCorsMappings(CorsRegistry registry) {
+            registry.addMapping("/**")
+            .allowedOrigins("*")
+            .allowedMethods("GET", "POST", "PUT", "DELETE");
+        }
+    }
 
 
 

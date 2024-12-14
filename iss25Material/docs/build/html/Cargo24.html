@@ -13,7 +13,7 @@
     <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="prev" title="cargoserviceM2M" href="cargoserviceM2M.html" /> 
+    <link rel="prev" title="cargoserviceM2MGui" href="cargoserviceM2MGui.html" /> 
   </head><body>
     <div class="related" role="navigation" aria-label="Related">
       <h3>Navigation</h3>
@@ -22,7 +22,7 @@
           <a href="genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="cargoserviceM2M.html" title="cargoserviceM2M"
+          <a href="cargoserviceM2MGui.html" title="cargoserviceM2MGui"
              accesskey="P">previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="index.html">issLab2025 1.0 documentation</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">Cargo24</a></li> 
@@ -49,6 +49,22 @@
 <li><p>Deployed mediante Dockerfile e <code class="docutils literal notranslate"><span class="pre">docker-compose.yml</span></code></p></li>
 <li><p>Che fa parte di un insieme più ampio di microservizi</p></li>
 </ol>
+</section>
+<section id="servizi-e-gui">
+<h2>Servizi e GUI<a class="headerlink" href="#servizi-e-gui" title="Link to this heading">¶</a></h2>
+<blockquote>
+<div><table class="docutils align-default" style="width: 100%">
+<colgroup>
+<col style="width: 30.0%" />
+<col style="width: 70.0%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>a</p></td>
+<td><p>b</p></td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
 </section>
 <section id="il-mcrsrv-productservice">
 <h2>Il mcrsrv ProductService<a class="headerlink" href="#il-mcrsrv-productservice" title="Link to this heading">¶</a></h2>
@@ -88,59 +104,6 @@ TCP sempre verso la porta <code class="docutils literal notranslate"><span class
 <div><a class="reference internal image-reference" href="_images/ProductServiceLogic.JPG"><img alt="_images/ProductServiceLogic.JPG" class="align-center" src="_images/ProductServiceLogic.JPG" style="width: 80%;" />
 </a>
 </div></blockquote>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">MESSAGE</span>                                                             <span class="n">logger_name</span>
-<span class="o">-----------------------------------------------------------------</span>   <span class="o">----------------------------------</span>
-<span class="n">storagevolatile</span> <span class="o">|</span> <span class="n">STARTS</span>                                              <span class="n">storageram</span>
-
-<span class="n">Product</span> <span class="o">|</span> <span class="n">created</span> <span class="mi">3</span><span class="p">:{</span><span class="s2">&quot;productId&quot;</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span><span class="s2">&quot;name&quot;</span><span class="p">:</span><span class="s2">&quot;wrong&quot;</span><span class="p">,</span><span class="s2">&quot;weight&quot;</span><span class="p">:</span><span class="mi">0</span><span class="p">}</span>             <span class="n">main</span><span class="o">.</span><span class="n">java</span><span class="o">.</span><span class="n">domain</span><span class="o">.</span><span class="n">Product</span>
-
-<span class="n">productservice</span> <span class="o">|</span> <span class="n">STARTS</span> <span class="n">delegating</span> <span class="n">createProduct</span> <span class="n">to</span> <span class="n">createexecutor</span>  <span class="n">productservice_actor</span>
-
-<span class="n">Product</span> <span class="o">|</span> <span class="n">created</span> <span class="n">json</span><span class="p">:{</span><span class="s2">&quot;productId&quot;</span><span class="p">:</span><span class="mi">33</span><span class="p">,</span><span class="s2">&quot;name&quot;</span><span class="p">:</span><span class="s2">&quot;p33&quot;</span><span class="p">,</span><span class="s2">&quot;weight&quot;</span><span class="p">:</span><span class="mi">333</span><span class="p">}</span>     <span class="n">main</span><span class="o">.</span><span class="n">java</span><span class="o">.</span><span class="n">domain</span><span class="o">.</span><span class="n">Product</span>
-
-<span class="n">Product</span> <span class="o">|</span> <span class="n">created</span> <span class="mi">3</span><span class="p">:{</span><span class="s2">&quot;productId&quot;</span><span class="p">:</span><span class="mi">33</span><span class="p">,</span><span class="s2">&quot;name&quot;</span><span class="p">:</span><span class="s2">&quot;p33&quot;</span><span class="p">,</span><span class="s2">&quot;weight&quot;</span><span class="p">:</span><span class="mi">333</span><span class="p">}</span>          <span class="n">main</span><span class="o">.</span><span class="n">java</span><span class="o">.</span><span class="n">domain</span><span class="o">.</span><span class="n">Product</span>
-
-<span class="n">ProductServiceLogic</span> <span class="o">|</span> <span class="n">creatingProduct</span><span class="p">:{</span><span class="s2">&quot;productId&quot;</span><span class="p">:</span><span class="mi">33</span><span class="p">,</span><span class="s2">&quot;name&quot;</span><span class="p">:</span><span class="s2">&quot;p33&quot;</span><span class="p">,</span><span class="s2">&quot;weight&quot;</span><span class="p">:</span><span class="mi">333</span><span class="p">}</span>
-                                                                    <span class="n">main</span><span class="o">.</span><span class="n">java</span><span class="o">.</span><span class="n">domain</span><span class="o">.</span><span class="n">ProductServiceLogic</span>
-
-<span class="n">StorageOnRam</span> <span class="o">|</span> <span class="n">get</span><span class="p">:</span><span class="mi">33</span> <span class="p">:</span> <span class="n">null</span>                                              <span class="n">StorageOnram</span>
-
-<span class="n">get</span> <span class="mi">0</span> <span class="kn">from</span> <span class="mi">33</span>                                                              <span class="n">storageram</span>
-
-<span class="n">createexecutor</span> <span class="o">|</span>
-<span class="n">handling</span> <span class="n">msg</span><span class="p">(</span><span class="n">createProduct</span><span class="p">,</span><span class="n">request</span><span class="p">,</span><span class="n">cargoservicecaller</span><span class="p">,</span><span class="n">productservice</span><span class="p">,</span><span class="n">product</span><span class="p">(</span><span class="s1">&#39;{&quot;productId&quot;:33,&quot;name&quot;:&quot;p33&quot;,&quot;weight&quot;:333}&#39;</span><span class="p">),</span><span class="mi">0</span><span class="p">)</span>
-                                                                    <span class="n">createexecutor_actor</span>
-
-<span class="n">exec_get1</span> <span class="o">|</span> <span class="n">ANSWR</span><span class="o">=</span><span class="s1">&#39;{&quot;productId&quot;:33,&quot;name&quot;:&quot;p33&quot;,&quot;weight&quot;:333}&#39;</span>        <span class="n">exec_get_actor</span>
-
-<span class="n">StorageOnRam</span> <span class="o">|</span> <span class="n">put</span><span class="p">:</span><span class="mi">33</span> <span class="n">N</span><span class="o">=</span><span class="mi">1</span>                                             <span class="n">StorageOnram</span>
-
-<span class="n">put</span> <span class="s1">&#39;{&quot;productId&quot;:33,&quot;name&quot;:&quot;p33&quot;,&quot;weight&quot;:333}&#39;</span> <span class="ow">in</span> <span class="mi">33</span>                  <span class="n">storageram</span>
-
-<span class="n">exec_get1</span> <span class="o">|</span> <span class="n">handle_getProduct</span> <span class="n">ID</span><span class="o">=</span><span class="mi">33</span>                                 <span class="n">exec_get_actor</span>
-
-<span class="n">StorageOnRam</span> <span class="o">|</span> <span class="n">get</span><span class="p">:</span><span class="mi">33</span> <span class="p">:</span> <span class="s1">&#39;{&quot;productId&quot;:33,&quot;name&quot;:&quot;p33&quot;,&quot;weight&quot;:333}&#39;</span>        <span class="n">StorageOnram</span>
-
-<span class="n">ProductServiceLogic</span> <span class="o">|</span> <span class="n">createProduct</span><span class="p">:{</span><span class="s2">&quot;productId&quot;</span><span class="p">:</span><span class="mi">33</span><span class="p">,</span><span class="s2">&quot;name&quot;</span><span class="p">:</span><span class="s2">&quot;p33&quot;</span><span class="p">,</span><span class="s2">&quot;weight&quot;</span><span class="p">:</span><span class="mi">333</span><span class="p">}</span>
-                                                                    <span class="n">main</span><span class="o">.</span><span class="n">java</span><span class="o">.</span><span class="n">domain</span><span class="o">.</span><span class="n">ProductServiceLogic</span>
-
-<span class="n">get</span> <span class="s1">&#39;{&quot;productId&quot;:33,&quot;name&quot;:&quot;p33&quot;,&quot;weight&quot;:333}&#39;</span> <span class="kn">from</span> <span class="mi">33</span>              <span class="n">storageram</span>
-
-<span class="n">Product</span> <span class="o">|</span> <span class="n">created</span> <span class="mi">3</span><span class="p">:{</span><span class="s2">&quot;productId&quot;</span><span class="p">:</span><span class="mi">33</span><span class="p">,</span><span class="s2">&quot;name&quot;</span><span class="p">:</span><span class="s2">&quot;p33&quot;</span><span class="p">,</span><span class="s2">&quot;weight&quot;</span><span class="p">:</span><span class="mi">333</span><span class="p">}</span>          <span class="n">main</span><span class="o">.</span><span class="n">java</span><span class="o">.</span><span class="n">domain</span><span class="o">.</span><span class="n">Product</span>
-
-<span class="n">Product</span> <span class="o">|</span> <span class="n">created</span> <span class="n">json</span><span class="p">:{</span><span class="s2">&quot;productId&quot;</span><span class="p">:</span><span class="mi">33</span><span class="p">,</span><span class="s2">&quot;name&quot;</span><span class="p">:</span><span class="s2">&quot;p33&quot;</span><span class="p">,</span><span class="s2">&quot;weight&quot;</span><span class="p">:</span><span class="mi">333</span><span class="p">}</span>     <span class="n">main</span><span class="o">.</span><span class="n">java</span><span class="o">.</span><span class="n">domain</span><span class="o">.</span><span class="n">Product</span>
-
-<span class="n">ProductServiceLogic</span> <span class="o">|</span> <span class="n">creatingProduct</span><span class="p">:{</span><span class="s2">&quot;productId&quot;</span><span class="p">:</span><span class="mi">33</span><span class="p">,</span><span class="s2">&quot;name&quot;</span><span class="p">:</span><span class="s2">&quot;p33&quot;</span><span class="p">,</span><span class="s2">&quot;weight&quot;</span><span class="p">:</span><span class="mi">333</span><span class="p">}</span>    <span class="n">main</span><span class="o">.</span><span class="n">java</span><span class="o">.</span><span class="n">domain</span><span class="o">.</span><span class="n">ProductServiceLogic</span>
-
-<span class="n">createexecutor</span> <span class="o">|</span>
-  <span class="n">handling</span> <span class="n">msg</span><span class="p">(</span><span class="n">createProduct</span><span class="p">,</span><span class="n">request</span><span class="p">,</span><span class="n">cargoservicecaller</span><span class="p">,</span><span class="n">productservice</span><span class="p">,</span><span class="n">product</span><span class="p">(</span><span class="s1">&#39;{&quot;productId&quot;:33,&quot;name&quot;:&quot;p33&quot;,&quot;weight&quot;:333}&#39;</span><span class="p">),</span><span class="mi">0</span><span class="p">)</span>
-                                                                    <span class="n">createexecutor_actor</span>
-
-<span class="n">StorageOnRam</span> <span class="o">|</span> <span class="n">get</span><span class="p">:</span><span class="mi">33</span> <span class="p">:</span> <span class="s1">&#39;{&quot;productId&quot;:33,&quot;name&quot;:&quot;p33&quot;,&quot;weight&quot;:333}&#39;</span>        <span class="n">StorageOnram</span>
-
-<span class="n">exec_get2</span> <span class="o">|</span> <span class="n">handle_getProduct</span> <span class="n">ID</span><span class="o">=</span><span class="mi">33</span>                                  <span class="n">exec_get_actor</span>
-</pre></div>
-</div>
 </section>
 </section>
 
@@ -156,6 +119,7 @@ TCP sempre verso la porta <code class="docutils literal notranslate"><span class
     <ul>
 <li><a class="reference internal" href="#">Cargo24</a><ul>
 <li><a class="reference internal" href="#c-didattica2024qak24cargo">C:Didattica2024qak24cargo:</a></li>
+<li><a class="reference internal" href="#servizi-e-gui">Servizi e GUI</a></li>
 <li><a class="reference internal" href="#il-mcrsrv-productservice">Il mcrsrv ProductService</a></li>
 </ul>
 </li>
@@ -164,8 +128,8 @@ TCP sempre verso la porta <code class="docutils literal notranslate"><span class
   </div>
   <div>
     <h4>Previous topic</h4>
-    <p class="topless"><a href="cargoserviceM2M.html"
-                          title="previous chapter">cargoserviceM2M</a></p>
+    <p class="topless"><a href="cargoserviceM2MGui.html"
+                          title="previous chapter">cargoserviceM2MGui</a></p>
   </div>
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
@@ -195,7 +159,7 @@ TCP sempre verso la porta <code class="docutils literal notranslate"><span class
           <a href="genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="cargoserviceM2M.html" title="cargoserviceM2M"
+          <a href="cargoserviceM2MGui.html" title="cargoserviceM2MGui"
              >previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="index.html">issLab2025 1.0 documentation</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">Cargo24</a></li> 
