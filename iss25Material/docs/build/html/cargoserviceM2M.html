@@ -117,6 +117,13 @@
 </pre></div>
 </div>
 </section>
+<section id="m2m-gitignore">
+<h2>M2M .gitignore<a class="headerlink" href="#m2m-gitignore" title="Link to this heading">¶</a></h2>
+<p>Aggiungere</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">.</span><span class="n">logs</span>
+</pre></div>
+</div>
+</section>
 <section id="m2m-application-and-run">
 <h2>M2M application and run<a class="headerlink" href="#m2m-application-and-run" title="Link to this heading">¶</a></h2>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">new</span> <span class="n">package</span> <span class="n">src</span>\<span class="n">main</span>\<span class="n">java</span>\<span class="n">unibo</span>\<span class="n">disi</span>\<span class="n">cargoserviceM2M</span>\<span class="n">controller</span>
@@ -383,6 +390,22 @@ Ad esempio (si veda <code class="docutils literal notranslate"><span class="pre"
 <li><p>Eseguire <code class="docutils literal notranslate"><span class="pre">src\main\java\unibo\disi\cargoserviceM2M\callers\PSLDiscoverCallerInteraction.java</span></code></p></li>
 </ol>
 </section>
+<section id="m2m-con-netty">
+<h2>M2M con Netty<a class="headerlink" href="#m2m-con-netty" title="Link to this heading">¶</a></h2>
+<p>SpringBoot (Tomcat), Jetty or Netty?</p>
+<p>Si veda: <a class="reference external" href="https://www.baeldung.com/netty">https://www.baeldung.com/netty</a></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">//</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">mvnrepository</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">artifact</span><span class="o">/</span><span class="n">io</span><span class="o">.</span><span class="n">netty</span><span class="o">/</span><span class="n">netty</span><span class="o">-</span><span class="nb">all</span>
+<span class="n">implementation</span> <span class="n">group</span><span class="p">:</span> <span class="s1">&#39;io.netty&#39;</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="s1">&#39;netty-all&#39;</span><span class="p">,</span> <span class="n">version</span><span class="p">:</span> <span class="s1">&#39;4.1.24.Final&#39;</span>
+<span class="n">implementation</span> <span class="n">group</span><span class="p">:</span> <span class="s1">&#39;io.netty&#39;</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="s1">&#39;netty-all&#39;</span><span class="p">,</span> <span class="n">version</span><span class="p">:</span> <span class="s1">&#39;4.1.115.Final&#39;</span>
+
+<span class="o">//</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">mvnrepository</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">artifact</span><span class="o">/</span><span class="n">io</span><span class="o">.</span><span class="n">netty</span><span class="o">/</span><span class="n">netty</span><span class="o">-</span><span class="nb">all</span>
+<span class="n">implementation</span> <span class="n">group</span><span class="p">:</span> <span class="s1">&#39;io.netty&#39;</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="s1">&#39;netty-all&#39;</span><span class="p">,</span> <span class="n">version</span><span class="p">:</span> <span class="s1">&#39;4.0.0.CR1&#39;</span>
+
+
+<span class="o">--</span><span class="n">add</span><span class="o">-</span><span class="n">opens</span><span class="o">=</span><span class="n">java</span><span class="o">.</span><span class="n">base</span><span class="o">/</span><span class="n">java</span><span class="o">.</span><span class="n">nio</span><span class="o">.</span><span class="n">charset</span><span class="o">=</span><span class="n">ALL</span><span class="o">-</span><span class="n">UNNAMED</span>
+</pre></div>
+</div>
+</section>
 </section>
 
 
@@ -400,6 +423,7 @@ Ad esempio (si veda <code class="docutils literal notranslate"><span class="pre"
 <li><a class="reference internal" href="#m2m-first-run">M2M first run</a></li>
 <li><a class="reference internal" href="#m2m-required-library">M2M required library</a></li>
 <li><a class="reference internal" href="#m2m-build-gradle">M2M build.gradle</a></li>
+<li><a class="reference internal" href="#m2m-gitignore">M2M .gitignore</a></li>
 <li><a class="reference internal" href="#m2m-application-and-run">M2M application and run</a></li>
 <li><a class="reference internal" href="#m2m-usage">M2M usage</a></li>
 <li><a class="reference internal" href="#m2m-logging">M2M logging</a></li>
@@ -411,6 +435,7 @@ Ad esempio (si veda <code class="docutils literal notranslate"><span class="pre"
 <li><a class="reference internal" href="#m2m-connection-e-interaction">M2M: Connection e Interaction</a></li>
 <li><a class="reference internal" href="#m2m-ws">M2M ws</a></li>
 <li><a class="reference internal" href="#m2m-su-raspberrypi">M2M su RaspberryPi</a></li>
+<li><a class="reference internal" href="#m2m-con-netty">M2M con Netty</a></li>
 </ul>
 </li>
 </ul>

@@ -59,8 +59,31 @@
 <col style="width: 70.0%" />
 </colgroup>
 <tbody>
-<tr class="row-odd"><td><p>a</p></td>
-<td><p>b</p></td>
+<tr class="row-odd"><td><p>cargoproduct</p></td>
+<td><p>POJO - Use StorageVolatile local</p>
+<p><em>caller</em>: ProductServiceCaller in Cargo25</p>
+</td>
+</tr>
+<tr class="row-even"><td><p>cargoserviceM2M</p></td>
+<td><p>Spring RestController on 9111 - Register as M2MPRODUCTSERVICE</p>
+<p><em>callers</em>: PSLCallerHTTP, PSLDiscoverCallerInteraction, PSDiscoverCallerHttp,</p>
+</td>
+</tr>
+<tr class="row-odd"><td><p>cargoserviceM2MGui</p></td>
+<td><p>Spring Controller on 9110 - Interacts WS with cargoserviceM2M discovered</p></td>
+</tr>
+<tr class="row-even"><td><p>cargoservice</p></td>
+<td><p>qak on 8111 - Register as PRODUCTSERVICE</p>
+<p>Use StorageVolatile in local / Mongo in Docker</p>
+<p><em>callers</em>: ProductServiceCallerJsonTcp, ProductServiceCallerCoap,
+ProductServiceCallerMqtt, ProductServiceDiscoverCallerTcp</p>
+</td>
+</tr>
+<tr class="row-odd"><td><p>cargoserviceQakGUI</p></td>
+<td><p>Spring RestController on 8075  - Interacts TCP with cargoservice remote</p></td>
+</tr>
+<tr class="row-even"><td><p>cargoserviceM2MQakLocal</p></td>
+<td><p>Spring RestController - Activates qak. Interacts local with guiworker</p></td>
 </tr>
 </tbody>
 </table>

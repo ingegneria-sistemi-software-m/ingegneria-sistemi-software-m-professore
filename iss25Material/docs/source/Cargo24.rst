@@ -43,9 +43,33 @@ Servizi e GUI
     :widths: 30,70
     :width: 100%
     
-    * - a
+    * - cargoproduct
       - 
-        b
+        POJO - Use StorageVolatile local 
+
+        *caller*: ProductServiceCaller in Cargo25
+    * - cargoserviceM2M
+      - 
+        Spring RestController on 9111 - Register as M2MPRODUCTSERVICE
+
+        *callers*: PSLCallerHTTP, PSLDiscoverCallerInteraction, PSDiscoverCallerHttp, 
+    * - cargoserviceM2MGui
+      - 
+        Spring Controller on 9110 - Interacts WS with cargoserviceM2M discovered
+    * - cargoservice
+      - 
+        qak on 8111 - Register as PRODUCTSERVICE 
+        
+        Use StorageVolatile in local / Mongo in Docker
+
+        *callers*: ProductServiceCallerJsonTcp, ProductServiceCallerCoap, 
+        ProductServiceCallerMqtt, ProductServiceDiscoverCallerTcp
+    * - cargoserviceQakGUI
+      - 
+        Spring RestController on 8075  - Interacts TCP with cargoservice remote
+    * - cargoserviceM2MQakLocal
+      - 
+        Spring RestController - Activates qak. Interacts local with guiworker 
 
 
 ----------------------------------
