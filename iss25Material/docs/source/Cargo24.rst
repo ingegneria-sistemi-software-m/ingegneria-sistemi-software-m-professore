@@ -52,7 +52,7 @@ Servizi e GUI
       - 
         Spring RestController on 9111 - Register as M2MPRODUCTSERVICE
 
-        *callers*: PSLCallerHTTP, PSLDiscoverCallerInteraction, PSDiscoverCallerHttp, 
+        *callers*: PSLCallerHTTP, PSLDiscoverCallerInteraction, PSLDiscoverCallerHttp, 
     * - cargoserviceM2MGui
       - 
         Spring Controller on 9110 - Interacts WS with cargoserviceM2M discovered
@@ -71,6 +71,42 @@ Servizi e GUI
       - 
         Spring RestController - Activates qak. Interacts local with guiworker 
 
+
+
+-----------------------------------------
+PSLCallerHTTP
+-----------------------------------------
+
+- Ho una applicazione Java APP e un servizio S che accetta messaggi via HTTP. 
+  APP attiva un thread T che chiama una funzione makeCall, la quale attiva una java.net.HttpURLConnection  
+  con S per invia un messaggio M1 e attende (quindi all'interno di T) la risposta sulla connessione 
+  (che richiede 4sec). Subito dopo avere attivato T, 
+  la applicazione APP invoca di nuovo makeCall per inviare a S un messaggio M2, 
+  cui il server risponde in 2sec. 
+  E' possibile che la prima invocazione di makeCall riceva la risposta relativa a M2?
+
+
+
+E' possibile che la prima invocazione di makeCall riceva la risposta relativa a M2. 
+Questo scenario è un classico esempio di race condition in programmazione concorrente.
+
+Perché può accadere?
+- Ordine non garantito delle risposte: Quando si effettuano chiamate HTTP, non c'è alcuna garanzia che le risposte arrivino nello stesso ordine in cui sono state inviate le richieste. Il tempo di risposta può variare a causa di diversi fattori come la latenza di rete, il carico del server, ecc.
+- Condivisione della connessione: Se le due invocazioni di makeCall condividono la stessa connessione HTTP (o la stessa pool di connessioni), è possibile che le risposte vengano confuse.
+- Problemi di sincronizzazione: Se non viene utilizzata una corretta sincronizzazione tra il thread T e il codice che gestisce le risposte, è possibile che una risposta venga associata alla richiesta sbagliata.
+
+Come prevenire questo problema?
+- Identificatori univoci per le richieste: Assegna un ID univoco a ciascuna richiesta e 
+  includi questo ID nel messaggio inviato al server. Il server può quindi includere l'ID nella risposta, 
+  permettendo al client di correlare correttamente le richieste e le risposte.
+- Gestione asincrona delle richieste: Utilizza un meccanismo asincrono per gestire le richieste HTTP, 
+  come le future o le promesse. In questo modo, puoi associare una callback a ciascuna richiesta e ricevere 
+  la risposta corretta quando arriva.
+- Utilizzo di una libreria HTTP client apposita: Librerie come Apache HttpClient o OkHttp offrono 
+  funzionalità avanzate per la gestione delle richieste HTTP, come la gestione delle connessioni, 
+  la gestione degli errori e la gestione delle risposte asincronamente.
+- Sincronizzazione corretta: Se si utilizzano meccanismi di sincronizzazione, 
+  assicurarsi che siano corretti e non introducano deadlock o altre problematiche.
 
 ----------------------------------
 Il mcrsrv ProductService 
