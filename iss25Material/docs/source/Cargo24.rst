@@ -67,6 +67,8 @@ Servizi e GUI
     * - cargoserviceQakGUI
       - 
         Spring RestController on 8075  - Interacts TCP with cargoservice remote
+
+        *callers*: PSLCallerHTTP,
     * - cargoserviceM2MQakLocal
       - 
         Spring RestController - Activates qak. Interacts local with guiworker 
