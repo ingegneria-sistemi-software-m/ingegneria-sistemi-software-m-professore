@@ -35,7 +35,25 @@ Servizi e GUI
 Si veda `Cargo Overview`_.   
 
 
+.. :guilabel:`Cargo Overview`
 
+.. sidebar:: Un primo sistema 
+  
+   .. figure:: ./_static/img/m2m/cargoserviceM2MAndGui.jpg
+      :alt: Un sistema
+      :width: 200px
+
+
+
+.. .. sidebar:: Sample Sidebar
+
+.. .. sidebar:: Una sidebar per la sezione 1
+
+..   Questa sidebar contiene informazioni aggiuntive sulla sezione 1.
+
+----------------------------------
+goon
+----------------------------------
 
   .. list-table::
     :widths: 30,70
