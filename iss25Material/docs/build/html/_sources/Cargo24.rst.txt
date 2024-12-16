@@ -1,7 +1,3 @@
-================================
-Cargo24
-================================
-
 .. role:: red
 .. role:: blue
 .. role:: silde2
@@ -16,35 +12,41 @@ Cargo24
 .. role:: slide3
 .. role:: slidekp
 .. role:: worktodo 
-   
 
- 
 
-----------------------------------
-C:\Didattica2024\qak24\cargo:
-----------------------------------
+.. _ovrw: file:///C:/Didattica2025/mcrsv24/cargo2025/userDocs/cargoOverview.html
+.. _pojo: file:///C:/Didattica2025/mcrsv24/cargo2025/userDocs/cargoOverview.html#pojo
+.. _actor0: file:///C:/Didattica2025/mcrsv24/cargo2025/userDocs/cargoHistory.html#actor0
 
-Nuova versione che prova coi colori Latex e con il ruolo 4
 
-#.  Microservizio di memorizzazione prodotti:  
-#.  Come actor attorno a un POJO ``ProductServiceLogic``
-#.  ``ProductServiceLogic`` usa ``AdapterStorage`` per realizzare persistenza in memoria 
-    (``AdapterStorageList``) oppure su MongoDB (``AdapterStorageMongo``)
-#.  Che usa logback.xml, elasticseacrh e logstash attivati usando ``docker-compose-EFKOnly.yml`` 
-#.  Che si avvale di ``ProductServiceCallerCoap`` come client
-#.  Deployed mediante Dockerfile e ``docker-compose.yml``
-#.  Che fa parte di un insieme più ampio di microservizi
+.. _REST: https://en.wikipedia.org/wiki/Representational_state_transfer
+.. _UniboPlanner: ../../../../../it.unibo.planner20/userDocs/LabPlanner.html
+
+.. _SonarAndLed: ../../../../it.unibo.raspIntro2024/code/python/SonarAndLed.py   
+
+
+================================
+Cargo24
+================================
+
 
 ----------------------------------
 Servizi e GUI
 ----------------------------------
+
+Si veda `ovrw`_.
+
+
+
 
   .. list-table::
     :widths: 30,70
     :width: 100%
     
     * - cargoproduct
-       
+
+        Si veda `pojo`_
+
         .. image::  ./_static/img/Cargo/ProductServiceLogic.JPG
            :align: center 
            :width: 100%  
@@ -67,6 +69,8 @@ Servizi e GUI
         Spring Controller on 9110 - Interacts WS with cargoserviceM2M discovered
     * - cargoservice 
 
+        Si veda `actor0`_
+
         .. image::  ./_static/img/Cargo/ProductService.JPG
            :align: center 
            :width: 100%  
@@ -88,6 +92,22 @@ Servizi e GUI
         Spring RestController - Activates qak. Interacts local with guiworker 
 
 
+ 
+
+----------------------------------
+C:\Didattica2024\qak24\cargo:
+----------------------------------
+
+Nuova versione che prova coi colori Latex e con il ruolo 4
+
+#.  Microservizio di memorizzazione prodotti:  
+#.  Come actor attorno a un POJO ``ProductServiceLogic``
+#.  ``ProductServiceLogic`` usa ``AdapterStorage`` per realizzare persistenza in memoria 
+    (``AdapterStorageList``) oppure su MongoDB (``AdapterStorageMongo``)
+#.  Che usa logback.xml, elasticseacrh e logstash attivati usando ``docker-compose-EFKOnly.yml`` 
+#.  Che si avvale di ``ProductServiceCallerCoap`` come client
+#.  Deployed mediante Dockerfile e ``docker-compose.yml``
+#.  Che fa parte di un insieme più ampio di microservizi
 
 -----------------------------------------
 PSLCallerHTTP

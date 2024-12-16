@@ -2,13 +2,17 @@
 cargoserviceM2M
 ===================================
 
+.. _ovrW: file:///C:/Didattica2024/qak24/iss24Material/docs/_build/html/SpringBootIntro.html?highlight=spring
+.. _REST: https://en.wikipedia.org/wiki/Representational_state_transfer
+.. _UniboPlanner: ../../../../../it.unibo.planner20/userDocs/LabPlanner.html
+
 
 
 -------------------------------
 M2M start
 -------------------------------
 
-#. Si veda: file:///C:/Didattica2024/qak24/iss24Material/docs/_build/html/SpringBootIntro.html?highlight=spring
+
 #. Eseguire https://spring.io/
 
         .. image::  ./_static/img/M2M/springiostart.png

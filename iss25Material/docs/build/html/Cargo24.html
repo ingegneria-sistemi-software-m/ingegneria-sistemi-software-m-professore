@@ -39,22 +39,9 @@
             
   <section id="cargo24">
 <h1>Cargo24<a class="headerlink" href="#cargo24" title="Permalink to this heading">¶</a></h1>
-<section id="c-didattica2024qak24cargo">
-<h2>C:Didattica2024qak24cargo:<a class="headerlink" href="#c-didattica2024qak24cargo" title="Permalink to this heading">¶</a></h2>
-<p>Nuova versione che prova coi colori Latex e con il ruolo 4</p>
-<ol class="arabic simple">
-<li><p>Microservizio di memorizzazione prodotti:</p></li>
-<li><p>Come actor attorno a un POJO <code class="docutils literal notranslate"><span class="pre">ProductServiceLogic</span></code></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">ProductServiceLogic</span></code> usa <code class="docutils literal notranslate"><span class="pre">AdapterStorage</span></code> per realizzare persistenza in memoria
-(<code class="docutils literal notranslate"><span class="pre">AdapterStorageList</span></code>) oppure su MongoDB (<code class="docutils literal notranslate"><span class="pre">AdapterStorageMongo</span></code>)</p></li>
-<li><p>Che usa logback.xml, elasticseacrh e logstash attivati usando <code class="docutils literal notranslate"><span class="pre">docker-compose-EFKOnly.yml</span></code></p></li>
-<li><p>Che si avvale di <code class="docutils literal notranslate"><span class="pre">ProductServiceCallerCoap</span></code> come client</p></li>
-<li><p>Deployed mediante Dockerfile e <code class="docutils literal notranslate"><span class="pre">docker-compose.yml</span></code></p></li>
-<li><p>Che fa parte di un insieme più ampio di microservizi</p></li>
-</ol>
-</section>
 <section id="servizi-e-gui">
 <h2>Servizi e GUI<a class="headerlink" href="#servizi-e-gui" title="Permalink to this heading">¶</a></h2>
+<p>Si veda <a class="reference external" href="file:///C:/Didattica2025/mcrsv24/cargo2025/userDocs/cargoOverview.html">ovrw</a>.</p>
 <blockquote>
 <div><table class="docutils align-default" style="width: 100%">
 <colgroup>
@@ -63,6 +50,7 @@
 </colgroup>
 <tbody>
 <tr class="row-odd"><td><p>cargoproduct</p>
+<p>Si veda <a class="reference external" href="file:///C:/Didattica2025/mcrsv24/cargo2025/userDocs/cargoOverview.html#pojo">pojo</a></p>
 <a class="reference internal image-reference" href="_images/ProductServiceLogic.JPG"><img alt="_images/ProductServiceLogic.JPG" class="align-center" src="_images/ProductServiceLogic.JPG" style="width: 100%;" /></a>
 </td>
 <td><p>POJO - Use StorageVolatile local</p>
@@ -80,6 +68,7 @@
 <td><p>Spring Controller on 9110 - Interacts WS with cargoserviceM2M discovered</p></td>
 </tr>
 <tr class="row-even"><td><p>cargoservice</p>
+<p>Si veda <a class="reference external" href="file:///C:/Didattica2025/mcrsv24/cargo2025/userDocs/cargoHistory.html#actor0">actor0</a></p>
 <a class="reference internal image-reference" href="_images/ProductService.JPG"><img alt="_images/ProductService.JPG" class="align-center" src="_images/ProductService.JPG" style="width: 100%;" /></a>
 </td>
 <td><p>qak on 8111 - Register as PRODUCTSERVICE</p>
@@ -99,6 +88,20 @@ ProductServiceCallerMqtt, ProductServiceDiscoverCallerTcp</p>
 </tbody>
 </table>
 </div></blockquote>
+</section>
+<section id="c-didattica2024qak24cargo">
+<h2>C:Didattica2024qak24cargo:<a class="headerlink" href="#c-didattica2024qak24cargo" title="Permalink to this heading">¶</a></h2>
+<p>Nuova versione che prova coi colori Latex e con il ruolo 4</p>
+<ol class="arabic simple">
+<li><p>Microservizio di memorizzazione prodotti:</p></li>
+<li><p>Come actor attorno a un POJO <code class="docutils literal notranslate"><span class="pre">ProductServiceLogic</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ProductServiceLogic</span></code> usa <code class="docutils literal notranslate"><span class="pre">AdapterStorage</span></code> per realizzare persistenza in memoria
+(<code class="docutils literal notranslate"><span class="pre">AdapterStorageList</span></code>) oppure su MongoDB (<code class="docutils literal notranslate"><span class="pre">AdapterStorageMongo</span></code>)</p></li>
+<li><p>Che usa logback.xml, elasticseacrh e logstash attivati usando <code class="docutils literal notranslate"><span class="pre">docker-compose-EFKOnly.yml</span></code></p></li>
+<li><p>Che si avvale di <code class="docutils literal notranslate"><span class="pre">ProductServiceCallerCoap</span></code> come client</p></li>
+<li><p>Deployed mediante Dockerfile e <code class="docutils literal notranslate"><span class="pre">docker-compose.yml</span></code></p></li>
+<li><p>Che fa parte di un insieme più ampio di microservizi</p></li>
+</ol>
 </section>
 <section id="pslcallerhttp">
 <h2>PSLCallerHTTP<a class="headerlink" href="#pslcallerhttp" title="Permalink to this heading">¶</a></h2>
@@ -180,8 +183,8 @@ TCP sempre verso la porta <code class="docutils literal notranslate"><span class
     <h3><a href="index.html">Table of Contents</a></h3>
     <ul>
 <li><a class="reference internal" href="#">Cargo24</a><ul>
-<li><a class="reference internal" href="#c-didattica2024qak24cargo">C:Didattica2024qak24cargo:</a></li>
 <li><a class="reference internal" href="#servizi-e-gui">Servizi e GUI</a></li>
+<li><a class="reference internal" href="#c-didattica2024qak24cargo">C:Didattica2024qak24cargo:</a></li>
 <li><a class="reference internal" href="#pslcallerhttp">PSLCallerHTTP</a></li>
 <li><a class="reference internal" href="#il-mcrsrv-productservice">Il mcrsrv ProductService</a></li>
 </ul>
