@@ -44,11 +44,20 @@ Servizi e GUI
     :width: 100%
     
     * - cargoproduct
+       
+        .. image::  ./_static/img/Cargo/ProductServiceLogic.JPG
+           :align: center 
+           :width: 100%  
       - 
         POJO - Use StorageVolatile local 
 
         *caller*: ProductServiceCaller in Cargo25
-    * - cargoserviceM2M
+    * - cargoserviceM2M   
+
+        .. image::  ./_static/img/Cargo/cargoserviceSpring.JPG
+           :align: center 
+           :width: 100%  
+
       - 
         Spring RestController on 9111 - Register as M2MPRODUCTSERVICE
 
@@ -56,7 +65,12 @@ Servizi e GUI
     * - cargoserviceM2MGui
       - 
         Spring Controller on 9110 - Interacts WS with cargoserviceM2M discovered
-    * - cargoservice
+    * - cargoservice 
+
+        .. image::  ./_static/img/Cargo/ProductService.JPG
+           :align: center 
+           :width: 100%  
+
       - 
         qak on 8111 - Register as PRODUCTSERVICE 
         
@@ -98,7 +112,8 @@ Perché può accadere?
 - Problemi di sincronizzazione: Se non viene utilizzata una corretta sincronizzazione tra il thread T e il codice che gestisce le risposte, è possibile che una risposta venga associata alla richiesta sbagliata.
 
 Come prevenire questo problema?
-- Identificatori univoci per le richieste: Assegna un ID univoco a ciascuna richiesta e 
+
+- Identificatori univoci per le richieste: Assegna un ID univoco a ciascuna richiesta e
   includi questo ID nel messaggio inviato al server. Il server può quindi includere l'ID nella risposta, 
   permettendo al client di correlare correttamente le richieste e le risposte.
 - Gestione asincrona delle richieste: Utilizza un meccanismo asincrono per gestire le richieste HTTP, 
@@ -155,9 +170,7 @@ Usando le utility di :slide2:`unibo.basicomm23`, possiamo costruire e inviare un
 .. _Cargo logback.xml: ../../../../../qak24/cargo/src/main/resources/logback.xml
 
 
-        .. image::  ./_static/img/Cargo/ProductServiceLogic.JPG
-           :align: center 
-           :width: 80%  
+
 
 
 

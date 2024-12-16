@@ -98,7 +98,7 @@ M2M build.gradle
 M2M .gitignore
 -------------------------------
 
-Aggiungere 
+Aggiungere
 
 .. code::
 
@@ -314,15 +314,13 @@ M2M ws
 -------------------------------
 
 #. Abilitazione delle WS in Spring; file 
-  ``src\main\java\unibo\disi\cargoserviceM2M\config\WebSocketConfiguration.java``:
+   ``src\main\java\unibo\disi\cargoserviceM2M\config\WebSocketConfiguration.java``:
 
    .. code::
-
     
     @Configuration
     @EnableWebSocket
     public class WebSocketConfiguration implements WebSocketConfigurer {
-
         public final String wsPath  = "wsupdates";
         
         @Override
@@ -332,7 +330,7 @@ M2M ws
     }
 
 #. Abilitazione **Cross-Origin Resource Sharing** (CORS): file 
-  ``src\main\java\unibo\disi\cargoserviceM2M\config\WebCorsConfig.java``:
+   ``src\main\java\unibo\disi\cargoserviceM2M\config\WebCorsConfig.java``:
 
    .. code::
 
