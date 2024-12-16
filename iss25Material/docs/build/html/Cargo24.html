@@ -8,6 +8,7 @@
     <title>Cargo24 &#8212; issLab2025 1.0 documentation</title>
     <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=649a27d8" />
     <link rel="stylesheet" type="text/css" href="_static/sphinxdoc.css?v=34905f61" />
+    <link rel="stylesheet" type="text/css" href="_static/custom.css?v=dba5b3c8" />
     <script src="_static/documentation_options.js?v=f2a433a1"></script>
     <script src="_static/doctools.js?v=9bcbadda"></script>
     <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
@@ -38,26 +39,14 @@
 <h1>Cargo24<a class="headerlink" href="#cargo24" title="Link to this heading">¶</a></h1>
 <section id="servizi-e-gui">
 <h2>Servizi e GUI<a class="headerlink" href="#servizi-e-gui" title="Link to this heading">¶</a></h2>
-<p>Si veda <a class="reference external" href="file:///C:/Didattica2025/mcrsv24/cargo2025/userDocs/cargoOverview.html">Cargo Overview</a>.</p>
-<aside class="sidebar">
-<p class="sidebar-title">Un primo sistema</p>
-<figure class="align-default">
-<a class="reference internal image-reference" href="_images/cargoserviceM2MAndGui.jpg"><img alt="Un sistema" src="_images/cargoserviceM2MAndGui.jpg" style="width: 200px;" />
-</a>
-</figure>
-</aside>
-</section>
-<section id="goon">
-<h2>goon<a class="headerlink" href="#goon" title="Link to this heading">¶</a></h2>
-<blockquote>
-<div><table class="docutils align-default" style="width: 100%">
+<p>Si veda <a href="#id1"><span class="problematic" id="id2">|</span></a>? <a class="reference external" href="file:///C:/Didattica2025/mcrsv24/cargo2025/userDocs/cargoOverview.html">Cargo Overview</a>, <a href="#id3"><span class="problematic" id="id4">|</span></a>? <a class="reference external" href="file:///C:/Didattica2025/mcrsv24/cargo2025/userDocs/cargoHistory.html">Cargo History</a>.</p>
+<table class="docutils align-default" style="width: 100%">
 <colgroup>
 <col style="width: 30.0%" />
 <col style="width: 70.0%" />
 </colgroup>
 <tbody>
-<tr class="row-odd"><td><p>cargoproduct</p>
-<p>Si veda <a class="reference external" href="file:///C:/Didattica2025/mcrsv24/cargo2025/userDocs/cargoOverview.html#Core-businessPOJO">Core-business POJO</a></p>
+<tr class="row-odd"><td><p>cargoproduct <a href="#id5"><span class="problematic" id="id6">|</span></a>? <a class="reference external" href="file:///C:/Didattica2025/mcrsv24/cargo2025/userDocs/cargoOverview.html#pojo">CorePOJO</a></p>
 <a class="reference internal image-reference" href="_images/ProductServiceLogic.JPG"><img alt="_images/ProductServiceLogic.JPG" class="align-center" src="_images/ProductServiceLogic.JPG" style="width: 100%;" />
 </a>
 </td>
@@ -66,15 +55,25 @@
 </div></blockquote>
 <a class="reference internal image-reference" href="_images/pojoSymbols.jpg"><img alt="_images/pojoSymbols.jpg" class="align-center" src="_images/pojoSymbols.jpg" style="width: 35%;" />
 </a>
+<ul class="simple">
+<li><p>Clean architecture: la ripartizione domain-adapter</p></li>
+<li><p>Test automatizzato con JUnit</p></li>
+<li><p>Logging locale</p></li>
+</ul>
 <p><strong>caller</strong>: <code class="docutils literal notranslate"><span class="pre">ProductServiceCaller</span></code> in Cargo25</p>
 </td>
 </tr>
-<tr class="row-even"><td><p>cargoserviceM2M</p>
-<p>Si veda <a class="reference external" href="file:///C:/Didattica2025/mcrsv24/cargo2025/userDocs/cargoOverview.html#cargowareserviceSpring">POJOInSpring</a></p>
+<tr class="row-even"><td><p><a class="reference internal" href="cargoserviceM2M.html#cargoservicem2m"><span class="std std-ref">cargoserviceM2M</span></a> <a href="#id7"><span class="problematic" id="id8">|</span></a>? <a class="reference external" href="file:///C:/Didattica2025/mcrsv24/cargo2025/userDocs/cargoOverview.html#cargowareserviceSpring">PojoSpring</a></p>
 <a class="reference internal image-reference" href="_images/cargoserviceM2M.jpg"><img alt="_images/cargoserviceM2M.jpg" class="align-center" src="_images/cargoserviceM2M.jpg" style="width: 100%;" />
 </a>
 </td>
 <td><p>Spring RestController on <code class="docutils literal notranslate"><span class="pre">9111</span></code> - Register as <code class="docutils literal notranslate"><span class="pre">M2MPRODUCTSERVICE</span></code> - CorsConfig</p>
+<ul class="simple">
+<li><p>Uso di Spring e RestController con CleanArchitecture</p></li>
+<li><p>Interazioni via HTTP e via Web-sockets</p></li>
+<li><p>Introduzione all’uso di ELK e al logging distribuito</p></li>
+<li><p>Deployment in Docker</p></li>
+</ul>
 <p><strong>callers</strong>: <code class="docutils literal notranslate"><span class="pre">PSLCallerHTTP,</span> <span class="pre">PSLDiscoverCallerInteraction,</span> <span class="pre">PSLDiscoverCallerHttp,</span> <span class="pre">WebSocketClient</span></code></p>
 </td>
 </tr>
@@ -83,6 +82,9 @@
 </a>
 </td>
 <td><p>Spring Controller on <code class="docutils literal notranslate"><span class="pre">9110</span></code> - Interacts WS with <code class="docutils literal notranslate"><span class="pre">cargoserviceM2M</span></code> (discovered)</p>
+<ul class="simple">
+<li><p>Pagina HTML che invia su WS comandi a <a class="reference internal" href="cargoserviceM2M.html#cargoservicem2m"><span class="std std-ref">cargoserviceM2M</span></a></p></li>
+</ul>
 <p><strong>callers</strong>:  <code class="docutils literal notranslate"><span class="pre">WebSocketClient</span></code></p>
 </td>
 </tr>
@@ -114,14 +116,13 @@ ProductServiceCallerMqtt, ProductServiceDiscoverCallerTcp</p>
 </tr>
 </tbody>
 </table>
-</div></blockquote>
 </section>
 <section id="c-didattica2024qak24cargo">
 <h2>C:Didattica2024qak24cargo:<a class="headerlink" href="#c-didattica2024qak24cargo" title="Link to this heading">¶</a></h2>
 <p>Nuova versione che prova coi colori Latex e con il ruolo 4</p>
 <ol class="arabic simple">
 <li><p>Microservizio di memorizzazione prodotti:</p></li>
-<li><p>Come actor attorno a un Core-business POJO <code class="docutils literal notranslate"><span class="pre">ProductServiceLogic</span></code></p></li>
+<li><p>Come actor attorno a un CorePOJO <code class="docutils literal notranslate"><span class="pre">ProductServiceLogic</span></code></p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">ProductServiceLogic</span></code> usa <code class="docutils literal notranslate"><span class="pre">AdapterStorage</span></code> per realizzare persistenza in memoria
 (<code class="docutils literal notranslate"><span class="pre">AdapterStorageList</span></code>) oppure su MongoDB (<code class="docutils literal notranslate"><span class="pre">AdapterStorageMongo</span></code>)</p></li>
 <li><p>Che usa logback.xml, elasticseacrh e logstash attivati usando <code class="docutils literal notranslate"><span class="pre">docker-compose-EFKOnly.yml</span></code></p></li>
@@ -211,7 +212,6 @@ TCP sempre verso la porta <code class="docutils literal notranslate"><span class
     <ul>
 <li><a class="reference internal" href="#">Cargo24</a><ul>
 <li><a class="reference internal" href="#servizi-e-gui">Servizi e GUI</a></li>
-<li><a class="reference internal" href="#goon">goon</a></li>
 <li><a class="reference internal" href="#c-didattica2024qak24cargo">C:Didattica2024qak24cargo:</a></li>
 <li><a class="reference internal" href="#pslcallerhttp">PSLCallerHTTP</a></li>
 <li><a class="reference internal" href="#il-mcrsrv-productservice">Il mcrsrv ProductService</a></li>

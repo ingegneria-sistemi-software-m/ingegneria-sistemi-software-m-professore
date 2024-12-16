@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="./">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>cargosystem25 &#8212; issLab2025 1.0 documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=649a27d8" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinxdoc.css?v=34905f61" />
+    <link rel="stylesheet" type="text/css" href="_static/custom.css?v=67394294" />
+    <script src="_static/documentation_options.js?v=f2a433a1"></script>
+    <script src="_static/doctools.js?v=9bcbadda"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="cargoserviceM2M" href="cargoserviceM2M.html" />
+    <link rel="prev" title="issLab2025" href="index.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="Related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="cargoserviceM2M.html" title="cargoserviceM2M"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="issLab2025"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">issLab2025 1.0 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">cargosystem25</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="cargosystem25">
+<h1>cargosystem25<a class="headerlink" href="#cargosystem25" title="Link to this heading">¶</a></h1>
+<section id="requisiti">
+<h2>Requisiti<a class="headerlink" href="#requisiti" title="Link to this heading">¶</a></h2>
+<p>Progettare e costruire un <span class="blue">sistema software</span> per il carico/scarico di prodotti
+in modo automatizzato mediante ronot su di un cargo.
+I prodotti da caricar/scaricare devono essere stati precedentemente registrati su database.</p>
+<p><a class="reference internal" href="Cargo24.html#cargo24"><span class="std std-ref">Cargo24</span></a></p>
+</section>
+<section id="progetto-cargoproduct">
+<h2>Progetto cargoproduct<a class="headerlink" href="#progetto-cargoproduct" title="Link to this heading">¶</a></h2>
+<p>Costruzione di un pplicativo Java che realizza la logica CRUD di gestione di prodotti in uno storage
+di diverse forme: inizialmente una semplice lista in memoria volatile, poi un database MongoDB.</p>
+<section id="problematiche-cargoproduct">
+<h3>Problematiche cargoproduct<a class="headerlink" href="#problematiche-cargoproduct" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p>Come rendere la logica applicativa indipendente dai dispositivi usati per la persistenza?</p></li>
+<li><p>Come selezionare la memoria volatile o il database MongoDB?</p></li>
+<li><p>Come definire ed eseguire test in modo automatizzato?</p></li>
+<li><p>Come realizzare un sistema di logging locale su file?</p></li>
+<li><p>Come distribuire l’applicativo?</p></li>
+</ul>
+</section>
+</section>
+<section id="progetto-cargoservicem2m">
+<h2>Progetto cargoserviceM2M<a class="headerlink" href="#progetto-cargoservicem2m" title="Link to this heading">¶</a></h2>
+<p>Goal: rendere <code class="docutils literal notranslate"><span class="pre">cargoproduct</span></code> disponibile in rete come servizio web.</p>
+<section id="problematiche-cargoservicem2m">
+<h3>Problematiche cargoserviceM2M<a class="headerlink" href="#problematiche-cargoservicem2m" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p>Come rendere la logica applicativa accessibile via rete ad altri progrsmmi?</p></li>
+<li><p>Come evitare la duplicazione di prodotti in caso di acessi concorrenti?</p></li>
+<li><p>Come realizzare un sistema di logging distribuito?</p></li>
+<li><p>Come distribuire l’applicativo in forma di micro-servizio su Docker?</p></li>
+</ul>
+</section>
+</section>
+<section id="progetto-cargoservicem2mgui">
+<h2>Progetto cargoserviceM2MGui<a class="headerlink" href="#progetto-cargoservicem2mgui" title="Link to this heading">¶</a></h2>
+<p>Goal: dotare <a class="reference internal" href="#progetto-cargoservicem2m"><span class="std std-ref">Progetto cargoserviceM2M</span></a> di una GUI per la interazione uomo-macchina.</p>
+<section id="problematiche-cargoservicem2mgui">
+<h3>Problematiche cargoserviceM2MGui<a class="headerlink" href="#problematiche-cargoservicem2mgui" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p>Come realizzare una GUI in HTML5 e Javascript?</p></li>
+<li><p>Come permettere la comunicazione asincrona tra GUI e servizio web?</p></li>
+</ul>
+</section>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+  <div>
+    <h3><a href="index.html">Table of Contents</a></h3>
+    <ul>
+<li><a class="reference internal" href="#">cargosystem25</a><ul>
+<li><a class="reference internal" href="#requisiti">Requisiti</a></li>
+<li><a class="reference internal" href="#progetto-cargoproduct">Progetto cargoproduct</a><ul>
+<li><a class="reference internal" href="#problematiche-cargoproduct">Problematiche cargoproduct</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#progetto-cargoservicem2m">Progetto cargoserviceM2M</a><ul>
+<li><a class="reference internal" href="#problematiche-cargoservicem2m">Problematiche cargoserviceM2M</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#progetto-cargoservicem2mgui">Progetto cargoserviceM2MGui</a><ul>
+<li><a class="reference internal" href="#problematiche-cargoservicem2mgui">Problematiche cargoserviceM2MGui</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  </div>
+  <div>
+    <h4>Previous topic</h4>
+    <p class="topless"><a href="index.html"
+                          title="previous chapter">issLab2025</a></p>
+  </div>
+  <div>
+    <h4>Next topic</h4>
+    <p class="topless"><a href="cargoserviceM2M.html"
+                          title="next chapter">cargoserviceM2M</a></p>
+  </div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/cargosystem25.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="Related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="cargoserviceM2M.html" title="cargoserviceM2M"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="issLab2025"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">issLab2025 1.0 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">cargosystem25</a></li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+    &#169; Copyright 2024, ANatali.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.1.3.
+    </div>
+  </body>
+</html>

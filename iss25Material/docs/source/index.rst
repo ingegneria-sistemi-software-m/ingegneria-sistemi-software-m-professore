@@ -14,6 +14,7 @@ issLab2025
 .. toctree::
    :maxdepth: 5 
    
+   cargosystem25
    cargoserviceM2M
    cargoserviceM2MGui
    Cargo24
