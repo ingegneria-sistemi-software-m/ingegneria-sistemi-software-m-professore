@@ -14,10 +14,10 @@
 .. role:: worktodo 
 
 
-.. _ovrw: file:///C:/Didattica2025/mcrsv24/cargo2025/userDocs/cargoOverview.html
-.. _pojo: file:///C:/Didattica2025/mcrsv24/cargo2025/userDocs/cargoOverview.html#pojo
+.. _Cargo Overview: file:///C:/Didattica2025/mcrsv24/cargo2025/userDocs/cargoOverview.html
+.. _Core-business POJO: file:///C:/Didattica2025/mcrsv24/cargo2025/userDocs/cargoOverview.html#Core-business POJO
 .. _actor0: file:///C:/Didattica2025/mcrsv24/cargo2025/userDocs/cargoHistory.html#actor0
-.. _pojoInSpring: file:///C:/Didattica2025/mcrsv24/cargo2025/userDocs/cargoOverview.html#cargowareserviceSpring
+.. _PojoInSpring: file:///C:/Didattica2025/mcrsv24/cargo2025/userDocs/cargoOverview.html#cargowareserviceSpring
 
 .. _REST: https://en.wikipedia.org/wiki/Representational_state_transfer
 .. _SonarAndLed: ../../../../it.unibo.raspIntro2024/code/python/SonarAndLed.py   
@@ -32,7 +32,7 @@ Cargo24
 Servizi e GUI
 ----------------------------------
 
-Si veda `ovrw`_.
+Si veda `Cargo Overview`_.   
 
 
 
@@ -43,13 +43,13 @@ Si veda `ovrw`_.
     
     * - cargoproduct
 
-        Si veda `pojo`_
+        Si veda `Core-business POJO`_
 
         .. image::  ./_static/img/Cargo/ProductServiceLogic.JPG
            :align: center 
            :width: 100%  
       - 
-        POJO - Use ``StorageVolatile`` local. Symbols:
+         Using ``StorageVolatile`` local. Symbols:
 
         .. image::  ./_static/img/m2m/pojoSymbols.jpg
            :align: center 
@@ -60,14 +60,14 @@ Si veda `ovrw`_.
 
     * - cargoserviceM2M   
 
-        Si veda `pojoInSpring`_
+        Si veda `POJOInSpring`_
 
         .. image::  ./_static/img/m2m/cargoserviceM2M.jpg
            :align: center 
            :width: 100%  
 
       - 
-        Spring RestController on 9111 - Register as M2MPRODUCTSERVICE - CorsConfig
+        Spring RestController on ``9111`` - Register as ``M2MPRODUCTSERVICE`` - CorsConfig
 
         **callers**: ``PSLCallerHTTP, PSLDiscoverCallerInteraction, PSLDiscoverCallerHttp, WebSocketClient`` 
     
@@ -78,7 +78,7 @@ Si veda `ovrw`_.
            :width: 100%  
      
       - 
-        Spring Controller on 9110 - Interacts WS with cargoserviceM2M discovered
+        Spring Controller on ``9110`` - Interacts WS with ``cargoserviceM2M`` (discovered)
 
         **callers**:  ``WebSocketClient``
 
@@ -125,7 +125,7 @@ C:\Didattica2024\qak24\cargo:
 Nuova versione che prova coi colori Latex e con il ruolo 4
 
 #.  Microservizio di memorizzazione prodotti:  
-#.  Come actor attorno a un POJO ``ProductServiceLogic``
+#.  Come actor attorno a un Core-business POJO ``ProductServiceLogic``
 #.  ``ProductServiceLogic`` usa ``AdapterStorage`` per realizzare persistenza in memoria 
     (``AdapterStorageList``) oppure su MongoDB (``AdapterStorageMongo``)
 #.  Che usa logback.xml, elasticseacrh e logstash attivati usando ``docker-compose-EFKOnly.yml`` 

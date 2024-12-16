@@ -38,7 +38,7 @@
 <h1>Cargo24<a class="headerlink" href="#cargo24" title="Link to this heading">¶</a></h1>
 <section id="servizi-e-gui">
 <h2>Servizi e GUI<a class="headerlink" href="#servizi-e-gui" title="Link to this heading">¶</a></h2>
-<p>Si veda <a class="reference external" href="file:///C:/Didattica2025/mcrsv24/cargo2025/userDocs/cargoOverview.html">ovrw</a>.</p>
+<p>Si veda <a class="reference external" href="file:///C:/Didattica2025/mcrsv24/cargo2025/userDocs/cargoOverview.html">Cargo Overview</a>.</p>
 <blockquote>
 <div><table class="docutils align-default" style="width: 100%">
 <colgroup>
@@ -47,22 +47,24 @@
 </colgroup>
 <tbody>
 <tr class="row-odd"><td><p>cargoproduct</p>
-<p>Si veda <a class="reference external" href="file:///C:/Didattica2025/mcrsv24/cargo2025/userDocs/cargoOverview.html#pojo">pojo</a></p>
+<p>Si veda <a class="reference external" href="file:///C:/Didattica2025/mcrsv24/cargo2025/userDocs/cargoOverview.html#Core-businessPOJO">Core-business POJO</a></p>
 <a class="reference internal image-reference" href="_images/ProductServiceLogic.JPG"><img alt="_images/ProductServiceLogic.JPG" class="align-center" src="_images/ProductServiceLogic.JPG" style="width: 100%;" />
 </a>
 </td>
-<td><p>POJO - Use <code class="docutils literal notranslate"><span class="pre">StorageVolatile</span></code> local. Symbols:</p>
+<td><blockquote>
+<div><p>Using <code class="docutils literal notranslate"><span class="pre">StorageVolatile</span></code> local. Symbols:</p>
+</div></blockquote>
 <a class="reference internal image-reference" href="_images/pojoSymbols.jpg"><img alt="_images/pojoSymbols.jpg" class="align-center" src="_images/pojoSymbols.jpg" style="width: 35%;" />
 </a>
 <p><strong>caller</strong>: <code class="docutils literal notranslate"><span class="pre">ProductServiceCaller</span></code> in Cargo25</p>
 </td>
 </tr>
 <tr class="row-even"><td><p>cargoserviceM2M</p>
-<p>Si veda <a class="reference external" href="file:///C:/Didattica2025/mcrsv24/cargo2025/userDocs/cargoOverview.html#cargowareserviceSpring">pojoInSpring</a></p>
+<p>Si veda <a class="reference external" href="file:///C:/Didattica2025/mcrsv24/cargo2025/userDocs/cargoOverview.html#cargowareserviceSpring">POJOInSpring</a></p>
 <a class="reference internal image-reference" href="_images/cargoserviceM2M.jpg"><img alt="_images/cargoserviceM2M.jpg" class="align-center" src="_images/cargoserviceM2M.jpg" style="width: 100%;" />
 </a>
 </td>
-<td><p>Spring RestController on 9111 - Register as M2MPRODUCTSERVICE - CorsConfig</p>
+<td><p>Spring RestController on <code class="docutils literal notranslate"><span class="pre">9111</span></code> - Register as <code class="docutils literal notranslate"><span class="pre">M2MPRODUCTSERVICE</span></code> - CorsConfig</p>
 <p><strong>callers</strong>: <code class="docutils literal notranslate"><span class="pre">PSLCallerHTTP,</span> <span class="pre">PSLDiscoverCallerInteraction,</span> <span class="pre">PSLDiscoverCallerHttp,</span> <span class="pre">WebSocketClient</span></code></p>
 </td>
 </tr>
@@ -70,7 +72,7 @@
 <a class="reference internal image-reference" href="_images/cargoserviceM2MGui.jpg"><img alt="_images/cargoserviceM2MGui.jpg" class="align-center" src="_images/cargoserviceM2MGui.jpg" style="width: 100%;" />
 </a>
 </td>
-<td><p>Spring Controller on 9110 - Interacts WS with cargoserviceM2M discovered</p>
+<td><p>Spring Controller on <code class="docutils literal notranslate"><span class="pre">9110</span></code> - Interacts WS with <code class="docutils literal notranslate"><span class="pre">cargoserviceM2M</span></code> (discovered)</p>
 <p><strong>callers</strong>:  <code class="docutils literal notranslate"><span class="pre">WebSocketClient</span></code></p>
 </td>
 </tr>
@@ -109,7 +111,7 @@ ProductServiceCallerMqtt, ProductServiceDiscoverCallerTcp</p>
 <p>Nuova versione che prova coi colori Latex e con il ruolo 4</p>
 <ol class="arabic simple">
 <li><p>Microservizio di memorizzazione prodotti:</p></li>
-<li><p>Come actor attorno a un POJO <code class="docutils literal notranslate"><span class="pre">ProductServiceLogic</span></code></p></li>
+<li><p>Come actor attorno a un Core-business POJO <code class="docutils literal notranslate"><span class="pre">ProductServiceLogic</span></code></p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">ProductServiceLogic</span></code> usa <code class="docutils literal notranslate"><span class="pre">AdapterStorage</span></code> per realizzare persistenza in memoria
 (<code class="docutils literal notranslate"><span class="pre">AdapterStorageList</span></code>) oppure su MongoDB (<code class="docutils literal notranslate"><span class="pre">AdapterStorageMongo</span></code>)</p></li>
 <li><p>Che usa logback.xml, elasticseacrh e logstash attivati usando <code class="docutils literal notranslate"><span class="pre">docker-compose-EFKOnly.yml</span></code></p></li>
