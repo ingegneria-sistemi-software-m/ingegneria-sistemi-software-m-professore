@@ -1,24 +1,21 @@
-
 <!DOCTYPE html>
 
-<html lang="en">
+<html lang="en" data-content_root="./">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <title>Cargo24 &#8212; issLab2025 1.0 documentation</title>
-    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="_static/sphinxdoc.css" />
-    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
-    <script src="_static/jquery.js"></script>
-    <script src="_static/underscore.js"></script>
-    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
-    <script src="_static/doctools.js"></script>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=649a27d8" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinxdoc.css?v=34905f61" />
+    <script src="_static/documentation_options.js?v=f2a433a1"></script>
+    <script src="_static/doctools.js?v=9bcbadda"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="prev" title="cargoserviceM2MGui" href="cargoserviceM2MGui.html" /> 
   </head><body>
-    <div class="related" role="navigation" aria-label="related navigation">
+    <div class="related" role="navigation" aria-label="Related">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -38,51 +35,69 @@
           <div class="body" role="main">
             
   <section id="cargo24">
-<h1>Cargo24<a class="headerlink" href="#cargo24" title="Permalink to this heading">¶</a></h1>
+<h1>Cargo24<a class="headerlink" href="#cargo24" title="Link to this heading">¶</a></h1>
 <section id="servizi-e-gui">
-<h2>Servizi e GUI<a class="headerlink" href="#servizi-e-gui" title="Permalink to this heading">¶</a></h2>
+<h2>Servizi e GUI<a class="headerlink" href="#servizi-e-gui" title="Link to this heading">¶</a></h2>
 <p>Si veda <a class="reference external" href="file:///C:/Didattica2025/mcrsv24/cargo2025/userDocs/cargoOverview.html">ovrw</a>.</p>
 <blockquote>
 <div><table class="docutils align-default" style="width: 100%">
 <colgroup>
-<col style="width: 30%" />
-<col style="width: 70%" />
+<col style="width: 30.0%" />
+<col style="width: 70.0%" />
 </colgroup>
 <tbody>
 <tr class="row-odd"><td><p>cargoproduct</p>
 <p>Si veda <a class="reference external" href="file:///C:/Didattica2025/mcrsv24/cargo2025/userDocs/cargoOverview.html#pojo">pojo</a></p>
-<a class="reference internal image-reference" href="_images/ProductServiceLogic.JPG"><img alt="_images/ProductServiceLogic.JPG" class="align-center" src="_images/ProductServiceLogic.JPG" style="width: 100%;" /></a>
+<a class="reference internal image-reference" href="_images/ProductServiceLogic.JPG"><img alt="_images/ProductServiceLogic.JPG" class="align-center" src="_images/ProductServiceLogic.JPG" style="width: 100%;" />
+</a>
 </td>
-<td><p>POJO - Use StorageVolatile local</p>
-<p><em>caller</em>: ProductServiceCaller in Cargo25</p>
+<td><p>POJO - Use <code class="docutils literal notranslate"><span class="pre">StorageVolatile</span></code> local. Symbols:</p>
+<a class="reference internal image-reference" href="_images/pojoSymbols.jpg"><img alt="_images/pojoSymbols.jpg" class="align-center" src="_images/pojoSymbols.jpg" style="width: 35%;" />
+</a>
+<p><strong>caller</strong>: <code class="docutils literal notranslate"><span class="pre">ProductServiceCaller</span></code> in Cargo25</p>
 </td>
 </tr>
 <tr class="row-even"><td><p>cargoserviceM2M</p>
-<a class="reference internal image-reference" href="_images/cargoserviceSpring.JPG"><img alt="_images/cargoserviceSpring.JPG" class="align-center" src="_images/cargoserviceSpring.JPG" style="width: 100%;" /></a>
+<p>Si veda <a class="reference external" href="file:///C:/Didattica2025/mcrsv24/cargo2025/userDocs/cargoOverview.html#cargowareserviceSpring">pojoInSpring</a></p>
+<a class="reference internal image-reference" href="_images/cargoserviceM2M.jpg"><img alt="_images/cargoserviceM2M.jpg" class="align-center" src="_images/cargoserviceM2M.jpg" style="width: 100%;" />
+</a>
 </td>
-<td><p>Spring RestController on 9111 - Register as M2MPRODUCTSERVICE</p>
-<p><em>callers</em>: PSLCallerHTTP, PSLDiscoverCallerInteraction, PSLDiscoverCallerHttp,</p>
+<td><p>Spring RestController on 9111 - Register as M2MPRODUCTSERVICE - CorsConfig</p>
+<p><strong>callers</strong>: <code class="docutils literal notranslate"><span class="pre">PSLCallerHTTP,</span> <span class="pre">PSLDiscoverCallerInteraction,</span> <span class="pre">PSLDiscoverCallerHttp,</span> <span class="pre">WebSocketClient</span></code></p>
 </td>
 </tr>
-<tr class="row-odd"><td><p>cargoserviceM2MGui</p></td>
-<td><p>Spring Controller on 9110 - Interacts WS with cargoserviceM2M discovered</p></td>
+<tr class="row-odd"><td><p>cargoserviceM2MGui</p>
+<a class="reference internal image-reference" href="_images/cargoserviceM2MGui.jpg"><img alt="_images/cargoserviceM2MGui.jpg" class="align-center" src="_images/cargoserviceM2MGui.jpg" style="width: 100%;" />
+</a>
+</td>
+<td><p>Spring Controller on 9110 - Interacts WS with cargoserviceM2M discovered</p>
+<p><strong>callers</strong>:  <code class="docutils literal notranslate"><span class="pre">WebSocketClient</span></code></p>
+</td>
 </tr>
-<tr class="row-even"><td><p>cargoservice</p>
+<tr class="row-even"><td><p>cargoserviceM2M and cargoserviceM2MGui</p>
+<p><strong>callers</strong>: <code class="docutils literal notranslate"><span class="pre">PSLCallerHTTP</span></code> e <code class="docutils literal notranslate"><span class="pre">WebSocketClient</span></code></p>
+</td>
+<td><a class="reference internal image-reference" href="_images/cargoserviceM2MAndGui.jpg"><img alt="_images/cargoserviceM2MAndGui.jpg" class="align-center" src="_images/cargoserviceM2MAndGui.jpg" style="width: 100%;" />
+</a>
+</td>
+</tr>
+<tr class="row-odd"><td><p>cargoservice</p>
 <p>Si veda <a class="reference external" href="file:///C:/Didattica2025/mcrsv24/cargo2025/userDocs/cargoHistory.html#actor0">actor0</a></p>
-<a class="reference internal image-reference" href="_images/ProductService.JPG"><img alt="_images/ProductService.JPG" class="align-center" src="_images/ProductService.JPG" style="width: 100%;" /></a>
+<a class="reference internal image-reference" href="_images/ProductService.JPG"><img alt="_images/ProductService.JPG" class="align-center" src="_images/ProductService.JPG" style="width: 100%;" />
+</a>
 </td>
 <td><p>qak on 8111 - Register as PRODUCTSERVICE</p>
 <p>Use StorageVolatile in local / Mongo in Docker</p>
-<p><em>callers</em>: ProductServiceCallerJsonTcp, ProductServiceCallerCoap,
+<p><strong>callers</strong>: ProductServiceCallerJsonTcp, ProductServiceCallerCoap,
 ProductServiceCallerMqtt, ProductServiceDiscoverCallerTcp</p>
 </td>
 </tr>
-<tr class="row-odd"><td><p>cargoserviceQakGUI</p></td>
+<tr class="row-even"><td><p>cargoserviceQakGUI</p></td>
 <td><p>Spring RestController on 8075  - Interacts TCP with cargoservice remote</p>
-<p><em>callers</em>: PSLCallerHTTP,</p>
+<p><strong>callers</strong>: PSLCallerHTTP,</p>
 </td>
 </tr>
-<tr class="row-even"><td><p>cargoserviceM2MQakLocal</p></td>
+<tr class="row-odd"><td><p>cargoserviceM2MQakLocal</p></td>
 <td><p>Spring RestController - Activates qak. Interacts local with guiworker</p></td>
 </tr>
 </tbody>
@@ -90,7 +105,7 @@ ProductServiceCallerMqtt, ProductServiceDiscoverCallerTcp</p>
 </div></blockquote>
 </section>
 <section id="c-didattica2024qak24cargo">
-<h2>C:Didattica2024qak24cargo:<a class="headerlink" href="#c-didattica2024qak24cargo" title="Permalink to this heading">¶</a></h2>
+<h2>C:Didattica2024qak24cargo:<a class="headerlink" href="#c-didattica2024qak24cargo" title="Link to this heading">¶</a></h2>
 <p>Nuova versione che prova coi colori Latex e con il ruolo 4</p>
 <ol class="arabic simple">
 <li><p>Microservizio di memorizzazione prodotti:</p></li>
@@ -104,7 +119,7 @@ ProductServiceCallerMqtt, ProductServiceDiscoverCallerTcp</p>
 </ol>
 </section>
 <section id="pslcallerhttp">
-<h2>PSLCallerHTTP<a class="headerlink" href="#pslcallerhttp" title="Permalink to this heading">¶</a></h2>
+<h2>PSLCallerHTTP<a class="headerlink" href="#pslcallerhttp" title="Link to this heading">¶</a></h2>
 <ul class="simple">
 <li><p>Ho una applicazione Java APP e un servizio S che accetta messaggi via HTTP.
 APP attiva un thread T che chiama una funzione makeCall, la quale attiva una java.net.HttpURLConnection
@@ -136,7 +151,7 @@ assicurarsi che siano corretti e non introducano deadlock o altre problematiche.
 </ul>
 </section>
 <section id="il-mcrsrv-productservice">
-<h2>Il mcrsrv ProductService<a class="headerlink" href="#il-mcrsrv-productservice" title="Permalink to this heading">¶</a></h2>
+<h2>Il mcrsrv ProductService<a class="headerlink" href="#il-mcrsrv-productservice" title="Link to this heading">¶</a></h2>
 <ul>
 <li><p><strong>ProductService</strong> è una applicazione software che viene distribuita mediante una immagine
 docker memorizzata su DockerHub.</p></li>
@@ -177,7 +192,7 @@ TCP sempre verso la porta <code class="docutils literal notranslate"><span class
           </div>
         </div>
       </div>
-      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
         <div class="sphinxsidebarwrapper">
   <div>
     <h3><a href="index.html">Table of Contents</a></h3>
@@ -204,7 +219,7 @@ TCP sempre verso la porta <code class="docutils literal notranslate"><span class
             rel="nofollow">Show Source</a></li>
     </ul>
    </div>
-<div id="searchbox" style="display: none" role="search">
+<search id="searchbox" style="display: none" role="search">
   <h3 id="searchlabel">Quick search</h3>
     <div class="searchformwrapper">
     <form class="search" action="search.html" method="get">
@@ -212,13 +227,13 @@ TCP sempre verso la porta <code class="docutils literal notranslate"><span class
       <input type="submit" value="Go" />
     </form>
     </div>
-</div>
+</search>
 <script>document.getElementById('searchbox').style.display = "block"</script>
         </div>
       </div>
       <div class="clearer"></div>
     </div>
-    <div class="related" role="navigation" aria-label="related navigation">
+    <div class="related" role="navigation" aria-label="Related">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -232,8 +247,8 @@ TCP sempre verso la porta <code class="docutils literal notranslate"><span class
       </ul>
     </div>
     <div class="footer" role="contentinfo">
-        &#169; Copyright 2024, ANatali.
-      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 5.0.2.
+    &#169; Copyright 2024, ANatali.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.1.3.
     </div>
   </body>
 </html>

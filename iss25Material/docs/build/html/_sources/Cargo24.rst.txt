@@ -17,11 +17,9 @@
 .. _ovrw: file:///C:/Didattica2025/mcrsv24/cargo2025/userDocs/cargoOverview.html
 .. _pojo: file:///C:/Didattica2025/mcrsv24/cargo2025/userDocs/cargoOverview.html#pojo
 .. _actor0: file:///C:/Didattica2025/mcrsv24/cargo2025/userDocs/cargoHistory.html#actor0
-
+.. _pojoInSpring: file:///C:/Didattica2025/mcrsv24/cargo2025/userDocs/cargoOverview.html#cargowareserviceSpring
 
 .. _REST: https://en.wikipedia.org/wiki/Representational_state_transfer
-.. _UniboPlanner: ../../../../../it.unibo.planner20/userDocs/LabPlanner.html
-
 .. _SonarAndLed: ../../../../it.unibo.raspIntro2024/code/python/SonarAndLed.py   
 
 
@@ -51,22 +49,48 @@ Si veda `ovrw`_.
            :align: center 
            :width: 100%  
       - 
-        POJO - Use StorageVolatile local 
+        POJO - Use ``StorageVolatile`` local. Symbols:
 
-        *caller*: ProductServiceCaller in Cargo25
+        .. image::  ./_static/img/m2m/pojoSymbols.jpg
+           :align: center 
+           :width: 35%  
+
+        **caller**: ``ProductServiceCaller`` in Cargo25
+
+
     * - cargoserviceM2M   
 
-        .. image::  ./_static/img/Cargo/cargoserviceSpring.JPG
+        Si veda `pojoInSpring`_
+
+        .. image::  ./_static/img/m2m/cargoserviceM2M.jpg
            :align: center 
            :width: 100%  
 
       - 
-        Spring RestController on 9111 - Register as M2MPRODUCTSERVICE
+        Spring RestController on 9111 - Register as M2MPRODUCTSERVICE - CorsConfig
 
-        *callers*: PSLCallerHTTP, PSLDiscoverCallerInteraction, PSLDiscoverCallerHttp, 
+        **callers**: ``PSLCallerHTTP, PSLDiscoverCallerInteraction, PSLDiscoverCallerHttp, WebSocketClient`` 
+    
     * - cargoserviceM2MGui
+
+        .. image::  ./_static/img/m2m/cargoserviceM2MGui.jpg
+           :align: center 
+           :width: 100%  
+     
       - 
         Spring Controller on 9110 - Interacts WS with cargoserviceM2M discovered
+
+        **callers**:  ``WebSocketClient``
+
+    * - cargoserviceM2M and cargoserviceM2MGui
+
+        **callers**: ``PSLCallerHTTP`` e ``WebSocketClient``
+      - 
+        .. image::  ./_static/img/m2m/cargoserviceM2MAndGui.jpg
+           :align: center 
+           :width: 100%  
+
+
     * - cargoservice 
 
         Si veda `actor0`_
@@ -80,13 +104,13 @@ Si veda `ovrw`_.
         
         Use StorageVolatile in local / Mongo in Docker
 
-        *callers*: ProductServiceCallerJsonTcp, ProductServiceCallerCoap, 
+        **callers**: ProductServiceCallerJsonTcp, ProductServiceCallerCoap, 
         ProductServiceCallerMqtt, ProductServiceDiscoverCallerTcp
     * - cargoserviceQakGUI
       - 
         Spring RestController on 8075  - Interacts TCP with cargoservice remote
 
-        *callers*: PSLCallerHTTP,
+        **callers**: PSLCallerHTTP,
     * - cargoserviceM2MQakLocal
       - 
         Spring RestController - Activates qak. Interacts local with guiworker 
