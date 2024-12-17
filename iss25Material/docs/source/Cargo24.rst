@@ -70,11 +70,7 @@ Si veda |? `Cargo Overview`_, |? `Cargo History`_.
            :align: center 
            :width: 100%  
       - 
-         Using ``StorageVolatile`` local. Symbols:
-
-        .. image::  ./_static/img/m2m/pojoSymbols.jpg
-           :align: center 
-           :width: 35%  
+         Using ``StorageVolatile`` 
 
         
         - Clean architecture: la ripartizione domain-adapter

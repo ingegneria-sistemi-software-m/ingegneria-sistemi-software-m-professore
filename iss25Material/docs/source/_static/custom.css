@@ -8,15 +8,15 @@ pre{
 
 
 h1{
-    background-color: #fffed6 !important;
+    background-color: #f3f049 !important;
     color: rgb(115, 0, 255)  !important;
     border: 1px solid rgb(0, 10, 0) !important;
     margin: 0 !important;
-    border-radius: 15px !important;
+
   }
 
 h2{
-    background-color: #e4ffd6 !important;
+    background-color: #e1f4d7 !important;
     color: rgb(47, 0, 255) !important;
     margin: 100 !important;
     border: 1px solid rgb(0, 10, 0) !important;

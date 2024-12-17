@@ -8,7 +8,7 @@
     <title>cargosystem25 &#8212; issLab2025 1.0 documentation</title>
     <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=649a27d8" />
     <link rel="stylesheet" type="text/css" href="_static/sphinxdoc.css?v=34905f61" />
-    <link rel="stylesheet" type="text/css" href="_static/custom.css?v=67394294" />
+    <link rel="stylesheet" type="text/css" href="_static/custom.css?v=cb2d0677" />
     <script src="_static/documentation_options.js?v=f2a433a1"></script>
     <script src="_static/doctools.js?v=9bcbadda"></script>
     <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
@@ -50,41 +50,97 @@ I prodotti da caricar/scaricare devono essere stati precedentemente registrati s
 </section>
 <section id="progetto-cargoproduct">
 <h2>Progetto cargoproduct<a class="headerlink" href="#progetto-cargoproduct" title="Link to this heading">¶</a></h2>
-<p>Costruzione di un pplicativo Java che realizza la logica CRUD di gestione di prodotti in uno storage
+<p>Costruzione di un applicativo Java che realizza la logica <strong>CRUD</strong> di gestione di prodotti in uno storage
 di diverse forme: inizialmente una semplice lista in memoria volatile, poi un database MongoDB.</p>
-<section id="problematiche-cargoproduct">
-<h3>Problematiche cargoproduct<a class="headerlink" href="#problematiche-cargoproduct" title="Link to this heading">¶</a></h3>
+<blockquote>
+<div><a class="reference internal image-reference" href="_images/ProductServiceLogic.JPG"><img alt="_images/ProductServiceLogic.JPG" class="align-center" src="_images/ProductServiceLogic.JPG" style="width: 60%;" />
+</a>
+</div></blockquote>
+<section id="key-points-cargoproduct">
+<h3>Key-points cargoproduct<a class="headerlink" href="#key-points-cargoproduct" title="Link to this heading">¶</a></h3>
 <ul class="simple">
-<li><p>Come rendere la logica applicativa indipendente dai dispositivi usati per la persistenza?</p></li>
-<li><p>Come selezionare la memoria volatile o il database MongoDB?</p></li>
-<li><p>Come definire ed eseguire test in modo automatizzato?</p></li>
-<li><p>Come realizzare un sistema di logging locale su file?</p></li>
-<li><p>Come distribuire l’applicativo?</p></li>
+<li><p>Adpater (<code class="docutils literal notranslate"><span class="pre">AdapterStorage</span></code>) per rendere la logica applicativa indipendente dai dispositivi
+usati per la persistenza.</p></li>
+<li><p>Predisposizione di <code class="docutils literal notranslate"><span class="pre">AdapterStorage</span></code> per  selezionare la memoria volatile o il database MongoDB
+usando variabili di ambiente. In assenza, uso del singleton</p></li>
+<li><p>Testing in modo automatizzato con JUnit.</p></li>
+<li><p>Logging locale su file.</p></li>
+<li><p>Deployment mediante jar.</p></li>
 </ul>
 </section>
 </section>
 <section id="progetto-cargoservicem2m">
 <h2>Progetto cargoserviceM2M<a class="headerlink" href="#progetto-cargoservicem2m" title="Link to this heading">¶</a></h2>
-<p>Goal: rendere <code class="docutils literal notranslate"><span class="pre">cargoproduct</span></code> disponibile in rete come servizio web.</p>
-<section id="problematiche-cargoservicem2m">
-<h3>Problematiche cargoserviceM2M<a class="headerlink" href="#problematiche-cargoservicem2m" title="Link to this heading">¶</a></h3>
+<p>Goal: rendere il sistema del <a class="reference internal" href="#progetto-cargoproduct"><span class="std std-ref">Progetto cargoproduct</span></a> disponibile in rete come (micro)servizio web
+per altri programmi.</p>
+<blockquote>
+<div><a class="reference internal image-reference" href="_images/cargoserviceM2M.JPG"><img alt="_images/cargoserviceM2M.JPG" class="align-center" src="_images/cargoserviceM2M.JPG" style="width: 60%;" />
+</a>
+</div></blockquote>
+<section id="key-points-cargoservicem2m">
+<h3>Key-points cargoserviceM2M<a class="headerlink" href="#key-points-cargoservicem2m" title="Link to this heading">¶</a></h3>
 <ul class="simple">
-<li><p>Come rendere la logica applicativa accessibile via rete ad altri progrsmmi?</p></li>
-<li><p>Come evitare la duplicazione di prodotti in caso di acessi concorrenti?</p></li>
-<li><p>Come realizzare un sistema di logging distribuito?</p></li>
-<li><p>Come distribuire l’applicativo in forma di micro-servizio su Docker?</p></li>
+<li><p>Uso di Spring e RestController per rendere la logica applicativa accessibile via rete ad altri progrsmmi
+(interazione M2M).</p></li>
+<li><p>Registrazione del servizio su Eureka.</p></li>
+<li><p>Interazioni via HTTP (sincrone) e via Web-sockets (asincrone)</p></li>
+<li><p>Problema degli accessi concorrenti e come evitare la possibile duplicazione di prodotti.</p></li>
+<li><p>Sperimentazione di callers via HTTP e via Web-sockets</p></li>
+<li><p>Introduzione all’uso di ELK e al logging distribuito</p></li>
+<li><p>Distribuzione del prodotto software in forma di micro-servizio su Docker.</p></li>
+<li><p>Definizione di un caller (<code class="docutils literal notranslate"><span class="pre">PSLCallerHTTP</span></code>) che usa il servizio via HTTP e
+di un caller (<code class="docutils literal notranslate"><span class="pre">WebSocketClient</span></code>) che usa il servizio via Web-socket.</p></li>
 </ul>
 </section>
 </section>
 <section id="progetto-cargoservicem2mgui">
 <h2>Progetto cargoserviceM2MGui<a class="headerlink" href="#progetto-cargoservicem2mgui" title="Link to this heading">¶</a></h2>
-<p>Goal: dotare <a class="reference internal" href="#progetto-cargoservicem2m"><span class="std std-ref">Progetto cargoserviceM2M</span></a> di una GUI per la interazione uomo-macchina.</p>
-<section id="problematiche-cargoservicem2mgui">
-<h3>Problematiche cargoserviceM2MGui<a class="headerlink" href="#problematiche-cargoservicem2mgui" title="Link to this heading">¶</a></h3>
+<p>Goal: dotare il sistema del <a class="reference internal" href="#progetto-cargoservicem2m"><span class="std std-ref">Progetto cargoserviceM2M</span></a> di una GUI per la interazione uomo-macchina.</p>
+<blockquote>
+<div><a class="reference internal image-reference" href="_images/cargoserviceM2MGui.jpg"><img alt="_images/cargoserviceM2MGui.jpg" class="align-center" src="_images/cargoserviceM2MGui.jpg" style="width: 50%;" />
+</a>
+</div></blockquote>
+<section id="key-points-cargoservicem2mgui">
+<h3>Key-points cargoserviceM2MGui<a class="headerlink" href="#key-points-cargoservicem2mgui" title="Link to this heading">¶</a></h3>
 <ul class="simple">
-<li><p>Come realizzare una GUI in HTML5 e Javascript?</p></li>
-<li><p>Come permettere la comunicazione asincrona tra GUI e servizio web?</p></li>
+<li><p>Realizzare una GUI in HTML5 e Javascript che invia comandi e riceve sia risposte sia aggiornamenti.</p></li>
+<li><p>Aggiornamento della pagina mediante Theamleaf</p></li>
+<li><p>Uso di form e dell’operatore <code class="docutils literal notranslate"><span class="pre">fetch</span></code>  per l’invio di comandi</p></li>
+<li><p>Discovery del servizio <code class="docutils literal notranslate"><span class="pre">cargoserviceM2M</span></code> mediante Eureka</p></li>
 </ul>
+</section>
+</section>
+<section id="sistema-cargoservicem2m">
+<h2>Sistema cargoserviceM2M<a class="headerlink" href="#sistema-cargoservicem2m" title="Link to this heading">¶</a></h2>
+<p>Goal: costruire il sistema facendo interagirre due micro-servizi.</p>
+<blockquote>
+<div><a class="reference internal image-reference" href="_images/cargoserviceM2MAndGui.jpg"><img alt="_images/cargoserviceM2MAndGui.jpg" class="align-center" src="_images/cargoserviceM2MAndGui.jpg" style="width: 60%;" />
+</a>
+</div></blockquote>
+</section>
+</section>
+<section id="cargosystem25-con-attori-qak">
+<h1>cargosystem25 con attori qak<a class="headerlink" href="#cargosystem25-con-attori-qak" title="Link to this heading">¶</a></h1>
+<section id="progetto-cargoservice">
+<h2>Progetto cargoservice<a class="headerlink" href="#progetto-cargoservice" title="Link to this heading">¶</a></h2>
+<p>Goal: costruire un micorservizio basato sugli attori.</p>
+<section id="key-points-cargoservice">
+<h3>Key-points cargoservice<a class="headerlink" href="#key-points-cargoservice" title="Link to this heading">¶</a></h3>
+</section>
+</section>
+<section id="progetto-cargoserviceqakgui">
+<h2>Progetto cargoserviceQakGui<a class="headerlink" href="#progetto-cargoserviceqakgui" title="Link to this heading">¶</a></h2>
+<p>Goal: dotare il sistema del <a class="reference internal" href="#progetto-cargoservice"><span class="std std-ref">Progetto cargoservice</span></a> di una GUI per la interazione uomo-macchina.</p>
+<section id="key-points-cargoserviceqakgui">
+<h3>Key-points cargoserviceQakGui<a class="headerlink" href="#key-points-cargoserviceqakgui" title="Link to this heading">¶</a></h3>
+</section>
+</section>
+<section id="progetto-cargoservicem2mqaklocal">
+<h2>Progetto cargoserviceM2MQakLocal<a class="headerlink" href="#progetto-cargoservicem2mqaklocal" title="Link to this heading">¶</a></h2>
+<section id="key-points-cargoservicem2mqaklocal">
+<h3>Key-points cargoserviceM2MQakLocal<a class="headerlink" href="#key-points-cargoservicem2mqaklocal" title="Link to this heading">¶</a></h3>
+<p>Goal: dotare il sistema del <a class="reference internal" href="#progetto-cargoservice"><span class="std std-ref">Progetto cargoservice</span></a> di una GUI per la interazione uomo-macchina
+evitando la comunicazione via rete tra il RestController della GUI e il serviceqak.</p>
 </section>
 </section>
 </section>
@@ -102,15 +158,31 @@ di diverse forme: inizialmente una semplice lista in memoria volatile, poi un da
 <li><a class="reference internal" href="#">cargosystem25</a><ul>
 <li><a class="reference internal" href="#requisiti">Requisiti</a></li>
 <li><a class="reference internal" href="#progetto-cargoproduct">Progetto cargoproduct</a><ul>
-<li><a class="reference internal" href="#problematiche-cargoproduct">Problematiche cargoproduct</a></li>
+<li><a class="reference internal" href="#key-points-cargoproduct">Key-points cargoproduct</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#progetto-cargoservicem2m">Progetto cargoserviceM2M</a><ul>
-<li><a class="reference internal" href="#problematiche-cargoservicem2m">Problematiche cargoserviceM2M</a></li>
+<li><a class="reference internal" href="#key-points-cargoservicem2m">Key-points cargoserviceM2M</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#progetto-cargoservicem2mgui">Progetto cargoserviceM2MGui</a><ul>
-<li><a class="reference internal" href="#problematiche-cargoservicem2mgui">Problematiche cargoserviceM2MGui</a></li>
+<li><a class="reference internal" href="#key-points-cargoservicem2mgui">Key-points cargoserviceM2MGui</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#sistema-cargoservicem2m">Sistema cargoserviceM2M</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#cargosystem25-con-attori-qak">cargosystem25 con attori qak</a><ul>
+<li><a class="reference internal" href="#progetto-cargoservice">Progetto cargoservice</a><ul>
+<li><a class="reference internal" href="#key-points-cargoservice">Key-points cargoservice</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#progetto-cargoserviceqakgui">Progetto cargoserviceQakGui</a><ul>
+<li><a class="reference internal" href="#key-points-cargoserviceqakgui">Key-points cargoserviceQakGui</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#progetto-cargoservicem2mqaklocal">Progetto cargoserviceM2MQakLocal</a><ul>
+<li><a class="reference internal" href="#key-points-cargoservicem2mqaklocal">Key-points cargoserviceM2MQakLocal</a></li>
 </ul>
 </li>
 </ul>

@@ -31,44 +31,117 @@ I prodotti da caricar/scaricare devono essere stati precedentemente registrati s
 Progetto cargoproduct
 -----------------------------------------
 
-Costruzione di un pplicativo Java che realizza la logica CRUD di gestione di prodotti in uno storage 
+Costruzione di un applicativo Java che realizza la logica **CRUD** di gestione di prodotti in uno storage 
 di diverse forme: inizialmente una semplice lista in memoria volatile, poi un database MongoDB.
 
+        .. image::  ./_static/img/Cargo/ProductServiceLogic.JPG
+           :align: center 
+           :width: 60%  
+
 +++++++++++++++++++++++++++++++++++++
-Problematiche cargoproduct
+Key-points cargoproduct
 +++++++++++++++++++++++++++++++++++++
 
-- Come rendere la logica applicativa indipendente dai dispositivi usati per la persistenza?
-- Come selezionare la memoria volatile o il database MongoDB?
-- Come definire ed eseguire test in modo automatizzato?
-- Come realizzare un sistema di logging locale su file?
-- Come distribuire l'applicativo?
+- Adpater (``AdapterStorage``) per rendere la logica applicativa indipendente dai dispositivi 
+  usati per la persistenza.
+- Predisposizione di ``AdapterStorage`` per  selezionare la memoria volatile o il database MongoDB
+  usando variabili di ambiente. In assenza, uso del singleton 
+- Testing in modo automatizzato con JUnit.
+- Logging locale su file.
+- Deployment mediante jar.
+
+ 
 
 -----------------------------------------
 Progetto cargoserviceM2M
 -----------------------------------------
 
-Goal: rendere ``cargoproduct`` disponibile in rete come servizio web.
+Goal: rendere il sistema del :ref:`Progetto cargoproduct` disponibile in rete come (micro)servizio web 
+per altri programmi.
+
+        .. image::  ./_static/img/m2m/cargoserviceM2M.JPG
+           :align: center 
+           :width: 60%  
 
 +++++++++++++++++++++++++++++++++++++
-Problematiche cargoserviceM2M
+Key-points cargoserviceM2M
 +++++++++++++++++++++++++++++++++++++
 
-- Come rendere la logica applicativa accessibile via rete ad altri progrsmmi?
-- Come evitare la duplicazione di prodotti in caso di acessi concorrenti?
-- Come realizzare un sistema di logging distribuito?
-- Come distribuire l'applicativo in forma di micro-servizio su Docker?
+.. File cargoservice.properties per  selezionare la memoria volatile o il database MongoDB
+
+- Uso di Spring e RestController per rendere la logica applicativa accessibile via rete ad altri progrsmmi
+  (interazione M2M).
+- Registrazione del servizio su Eureka.
+- Interazioni via HTTP (sincrone) e via Web-sockets (asincrone)
+- Problema degli accessi concorrenti e come evitare la possibile duplicazione di prodotti.
+- Sperimentazione di callers via HTTP e via Web-sockets
+- Introduzione all'uso di ELK e al logging distribuito
+- Distribuzione del prodotto software in forma di micro-servizio su Docker.
+- Definizione di un caller (``PSLCallerHTTP``) che usa il servizio via HTTP e 
+  di un caller (``WebSocketClient``) che usa il servizio via Web-socket.
 
 
 -----------------------------------------
 Progetto cargoserviceM2MGui
 -----------------------------------------
 
-Goal: dotare :ref:`Progetto cargoserviceM2M` di una GUI per la interazione uomo-macchina.
+Goal: dotare il sistema del :ref:`Progetto cargoserviceM2M` di una GUI per la interazione uomo-macchina.
+
+        .. image::  ./_static/img/m2m/cargoserviceM2MGui.jpg
+           :align: center 
+           :width: 50%  
 
 +++++++++++++++++++++++++++++++++++++
-Problematiche cargoserviceM2MGui
+Key-points cargoserviceM2MGui
 +++++++++++++++++++++++++++++++++++++
 
-- Come realizzare una GUI in HTML5 e Javascript?
-- Come permettere la comunicazione asincrona tra GUI e servizio web?
+- Realizzare una GUI in HTML5 e Javascript che invia comandi e riceve sia risposte sia aggiornamenti.
+- Aggiornamento della pagina mediante Theamleaf
+- Uso di form e dell'operatore ``fetch``  per l'invio di comandi
+- Discovery del servizio ``cargoserviceM2M`` mediante Eureka
+
+
+-----------------------------------------
+Sistema cargoserviceM2M 
+-----------------------------------------
+
+Goal: costruire il sistema facendo interagirre due micro-servizi.
+
+        .. image::  ./_static/img/m2m/cargoserviceM2MAndGui.jpg
+           :align: center 
+           :width: 60%  
+
+===================================
+cargosystem25 con attori qak
+===================================
+
+-----------------------------------------
+Progetto cargoservice
+-----------------------------------------
+
+Goal: costruire un micorservizio basato sugli attori.
+
++++++++++++++++++++++++++++++++++++++
+Key-points cargoservice
++++++++++++++++++++++++++++++++++++++
+
+-----------------------------------------
+Progetto cargoserviceQakGui
+-----------------------------------------
+
+Goal: dotare il sistema del :ref:`Progetto cargoservice` di una GUI per la interazione uomo-macchina.
+
++++++++++++++++++++++++++++++++++++++
+Key-points cargoserviceQakGui
++++++++++++++++++++++++++++++++++++++
+
+-----------------------------------------
+Progetto cargoserviceM2MQakLocal
+-----------------------------------------
+
++++++++++++++++++++++++++++++++++++++++
+Key-points cargoserviceM2MQakLocal
++++++++++++++++++++++++++++++++++++++++
+
+Goal: dotare il sistema del :ref:`Progetto cargoservice` di una GUI per la interazione uomo-macchina
+evitando la comunicazione via rete tra il RestController della GUI e il serviceqak.
