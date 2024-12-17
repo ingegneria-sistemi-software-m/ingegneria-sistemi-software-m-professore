@@ -44,8 +44,8 @@
 <section id="requisiti">
 <h2>Requisiti<a class="headerlink" href="#requisiti" title="Link to this heading">¶</a></h2>
 <p>Progettare e costruire un <span class="blue">sistema software</span> per il carico/scarico di prodotti
-in modo automatizzato mediante ronot su di un cargo.
-I prodotti da caricar/scaricare devono essere stati precedentemente registrati su database.</p>
+in modo automatizzato mediante robot-DDR su di un cargo navale.
+I prodotti da caricare/scaricare devono essere stati precedentemente registrati su database.</p>
 <p><a class="reference internal" href="Cargo24.html#cargo24"><span class="std std-ref">Cargo24</span></a></p>
 </section>
 <section id="progetto-cargoproduct">
@@ -59,12 +59,14 @@ di diverse forme: inizialmente una semplice lista in memoria volatile, poi un da
 <section id="key-points-cargoproduct">
 <h3>Key-points cargoproduct<a class="headerlink" href="#key-points-cargoproduct" title="Link to this heading">¶</a></h3>
 <ul class="simple">
+<li><p>Impostazione del Workspace Eclipse e di un progetto Gradle con relativo build file.</p></li>
 <li><p>Adpater (<code class="docutils literal notranslate"><span class="pre">AdapterStorage</span></code>) per rendere la logica applicativa indipendente dai dispositivi
 usati per la persistenza.</p></li>
 <li><p>Predisposizione di <code class="docutils literal notranslate"><span class="pre">AdapterStorage</span></code> per  selezionare la memoria volatile o il database MongoDB
 usando variabili di ambiente. In assenza, uso del singleton</p></li>
 <li><p>Testing in modo automatizzato con JUnit.</p></li>
 <li><p>Logging locale su file.</p></li>
+<li><p>Logging su ElasticSearch e Kibana.</p></li>
 <li><p>Deployment mediante jar.</p></li>
 </ul>
 </section>
@@ -77,16 +79,16 @@ per altri programmi.</p>
 <div><a class="reference internal image-reference" href="_images/cargoserviceM2M.JPG"><img alt="_images/cargoserviceM2M.JPG" class="align-center" src="_images/cargoserviceM2M.JPG" style="width: 60%;" />
 </a>
 </div></blockquote>
+<p>Appunti per lo sviloppo del prodotto: <a class="reference internal" href="cargoserviceM2M.html#cargoservicem2m"><span class="std std-ref">cargoserviceM2M</span></a></p>
 <section id="key-points-cargoservicem2m">
 <h3>Key-points cargoserviceM2M<a class="headerlink" href="#key-points-cargoservicem2m" title="Link to this heading">¶</a></h3>
 <ul class="simple">
-<li><p>Uso di Spring e RestController per rendere la logica applicativa accessibile via rete ad altri progrsmmi
-(interazione M2M).</p></li>
+<li><p>Uso di Spring e di un componente &#64;RestController per rendere la logica applicativa accessibile via rete ad altri progrsmmi
+(interazione <strong>M2M</strong>).</p></li>
 <li><p>Registrazione del servizio su Eureka.</p></li>
 <li><p>Interazioni via HTTP (sincrone) e via Web-sockets (asincrone)</p></li>
 <li><p>Problema degli accessi concorrenti e come evitare la possibile duplicazione di prodotti.</p></li>
 <li><p>Sperimentazione di callers via HTTP e via Web-sockets</p></li>
-<li><p>Introduzione all’uso di ELK e al logging distribuito</p></li>
 <li><p>Distribuzione del prodotto software in forma di micro-servizio su Docker.</p></li>
 <li><p>Definizione di un caller (<code class="docutils literal notranslate"><span class="pre">PSLCallerHTTP</span></code>) che usa il servizio via HTTP e
 di un caller (<code class="docutils literal notranslate"><span class="pre">WebSocketClient</span></code>) che usa il servizio via Web-socket.</p></li>
@@ -100,19 +102,24 @@ di un caller (<code class="docutils literal notranslate"><span class="pre">WebSo
 <div><a class="reference internal image-reference" href="_images/cargoserviceM2MGui.jpg"><img alt="_images/cargoserviceM2MGui.jpg" class="align-center" src="_images/cargoserviceM2MGui.jpg" style="width: 50%;" />
 </a>
 </div></blockquote>
+<p>Appunti per lo sviloppo del prodotto: <a class="reference internal" href="cargoserviceM2MGui.html#cargoservicem2mgui"><span class="std std-ref">cargoserviceM2MGui</span></a></p>
 <section id="key-points-cargoservicem2mgui">
 <h3>Key-points cargoserviceM2MGui<a class="headerlink" href="#key-points-cargoservicem2mgui" title="Link to this heading">¶</a></h3>
 <ul class="simple">
-<li><p>Realizzare una GUI in HTML5 e Javascript che invia comandi e riceve sia risposte sia aggiornamenti.</p></li>
+<li><p>Uso di Spring e di un componente &#64;Controller per rendere la logica applicativa accessibile via rete ad
+esseri umani (interazione <strong>H2M</strong>).</p></li>
+<li><p>Realizzare una GUI in HTML e Javascript che invia comandi e riceve sia risposte sia aggiornamenti.</p></li>
 <li><p>Aggiornamento della pagina mediante Theamleaf</p></li>
 <li><p>Uso di form e dell’operatore <code class="docutils literal notranslate"><span class="pre">fetch</span></code>  per l’invio di comandi</p></li>
 <li><p>Discovery del servizio <code class="docutils literal notranslate"><span class="pre">cargoserviceM2M</span></code> mediante Eureka</p></li>
+<li><p>Definizione di un caller (<code class="docutils literal notranslate"><span class="pre">GuiCallerHTTP</span></code>) che usa il servizio via HTTP sperimentando diversi tipi
+di risposta da part del &#64;Controller</p></li>
 </ul>
 </section>
 </section>
 <section id="sistema-cargoservicem2m">
 <h2>Sistema cargoserviceM2M<a class="headerlink" href="#sistema-cargoservicem2m" title="Link to this heading">¶</a></h2>
-<p>Goal: costruire il sistema facendo interagirre due micro-servizi.</p>
+<p>Goal: costruire il sistema facendo interagire due micro-servizi deployed su Docker</p>
 <blockquote>
 <div><a class="reference internal image-reference" href="_images/cargoserviceM2MAndGui.jpg"><img alt="_images/cargoserviceM2MAndGui.jpg" class="align-center" src="_images/cargoserviceM2MAndGui.jpg" style="width: 60%;" />
 </a>
