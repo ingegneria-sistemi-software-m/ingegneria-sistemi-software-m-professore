@@ -46,7 +46,18 @@
 <p>Progettare e costruire un <span class="blue">sistema software</span> per il carico/scarico di prodotti
 in modo automatizzato mediante robot-DDR su di un cargo navale.
 I prodotti da caricare/scaricare devono essere stati precedentemente registrati su database.</p>
-<p><a class="reference internal" href="Cargo24.html#cargo24"><span class="std std-ref">Cargo24</span></a></p>
+<p>Versione precedente: <a class="reference internal" href="Cargo24.html#cargo24"><span class="std std-ref">Cargo24</span></a></p>
+</section>
+<section id="impostazioni-preliminari">
+<h2>Impostazioni preliminari<a class="headerlink" href="#impostazioni-preliminari" title="Link to this heading">¶</a></h2>
+<ul class="simple">
+<li><p>Analisi dei requisiti e del problema: individuazione dei <span class="blue">BoundedContexts</span> applicativi</p></li>
+<li><p>Introduzione alla Clean Architecture e ai principi SOLID</p></li>
+<li><p>Comunicazione tra componenti software in termini di <span class="blue">Business Concepts</span></p></li>
+<li><p>Introduzione allo sviluppo agile con <code class="docutils literal notranslate"><span class="pre">SCRUM</span></code></p></li>
+<li><p>Vesro componenti con <span class="brown">loose-coupling e high-coesion</span></p></li>
+<li><p>Idea di <span class="blue">DevOps</span> e sua evoluzione</p></li>
+</ul>
 </section>
 <section id="progetto-cargoproduct">
 <h2>Progetto cargoproduct<a class="headerlink" href="#progetto-cargoproduct" title="Link to this heading">¶</a></h2>
@@ -58,51 +69,65 @@ di diverse forme: inizialmente una semplice lista in memoria volatile, poi un da
 </div></blockquote>
 <section id="key-points-cargoproduct">
 <h3>Key-points cargoproduct<a class="headerlink" href="#key-points-cargoproduct" title="Link to this heading">¶</a></h3>
-<ul class="simple">
+<ul>
 <li><p>Impostazione del Workspace Eclipse e di un progetto Gradle con relativo build file.</p></li>
 <li><p>Adpater (<code class="docutils literal notranslate"><span class="pre">AdapterStorage</span></code>) per rendere la logica applicativa indipendente dai dispositivi
 usati per la persistenza.</p></li>
 <li><p>Predisposizione di <code class="docutils literal notranslate"><span class="pre">AdapterStorage</span></code> per  selezionare la memoria volatile o il database MongoDB
-usando variabili di ambiente. In assenza, uso del singleton</p></li>
+usando variabili di ambiente. In assenza, uso del singleton <code class="docutils literal notranslate"><span class="pre">StorageVolatile</span></code>.</p></li>
 <li><p>Testing in modo automatizzato con JUnit.</p></li>
 <li><p>Logging locale su file.</p></li>
-<li><p>Logging su ElasticSearch e Kibana.</p></li>
-<li><p>Deployment mediante jar.</p></li>
+<li><p>Logging su ElasticSearch e Kibana, attivati come micorservizi ELK su Docker.</p></li>
+<li><p>Deployment mediante file <code class="docutils literal notranslate"><span class="pre">cargoproduct-1.0.jar</span></code> di un componente software che:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>non è autonomo</p></li>
+<li><p>produce effetti perchè esegue procedure specificate nell’interfaccia <code class="docutils literal notranslate"><span class="pre">ICrudOps</span></code></p></li>
+<li><p>nel caso di memoria piena, esegue il metodo <code class="docutils literal notranslate"><span class="pre">createProduct</span></code> restituendo una stringa generica di errore</p></li>
+</ul>
+</div></blockquote>
+</li>
 </ul>
 </section>
 </section>
 <section id="progetto-cargoservicem2m">
 <h2>Progetto cargoserviceM2M<a class="headerlink" href="#progetto-cargoservicem2m" title="Link to this heading">¶</a></h2>
 <p>Goal: rendere il sistema del <a class="reference internal" href="#progetto-cargoproduct"><span class="std std-ref">Progetto cargoproduct</span></a> disponibile in rete come (micro)servizio web
-per altri programmi.</p>
+per altri programmi  (interazione <strong>M2M</strong>).</p>
 <blockquote>
-<div><a class="reference internal image-reference" href="_images/cargoserviceM2M.JPG"><img alt="_images/cargoserviceM2M.JPG" class="align-center" src="_images/cargoserviceM2M.JPG" style="width: 60%;" />
+<div><a class="reference internal image-reference" href="_images/cargoserviceM2M.JPG"><img alt="_images/cargoserviceM2M.JPG" class="align-center" src="_images/cargoserviceM2M.JPG" style="width: 70%;" />
 </a>
 </div></blockquote>
-<p>Appunti per lo sviloppo del prodotto: <a class="reference internal" href="cargoserviceM2M.html#cargoservicem2m"><span class="std std-ref">cargoserviceM2M</span></a></p>
+<p>Appunti per lo sviluppo del prodotto: <a class="reference internal" href="cargoserviceM2M.html#cargoservicem2m"><span class="std std-ref">cargoserviceM2M</span></a></p>
 <section id="key-points-cargoservicem2m">
 <h3>Key-points cargoserviceM2M<a class="headerlink" href="#key-points-cargoservicem2m" title="Link to this heading">¶</a></h3>
 <ul class="simple">
-<li><p>Uso di Spring e di un componente &#64;RestController per rendere la logica applicativa accessibile via rete ad altri progrsmmi
-(interazione <strong>M2M</strong>).</p></li>
-<li><p>Registrazione del servizio su Eureka.</p></li>
+<li><p>Uso di Spring e di un componente &#64;RestController per rendere la logica applicativa accessibile via rete
+ad altri programmi (interazione <strong>M2M</strong> <span class="brown">RESTful</span>).</p></li>
+<li><p>&#64;RestController come componente di Spring che riceve richieste HTTP e risponde con oggetti JSON
+invocando le operazioni dell’interfaccia <code class="docutils literal notranslate"><span class="pre">ICrudOps</span></code> realizzate dal singleton <code class="docutils literal notranslate"><span class="pre">ProductServiceLogic</span></code>.</p></li>
+<li><p>Registrazione su Eureka del servizio con nome <code class="docutils literal notranslate"><span class="pre">cargoserviceM2M</span></code>.</p></li>
 <li><p>Interazioni via HTTP (sincrone) e via Web-sockets (asincrone)</p></li>
 <li><p>Problema degli accessi concorrenti e come evitare la possibile duplicazione di prodotti.</p></li>
-<li><p>Sperimentazione di callers via HTTP e via Web-sockets</p></li>
-<li><p>Distribuzione del prodotto software in forma di micro-servizio su Docker.</p></li>
+<li><p>Sperimentazione di callers via HTTP e via Web-sockets (protocollo non limitato ai sistem Web)</p></li>
+<li><p>Distribuzione del prodotto software in forma di micro-servizio su Docker:
+file <em>cargo2025yamlscargoServiceNoGui.yml</em> con variabili di ambiente che permettono di usare <code class="docutils literal notranslate"><span class="pre">MongoDB</span></code>.</p></li>
 <li><p>Definizione di un caller (<code class="docutils literal notranslate"><span class="pre">PSLCallerHTTP</span></code>) che usa il servizio via HTTP e
 di un caller (<code class="docutils literal notranslate"><span class="pre">WebSocketClient</span></code>) che usa il servizio via Web-socket.</p></li>
+<li><p>L’astrazione <span class="blue">Interaction</span>, la libreria <code class="docutils literal notranslate"><span class="pre">unibo.basicomm23-1.0</span></code> e il caller <code class="docutils literal notranslate"><span class="pre">PSLDiscoverCallerInteraction</span></code>
+che include la scoperta (discovery) del servizio <code class="docutils literal notranslate"><span class="pre">cargoserviceM2M</span></code> mediante Eureka.</p></li>
 </ul>
 </section>
 </section>
 <section id="progetto-cargoservicem2mgui">
 <h2>Progetto cargoserviceM2MGui<a class="headerlink" href="#progetto-cargoservicem2mgui" title="Link to this heading">¶</a></h2>
-<p>Goal: dotare il sistema del <a class="reference internal" href="#progetto-cargoservicem2m"><span class="std std-ref">Progetto cargoserviceM2M</span></a> di una GUI per la interazione uomo-macchina.</p>
+<p>Goal: dotare il sistema del <a class="reference internal" href="#progetto-cargoservicem2m"><span class="std std-ref">Progetto cargoserviceM2M</span></a> di una GUI per la interazione uomo-macchina
+(interazione <strong>H2M</strong>).</p>
 <blockquote>
-<div><a class="reference internal image-reference" href="_images/cargoserviceM2MGui.jpg"><img alt="_images/cargoserviceM2MGui.jpg" class="align-center" src="_images/cargoserviceM2MGui.jpg" style="width: 50%;" />
+<div><a class="reference internal image-reference" href="_images/cargoserviceM2MGui.jpg"><img alt="_images/cargoserviceM2MGui.jpg" class="align-center" src="_images/cargoserviceM2MGui.jpg" style="width: 60%;" />
 </a>
 </div></blockquote>
-<p>Appunti per lo sviloppo del prodotto: <a class="reference internal" href="cargoserviceM2MGui.html#cargoservicem2mgui"><span class="std std-ref">cargoserviceM2MGui</span></a></p>
+<p>Appunti per lo sviluppo del prodotto: <a class="reference internal" href="cargoserviceM2MGui.html#cargoservicem2mgui"><span class="std std-ref">cargoserviceM2MGui</span></a></p>
 <section id="key-points-cargoservicem2mgui">
 <h3>Key-points cargoserviceM2MGui<a class="headerlink" href="#key-points-cargoservicem2mgui" title="Link to this heading">¶</a></h3>
 <ul class="simple">
@@ -110,7 +135,10 @@ di un caller (<code class="docutils literal notranslate"><span class="pre">WebSo
 esseri umani (interazione <strong>H2M</strong>).</p></li>
 <li><p>Realizzare una GUI in HTML e Javascript che invia comandi e riceve sia risposte sia aggiornamenti.</p></li>
 <li><p>Aggiornamento della pagina mediante Theamleaf</p></li>
-<li><p>Uso di form e dell’operatore <code class="docutils literal notranslate"><span class="pre">fetch</span></code>  per l’invio di comandi</p></li>
+<li><p>Uso di form e dell’operatore <code class="docutils literal notranslate"><span class="pre">fetch</span></code>  per l’invio di comandi come messaggi HTTP.</p></li>
+<li><p>Multiple UI, Aggregatori, API Gateway</p></li>
+<li><p>User experience</p></li>
+<li><p>BFF (Beckends Bor Frontends)</p></li>
 <li><p>Discovery del servizio <code class="docutils literal notranslate"><span class="pre">cargoserviceM2M</span></code> mediante Eureka</p></li>
 <li><p>Definizione di un caller (<code class="docutils literal notranslate"><span class="pre">GuiCallerHTTP</span></code>) che usa il servizio via HTTP sperimentando diversi tipi
 di risposta da part del &#64;Controller</p></li>
@@ -124,6 +152,62 @@ di risposta da part del &#64;Controller</p></li>
 <div><a class="reference internal image-reference" href="_images/cargoserviceM2MAndGui.jpg"><img alt="_images/cargoserviceM2MAndGui.jpg" class="align-center" src="_images/cargoserviceM2MAndGui.jpg" style="width: 60%;" />
 </a>
 </div></blockquote>
+<ul class="simple">
+<li><p>File <em>cargo2025yamlscargowareservice.yml</em></p></li>
+</ul>
+</section>
+<section id="sistema-cargoservicem2m-con-eventi">
+<h2>Sistema cargoserviceM2M con eventi<a class="headerlink" href="#sistema-cargoservicem2m-con-eventi" title="Link to this heading">¶</a></h2>
+<p>Goal: estendere il servizio del <a class="reference internal" href="#progetto-cargoservicem2m"><span class="std std-ref">Progetto cargoserviceM2M</span></a> in modo che possa emettere informazioni
+in forma di eventi perecibili e visualizzabili nella GUI del <a class="reference internal" href="#progetto-cargoservicem2mgui"><span class="std std-ref">Progetto cargoserviceM2MGui</span></a></p>
+<section id="key-points-cargoservicem2m-con-eventi">
+<h3>Key-points cargoserviceM2M con eventi<a class="headerlink" href="#key-points-cargoservicem2m-con-eventi" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p>I (micro)servizi non sono solo anemici CRUD-Wrappers</p></li>
+<li><p>I (micro)servizi sono concettualmente enti autonomi che possono emettere/percepire eventi e interagire tra loro
+con meccanismi asincroni (es. Web-sockets, publish-subscribe) di comunicazione.</p></li>
+<li><p>Il logging distribuito un meccanismo di monitoraggio e registrazione delle attività e non un meccanismo
+di comunicazione utile a realizzare in modo genrale ed efficiente la comunicazione tra componenti software.</p></li>
+<li><p>Enterprise Integration Patterns (EIP)</p></li>
+</ul>
+<table class="docutils align-default" style="width: 100%">
+<colgroup>
+<col style="width: 15.0%" />
+<col style="width: 35.0%" />
+<col style="width: 50.0%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>Caratteristica</strong></p></td>
+<td><p><strong>Broker</strong></p></td>
+<td><p><strong>WebSocket</strong></p></td>
+</tr>
+<tr class="row-even"><td><p>Modello</p></td>
+<td><p>Pub-Sub</p></td>
+<td><p>Bidirezionale, full-duplex</p></td>
+</tr>
+<tr class="row-odd"><td><p>Decoupling</p></td>
+<td><p>Alto</p></td>
+<td><p>Basso</p></td>
+</tr>
+<tr class="row-even"><td><p>Scalabilità</p></td>
+<td><p>Alta</p></td>
+<td><p>Dipende dall’implementazione</p></td>
+</tr>
+<tr class="row-odd"><td><p>Flessibilità</p></td>
+<td><p>Alta</p></td>
+<td><p>Più limitata</p></td>
+</tr>
+<tr class="row-even"><td><p>Persistenza</p></td>
+<td><p>Dipende dal broker</p></td>
+<td><p>Dipende dall’implementazione del server WebSocket</p></td>
+</tr>
+<tr class="row-odd"><td><p>Utilizzi tipici</p></td>
+<td><p>Sistemi distribuiti, streaming, IoT</p></td>
+<td><p>Applicazioni in tempo reale, chat, notifiche push</p></td>
+</tr>
+</tbody>
+</table>
+</section>
 </section>
 </section>
 <section id="cargosystem25-con-attori-qak">
@@ -164,6 +248,7 @@ evitando la comunicazione via rete tra il RestController della GUI e il serviceq
     <ul>
 <li><a class="reference internal" href="#">cargosystem25</a><ul>
 <li><a class="reference internal" href="#requisiti">Requisiti</a></li>
+<li><a class="reference internal" href="#impostazioni-preliminari">Impostazioni preliminari</a></li>
 <li><a class="reference internal" href="#progetto-cargoproduct">Progetto cargoproduct</a><ul>
 <li><a class="reference internal" href="#key-points-cargoproduct">Key-points cargoproduct</a></li>
 </ul>
@@ -177,6 +262,10 @@ evitando la comunicazione via rete tra il RestController della GUI e il serviceq
 </ul>
 </li>
 <li><a class="reference internal" href="#sistema-cargoservicem2m">Sistema cargoserviceM2M</a></li>
+<li><a class="reference internal" href="#sistema-cargoservicem2m-con-eventi">Sistema cargoserviceM2M con eventi</a><ul>
+<li><a class="reference internal" href="#key-points-cargoservicem2m-con-eventi">Key-points cargoserviceM2M con eventi</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li><a class="reference internal" href="#cargosystem25-con-attori-qak">cargosystem25 con attori qak</a><ul>

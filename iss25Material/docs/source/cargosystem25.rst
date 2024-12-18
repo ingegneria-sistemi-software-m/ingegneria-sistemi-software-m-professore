@@ -25,8 +25,19 @@ Progettare e costruire un :blue:`sistema software` per il carico/scarico di prod
 in modo automatizzato mediante robot-DDR su di un cargo navale.
 I prodotti da caricare/scaricare devono essere stati precedentemente registrati su database.
  
-:ref:`Cargo24`
- 
+Versione precedente: :ref:`Cargo24`
+
+-----------------------------------------
+Impostazioni preliminari
+-----------------------------------------
+
+- Analisi dei requisiti e del problema: individuazione dei :blue:`BoundedContexts` applicativi
+- Introduzione alla Clean Architecture e ai principi SOLID
+- Comunicazione tra componenti software in termini di :blue:`Business Concepts`
+- Introduzione allo sviluppo agile con ``SCRUM``
+- Vesro componenti con :brown:`loose-coupling e high-coesion`
+- Idea di :blue:`DevOps` e sua evoluzione
+
 -----------------------------------------
 Progetto cargoproduct
 -----------------------------------------
@@ -46,11 +57,15 @@ Key-points cargoproduct
 - Adpater (``AdapterStorage``) per rendere la logica applicativa indipendente dai dispositivi 
   usati per la persistenza.
 - Predisposizione di ``AdapterStorage`` per  selezionare la memoria volatile o il database MongoDB
-  usando variabili di ambiente. In assenza, uso del singleton 
+  usando variabili di ambiente. In assenza, uso del singleton ``StorageVolatile``.
 - Testing in modo automatizzato con JUnit.
 - Logging locale su file.
-- Logging su ElasticSearch e Kibana.
-- Deployment mediante jar.
+- Logging su ElasticSearch e Kibana, attivati come micorservizi ELK su Docker.
+- Deployment mediante file ``cargoproduct-1.0.jar`` di un componente software che:
+
+   - non è autonomo
+   - produce effetti perchè esegue procedure specificate nell'interfaccia ``ICrudOps``
+   - nel caso di memoria piena, esegue il metodo ``createProduct`` restituendo una stringa generica di errore 
 
  
 
@@ -59,13 +74,13 @@ Progetto cargoserviceM2M
 -----------------------------------------
 
 Goal: rendere il sistema del :ref:`Progetto cargoproduct` disponibile in rete come (micro)servizio web 
-per altri programmi.
+per altri programmi  (interazione **M2M**).
 
         .. image::  ./_static/img/m2m/cargoserviceM2M.JPG
            :align: center 
-           :width: 60%  
+           :width: 70%  
 
-Appunti per lo sviloppo del prodotto: :ref:`cargoserviceM2M`
+Appunti per lo sviluppo del prodotto: :ref:`cargoserviceM2M`
 
 +++++++++++++++++++++++++++++++++++++
 Key-points cargoserviceM2M
@@ -73,28 +88,34 @@ Key-points cargoserviceM2M
 
 .. File cargoservice.properties per  selezionare la memoria volatile o il database MongoDB
 
-- Uso di Spring e di un componente @RestController per rendere la logica applicativa accessibile via rete ad altri progrsmmi
-  (interazione **M2M**).
-- Registrazione del servizio su Eureka.
+- Uso di Spring e di un componente @RestController per rendere la logica applicativa accessibile via rete 
+  ad altri programmi (interazione **M2M** :brown:`RESTful`).
+- @RestController come componente di Spring che riceve richieste HTTP e risponde con oggetti JSON 
+  invocando le operazioni dell'interfaccia ``ICrudOps`` realizzate dal singleton ``ProductServiceLogic``.
+- Registrazione su Eureka del servizio con nome ``cargoserviceM2M``.
 - Interazioni via HTTP (sincrone) e via Web-sockets (asincrone)
 - Problema degli accessi concorrenti e come evitare la possibile duplicazione di prodotti.
-- Sperimentazione di callers via HTTP e via Web-sockets
-- Distribuzione del prodotto software in forma di micro-servizio su Docker.
+- Sperimentazione di callers via HTTP e via Web-sockets (protocollo non limitato ai sistem Web)
+- Distribuzione del prodotto software in forma di micro-servizio su Docker: 
+  file *cargo2025\yamls\cargoServiceNoGui.yml* con variabili di ambiente che permettono di usare ``MongoDB``.
 - Definizione di un caller (``PSLCallerHTTP``) che usa il servizio via HTTP e 
   di un caller (``WebSocketClient``) che usa il servizio via Web-socket.
-
+- L'astrazione :blue:`Interaction`, la libreria ``unibo.basicomm23-1.0`` e il caller ``PSLDiscoverCallerInteraction`` 
+  che include la scoperta (discovery) del servizio ``cargoserviceM2M`` mediante Eureka.
+ 
 
 -----------------------------------------
 Progetto cargoserviceM2MGui
 -----------------------------------------
 
-Goal: dotare il sistema del :ref:`Progetto cargoserviceM2M` di una GUI per la interazione uomo-macchina.
+Goal: dotare il sistema del :ref:`Progetto cargoserviceM2M` di una GUI per la interazione uomo-macchina
+(interazione **H2M**).
 
         .. image::  ./_static/img/m2m/cargoserviceM2MGui.jpg
            :align: center 
-           :width: 50%  
+           :width: 60%  
 
-Appunti per lo sviloppo del prodotto: :ref:`cargoserviceM2MGui`
+Appunti per lo sviluppo del prodotto: :ref:`cargoserviceM2MGui`
 
 +++++++++++++++++++++++++++++++++++++
 Key-points cargoserviceM2MGui
@@ -104,7 +125,10 @@ Key-points cargoserviceM2MGui
   esseri umani (interazione **H2M**).
 - Realizzare una GUI in HTML e Javascript che invia comandi e riceve sia risposte sia aggiornamenti.
 - Aggiornamento della pagina mediante Theamleaf
-- Uso di form e dell'operatore ``fetch``  per l'invio di comandi
+- Uso di form e dell'operatore ``fetch``  per l'invio di comandi come messaggi HTTP.
+- Multiple UI, Aggregatori, API Gateway
+- User experience
+- BFF (Beckends Bor Frontends)
 - Discovery del servizio ``cargoserviceM2M`` mediante Eureka
 - Definizione di un caller (``GuiCallerHTTP``) che usa il servizio via HTTP sperimentando diversi tipi 
   di risposta da part del @Controller
@@ -119,6 +143,59 @@ Goal: costruire il sistema facendo interagire due micro-servizi deployed su Dock
         .. image::  ./_static/img/m2m/cargoserviceM2MAndGui.jpg
            :align: center 
            :width: 60%  
+
+- File *cargo2025\yamls\cargowareservice.yml* 
+
+-----------------------------------------
+Sistema cargoserviceM2M con eventi
+-----------------------------------------
+
+Goal: estendere il servizio del :ref:`Progetto cargoserviceM2M` in modo che possa emettere informazioni 
+in forma di eventi perecibili e visualizzabili nella GUI del :ref:`Progetto cargoserviceM2MGui`
+
+
++++++++++++++++++++++++++++++++++++++++
+Key-points cargoserviceM2M con eventi
++++++++++++++++++++++++++++++++++++++++
+
+- I (micro)servizi non sono solo anemici CRUD-Wrappers
+- I (micro)servizi sono concettualmente enti autonomi che possono emettere/percepire eventi e interagire tra loro
+  con meccanismi asincroni (es. Web-sockets, publish-subscribe) di comunicazione.
+- Il logging distribuito un meccanismo di monitoraggio e registrazione delle attività e non un meccanismo 
+  di comunicazione utile a realizzare in modo genrale ed efficiente la comunicazione tra componenti software.
+- Enterprise Integration Patterns (EIP)  
+
+
+.. list-table::
+    :widths: 15,35,50
+    :width: 100%
+    
+    * - **Caratteristica**
+      - **Broker**    
+      - **WebSocket**
+    * - Modello
+      - Pub-Sub    
+      - Bidirezionale, full-duplex
+    * - Decoupling
+      - Alto    
+      - Basso
+    * - Scalabilità
+      - Alta    
+      - Dipende dall'implementazione
+    * - Flessibilità
+      - Alta    
+      - Più limitata
+    * - Persistenza
+      - Dipende dal broker   
+      - Dipende dall'implementazione del server WebSocket
+    * - Utilizzi tipici
+      - Sistemi distribuiti, streaming, IoT    
+      - Applicazioni in tempo reale, chat, notifiche push
+
+
+
+
+
 
 ===================================
 cargosystem25 con attori qak
