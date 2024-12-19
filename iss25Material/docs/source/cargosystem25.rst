@@ -13,6 +13,8 @@
 .. role:: slidekp
 .. role:: worktodo 
 
+.. _appllevel: file:///C:/Didattica2025/mcrsv24/cargo2025/userDocs/cargoHistory.html#appllevel
+
 ===================================
 cargosystem25
 ===================================
@@ -99,9 +101,11 @@ Key-points cargoserviceM2M
 - Distribuzione del prodotto software in forma di micro-servizio su Docker: 
   file *cargo2025\yamls\cargoServiceNoGui.yml* con variabili di ambiente che permettono di usare ``MongoDB``.
 - Definizione di un caller (``PSLCallerHTTP``) che usa il servizio via HTTP e 
-  di un caller (``WebSocketClient``) che usa il servizio via Web-socket.
-- L'astrazione :blue:`Interaction`, la libreria ``unibo.basicomm23-1.0`` e il caller ``PSLDiscoverCallerInteraction`` 
-  che include la scoperta (discovery) del servizio ``cargoserviceM2M`` mediante Eureka.
+  di un caller (``PSLCallerWS``) che usa il servizio via Web-socket.
+- L'astrazione :blue:`Interaction`, la libreria ``unibo.basicomm23-1.0``,
+  il caller ``PSLCallerWSInteraction`` e
+  il caller ``PSLDiscoverCallerHTTPInteraction`` 
+  che include la scoperta (*discovery*) del servizio ``cargoserviceM2M`` mediante Eureka.
  
 
 -----------------------------------------
@@ -130,8 +134,8 @@ Key-points cargoserviceM2MGui
 - User experience
 - BFF (Beckends Bor Frontends)
 - Discovery del servizio ``cargoserviceM2M`` mediante Eureka
-- Definizione di un caller (``GuiCallerHTTP``) che usa il servizio via HTTP sperimentando diversi tipi 
-  di risposta da part del @Controller
+- Definizione di un caller (``GuiCallerHTTP``) che usa il servizio con Interaction su HTTP, 
+  sperimentando diversi tipi  di risposta da part del @Controller
 
 
 -----------------------------------------
@@ -151,7 +155,7 @@ Sistema cargoserviceM2M con eventi
 -----------------------------------------
 
 Goal: estendere il servizio del :ref:`Progetto cargoserviceM2M` in modo che possa emettere informazioni 
-in forma di eventi perecibili e visualizzabili nella GUI del :ref:`Progetto cargoserviceM2MGui`
+in forma di eventi percepibili e visualizzabili nella GUI del :ref:`Progetto cargoserviceM2MGui`
 
 
 +++++++++++++++++++++++++++++++++++++++
@@ -162,8 +166,9 @@ Key-points cargoserviceM2M con eventi
 - I (micro)servizi sono concettualmente enti autonomi che possono emettere/percepire eventi e interagire tra loro
   con meccanismi asincroni (es. Web-sockets, publish-subscribe) di comunicazione.
 - Il logging distribuito un meccanismo di monitoraggio e registrazione delle attività e non un meccanismo 
-  di comunicazione utile a realizzare in modo genrale ed efficiente la comunicazione tra componenti software.
-- Enterprise Integration Patterns (EIP)  
+  di comunicazione utile a realizzare in modo generale ed efficiente la comunicazione tra componenti software.
+- Introduzione ai tipi logici di messggio `appllevel`_ (*I Protocolli e i dati*)
+- Enterprise Integration Patterns (**EIP**)  
 
 
 .. list-table::

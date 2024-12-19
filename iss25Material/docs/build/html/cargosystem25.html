@@ -113,9 +113,11 @@ invocando le operazioni dell’interfaccia <code class="docutils literal notrans
 <li><p>Distribuzione del prodotto software in forma di micro-servizio su Docker:
 file <em>cargo2025yamlscargoServiceNoGui.yml</em> con variabili di ambiente che permettono di usare <code class="docutils literal notranslate"><span class="pre">MongoDB</span></code>.</p></li>
 <li><p>Definizione di un caller (<code class="docutils literal notranslate"><span class="pre">PSLCallerHTTP</span></code>) che usa il servizio via HTTP e
-di un caller (<code class="docutils literal notranslate"><span class="pre">WebSocketClient</span></code>) che usa il servizio via Web-socket.</p></li>
-<li><p>L’astrazione <span class="blue">Interaction</span>, la libreria <code class="docutils literal notranslate"><span class="pre">unibo.basicomm23-1.0</span></code> e il caller <code class="docutils literal notranslate"><span class="pre">PSLDiscoverCallerInteraction</span></code>
-che include la scoperta (discovery) del servizio <code class="docutils literal notranslate"><span class="pre">cargoserviceM2M</span></code> mediante Eureka.</p></li>
+di un caller (<code class="docutils literal notranslate"><span class="pre">PSLCallerWS</span></code>) che usa il servizio via Web-socket.</p></li>
+<li><p>L’astrazione <span class="blue">Interaction</span>, la libreria <code class="docutils literal notranslate"><span class="pre">unibo.basicomm23-1.0</span></code>,
+il caller <code class="docutils literal notranslate"><span class="pre">PSLCallerWSInteraction</span></code> e
+il caller <code class="docutils literal notranslate"><span class="pre">PSLDiscoverCallerHTTPInteraction</span></code>
+che include la scoperta (<em>discovery</em>) del servizio <code class="docutils literal notranslate"><span class="pre">cargoserviceM2M</span></code> mediante Eureka.</p></li>
 </ul>
 </section>
 </section>
@@ -159,7 +161,7 @@ di risposta da part del &#64;Controller</p></li>
 <section id="sistema-cargoservicem2m-con-eventi">
 <h2>Sistema cargoserviceM2M con eventi<a class="headerlink" href="#sistema-cargoservicem2m-con-eventi" title="Link to this heading">¶</a></h2>
 <p>Goal: estendere il servizio del <a class="reference internal" href="#progetto-cargoservicem2m"><span class="std std-ref">Progetto cargoserviceM2M</span></a> in modo che possa emettere informazioni
-in forma di eventi perecibili e visualizzabili nella GUI del <a class="reference internal" href="#progetto-cargoservicem2mgui"><span class="std std-ref">Progetto cargoserviceM2MGui</span></a></p>
+in forma di eventi percepibili e visualizzabili nella GUI del <a class="reference internal" href="#progetto-cargoservicem2mgui"><span class="std std-ref">Progetto cargoserviceM2MGui</span></a></p>
 <section id="key-points-cargoservicem2m-con-eventi">
 <h3>Key-points cargoserviceM2M con eventi<a class="headerlink" href="#key-points-cargoservicem2m-con-eventi" title="Link to this heading">¶</a></h3>
 <ul class="simple">
@@ -168,7 +170,8 @@ in forma di eventi perecibili e visualizzabili nella GUI del <a class="reference
 con meccanismi asincroni (es. Web-sockets, publish-subscribe) di comunicazione.</p></li>
 <li><p>Il logging distribuito un meccanismo di monitoraggio e registrazione delle attività e non un meccanismo
 di comunicazione utile a realizzare in modo genrale ed efficiente la comunicazione tra componenti software.</p></li>
-<li><p>Enterprise Integration Patterns (EIP)</p></li>
+<li><p>Introduzione ai tipi logici di messggio <a class="reference external" href="file:///C:/Didattica2025/mcrsv24/cargo2025/userDocs/cargoHistory.html#appllevel">appllevel</a> (<em>I Protocolli e i dati</em>)</p></li>
+<li><p>Enterprise Integration Patterns (<strong>EIP</strong>)</p></li>
 </ul>
 <table class="docutils align-default" style="width: 100%">
 <colgroup>
