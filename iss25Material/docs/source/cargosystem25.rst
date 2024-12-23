@@ -95,7 +95,8 @@ Key-points cargoserviceM2M
 - @RestController come componente di Spring che riceve richieste HTTP e risponde con oggetti JSON 
   invocando le operazioni dell'interfaccia ``ICrudOps`` realizzate dal singleton ``ProductServiceLogic``.
 - Registrazione su Eureka del servizio con nome ``cargoserviceM2M``.
-- Interazioni via HTTP (sincrone) e via Web-sockets (asincrone)
+- Interazioni via HTTP (sincrone) e via Web-sockets (asincrone).
+- Supporti per interazioni via WS: ``WSServerServiceM2M`` e ``PSLUsageWS``
 - Problema degli accessi concorrenti e come evitare la possibile duplicazione di prodotti.
 - Sperimentazione di callers via HTTP e via Web-sockets (protocollo non limitato ai sistem Web)
 - Distribuzione del prodotto software in forma di micro-servizio su Docker: 
