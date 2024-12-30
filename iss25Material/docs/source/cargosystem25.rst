@@ -82,7 +82,7 @@ Key-points cargoproduct
 Progetto cargoserviceM2M
 -----------------------------------------
 
-Goal: rendere il sistema del :ref:`Progetto cargoproduct` disponibile in rete come (micro)servizio web 
+:slide3:`Goal`: rendere il sistema del :ref:`Progetto cargoproduct` disponibile in rete come (micro)servizio web 
 per altri programmi  (interazione **M2M**).
 
         .. image::  ./_static/img/m2m/cargoserviceM2M.JPG
@@ -174,7 +174,7 @@ Uso di cargoserviceM2M
 Progetto cargoserviceM2MGui
 -----------------------------------------
 
-Goal: dotare il sistema del :ref:`Progetto cargoserviceM2M` di una GUI per la interazione uomo-macchina
+:slide3:`Goal`: dotare il sistema del :ref:`Progetto cargoserviceM2M` di una GUI per la interazione uomo-macchina
 (interazione **H2M**).
 
         .. image::  ./_static/img/m2m/cargoserviceM2MGui.jpg
@@ -207,7 +207,7 @@ TODO
 Sistema cargoserviceM2M 
 -----------------------------------------
 
-Goal: costruire il sistema facendo interagire due micro-servizi deployed su Docker
+:slide3:`Goal`: costruire il sistema facendo interagire due micro-servizi deployed su Docker
 
         .. image::  ./_static/img/m2m/cargoserviceM2MAndGui.jpg
            :align: center 
@@ -255,27 +255,19 @@ Goal: costruire il sistema facendo interagire due micro-servizi deployed su Dock
         external: true
 
 
-
 -----------------------------------------
-Sistema cargoserviceM2M con eventi
+cargoserviceM2M con eventi
 -----------------------------------------
-
-Goal: estendere il servizio del :ref:`Progetto cargoserviceM2M` in modo che possa emettere informazioni 
-in forma di eventi percepibili e visualizzabili nella GUI del :ref:`Progetto cargoserviceM2MGui`
-
 
 +++++++++++++++++++++++++++++++++++++++
-Key-points cargoserviceM2M con eventi
+Ossevazioni preliminari
 +++++++++++++++++++++++++++++++++++++++
 
 - I (micro)servizi non sono solo anemici CRUD-Wrappers
-- I (micro)servizi sono concettualmente enti autonomi che possono emettere/percepire eventi e interagire tra loro
-  con meccanismi asincroni (es. Web-sockets, publish-subscribe) di comunicazione.
 - Il logging distribuito è un meccanismo di monitoraggio e registrazione delle attività e non un meccanismo 
   di comunicazione utile a realizzare in modo generale ed efficiente la comunicazione tra componenti software.
-- Introduzione ai tipi logici di messggio `appllevel`_ (*I Protocolli e i dati*)
-- Reference: Enterprise Integration Patterns (**EIP**)  
-
+- I (micro)servizi sono concettualmente enti autonomi che possono emettere/percepire eventi e interagire tra loro
+  con meccanismi asincroni (es. Web-sockets, publish-subscribe) di comunicazione.
 
 +++++++++++++++++++++++++++++++++++++++
 Pub-sub o WebSocket?
@@ -307,6 +299,30 @@ Pub-sub o WebSocket?
       - Sistemi distribuiti, streaming, IoT    
       - Applicazioni in tempo reale, chat, notifiche push
 
+:slide3:`Goal`: estendere il servizio del :ref:`Progetto cargoserviceM2M` in modo che possa emettere informazioni 
+in forma di :blue:`eventi` percepibili e visualizzabili nella GUI del :ref:`Progetto cargoserviceM2MGui`
+
++++++++++++++++++++++++++++++++++++++++
+Key-points cargoserviceM2M con eventi
++++++++++++++++++++++++++++++++++++++++
+
+- Supporti per interazioni pub-sub in MQTT (**Message Queuing Telemetry Transport**)
+- Introduzione di un broker MQTT (es. **Mosquitto**) per la comunicazione asincrona tra i servizi
+- Introduzione di un supporto MQTT lato service per la pubblicazione degli eventi
+- Introduzione di un supporto MQTT lato GUI per la ricezione degli eventi pubblicati dal servizio
+
+.. - Introduzione ai tipi logici di messggio `appllevel`_ (*I Protocolli e i dati*)
+.. - Reference: Enterprise Integration Patterns (**EIP**)  
+
+.. image::  ./_static/img/m2m/cargoserviceM2MEvents.jpg
+  :align: center 
+  :width: 60%  
+
+
+.. image::  ./_static/img/m2m/cargoserviceM2MGuiEvents.jpg
+  :align: center 
+  :width: 60%  
+
 ===================================
 cargosystem25 con attori qak
 ===================================
@@ -315,7 +331,7 @@ cargosystem25 con attori qak
 Progetto cargoservice
 -----------------------------------------
 
-Goal: costruire un micorservizio basato sugli attori.
+:slide3:`Goal`: costruire un micorservizio basato sugli attori.
 
 +++++++++++++++++++++++++++++++++++++
 Key-points cargoservice
@@ -325,7 +341,7 @@ Key-points cargoservice
 Progetto cargoserviceQakGui
 -----------------------------------------
 
-Goal: dotare il sistema del :ref:`Progetto cargoservice` di una GUI per la interazione uomo-macchina.
+:slide3:`Goal`: dotare il sistema del :ref:`Progetto cargoservice` di una GUI per la interazione uomo-macchina.
 
 +++++++++++++++++++++++++++++++++++++
 Key-points cargoserviceQakGui
@@ -339,7 +355,7 @@ Progetto cargoserviceM2MQakLocal
 Key-points cargoserviceM2MQakLocal
 +++++++++++++++++++++++++++++++++++++++
 
-Goal: dotare il sistema del :ref:`Progetto cargoservice` di una GUI per la interazione uomo-macchina
+:slide3:`Goal`: dotare il sistema del :ref:`Progetto cargoservice` di una GUI per la interazione uomo-macchina
 evitando la comunicazione via rete tra il RestController della GUI e il serviceqak.
 
 
