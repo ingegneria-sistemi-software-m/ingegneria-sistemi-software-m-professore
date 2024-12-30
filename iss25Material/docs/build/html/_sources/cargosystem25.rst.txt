@@ -14,6 +14,9 @@
 .. role:: worktodo 
 
 .. _appllevel: file:///C:/Didattica2025/mcrsv24/cargo2025/userDocs/cargoHistory.html#appllevel
+.. _cargoenvBase.yml: file:///C:/Didattica2025/mcrsv24/cargo2025/yamls/cargoenvBase.yml
+.. _DockerfileM2M: file:///C:/Didattica2025/mcrsv24/cargoserviceM2M/Dockerfile
+.. _DockerfileM2MRasp: file:///C:/Didattica2025/mcrsv24/cargoserviceM2M/DockerfileM2mRasp
 
 ===================================
 cargosystem25
@@ -39,6 +42,10 @@ Impostazioni preliminari
 - Introduzione allo sviluppo agile con ``SCRUM``
 - Vesro componenti con :brown:`loose-coupling e high-coesion`
 - Idea di :blue:`DevOps` e sua evoluzione
+- Micro-servizi di supporto attivabili con il file 
+  `cargoenvBase.yml`_  (**cargo2025/yamls/cargoenvBase.yml**)
+
+
 
 -----------------------------------------
 Progetto cargoproduct
@@ -56,7 +63,7 @@ Key-points cargoproduct
 +++++++++++++++++++++++++++++++++++++
 
 - Impostazione del Workspace Eclipse e di un progetto Gradle con relativo build file.
-- Adpater (``AdapterStorage``) per rendere la logica applicativa indipendente dai dispositivi 
+- Adapter (``AdapterStorage``) per rendere la logica applicativa indipendente dai dispositivi 
   usati per la persistenza.
 - Predisposizione di ``AdapterStorage`` per  selezionare la memoria volatile o il database MongoDB
   usando variabili di ambiente. In assenza, uso del singleton ``StorageVolatile``.
@@ -95,11 +102,66 @@ Key-points cargoserviceM2M
 - @RestController come componente di Spring che riceve richieste HTTP e risponde con oggetti JSON 
   invocando le operazioni dell'interfaccia ``ICrudOps`` realizzate dal singleton ``ProductServiceLogic``.
 - Registrazione su Eureka del servizio con nome ``cargoserviceM2M``.
-- Interazioni via HTTP (sincrone) e via Web-sockets (asincrone)
+- Interazioni via HTTP (sincrone) e via Web-sockets (asincrone).
+- Supporti per interazioni via WS: ``WSServerServiceM2M`` e ``PSLUsageWS``
 - Problema degli accessi concorrenti e come evitare la possibile duplicazione di prodotti.
-- Sperimentazione di callers via HTTP e via Web-sockets (protocollo non limitato ai sistem Web)
-- Distribuzione del prodotto software in forma di micro-servizio su Docker: 
-  file *cargo2025\yamls\cargoServiceNoGui.yml* con variabili di ambiente che permettono di usare ``MongoDB``.
+- Distribuzione del prodotto software in forma di micro-servizio su Docker.
+
+File `DockerfileM2M`_ per la generazione della immagine *cargoservice:3.0*
+e docker-compsoe file **cargo2025/yamls/cargoServiceNoGui.yml**,
+con variabili di ambiente che permettono di usare ``MongoDB``:
+
+  .. code::
+
+    services:
+      cargoservice:
+        image: cargoservice:3.0 
+        #image: natbodocker/cargoservice:3.0
+        container_name: cargoservice
+        environment:
+          - EUREKA_INSTANCE_LEASE_RENEWAL_INTERVAL_IN_SECONDS=60
+          - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://eureka:8761/eureka/
+          - MONGO_URL=mongodb://mongosrv:27017
+        ports:
+          - 8111:8111/tcp
+          - 8111:8111/udp
+        networks:
+          - cargo-network
+
+    networks:
+      cargo-network:
+        external: true
+
+
++++++++++++++++++++++++++++++++++++++
+cargoserviceM2M su Raspberry
++++++++++++++++++++++++++++++++++++++
+
+File `DockerfileM2MRasp`_ per la generazione della immagine *imgservicerasp:1.0*
+e docker-compose file: **cargo2025/yamls/cargoServiceRasp.yml.yml**
+
+.. code::
+
+    services:
+          
+      cargoservice:
+        image: imgservicerasp:1.0 
+        #image: natbodocker/imgservicerasp:1.0
+        container_name: cargoraspservice
+        environment:
+          - EUREKA_INSTANCE_LEASE_RENEWAL_INTERVAL_IN_SECONDS=60
+          - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://eureka:8761/eureka/
+          - MONGO_URL=mongodb://192.168.1.132:27017
+        ports:
+          - 8111:8111/tcp
+          - 8111:8111/udp
+
+
++++++++++++++++++++++++++++++++++++++
+Uso di cargoserviceM2M
++++++++++++++++++++++++++++++++++++++
+
+- Sperimentazione di callers via HTTP e via Web-sockets (protocollo non limitato ai sistemi Web)
 - Definizione di un caller (``PSLCallerHTTP``) che usa il servizio via HTTP e 
   di un caller (``PSLCallerWS``) che usa il servizio via Web-socket.
 - L'astrazione :blue:`Interaction`, la libreria ``unibo.basicomm23-1.0``,
@@ -130,13 +192,16 @@ Key-points cargoserviceM2MGui
 - Realizzare una GUI in HTML e Javascript che invia comandi e riceve sia risposte sia aggiornamenti.
 - Aggiornamento della pagina mediante Theamleaf
 - Uso di form e dell'operatore ``fetch``  per l'invio di comandi come messaggi HTTP.
-- Multiple UI, Aggregatori, API Gateway
-- User experience
-- BFF (Beckends Bor Frontends)
 - Discovery del servizio ``cargoserviceM2M`` mediante Eureka
 - Definizione di un caller (``GuiCallerHTTP``) che usa il servizio con Interaction su HTTP, 
   sperimentando diversi tipi  di risposta da part del @Controller
 
+
+TODO
+
+- Multiple UI, Aggregatori, API Gateway
+- User experience
+- BFF (Beckends Bor Frontends)
 
 -----------------------------------------
 Sistema cargoserviceM2M 
@@ -148,7 +213,48 @@ Goal: costruire il sistema facendo interagire due micro-servizi deployed su Dock
            :align: center 
            :width: 60%  
 
-- File *cargo2025\yamls\cargowareservice.yml* 
+- Deploymente mediante File docker-compose: *cargo2025/yamls/cargowareservice.yml* 
+
+  .. code::
+
+    services:
+          
+      cargoservice:
+        #image: cargoservice:3.0  
+        image: natbodocker/cargoservice:3.0 
+        container_name: cargoservice
+        environment:
+          - EUREKA_INSTANCE_LEASE_RENEWAL_INTERVAL_IN_SECONDS=60
+          - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://eureka:8761/eureka/
+          - MONGO_URL=mongodb://mongosrv:27017
+    #      - RASP_ADDR=192.168.1.248   
+        ports:
+          - 8111:8111/tcp
+          - 8111:8111/udp
+        networks:
+          - cargo-network
+
+
+      cargoservicegui:
+        #image: cargoservicespringnat:3.0 
+        image: natbodocker/cargoservicespringnat:3.0 
+        container_name: cargoservicegui
+        environment:
+          - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://eureka:8761/eureka/
+          - SERVICE_URL=http://localhost:8075   ##set to http://CommUtils.getMyPublicip() by PSLControllerWithQak 
+          - PRODUCT_SERVICEADDR=cargoservice    
+        ports:
+          - 8075:8075/tcp
+        depends_on:
+          - cargoservice
+        networks:
+          - cargo-network
+
+    networks:
+      cargo-network:
+        external: true
+
+
 
 -----------------------------------------
 Sistema cargoserviceM2M con eventi
@@ -165,11 +271,15 @@ Key-points cargoserviceM2M con eventi
 - I (micro)servizi non sono solo anemici CRUD-Wrappers
 - I (micro)servizi sono concettualmente enti autonomi che possono emettere/percepire eventi e interagire tra loro
   con meccanismi asincroni (es. Web-sockets, publish-subscribe) di comunicazione.
-- Il logging distribuito un meccanismo di monitoraggio e registrazione delle attività e non un meccanismo 
+- Il logging distribuito è un meccanismo di monitoraggio e registrazione delle attività e non un meccanismo 
   di comunicazione utile a realizzare in modo generale ed efficiente la comunicazione tra componenti software.
 - Introduzione ai tipi logici di messggio `appllevel`_ (*I Protocolli e i dati*)
-- Enterprise Integration Patterns (**EIP**)  
+- Reference: Enterprise Integration Patterns (**EIP**)  
 
+
++++++++++++++++++++++++++++++++++++++++
+Pub-sub o WebSocket?
++++++++++++++++++++++++++++++++++++++++
 
 .. list-table::
     :widths: 15,35,50

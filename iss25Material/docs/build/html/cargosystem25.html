@@ -57,6 +57,8 @@ I prodotti da caricare/scaricare devono essere stati precedentemente registrati 
 <li><p>Introduzione allo sviluppo agile con <code class="docutils literal notranslate"><span class="pre">SCRUM</span></code></p></li>
 <li><p>Vesro componenti con <span class="brown">loose-coupling e high-coesion</span></p></li>
 <li><p>Idea di <span class="blue">DevOps</span> e sua evoluzione</p></li>
+<li><p>Micro-servizi di supporto attivabili con il file
+<a class="reference external" href="file:///C:/Didattica2025/mcrsv24/cargo2025/yamls/cargoenvBase.yml">cargoenvBase.yml</a>  (<strong>cargo2025/yamls/cargoenvBase.yml</strong>)</p></li>
 </ul>
 </section>
 <section id="progetto-cargoproduct">
@@ -71,7 +73,7 @@ di diverse forme: inizialmente una semplice lista in memoria volatile, poi un da
 <h3>Key-points cargoproduct<a class="headerlink" href="#key-points-cargoproduct" title="Link to this heading">¶</a></h3>
 <ul>
 <li><p>Impostazione del Workspace Eclipse e di un progetto Gradle con relativo build file.</p></li>
-<li><p>Adpater (<code class="docutils literal notranslate"><span class="pre">AdapterStorage</span></code>) per rendere la logica applicativa indipendente dai dispositivi
+<li><p>Adapter (<code class="docutils literal notranslate"><span class="pre">AdapterStorage</span></code>) per rendere la logica applicativa indipendente dai dispositivi
 usati per la persistenza.</p></li>
 <li><p>Predisposizione di <code class="docutils literal notranslate"><span class="pre">AdapterStorage</span></code> per  selezionare la memoria volatile o il database MongoDB
 usando variabili di ambiente. In assenza, uso del singleton <code class="docutils literal notranslate"><span class="pre">StorageVolatile</span></code>.</p></li>
@@ -107,11 +109,61 @@ ad altri programmi (interazione <strong>M2M</strong> <span class="brown">RESTful
 <li><p>&#64;RestController come componente di Spring che riceve richieste HTTP e risponde con oggetti JSON
 invocando le operazioni dell’interfaccia <code class="docutils literal notranslate"><span class="pre">ICrudOps</span></code> realizzate dal singleton <code class="docutils literal notranslate"><span class="pre">ProductServiceLogic</span></code>.</p></li>
 <li><p>Registrazione su Eureka del servizio con nome <code class="docutils literal notranslate"><span class="pre">cargoserviceM2M</span></code>.</p></li>
-<li><p>Interazioni via HTTP (sincrone) e via Web-sockets (asincrone)</p></li>
+<li><p>Interazioni via HTTP (sincrone) e via Web-sockets (asincrone).</p></li>
+<li><p>Supporti per interazioni via WS: <code class="docutils literal notranslate"><span class="pre">WSServerServiceM2M</span></code> e <code class="docutils literal notranslate"><span class="pre">PSLUsageWS</span></code></p></li>
 <li><p>Problema degli accessi concorrenti e come evitare la possibile duplicazione di prodotti.</p></li>
-<li><p>Sperimentazione di callers via HTTP e via Web-sockets (protocollo non limitato ai sistem Web)</p></li>
-<li><p>Distribuzione del prodotto software in forma di micro-servizio su Docker:
-file <em>cargo2025yamlscargoServiceNoGui.yml</em> con variabili di ambiente che permettono di usare <code class="docutils literal notranslate"><span class="pre">MongoDB</span></code>.</p></li>
+<li><p>Distribuzione del prodotto software in forma di micro-servizio su Docker.</p></li>
+</ul>
+<p>File <a class="reference external" href="file:///C:/Didattica2025/mcrsv24/cargoserviceM2M/Dockerfile">DockerfileM2M</a> per la generazione della immagine <em>cargoservice:3.0</em>
+e docker-compsoe file <strong>cargo2025/yamls/cargoServiceNoGui.yml</strong>,
+con variabili di ambiente che permettono di usare <code class="docutils literal notranslate"><span class="pre">MongoDB</span></code>:</p>
+<blockquote>
+<div><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">services</span><span class="p">:</span>
+  <span class="n">cargoservice</span><span class="p">:</span>
+    <span class="n">image</span><span class="p">:</span> <span class="n">cargoservice</span><span class="p">:</span><span class="mf">3.0</span>
+    <span class="c1">#image: natbodocker/cargoservice:3.0</span>
+    <span class="n">container_name</span><span class="p">:</span> <span class="n">cargoservice</span>
+    <span class="n">environment</span><span class="p">:</span>
+      <span class="o">-</span> <span class="n">EUREKA_INSTANCE_LEASE_RENEWAL_INTERVAL_IN_SECONDS</span><span class="o">=</span><span class="mi">60</span>
+      <span class="o">-</span> <span class="n">EUREKA_CLIENT_SERVICEURL_DEFAULTZONE</span><span class="o">=</span><span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">eureka</span><span class="p">:</span><span class="mi">8761</span><span class="o">/</span><span class="n">eureka</span><span class="o">/</span>
+      <span class="o">-</span> <span class="n">MONGO_URL</span><span class="o">=</span><span class="n">mongodb</span><span class="p">:</span><span class="o">//</span><span class="n">mongosrv</span><span class="p">:</span><span class="mi">27017</span>
+    <span class="n">ports</span><span class="p">:</span>
+      <span class="o">-</span> <span class="mi">8111</span><span class="p">:</span><span class="mi">8111</span><span class="o">/</span><span class="n">tcp</span>
+      <span class="o">-</span> <span class="mi">8111</span><span class="p">:</span><span class="mi">8111</span><span class="o">/</span><span class="n">udp</span>
+    <span class="n">networks</span><span class="p">:</span>
+      <span class="o">-</span> <span class="n">cargo</span><span class="o">-</span><span class="n">network</span>
+
+<span class="n">networks</span><span class="p">:</span>
+  <span class="n">cargo</span><span class="o">-</span><span class="n">network</span><span class="p">:</span>
+    <span class="n">external</span><span class="p">:</span> <span class="n">true</span>
+</pre></div>
+</div>
+</div></blockquote>
+</section>
+<section id="cargoservicem2m-su-raspberry">
+<h3>cargoserviceM2M su Raspberry<a class="headerlink" href="#cargoservicem2m-su-raspberry" title="Link to this heading">¶</a></h3>
+<p>File <a class="reference external" href="file:///C:/Didattica2025/mcrsv24/cargoserviceM2M/DockerfileM2mRasp">DockerfileM2MRasp</a> per la generazione della immagine <em>imgservicerasp:1.0</em>
+e docker-compose file: <strong>cargo2025/yamls/cargoServiceRasp.yml.yml</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">services</span><span class="p">:</span>
+
+  <span class="n">cargoservice</span><span class="p">:</span>
+    <span class="n">image</span><span class="p">:</span> <span class="n">imgservicerasp</span><span class="p">:</span><span class="mf">1.0</span>
+    <span class="c1">#image: natbodocker/imgservicerasp:1.0</span>
+    <span class="n">container_name</span><span class="p">:</span> <span class="n">cargoraspservice</span>
+    <span class="n">environment</span><span class="p">:</span>
+      <span class="o">-</span> <span class="n">EUREKA_INSTANCE_LEASE_RENEWAL_INTERVAL_IN_SECONDS</span><span class="o">=</span><span class="mi">60</span>
+      <span class="o">-</span> <span class="n">EUREKA_CLIENT_SERVICEURL_DEFAULTZONE</span><span class="o">=</span><span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">eureka</span><span class="p">:</span><span class="mi">8761</span><span class="o">/</span><span class="n">eureka</span><span class="o">/</span>
+      <span class="o">-</span> <span class="n">MONGO_URL</span><span class="o">=</span><span class="n">mongodb</span><span class="p">:</span><span class="o">//</span><span class="mf">192.168.1.132</span><span class="p">:</span><span class="mi">27017</span>
+    <span class="n">ports</span><span class="p">:</span>
+      <span class="o">-</span> <span class="mi">8111</span><span class="p">:</span><span class="mi">8111</span><span class="o">/</span><span class="n">tcp</span>
+      <span class="o">-</span> <span class="mi">8111</span><span class="p">:</span><span class="mi">8111</span><span class="o">/</span><span class="n">udp</span>
+</pre></div>
+</div>
+</section>
+<section id="uso-di-cargoservicem2m">
+<h3>Uso di cargoserviceM2M<a class="headerlink" href="#uso-di-cargoservicem2m" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p>Sperimentazione di callers via HTTP e via Web-sockets (protocollo non limitato ai sistemi Web)</p></li>
 <li><p>Definizione di un caller (<code class="docutils literal notranslate"><span class="pre">PSLCallerHTTP</span></code>) che usa il servizio via HTTP e
 di un caller (<code class="docutils literal notranslate"><span class="pre">PSLCallerWS</span></code>) che usa il servizio via Web-socket.</p></li>
 <li><p>L’astrazione <span class="blue">Interaction</span>, la libreria <code class="docutils literal notranslate"><span class="pre">unibo.basicomm23-1.0</span></code>,
@@ -138,12 +190,15 @@ esseri umani (interazione <strong>H2M</strong>).</p></li>
 <li><p>Realizzare una GUI in HTML e Javascript che invia comandi e riceve sia risposte sia aggiornamenti.</p></li>
 <li><p>Aggiornamento della pagina mediante Theamleaf</p></li>
 <li><p>Uso di form e dell’operatore <code class="docutils literal notranslate"><span class="pre">fetch</span></code>  per l’invio di comandi come messaggi HTTP.</p></li>
-<li><p>Multiple UI, Aggregatori, API Gateway</p></li>
-<li><p>User experience</p></li>
-<li><p>BFF (Beckends Bor Frontends)</p></li>
 <li><p>Discovery del servizio <code class="docutils literal notranslate"><span class="pre">cargoserviceM2M</span></code> mediante Eureka</p></li>
 <li><p>Definizione di un caller (<code class="docutils literal notranslate"><span class="pre">GuiCallerHTTP</span></code>) che usa il servizio con Interaction su HTTP,
 sperimentando diversi tipi  di risposta da part del &#64;Controller</p></li>
+</ul>
+<p>TODO</p>
+<ul class="simple">
+<li><p>Multiple UI, Aggregatori, API Gateway</p></li>
+<li><p>User experience</p></li>
+<li><p>BFF (Beckends Bor Frontends)</p></li>
 </ul>
 </section>
 </section>
@@ -154,8 +209,47 @@ sperimentando diversi tipi  di risposta da part del &#64;Controller</p></li>
 <div><a class="reference internal image-reference" href="_images/cargoserviceM2MAndGui.jpg"><img alt="_images/cargoserviceM2MAndGui.jpg" class="align-center" src="_images/cargoserviceM2MAndGui.jpg" style="width: 60%;" />
 </a>
 </div></blockquote>
-<ul class="simple">
-<li><p>File <em>cargo2025yamlscargowareservice.yml</em></p></li>
+<ul>
+<li><p>Deploymente mediante File docker-compose: <em>cargo2025/yamls/cargowareservice.yml</em></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">services</span><span class="p">:</span>
+
+  <span class="n">cargoservice</span><span class="p">:</span>
+    <span class="c1">#image: cargoservice:3.0</span>
+    <span class="n">image</span><span class="p">:</span> <span class="n">natbodocker</span><span class="o">/</span><span class="n">cargoservice</span><span class="p">:</span><span class="mf">3.0</span>
+    <span class="n">container_name</span><span class="p">:</span> <span class="n">cargoservice</span>
+    <span class="n">environment</span><span class="p">:</span>
+      <span class="o">-</span> <span class="n">EUREKA_INSTANCE_LEASE_RENEWAL_INTERVAL_IN_SECONDS</span><span class="o">=</span><span class="mi">60</span>
+      <span class="o">-</span> <span class="n">EUREKA_CLIENT_SERVICEURL_DEFAULTZONE</span><span class="o">=</span><span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">eureka</span><span class="p">:</span><span class="mi">8761</span><span class="o">/</span><span class="n">eureka</span><span class="o">/</span>
+      <span class="o">-</span> <span class="n">MONGO_URL</span><span class="o">=</span><span class="n">mongodb</span><span class="p">:</span><span class="o">//</span><span class="n">mongosrv</span><span class="p">:</span><span class="mi">27017</span>
+<span class="c1">#      - RASP_ADDR=192.168.1.248</span>
+    <span class="n">ports</span><span class="p">:</span>
+      <span class="o">-</span> <span class="mi">8111</span><span class="p">:</span><span class="mi">8111</span><span class="o">/</span><span class="n">tcp</span>
+      <span class="o">-</span> <span class="mi">8111</span><span class="p">:</span><span class="mi">8111</span><span class="o">/</span><span class="n">udp</span>
+    <span class="n">networks</span><span class="p">:</span>
+      <span class="o">-</span> <span class="n">cargo</span><span class="o">-</span><span class="n">network</span>
+
+
+  <span class="n">cargoservicegui</span><span class="p">:</span>
+    <span class="c1">#image: cargoservicespringnat:3.0</span>
+    <span class="n">image</span><span class="p">:</span> <span class="n">natbodocker</span><span class="o">/</span><span class="n">cargoservicespringnat</span><span class="p">:</span><span class="mf">3.0</span>
+    <span class="n">container_name</span><span class="p">:</span> <span class="n">cargoservicegui</span>
+    <span class="n">environment</span><span class="p">:</span>
+      <span class="o">-</span> <span class="n">EUREKA_CLIENT_SERVICEURL_DEFAULTZONE</span><span class="o">=</span><span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">eureka</span><span class="p">:</span><span class="mi">8761</span><span class="o">/</span><span class="n">eureka</span><span class="o">/</span>
+      <span class="o">-</span> <span class="n">SERVICE_URL</span><span class="o">=</span><span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">localhost</span><span class="p">:</span><span class="mi">8075</span>   <span class="c1">##set to http://CommUtils.getMyPublicip() by PSLControllerWithQak</span>
+      <span class="o">-</span> <span class="n">PRODUCT_SERVICEADDR</span><span class="o">=</span><span class="n">cargoservice</span>
+    <span class="n">ports</span><span class="p">:</span>
+      <span class="o">-</span> <span class="mi">8075</span><span class="p">:</span><span class="mi">8075</span><span class="o">/</span><span class="n">tcp</span>
+    <span class="n">depends_on</span><span class="p">:</span>
+      <span class="o">-</span> <span class="n">cargoservice</span>
+    <span class="n">networks</span><span class="p">:</span>
+      <span class="o">-</span> <span class="n">cargo</span><span class="o">-</span><span class="n">network</span>
+
+<span class="n">networks</span><span class="p">:</span>
+  <span class="n">cargo</span><span class="o">-</span><span class="n">network</span><span class="p">:</span>
+    <span class="n">external</span><span class="p">:</span> <span class="n">true</span>
+</pre></div>
+</div>
+</li>
 </ul>
 </section>
 <section id="sistema-cargoservicem2m-con-eventi">
@@ -168,11 +262,14 @@ in forma di eventi percepibili e visualizzabili nella GUI del <a class="referenc
 <li><p>I (micro)servizi non sono solo anemici CRUD-Wrappers</p></li>
 <li><p>I (micro)servizi sono concettualmente enti autonomi che possono emettere/percepire eventi e interagire tra loro
 con meccanismi asincroni (es. Web-sockets, publish-subscribe) di comunicazione.</p></li>
-<li><p>Il logging distribuito un meccanismo di monitoraggio e registrazione delle attività e non un meccanismo
+<li><p>Il logging distribuito è un meccanismo di monitoraggio e registrazione delle attività e non un meccanismo
 di comunicazione utile a realizzare in modo generale ed efficiente la comunicazione tra componenti software.</p></li>
 <li><p>Introduzione ai tipi logici di messggio <a class="reference external" href="file:///C:/Didattica2025/mcrsv24/cargo2025/userDocs/cargoHistory.html#appllevel">appllevel</a> (<em>I Protocolli e i dati</em>)</p></li>
-<li><p>Enterprise Integration Patterns (<strong>EIP</strong>)</p></li>
+<li><p>Reference: Enterprise Integration Patterns (<strong>EIP</strong>)</p></li>
 </ul>
+</section>
+<section id="pub-sub-o-websocket">
+<h3>Pub-sub o WebSocket?<a class="headerlink" href="#pub-sub-o-websocket" title="Link to this heading">¶</a></h3>
 <table class="docutils align-default" style="width: 100%">
 <colgroup>
 <col style="width: 15.0%" />
@@ -731,6 +828,8 @@ per ridurre il carico di gestione.</p></li>
 </li>
 <li><a class="reference internal" href="#progetto-cargoservicem2m">Progetto cargoserviceM2M</a><ul>
 <li><a class="reference internal" href="#key-points-cargoservicem2m">Key-points cargoserviceM2M</a></li>
+<li><a class="reference internal" href="#cargoservicem2m-su-raspberry">cargoserviceM2M su Raspberry</a></li>
+<li><a class="reference internal" href="#uso-di-cargoservicem2m">Uso di cargoserviceM2M</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#progetto-cargoservicem2mgui">Progetto cargoserviceM2MGui</a><ul>
@@ -740,6 +839,7 @@ per ridurre il carico di gestione.</p></li>
 <li><a class="reference internal" href="#sistema-cargoservicem2m">Sistema cargoserviceM2M</a></li>
 <li><a class="reference internal" href="#sistema-cargoservicem2m-con-eventi">Sistema cargoserviceM2M con eventi</a><ul>
 <li><a class="reference internal" href="#key-points-cargoservicem2m-con-eventi">Key-points cargoserviceM2M con eventi</a></li>
+<li><a class="reference internal" href="#pub-sub-o-websocket">Pub-sub o WebSocket?</a></li>
 </ul>
 </li>
 </ul>
