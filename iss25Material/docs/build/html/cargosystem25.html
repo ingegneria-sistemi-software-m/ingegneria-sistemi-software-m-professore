@@ -1,26 +1,23 @@
-
 <!DOCTYPE html>
 
-<html lang="en">
+<html lang="en" data-content_root="./">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <title>cargosystem25 &#8212; issLab2025 1.0 documentation</title>
-    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="_static/sphinxdoc.css" />
-    <link rel="stylesheet" type="text/css" href="_static/custom.css" />
-    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
-    <script src="_static/jquery.js"></script>
-    <script src="_static/underscore.js"></script>
-    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
-    <script src="_static/doctools.js"></script>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=649a27d8" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinxdoc.css?v=34905f61" />
+    <link rel="stylesheet" type="text/css" href="_static/custom.css?v=cb2d0677" />
+    <script src="_static/documentation_options.js?v=f2a433a1"></script>
+    <script src="_static/doctools.js?v=9bcbadda"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="cargoserviceM2M" href="cargoserviceM2M.html" />
     <link rel="prev" title="issLab2025" href="index.html" /> 
   </head><body>
-    <div class="related" role="navigation" aria-label="related navigation">
+    <div class="related" role="navigation" aria-label="Related">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -43,16 +40,16 @@
           <div class="body" role="main">
             
   <section id="cargosystem25">
-<h1>cargosystem25<a class="headerlink" href="#cargosystem25" title="Permalink to this heading">¶</a></h1>
+<h1>cargosystem25<a class="headerlink" href="#cargosystem25" title="Link to this heading">¶</a></h1>
 <section id="requisiti">
-<h2>Requisiti<a class="headerlink" href="#requisiti" title="Permalink to this heading">¶</a></h2>
+<h2>Requisiti<a class="headerlink" href="#requisiti" title="Link to this heading">¶</a></h2>
 <p>Progettare e costruire un <span class="blue">sistema software</span> per il carico/scarico di prodotti
 in modo automatizzato mediante robot-DDR su di un cargo navale.
 I prodotti da caricare/scaricare devono essere stati precedentemente registrati su database.</p>
 <p>Versione precedente: <a class="reference internal" href="Cargo24.html#cargo24"><span class="std std-ref">Cargo24</span></a></p>
 </section>
 <section id="impostazioni-preliminari">
-<h2>Impostazioni preliminari<a class="headerlink" href="#impostazioni-preliminari" title="Permalink to this heading">¶</a></h2>
+<h2>Impostazioni preliminari<a class="headerlink" href="#impostazioni-preliminari" title="Link to this heading">¶</a></h2>
 <ul class="simple">
 <li><p>Analisi dei requisiti e del problema: individuazione dei <span class="blue">BoundedContexts</span> applicativi</p></li>
 <li><p>Introduzione alla Clean Architecture e ai principi SOLID</p></li>
@@ -65,14 +62,15 @@ I prodotti da caricare/scaricare devono essere stati precedentemente registrati 
 </ul>
 </section>
 <section id="progetto-cargoproduct">
-<h2>Progetto cargoproduct<a class="headerlink" href="#progetto-cargoproduct" title="Permalink to this heading">¶</a></h2>
-<p>Costruzione di un applicativo Java che realizza la logica <strong>CRUD</strong> di gestione di prodotti in uno storage
+<h2>Progetto cargoproduct<a class="headerlink" href="#progetto-cargoproduct" title="Link to this heading">¶</a></h2>
+<p><span class="slide3">Goal</span>: Costruire un applicativo Java che realizza la logica <strong>CRUD</strong> di gestione di prodotti in uno storage
 di diverse forme: inizialmente una semplice lista in memoria volatile, poi un database MongoDB.</p>
 <blockquote>
-<div><a class="reference internal image-reference" href="_images/ProductServiceLogic.JPG"><img alt="_images/ProductServiceLogic.JPG" class="align-center" src="_images/ProductServiceLogic.JPG" style="width: 60%;" /></a>
+<div><a class="reference internal image-reference" href="_images/ProductServiceLogic.JPG"><img alt="_images/ProductServiceLogic.JPG" class="align-center" src="_images/ProductServiceLogic.JPG" style="width: 60%;" />
+</a>
 </div></blockquote>
 <section id="key-points-cargoproduct">
-<h3>Key-points cargoproduct<a class="headerlink" href="#key-points-cargoproduct" title="Permalink to this heading">¶</a></h3>
+<h3>Key-points cargoproduct<a class="headerlink" href="#key-points-cargoproduct" title="Link to this heading">¶</a></h3>
 <ul>
 <li><p>Impostazione del Workspace Eclipse e di un progetto Gradle con relativo build file.</p></li>
 <li><p>Adapter (<code class="docutils literal notranslate"><span class="pre">AdapterStorage</span></code>) per rendere la logica applicativa indipendente dai dispositivi
@@ -95,28 +93,82 @@ usando variabili di ambiente. In assenza, uso del singleton <code class="docutil
 </section>
 </section>
 <section id="progetto-cargoservicem2m">
-<h2>Progetto cargoserviceM2M<a class="headerlink" href="#progetto-cargoservicem2m" title="Permalink to this heading">¶</a></h2>
+<h2>Progetto cargoserviceM2M<a class="headerlink" href="#progetto-cargoservicem2m" title="Link to this heading">¶</a></h2>
 <p><span class="slide3">Goal</span>: rendere il sistema del <a class="reference internal" href="#progetto-cargoproduct"><span class="std std-ref">Progetto cargoproduct</span></a> disponibile in rete come (micro)servizio web
 per altri programmi  (interazione <strong>M2M</strong>).</p>
 <blockquote>
-<div><a class="reference internal image-reference" href="_images/cargoserviceM2M.JPG"><img alt="_images/cargoserviceM2M.JPG" class="align-center" src="_images/cargoserviceM2M.JPG" style="width: 70%;" /></a>
+<div><a class="reference internal image-reference" href="_images/cargoserviceM2M.JPG"><img alt="_images/cargoserviceM2M.JPG" class="align-center" src="_images/cargoserviceM2M.JPG" style="width: 70%;" />
+</a>
 </div></blockquote>
 <p>Appunti per lo sviluppo del prodotto: <a class="reference internal" href="cargoserviceM2M.html#cargoservicem2m"><span class="std std-ref">cargoserviceM2M</span></a></p>
 <section id="key-points-cargoservicem2m">
-<h3>Key-points cargoserviceM2M<a class="headerlink" href="#key-points-cargoservicem2m" title="Permalink to this heading">¶</a></h3>
-<ul class="simple">
+<h3>Key-points cargoserviceM2M<a class="headerlink" href="#key-points-cargoservicem2m" title="Link to this heading">¶</a></h3>
+<ul>
 <li><p>Uso di Spring e di un componente &#64;RestController per rendere la logica applicativa accessibile via rete
-ad altri programmi (interazione <strong>M2M</strong> <span class="brown">RESTful</span>).</p></li>
+ad altri programmi (interazione <strong>M2M</strong>-<span class="brown">RESTful</span>).</p></li>
 <li><p>&#64;RestController come componente di Spring che riceve richieste HTTP e risponde con oggetti JSON
 invocando le operazioni dell’interfaccia <code class="docutils literal notranslate"><span class="pre">ICrudOps</span></code> realizzate dal singleton <code class="docutils literal notranslate"><span class="pre">ProductServiceLogic</span></code>.</p></li>
 <li><p>Registrazione su Eureka del servizio con nome <code class="docutils literal notranslate"><span class="pre">cargoserviceM2M</span></code>.</p></li>
 <li><p>Interazioni via HTTP (sincrone) e via Web-sockets (asincrone).</p></li>
-<li><p>Supporti per interazioni via WS: <code class="docutils literal notranslate"><span class="pre">WSServerServiceM2M</span></code> e <code class="docutils literal notranslate"><span class="pre">PSLUsageWS</span></code></p></li>
-<li><p>Problema degli accessi concorrenti e come evitare la possibile duplicazione di prodotti.</p></li>
+<li><p>Supporto lato server per interazioni via WS: <code class="docutils literal notranslate"><span class="pre">WSCargoM2M</span></code></p></li>
+<li><p>Supporto lato server per interazioni via MQTT (emissione di eventi e ricezione di allarmi): <code class="docutils literal notranslate"><span class="pre">CargoMqtt</span></code>
+che crea una ‘conessione-MQTT’  mediante la coppia di topic <span class="slidekp">cargoin-cargoevents</span> .</p></li>
+<li><p>Problema degli accessi concorrenti e come evitare la possibile duplicazione di prodotti: il
+componente <span class="slidekp">ActorForPsl</span> come primo esempio di un attore che sequenzializza le richieste
+di creazione di un prodotto, evitando di modificare il codice del <a class="reference internal" href="#progetto-cargoproduct"><span class="std std-ref">Progetto cargoproduct</span></a>
+per definire come <span class="slidekp">synchronized</span> il metodo <code class="docutils literal notranslate"><span class="pre">createProduct</span></code>.</p>
+<blockquote>
+<div><a class="reference internal image-reference" href="_images/cargoM2MActorForPsl.jpg"><img alt="_images/cargoM2MActorForPsl.jpg" class="align-center" src="_images/cargoM2MActorForPsl.jpg" style="width: 80%;" />
+</a>
+</div></blockquote>
+</li>
+</ul>
+</section>
+<section id="uso-di-cargoservicem2m">
+<h3>Uso di cargoserviceM2M<a class="headerlink" href="#uso-di-cargoservicem2m" title="Link to this heading">¶</a></h3>
+<table class="docutils align-default" style="width: 100%">
+<colgroup>
+<col style="width: 35.0%" />
+<col style="width: 65.0%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>PSCallerHTTP.java</strong></p></td>
+<td><p>Usa <span class="blue">HttpURLConnection</span> per effettuare <em>callPost</em> e <em>callGet</em> al servizio <code class="docutils literal notranslate"><span class="pre">cargoserviceM2M</span></code> di
+cui conosce l’IP.</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>PSDiscoverCallerHTTP.java</strong></p></td>
+<td><p>Usa <span class="blue">HttpURLConnection</span> per effettuare <em>callPost</em> e <em>callGet</em> al servizio <code class="docutils literal notranslate"><span class="pre">cargoserviceM2M</span></code>,
+il cui IP  viene scoperto mediante Eureka.</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>PSLDiscoverCallerHTTPInteraction.java</strong></p></td>
+<td><p>Usa <span class="blue">Interaction</span> e <span class="blue">ConnectionFactory</span> (libreria <code class="docutils literal notranslate"><span class="pre">unibo.basicomm23-1.0</span></code>)
+per effettuare <em>forward</em> e <em>request</em>
+al servizio <code class="docutils literal notranslate"><span class="pre">cargoserviceM2M</span></code>, il cui IP  viene scoperto mediante Eureka.</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>PSCallerWS.java</strong></p></td>
+<td><p>Usa <span class="blue">javax.websocket</span> per effettuare interazioni asincrone con il servizio <code class="docutils literal notranslate"><span class="pre">cargoserviceM2M</span></code> di
+cui conosce l’IP.</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>PSLCallerWSInteraction.java</strong></p></td>
+<td><p>Usa <span class="blue">Interaction</span> e <span class="blue">ConnectionFactory</span> (libreria <code class="docutils literal notranslate"><span class="pre">unibo.basicomm23-1.0</span></code>) per effettuare
+interazioni asincrone con il servizio <code class="docutils literal notranslate"><span class="pre">cargoserviceM2M</span></code> di
+cui conosce l’IP.</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>CargoM2MObserver.java</strong></p></td>
+<td><p>Usa :<span class="blue">Interaction</span> e <span class="blue">ConnectionFactory</span> (libreria <code class="docutils literal notranslate"><span class="pre">unibo.basicomm23-1.0</span></code>)
+per percepire gli eventi emessi da <code class="docutils literal notranslate"><span class="pre">cargoserviceM2M</span></code> sulla topoc MQTT <code class="docutils literal notranslate"><span class="pre">cargoevents</span></code>
+e per mettere un allarme sulla topoc MQTT <code class="docutils literal notranslate"><span class="pre">cargoain</span></code></p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="deployment-di-cargoservicem2m">
+<h3>Deployment di cargoserviceM2M<a class="headerlink" href="#deployment-di-cargoservicem2m" title="Link to this heading">¶</a></h3>
+<ul class="simple">
 <li><p>Distribuzione del prodotto software in forma di micro-servizio su Docker.</p></li>
 </ul>
 <p>File <a class="reference external" href="file:///C:/Didattica2025/mcrsv24/cargoserviceM2M/Dockerfile">DockerfileM2M</a> per la generazione della immagine <em>cargoservice:3.0</em>
-e docker-compsoe file <strong>cargo2025/yamls/cargoServiceNoGui.yml</strong>,
+e docker-compose file <strong>cargo2025/yamls/cargoServiceNoGui.yml</strong>,
 con variabili di ambiente che permettono di usare <code class="docutils literal notranslate"><span class="pre">MongoDB</span></code>:</p>
 <blockquote>
 <div><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">services</span><span class="p">:</span>
@@ -142,7 +194,7 @@ con variabili di ambiente che permettono di usare <code class="docutils literal 
 </div></blockquote>
 </section>
 <section id="cargoservicem2m-su-raspberry">
-<h3>cargoserviceM2M su Raspberry<a class="headerlink" href="#cargoservicem2m-su-raspberry" title="Permalink to this heading">¶</a></h3>
+<h3>cargoserviceM2M su Raspberry<a class="headerlink" href="#cargoservicem2m-su-raspberry" title="Link to this heading">¶</a></h3>
 <p>File <a class="reference external" href="file:///C:/Didattica2025/mcrsv24/cargoserviceM2M/DockerfileM2mRasp">DockerfileM2MRasp</a> per la generazione della immagine <em>imgservicerasp:1.0</em>
 e docker-compose file: <strong>cargo2025/yamls/cargoServiceRasp.yml.yml</strong></p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">services</span><span class="p">:</span>
@@ -161,29 +213,18 @@ e docker-compose file: <strong>cargo2025/yamls/cargoServiceRasp.yml.yml</strong>
 </pre></div>
 </div>
 </section>
-<section id="uso-di-cargoservicem2m">
-<h3>Uso di cargoserviceM2M<a class="headerlink" href="#uso-di-cargoservicem2m" title="Permalink to this heading">¶</a></h3>
-<ul class="simple">
-<li><p>Sperimentazione di callers via HTTP e via Web-sockets (protocollo non limitato ai sistemi Web)</p></li>
-<li><p>Definizione di un caller (<code class="docutils literal notranslate"><span class="pre">PSLCallerHTTP</span></code>) che usa il servizio via HTTP e
-di un caller (<code class="docutils literal notranslate"><span class="pre">PSLCallerWS</span></code>) che usa il servizio via Web-socket.</p></li>
-<li><p>L’astrazione <span class="blue">Interaction</span>, la libreria <code class="docutils literal notranslate"><span class="pre">unibo.basicomm23-1.0</span></code>,
-il caller <code class="docutils literal notranslate"><span class="pre">PSLCallerWSInteraction</span></code> e
-il caller <code class="docutils literal notranslate"><span class="pre">PSLDiscoverCallerHTTPInteraction</span></code>
-che include la scoperta (<em>discovery</em>) del servizio <code class="docutils literal notranslate"><span class="pre">cargoserviceM2M</span></code> mediante Eureka.</p></li>
-</ul>
-</section>
 </section>
 <section id="progetto-cargoservicem2mgui">
-<h2>Progetto cargoserviceM2MGui<a class="headerlink" href="#progetto-cargoservicem2mgui" title="Permalink to this heading">¶</a></h2>
+<h2>Progetto cargoserviceM2MGui<a class="headerlink" href="#progetto-cargoservicem2mgui" title="Link to this heading">¶</a></h2>
 <p><span class="slide3">Goal</span>: dotare il sistema del <a class="reference internal" href="#progetto-cargoservicem2m"><span class="std std-ref">Progetto cargoserviceM2M</span></a> di una GUI per la interazione uomo-macchina
 (interazione <strong>H2M</strong>).</p>
 <blockquote>
-<div><a class="reference internal image-reference" href="_images/cargoserviceM2MGui.jpg"><img alt="_images/cargoserviceM2MGui.jpg" class="align-center" src="_images/cargoserviceM2MGui.jpg" style="width: 60%;" /></a>
+<div><a class="reference internal image-reference" href="_images/cargoserviceM2MGui.jpg"><img alt="_images/cargoserviceM2MGui.jpg" class="align-center" src="_images/cargoserviceM2MGui.jpg" style="width: 60%;" />
+</a>
 </div></blockquote>
 <p>Appunti per lo sviluppo del prodotto: <a class="reference internal" href="cargoserviceM2MGui.html#cargoservicem2mgui"><span class="std std-ref">cargoserviceM2MGui</span></a></p>
 <section id="key-points-cargoservicem2mgui">
-<h3>Key-points cargoserviceM2MGui<a class="headerlink" href="#key-points-cargoservicem2mgui" title="Permalink to this heading">¶</a></h3>
+<h3>Key-points cargoserviceM2MGui<a class="headerlink" href="#key-points-cargoservicem2mgui" title="Link to this heading">¶</a></h3>
 <ul class="simple">
 <li><p>Uso di Spring e di un componente &#64;Controller per rendere la logica applicativa accessibile via rete ad
 esseri umani (interazione <strong>H2M</strong>).</p></li>
@@ -203,13 +244,14 @@ sperimentando diversi tipi  di risposta da part del &#64;Controller</p></li>
 </section>
 </section>
 <section id="sistema-cargoservicem2m">
-<h2>Sistema cargoserviceM2M<a class="headerlink" href="#sistema-cargoservicem2m" title="Permalink to this heading">¶</a></h2>
+<h2>Sistema cargoserviceM2M<a class="headerlink" href="#sistema-cargoservicem2m" title="Link to this heading">¶</a></h2>
 <p><span class="slide3">Goal</span>: costruire il sistema facendo interagire due micro-servizi deployed su Docker</p>
 <blockquote>
-<div><a class="reference internal image-reference" href="_images/cargoserviceM2MAndGui.jpg"><img alt="_images/cargoserviceM2MAndGui.jpg" class="align-center" src="_images/cargoserviceM2MAndGui.jpg" style="width: 60%;" /></a>
+<div><a class="reference internal image-reference" href="_images/cargoserviceM2MAndGui.jpg"><img alt="_images/cargoserviceM2MAndGui.jpg" class="align-center" src="_images/cargoserviceM2MAndGui.jpg" style="width: 60%;" />
+</a>
 </div></blockquote>
 <ul>
-<li><p>Deploymente mediante File docker-compose: <em>cargo2025/yamls/cargowareservice.yml</em></p>
+<li><p>Deployment mediante file docker-compose: <em>cargo2025/yamls/cargowareservice.yml</em></p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">services</span><span class="p">:</span>
 
   <span class="n">cargoservice</span><span class="p">:</span>
@@ -252,9 +294,9 @@ sperimentando diversi tipi  di risposta da part del &#64;Controller</p></li>
 </ul>
 </section>
 <section id="cargoservicem2m-con-eventi">
-<h2>cargoserviceM2M con eventi<a class="headerlink" href="#cargoservicem2m-con-eventi" title="Permalink to this heading">¶</a></h2>
+<h2>cargoserviceM2M con eventi<a class="headerlink" href="#cargoservicem2m-con-eventi" title="Link to this heading">¶</a></h2>
 <section id="ossevazioni-preliminari">
-<h3>Ossevazioni preliminari<a class="headerlink" href="#ossevazioni-preliminari" title="Permalink to this heading">¶</a></h3>
+<h3>Ossevazioni preliminari<a class="headerlink" href="#ossevazioni-preliminari" title="Link to this heading">¶</a></h3>
 <ul class="simple">
 <li><p>I (micro)servizi non sono solo anemici CRUD-Wrappers</p></li>
 <li><p>Il logging distribuito è un meccanismo di monitoraggio e registrazione delle attività e non un meccanismo
@@ -264,12 +306,12 @@ con meccanismi asincroni (es. Web-sockets, publish-subscribe) di comunicazione.<
 </ul>
 </section>
 <section id="pub-sub-o-websocket">
-<h3>Pub-sub o WebSocket?<a class="headerlink" href="#pub-sub-o-websocket" title="Permalink to this heading">¶</a></h3>
+<h3>Pub-sub o WebSocket?<a class="headerlink" href="#pub-sub-o-websocket" title="Link to this heading">¶</a></h3>
 <table class="docutils align-default" style="width: 100%">
 <colgroup>
-<col style="width: 15%" />
-<col style="width: 35%" />
-<col style="width: 50%" />
+<col style="width: 15.0%" />
+<col style="width: 35.0%" />
+<col style="width: 50.0%" />
 </colgroup>
 <tbody>
 <tr class="row-odd"><td><p><strong>Caratteristica</strong></p></td>
@@ -306,513 +348,53 @@ con meccanismi asincroni (es. Web-sockets, publish-subscribe) di comunicazione.<
 in forma di <span class="blue">eventi</span> percepibili e visualizzabili nella GUI del <a class="reference internal" href="#progetto-cargoservicem2mgui"><span class="std std-ref">Progetto cargoserviceM2MGui</span></a></p>
 </section>
 <section id="key-points-cargoservicem2m-con-eventi">
-<h3>Key-points cargoserviceM2M con eventi<a class="headerlink" href="#key-points-cargoservicem2m-con-eventi" title="Permalink to this heading">¶</a></h3>
+<h3>Key-points cargoserviceM2M con eventi<a class="headerlink" href="#key-points-cargoservicem2m-con-eventi" title="Link to this heading">¶</a></h3>
 <ul class="simple">
 <li><p>Supporti per interazioni pub-sub in MQTT (<strong>Message Queuing Telemetry Transport</strong>)</p></li>
 <li><p>Introduzione di un broker MQTT (es. <strong>Mosquitto</strong>) per la comunicazione asincrona tra i servizi</p></li>
 <li><p>Introduzione di un supporto MQTT lato service per la pubblicazione degli eventi</p></li>
 <li><p>Introduzione di un supporto MQTT lato GUI per la ricezione degli eventi pubblicati dal servizio</p></li>
 </ul>
-<a class="reference internal image-reference" href="_images/cargoserviceM2MEvents.jpg"><img alt="_images/cargoserviceM2MEvents.jpg" class="align-center" src="_images/cargoserviceM2MEvents.jpg" style="width: 60%;" /></a>
-<a class="reference internal image-reference" href="_images/cargoserviceM2MGuiEvents.jpg"><img alt="_images/cargoserviceM2MGuiEvents.jpg" class="align-center" src="_images/cargoserviceM2MGuiEvents.jpg" style="width: 60%;" /></a>
+<a class="reference internal image-reference" href="_images/cargoserviceM2MEvents.jpg"><img alt="_images/cargoserviceM2MEvents.jpg" class="align-center" src="_images/cargoserviceM2MEvents.jpg" style="width: 60%;" />
+</a>
+<p>Gli eventi di allarme emessi dal servizio sono percepiti dalla GUI per essere visualizzati in modo appropriato.</p>
+<a class="reference internal image-reference" href="_images/cargoserviceM2MGuiEvents.jpg"><img alt="_images/cargoserviceM2MGuiEvents.jpg" class="align-center" src="_images/cargoserviceM2MGuiEvents.jpg" style="width: 60%;" />
+</a>
+<p><strong>CargoM2MObserver</strong> viene introdotto come esempio
+di un componente che percepisce l’evento emesoo alla creazione di un prodotto
+e come esempio di un agente esterno che possa emettere un evento di allarme
+sulla topic <code class="docutils literal notranslate"><span class="pre">cargoain</span></code>
+che possa a sua volta essere percepito dal servizio, modificandone il suo comportamento.</p>
+<a class="reference internal image-reference" href="_images/cargoserviceM2MEventsAndObs.jpg"><img alt="_images/cargoserviceM2MEventsAndObs.jpg" class="align-center" src="_images/cargoserviceM2MEventsAndObs.jpg" style="width: 80%;" />
+</a>
+<p>La percezione di un allarme da parte del servizio deve incidere  sia sul <code class="docutils literal notranslate"><span class="pre">Controller</span></code> sia su <code class="docutils literal notranslate"><span class="pre">WSCargoM2M</span></code>
+Per questo è utile un oggetto  usato da entrambi che dovrebbe operare come un FSM
+sensibile sia ai comandi sia agli eventi.</p>
 </section>
 </section>
 </section>
 <section id="cargosystem25-con-attori-qak">
-<h1>cargosystem25 con attori qak<a class="headerlink" href="#cargosystem25-con-attori-qak" title="Permalink to this heading">¶</a></h1>
+<h1>cargosystem25 con attori qak<a class="headerlink" href="#cargosystem25-con-attori-qak" title="Link to this heading">¶</a></h1>
 <section id="progetto-cargoservice">
-<h2>Progetto cargoservice<a class="headerlink" href="#progetto-cargoservice" title="Permalink to this heading">¶</a></h2>
+<h2>Progetto cargoservice<a class="headerlink" href="#progetto-cargoservice" title="Link to this heading">¶</a></h2>
 <p><span class="slide3">Goal</span>: costruire un micorservizio basato sugli attori.</p>
 <section id="key-points-cargoservice">
-<h3>Key-points cargoservice<a class="headerlink" href="#key-points-cargoservice" title="Permalink to this heading">¶</a></h3>
+<h3>Key-points cargoservice<a class="headerlink" href="#key-points-cargoservice" title="Link to this heading">¶</a></h3>
 </section>
 </section>
 <section id="progetto-cargoserviceqakgui">
-<h2>Progetto cargoserviceQakGui<a class="headerlink" href="#progetto-cargoserviceqakgui" title="Permalink to this heading">¶</a></h2>
+<h2>Progetto cargoserviceQakGui<a class="headerlink" href="#progetto-cargoserviceqakgui" title="Link to this heading">¶</a></h2>
 <p><span class="slide3">Goal</span>: dotare il sistema del <a class="reference internal" href="#progetto-cargoservice"><span class="std std-ref">Progetto cargoservice</span></a> di una GUI per la interazione uomo-macchina.</p>
 <section id="key-points-cargoserviceqakgui">
-<h3>Key-points cargoserviceQakGui<a class="headerlink" href="#key-points-cargoserviceqakgui" title="Permalink to this heading">¶</a></h3>
+<h3>Key-points cargoserviceQakGui<a class="headerlink" href="#key-points-cargoserviceqakgui" title="Link to this heading">¶</a></h3>
 </section>
 </section>
 <section id="progetto-cargoservicem2mqaklocal">
-<h2>Progetto cargoserviceM2MQakLocal<a class="headerlink" href="#progetto-cargoservicem2mqaklocal" title="Permalink to this heading">¶</a></h2>
+<h2>Progetto cargoserviceM2MQakLocal<a class="headerlink" href="#progetto-cargoservicem2mqaklocal" title="Link to this heading">¶</a></h2>
 <section id="key-points-cargoservicem2mqaklocal">
-<h3>Key-points cargoserviceM2MQakLocal<a class="headerlink" href="#key-points-cargoservicem2mqaklocal" title="Permalink to this heading">¶</a></h3>
+<h3>Key-points cargoserviceM2MQakLocal<a class="headerlink" href="#key-points-cargoservicem2mqaklocal" title="Link to this heading">¶</a></h3>
 <p><span class="slide3">Goal</span>: dotare il sistema del <a class="reference internal" href="#progetto-cargoservice"><span class="std std-ref">Progetto cargoservice</span></a> di una GUI per la interazione uomo-macchina
 evitando la comunicazione via rete tra il RestController della GUI e il serviceqak.</p>
-</section>
-</section>
-<section id="aggregatori-e-api-gateway">
-<h2>Aggregatori e API Gateway<a class="headerlink" href="#aggregatori-e-api-gateway" title="Permalink to this heading">¶</a></h2>
-<p>Sto costruendo un sistema software a microservizi che comprende prodotti, clienti, pagamenti e carico/scarico di mersi su un cargo. La logica di business si può riassumere come segue: un cliente regitsra un prodotto che vuole sia trasportato dal cargo a un certa destinazione, dopo opportuno pagamento. Ho già realizzato i singoli microservizi e vorrei sapere se, per costruire il sistema finale, sia utile, opportuno o necessario introdurre un aggregatore o una API gateway o entrambi.</p>
-<p>Introducendo un aggregatore o una API Gateway, puoi migliorare significativamente la progettazione e il funzionamento del tuo sistema a microservizi. Analizziamo la loro utilità in base al tuo contesto:</p>
-<section id="api-gateway">
-<h3>1. API Gateway<a class="headerlink" href="#api-gateway" title="Permalink to this heading">¶</a></h3>
-<p>Un’API Gateway è altamente consigliata in un’architettura a microservizi per i seguenti motivi:</p>
-<ul class="simple">
-<li><p>Punto di ingresso unico: Un’API Gateway funge da punto centrale attraverso cui i client (ad esempio, web app o mobile app) interagiscono con i microservizi, eliminando la necessità di conoscere la loro posizione e il loro contratto API.</p></li>
-<li><p>Autenticazione e autorizzazione: Può gestire centralmente la sicurezza, come autenticazione JWT, OAuth, o altro.</p></li>
-<li><p>Rate Limiting e Throttling: Protegge i tuoi microservizi da accessi eccessivi o attacchi DDoS.</p></li>
-<li><p>Orchestrazione semplice: Può instradare richieste multiple ai microservizi appropriati senza che il client debba preoccuparsi di orchestrare le operazioni (ad esempio, chiedere prima i dati di un cliente e poi quelli dei suoi pagamenti).</p></li>
-</ul>
-</section>
-<section id="aggregatore">
-<h3>2. Aggregatore<a class="headerlink" href="#aggregatore" title="Permalink to this heading">¶</a></h3>
-<p>Un aggregatore, rispetto a una semplice API Gateway, svolge un ruolo più complesso:</p>
-<ul class="simple">
-<li><p>Composizione di servizi: Se ci sono casi in cui i dati di più microservizi devono essere combinati in una risposta unica (es., dati del cliente, del prodotto e dei pagamenti per fornire una vista completa di un ordine), un aggregatore può orchestrare e combinare tali informazioni.</p></li>
-<li><p>Riduzione delle chiamate client-microservizi: Piuttosto che il client dover fare più chiamate, l’aggregatore compone i dati e li restituisce in un’unica risposta.</p></li>
-</ul>
-</section>
-<section id="quando-usarli-insieme">
-<h3>Quando usarli insieme?<a class="headerlink" href="#quando-usarli-insieme" title="Permalink to this heading">¶</a></h3>
-<p>In molti casi, è utile usare entrambi, ma con compiti distinti:</p>
-<ol class="arabic simple">
-<li><p>API Gateway:</p></li>
-</ol>
-<blockquote>
-<div><ul class="simple">
-<li><p>Gestisce il routing delle richieste e gli aspetti di sicurezza e accesso.</p></li>
-<li><p>Filtra e instrada le richieste ai microservizi o all’aggregatore.</p></li>
-</ul>
-</div></blockquote>
-<ol class="arabic simple">
-<li><p>Aggregatore:</p></li>
-</ol>
-<blockquote>
-<div><ul class="simple">
-<li><p>Gestisce la logica di business complessa e le richieste che richiedono dati combinati da più microservizi.</p></li>
-</ul>
-</div></blockquote>
-</section>
-<section id="caso-specifico-il-tuo-sistema">
-<h3>Caso specifico: il tuo sistema<a class="headerlink" href="#caso-specifico-il-tuo-sistema" title="Permalink to this heading">¶</a></h3>
-<p>Nel tuo scenario, entrambi potrebbero essere utili per diverse ragioni:</p>
-<ul class="simple">
-<li><p>API Gateway:</p>
-<ul>
-<li><p>Utile per centralizzare l’accesso ai microservizi come “Prodotti”, “Clienti”, “Pagamenti” e “Cargo”.</p></li>
-<li><p>Permetterà di gestire la sicurezza e limitare l’esposizione diretta dei microservizi ai client esterni.</p></li>
-</ul>
-</li>
-<li><p>Aggregatore:</p>
-<ul>
-<li><p>Può essere usato per costruire una funzionalità di “Gestione Ordine”, che compone dati da “Clienti”, “Prodotti” e “Pagamenti” per offrire una vista o un’operazione unificata (es. confermare un trasporto).</p></li>
-</ul>
-</li>
-</ul>
-</section>
-<section id="esempio-di-flusso-con-entrambi">
-<h3>Esempio di flusso con entrambi:<a class="headerlink" href="#esempio-di-flusso-con-entrambi" title="Permalink to this heading">¶</a></h3>
-<ol class="arabic simple">
-<li><p>Un cliente effettua una richiesta per registrare un prodotto per il trasporto.</p></li>
-<li><p>La richiesta passa attraverso l’API Gateway, che la instrada al microservizio corretto o all’aggregatore.</p></li>
-<li><p>L’aggregatore raccoglie i dati dai microservizi necessari (ad esempio, verifica il cliente, conferma il pagamento, registra il prodotto e aggiorna il carico del cargo).</p></li>
-<li><p>Il risultato finale è restituito al client tramite l’API Gateway.</p></li>
-</ol>
-</section>
-<section id="aa-conclusione">
-<h3>AA - Conclusione<a class="headerlink" href="#aa-conclusione" title="Permalink to this heading">¶</a></h3>
-<ul class="simple">
-<li><p>API Gateway: Quasi essenziale in un sistema a microservizi, per gestione di accesso, sicurezza e orchestrazione base.</p></li>
-<li><p>Aggregatore: Utile per semplificare la logica complessa e ridurre le chiamate client-microservizi.</p></li>
-</ul>
-<p>Se il sistema è già suddiviso in microservizi, l’introduzione di entrambi i componenti è un passo naturale per migliorarne la scalabilità, la gestione e l’efficienza.</p>
-</section>
-</section>
-<section id="uso-di-eventi-nel-sistema-cargo">
-<h2>Uso di eventi nel sistema cargo<a class="headerlink" href="#uso-di-eventi-nel-sistema-cargo" title="Permalink to this heading">¶</a></h2>
-<p>Con riferimento al problema precedente, vorrei qualche suggerimento e/o considerazione sulle situazioni in cui sia utile che uno dei servizi indicati interagisca con gli altri o gli utenti esterni al sistema, tramire emissione di ‘eventi’ usando un broker publish-subscribe</p>
-<p>L’uso di un broker di messaggistica basato su un modello publish-subscribe può essere estremamente utile in un sistema a microservizi come il tuo. Questo approccio consente ai servizi di comunicare in modo asincrono e decouplato, migliorando la scalabilità e l’estensibilità. Di seguito, alcune considerazioni e suggerimenti relativi al tuo caso:</p>
-<section id="quando-usare-il-modello-publish-subscribe">
-<h3>Quando usare il modello Publish-Subscribe<a class="headerlink" href="#quando-usare-il-modello-publish-subscribe" title="Permalink to this heading">¶</a></h3>
-<ol class="arabic simple">
-<li><p>Eventi di dominio importanti:</p></li>
-</ol>
-<blockquote>
-<div><ul class="simple">
-<li><p>Quando accadono eventi significativi nel sistema (ad esempio, un cliente registra un prodotto per il trasporto, un pagamento è stato completato, o un cargo è stato caricato), è utile notificare altri servizi interessati senza doverli contattare direttamente.</p></li>
-<li><p>Esempio: Quando un pagamento viene completato, il servizio “Pagamenti” potrebbe emettere un evento PaymentConfirmed per notificare altri servizi, come “Cargo” e “Clienti”.</p></li>
-</ul>
-</div></blockquote>
-<ol class="arabic simple">
-<li><p>Riduzione del coupling:</p></li>
-</ol>
-<blockquote>
-<div><ul class="simple">
-<li><p>Invece di chiamare direttamente un altro servizio (tight coupling), l’emissione di eventi permette ai microservizi di essere indipendenti. I servizi che consumano gli eventi possono cambiare o essere sostituiti senza che il servizio emettitore debba essere modificato.</p></li>
-</ul>
-</div></blockquote>
-<ol class="arabic simple">
-<li><p>Workflow asincroni:</p></li>
-</ol>
-<blockquote>
-<div><ul class="simple">
-<li><p>Per processi che non richiedono risposte immediate, l’uso di eventi consente di gestire il flusso senza rallentare il servizio emittente.</p></li>
-<li><p>Esempio: Dopo che un cliente registra un prodotto, un evento ProductRegistered potrebbe avviare l’allocazione dello spazio sul cargo e la generazione di un documento di trasporto.</p></li>
-</ul>
-</div></blockquote>
-<ol class="arabic simple">
-<li><p>Notifiche agli utenti esterni:</p></li>
-</ol>
-<blockquote>
-<div><ul class="simple">
-<li><p>Eventi pubblicati dal sistema possono essere usati per notificare gli utenti, ad esempio tramite e-mail, SMS o notifiche push.</p></li>
-<li><p>Esempio: Un evento CargoShipped potrebbe attivare un servizio di notifica che informa il cliente che il prodotto è stato spedito.</p></li>
-</ul>
-</div></blockquote>
-</section>
-<section id="esempi-specifici-di-utilizzo-nel-tuo-sistema">
-<h3>Esempi specifici di utilizzo nel tuo sistema<a class="headerlink" href="#esempi-specifici-di-utilizzo-nel-tuo-sistema" title="Permalink to this heading">¶</a></h3>
-<ol class="arabic simple">
-<li><ol class="arabic simple">
-<li><p>Microservizio “Clienti”</p></li>
-</ol>
-</li>
-</ol>
-<blockquote>
-<div><ul class="simple">
-<li><p>Evento: CustomerCreated
-- Usato per sincronizzare un nuovo cliente con altri sistemi (es., un CRM esterno o un modulo di reporting).</p></li>
-<li><p>Evento: ProductRequested
-- Emettere un evento quando un cliente registra un prodotto per il trasporto, per avviare la catena di elaborazione.</p></li>
-</ul>
-</div></blockquote>
-<ol class="arabic simple">
-<li><ol class="arabic simple" start="2">
-<li><p>Microservizio “Prodotti”</p></li>
-</ol>
-</li>
-</ol>
-<blockquote>
-<div><ul class="simple">
-<li><p>Evento: ProductRegistered
-- Informare i servizi “Pagamenti” e “Cargo” che un nuovo prodotto è stato registrato e può essere elaborato.</p></li>
-<li><p>Evento: ProductDelivered
-- Emettere un evento quando un prodotto viene consegnato, per aggiornare i dati del cliente o inviare notifiche.</p></li>
-</ul>
-</div></blockquote>
-<ol class="arabic simple">
-<li><ol class="arabic simple" start="3">
-<li><p>Microservizio “Pagamenti”</p></li>
-</ol>
-</li>
-</ol>
-<blockquote>
-<div><ul class="simple">
-<li><p>Evento: PaymentConfirmed
-- Notificare il servizio “Cargo” che può procedere con l’inserimento del prodotto nella lista di carico.</p></li>
-<li><p>Evento: PaymentFailed
-- Notificare il cliente e fermare l’elaborazione del trasporto.</p></li>
-</ul>
-</div></blockquote>
-<ol class="arabic simple">
-<li><ol class="arabic simple" start="4">
-<li><p>Microservizio “Cargo”</p></li>
-</ol>
-</li>
-</ol>
-<blockquote>
-<div><ul class="simple">
-<li><p>Evento: CargoLoaded
-- Informare i sistemi di monitoraggio o generare un avviso ai clienti.</p></li>
-<li><p>Evento: CargoShipped
-- Notificare il servizio di gestione dei clienti e il sistema di reportistica.</p></li>
-</ul>
-</div></blockquote>
-</section>
-<section id="vantaggi-dell-approccio-publish-subscribe">
-<h3>Vantaggi dell’approccio Publish-Subscribe<a class="headerlink" href="#vantaggi-dell-approccio-publish-subscribe" title="Permalink to this heading">¶</a></h3>
-<ol class="arabic simple">
-<li><p>Scalabilità:</p></li>
-</ol>
-<blockquote>
-<div><ul class="simple">
-<li><p>I consumatori possono essere scalati indipendentemente per elaborare grandi volumi di eventi.</p></li>
-<li><p>Ad esempio, se i pagamenti generano molti eventi, il consumatore del servizio “Pagamenti” può scalare senza impattare gli altri.</p></li>
-</ul>
-</div></blockquote>
-<ol class="arabic simple">
-<li><p>Estensibilità:</p></li>
-</ol>
-<blockquote>
-<div><ul class="simple">
-<li><p>Nuovi servizi possono essere aggiunti facilmente semplicemente iscrivendosi agli eventi esistenti.</p></li>
-<li><p>Ad esempio, un nuovo servizio di analisi può consumare eventi ProductRegistered o PaymentConfirmed per produrre statistiche.</p></li>
-</ul>
-</div></blockquote>
-<ol class="arabic simple">
-<li><p>Resilienza:</p></li>
-</ol>
-<blockquote>
-<div><ul class="simple">
-<li><p>I servizi che pubblicano eventi non si bloccano se un consumatore è temporaneamente offline: il broker (es. RabbitMQ, Kafka, o altri) può bufferizzare i messaggi fino a che i consumatori siano di nuovo disponibili.</p></li>
-</ul>
-</div></blockquote>
-</section>
-<section id="considerazioni-sull-implementazione">
-<h3>Considerazioni sull’implementazione<a class="headerlink" href="#considerazioni-sull-implementazione" title="Permalink to this heading">¶</a></h3>
-<ol class="arabic simple">
-<li><p>Scelta del broker:</p></li>
-</ol>
-<p>Usa un broker robusto come RabbitMQ, Apache Kafka, o AWS SNS/SQS.
-Kafka è ideale per sistemi con eventi a elevato throughput e necessità di persistenza a lungo termine.
-RabbitMQ è più semplice da configurare per comunicazioni tradizionali e con flussi di eventi a bassa latenza.</p>
-<ol class="arabic simple">
-<li><p>Progettazione degli eventi:</p></li>
-</ol>
-<p>Usa un formato standard come JSON o Avro per gli eventi.
-Assegna un ID univoco e un timestamp a ogni evento per garantire tracciabilità.
-Esempio di payload evento PaymentConfirmed:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
-  <span class="s2">&quot;eventId&quot;</span><span class="p">:</span> <span class="s2">&quot;12345&quot;</span><span class="p">,</span>
-  <span class="s2">&quot;eventType&quot;</span><span class="p">:</span> <span class="s2">&quot;PaymentConfirmed&quot;</span><span class="p">,</span>
-  <span class="s2">&quot;timestamp&quot;</span><span class="p">:</span> <span class="s2">&quot;2023-12-21T12:00:00Z&quot;</span><span class="p">,</span>
-  <span class="s2">&quot;data&quot;</span><span class="p">:</span> <span class="p">{</span>
-    <span class="s2">&quot;paymentId&quot;</span><span class="p">:</span> <span class="s2">&quot;67890&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;customerId&quot;</span><span class="p">:</span> <span class="s2">&quot;54321&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;amount&quot;</span><span class="p">:</span> <span class="mf">100.00</span>
-  <span class="p">}</span>
-<span class="p">}</span>
-</pre></div>
-</div>
-<ol class="arabic simple">
-<li><p>Gestione degli errori:</p></li>
-</ol>
-<ul class="simple">
-<li><p>Implementa una dead letter queue (DLQ) per gestire messaggi che non possono essere elaborati.</p></li>
-<li><p>Consenti ai consumatori di ripetere l’elaborazione degli eventi in caso di fallimenti temporanei.</p></li>
-</ul>
-<ol class="arabic simple">
-<li><p>Monitoraggio:</p></li>
-</ol>
-<ul class="simple">
-<li><p>Usa strumenti come Prometheus, Grafana, o Elasticsearch per monitorare il traffico degli eventi e rilevare eventuali colli di bottiglia.</p></li>
-</ul>
-</section>
-<section id="conclusione1">
-<h3>Conclusione1<a class="headerlink" href="#conclusione1" title="Permalink to this heading">¶</a></h3>
-<p>Integrare un sistema di eventi tramite un broker publish-subscribe è estremamente utile per un’architettura a microservizi come la tua. Migliorerà la scalabilità, la resilienza e la flessibilità, consentendo ai servizi di evolversi e interagire senza dipendenze rigide. Progettare eventi chiari e semantici è fondamentale per il successo dell’approccio.</p>
-</section>
-</section>
-<section id="ma-forse-ci-sono-anche-svantaggi">
-<h2>Ma forse ci sono anche svantaggi<a class="headerlink" href="#ma-forse-ci-sono-anche-svantaggi" title="Permalink to this heading">¶</a></h2>
-<p>Grazie. Credo però che l’uso di eventi con meccanismi publish-subscribe abbia anche qualche svantaggio e ponga diverse problematiche non banali</p>
-<p>Hai assolutamente ragione: l’uso di eventi e meccanismi publish-subscribe porta grandi vantaggi, ma introduce anche una serie di sfide e svantaggi che è importante considerare attentamente. Ecco un elenco di problematiche non banali associate a questo approccio, con possibili strategie per mitigarle:</p>
-<ol class="arabic simple">
-<li><ol class="arabic simple">
-<li><p>Complessità architetturale</p></li>
-</ol>
-</li>
-</ol>
-<blockquote>
-<div><ul class="simple">
-<li><p>Problema:</p>
-<ul>
-<li><p>L’introduzione di un broker e del paradigma publish-subscribe aumenta la complessità del sistema. Devi gestire la configurazione del broker, garantire la consegna dei messaggi e monitorare l’infrastruttura degli eventi.</p></li>
-</ul>
-</li>
-<li><p>Mitigazione:</p>
-<ul>
-<li><p>Usa soluzioni consolidate e ben documentate come Apache Kafka, RabbitMQ o AWS SNS/SQS.</p></li>
-<li><p>Introduci gradualmente gli eventi in base alle necessità, piuttosto che usarli ovunque.</p></li>
-<li><p>Automatizza il deployment e il monitoraggio del broker.</p></li>
-</ul>
-</li>
-</ul>
-</div></blockquote>
-<ol class="arabic">
-<li><ol class="arabic simple" start="2">
-<li><p>Difficoltà di tracciamento (Tracing)</p></li>
-</ol>
-<blockquote>
-<div><ul class="simple">
-<li><p>Problema:</p>
-<ul>
-<li><p>In un sistema asincrono basato su eventi, è difficile tracciare il flusso di una richiesta end-to-end, specialmente quando molti eventi sono correlati a una singola azione utente.</p></li>
-</ul>
-</li>
-<li><p>Mitigazione:</p>
-<ul>
-<li><p>Usa tecnologie di distributed tracing come OpenTelemetry o strumenti specifici come Jaeger e Zipkin.</p></li>
-<li><p>Includi correlation ID negli eventi per poterli raggruppare e ricostruire i flussi di elaborazione.</p></li>
-</ul>
-</li>
-</ul>
-</div></blockquote>
-</li>
-<li><ol class="arabic simple" start="3">
-<li><p>Mancanza di controllo diretto</p></li>
-</ol>
-</li>
-</ol>
-<blockquote>
-<div><ul class="simple">
-<li><p>Problema:</p>
-<ul>
-<li><p>Il servizio che pubblica un evento non ha controllo su come e quando i consumatori elaborano l’evento.</p></li>
-<li><p>I consumatori potrebbero elaborare gli eventi in ritardo o non rispettare le tue aspettative.</p></li>
-</ul>
-</li>
-<li><p>Mitigazione:</p>
-<ul>
-<li><p>Definisci contratti chiari per gli eventi (es., specifiche Avro o JSON Schema).</p></li>
-<li><p>Usa meccanismi di timeout e retry per gestire ritardi e problemi nei consumatori.</p></li>
-<li><p>Implementa una dead letter queue (DLQ) per eventi non elaborabili.</p></li>
-</ul>
-</li>
-</ul>
-</div></blockquote>
-<ol class="arabic">
-<li><ol class="arabic simple" start="4">
-<li><p>Ordine e duplicazione degli eventi</p></li>
-</ol>
-<blockquote>
-<div><ul class="simple">
-<li><p>Problema:</p>
-<ul>
-<li><p>Garantire l’ordine degli eventi o evitare duplicazioni è complesso.</p></li>
-<li><p>In certi scenari, l’elaborazione fuori ordine può portare a inconsistenze nei dati.</p></li>
-</ul>
-</li>
-<li><p>Mitigazione:</p>
-<ul>
-<li><p>Usa un broker che supporti partizionamento e ordinamento nativo (es., Kafka).</p></li>
-<li><p>Disegna i consumatori per essere idempotenti (ossia, capaci di gestire lo stesso evento più volte senza effetti collaterali).</p></li>
-<li><p>Usa sequenze o timestamp negli eventi per rilevare ed eventualmente gestire eventi fuori ordine.</p></li>
-</ul>
-</li>
-</ul>
-</div></blockquote>
-</li>
-<li><ol class="arabic simple" start="5">
-<li><p>Gestione degli errori</p></li>
-</ol>
-<blockquote>
-<div><ul class="simple">
-<li><p>Problema:</p>
-<ul>
-<li><p>Se un consumatore fallisce durante l’elaborazione, l’evento potrebbe andare perso o bloccarsi in un ciclo di tentativi.</p></li>
-<li><p>Gli errori possono propagarsi silenziosamente senza essere visibili.</p></li>
-</ul>
-</li>
-<li><p>Mitigazione:</p>
-<ul>
-<li><p>Implementa una strategia di retry con backoff esponenziale per i consumatori.</p></li>
-<li><p>Configura una DLQ per catturare eventi problematici e analizzarli.</p></li>
-<li><p>Usa metriche e log per identificare rapidamente consumatori che falliscono.</p></li>
-</ul>
-</li>
-</ul>
-</div></blockquote>
-</li>
-<li><ol class="arabic simple" start="6">
-<li><p>Overhead infrastrutturale</p>
-<ul class="simple">
-<li><p>Problema:</p>
-<ul>
-<li><p>L’introduzione di un broker richiede risorse aggiuntive, sia in termini di hardware che di competenze tecniche.</p></li>
-<li><p>Un broker mal configurato può diventare un single point of failure.</p></li>
-</ul>
-</li>
-<li><p>Mitigazione:</p>
-<ul>
-<li><p>Usa servizi gestiti (es., AWS MSK per Kafka o Google Pub/Sub) p
-per ridurre il carico di gestione.</p></li>
-<li><p>Configura il broker per avere ridondanza (es., partizioni replicate in Kafka).</p></li>
-<li><p>Implementa strategie di failover e disaster recovery.</p></li>
-</ul>
-</li>
-</ul>
-</li>
-</ol>
-</li>
-<li><ol class="arabic" start="7">
-<li><p>Dipendenze implicite</p>
-<blockquote>
-<div><ul class="simple">
-<li><p>Problema:</p>
-<ul>
-<li><p>Sebbene il paradigma publish-subscribe riduca il coupling diretto, introduce dipendenze implicite: i consumatori dipendono dagli eventi pubblicati, ma tali dipendenze non sono sempre visibili o formalmente documentate.</p></li>
-</ul>
-</li>
-<li><p>Mitigazione:</p>
-<ul>
-<li><p>Usa un Event Schema Registry (ad esempio, Confluent Schema Registry per Kafka) per mantenere una documentazione aggiornata degli eventi.</p></li>
-<li><p>Definisci i contratti per gli eventi in modo esplicito e versiona correttamente gli eventi per gestire modifiche nel tempo.</p></li>
-</ul>
-</li>
-</ul>
-</div></blockquote>
-</li>
-</ol>
-</li>
-<li><ol class="arabic simple" start="8">
-<li><p>Debugging più complesso</p></li>
-</ol>
-<blockquote>
-<div><ul class="simple">
-<li><p>Problema:</p>
-<ul>
-<li><p>Individuare la causa di un problema in un sistema distribuito basato su eventi richiede strumenti e competenze specializzate.</p></li>
-</ul>
-</li>
-<li><p>Mitigazione:</p>
-<ul>
-<li><p>Implementa logging strutturato per gli eventi.</p></li>
-<li><p>Includi nei log informazioni utili per identificare l’origine e il percorso dell’evento (es., timestamp, producer, consumer).</p></li>
-</ul>
-</li>
-</ul>
-</div></blockquote>
-</li>
-<li><ol class="arabic simple" start="9">
-<li><p>Overhead sui dati</p>
-<ul class="simple">
-<li><p>Problema:</p>
-<ul>
-<li><p>Gli eventi possono contenere molti dati per supportare casi d’uso generici, aumentando il consumo di memoria e banda.</p></li>
-</ul>
-</li>
-<li><p>Mitigazione:</p>
-<ul>
-<li><p>Riduci i dati negli eventi, includendo solo ciò che è strettamente necessario.</p></li>
-<li><p>Usa un approccio event-carried state transfer (l’evento trasporta solo dati rilevanti) o un approccio event sourcing se il sistema richiede un livello maggiore di persistenza.</p></li>
-</ul>
-</li>
-</ul>
-</li>
-</ol>
-</li>
-<li><ol class="arabic simple" start="10">
-<li><p>Problemi di consistenza</p></li>
-</ol>
-<blockquote>
-<div><ul class="simple">
-<li><p>Problema:</p>
-<ul>
-<li><p>Un modello basato su eventi può introdurre consistenza eventuale, creando situazioni in cui diversi servizi hanno uno stato divergente per un certo periodo di tempo.</p></li>
-</ul>
-</li>
-<li><p>Mitigazione:</p>
-<ul>
-<li><p>Progetta il sistema per tollerare inconsistenze temporanee.</p></li>
-<li><p>Usa una CQRS (Command Query Responsibility Segregation) se necessario per separare i comandi dagli eventi di lettura.</p></li>
-</ul>
-</li>
-</ul>
-</div></blockquote>
-</li>
-</ol>
-<section id="conclusione2">
-<h3>Conclusione2<a class="headerlink" href="#conclusione2" title="Permalink to this heading">¶</a></h3>
-<p>Sebbene il modello publish-subscribe porti benefici significativi, la sua implementazione non è priva di sfide. Per mitigare questi problemi, è cruciale:</p>
-<ul class="simple">
-<li><p>Progettare il sistema tenendo conto delle problematiche di tracciabilità, ordine e gestione degli errori.</p></li>
-<li><p>Avere una chiara strategia di logging, monitoraggio e testing.</p></li>
-<li><p>Introdurre gli eventi in modo incrementale, partendo dai casi d’uso in cui offrono il massimo valore.</p></li>
-</ul>
-<p>Adottando le giuste tecniche e strumenti, i benefici possono superare ampiamente i costi e i rischi associati.</p>
 </section>
 </section>
 </section>
@@ -822,7 +404,7 @@ per ridurre il carico di gestione.</p></li>
           </div>
         </div>
       </div>
-      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
         <div class="sphinxsidebarwrapper">
   <div>
     <h3><a href="index.html">Table of Contents</a></h3>
@@ -836,8 +418,9 @@ per ridurre il carico di gestione.</p></li>
 </li>
 <li><a class="reference internal" href="#progetto-cargoservicem2m">Progetto cargoserviceM2M</a><ul>
 <li><a class="reference internal" href="#key-points-cargoservicem2m">Key-points cargoserviceM2M</a></li>
-<li><a class="reference internal" href="#cargoservicem2m-su-raspberry">cargoserviceM2M su Raspberry</a></li>
 <li><a class="reference internal" href="#uso-di-cargoservicem2m">Uso di cargoserviceM2M</a></li>
+<li><a class="reference internal" href="#deployment-di-cargoservicem2m">Deployment di cargoserviceM2M</a></li>
+<li><a class="reference internal" href="#cargoservicem2m-su-raspberry">cargoserviceM2M su Raspberry</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#progetto-cargoservicem2mgui">Progetto cargoserviceM2MGui</a><ul>
@@ -866,27 +449,6 @@ per ridurre il carico di gestione.</p></li>
 <li><a class="reference internal" href="#key-points-cargoservicem2mqaklocal">Key-points cargoserviceM2MQakLocal</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#aggregatori-e-api-gateway">Aggregatori e API Gateway</a><ul>
-<li><a class="reference internal" href="#api-gateway">1. API Gateway</a></li>
-<li><a class="reference internal" href="#aggregatore">2. Aggregatore</a></li>
-<li><a class="reference internal" href="#quando-usarli-insieme">Quando usarli insieme?</a></li>
-<li><a class="reference internal" href="#caso-specifico-il-tuo-sistema">Caso specifico: il tuo sistema</a></li>
-<li><a class="reference internal" href="#esempio-di-flusso-con-entrambi">Esempio di flusso con entrambi:</a></li>
-<li><a class="reference internal" href="#aa-conclusione">AA - Conclusione</a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#uso-di-eventi-nel-sistema-cargo">Uso di eventi nel sistema cargo</a><ul>
-<li><a class="reference internal" href="#quando-usare-il-modello-publish-subscribe">Quando usare il modello Publish-Subscribe</a></li>
-<li><a class="reference internal" href="#esempi-specifici-di-utilizzo-nel-tuo-sistema">Esempi specifici di utilizzo nel tuo sistema</a></li>
-<li><a class="reference internal" href="#vantaggi-dell-approccio-publish-subscribe">Vantaggi dell’approccio Publish-Subscribe</a></li>
-<li><a class="reference internal" href="#considerazioni-sull-implementazione">Considerazioni sull’implementazione</a></li>
-<li><a class="reference internal" href="#conclusione1">Conclusione1</a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#ma-forse-ci-sono-anche-svantaggi">Ma forse ci sono anche svantaggi</a><ul>
-<li><a class="reference internal" href="#conclusione2">Conclusione2</a></li>
-</ul>
-</li>
 </ul>
 </li>
 </ul>
@@ -909,7 +471,7 @@ per ridurre il carico di gestione.</p></li>
             rel="nofollow">Show Source</a></li>
     </ul>
    </div>
-<div id="searchbox" style="display: none" role="search">
+<search id="searchbox" style="display: none" role="search">
   <h3 id="searchlabel">Quick search</h3>
     <div class="searchformwrapper">
     <form class="search" action="search.html" method="get">
@@ -917,13 +479,13 @@ per ridurre il carico di gestione.</p></li>
       <input type="submit" value="Go" />
     </form>
     </div>
-</div>
+</search>
 <script>document.getElementById('searchbox').style.display = "block"</script>
         </div>
       </div>
       <div class="clearer"></div>
     </div>
-    <div class="related" role="navigation" aria-label="related navigation">
+    <div class="related" role="navigation" aria-label="Related">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -940,8 +502,8 @@ per ridurre il carico di gestione.</p></li>
       </ul>
     </div>
     <div class="footer" role="contentinfo">
-        &#169; Copyright 2024, ANatali.
-      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 5.0.2.
+    &#169; Copyright 2024, ANatali.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.1.3.
     </div>
   </body>
 </html>
