@@ -379,20 +379,6 @@ La percezione di un allarme da parte del servizio deve incidere  sia sul ``Contr
 Per questo è utile un oggetto  usato da entrambi che dovrebbe operare come un FSM
 sensibile sia ai comandi sia agli eventi.
 
-===================================
-conway life e mqtt
-===================================
-
-.. image::  ./_static/img/conway/conwayguiseqdiagr.jpg
-  :align: center 
-  :width: 100%  
-
-.. image::  ./_static/img/conway/conwaygui.jpg
-  :align: center 
-  :width: 50%  
- 
-
-
 
 ===================================
 cargosystem25 con attori qak

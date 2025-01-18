@@ -18,5 +18,6 @@ issLab2025
    cargoserviceM2M
    cargoserviceM2MGui
    Cargo24
+   ConwayLife25
    Appunti
 
