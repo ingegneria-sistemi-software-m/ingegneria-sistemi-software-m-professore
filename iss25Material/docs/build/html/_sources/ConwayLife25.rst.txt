@@ -129,4 +129,9 @@ Il refactoring del controllo come actor agevola la gestione di eventi e messaggi
 essere generati da altri componenti.
 
 
+.. image::  ./_static/img/conway/conwayqakarchPlus.jpg
+  :align: center 
+  :width: 100%   
+ 
+
  
