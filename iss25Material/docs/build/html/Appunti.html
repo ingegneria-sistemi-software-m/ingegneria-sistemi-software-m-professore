@@ -1,26 +1,33 @@
+
 <!DOCTYPE html>
 
-<html lang="en" data-content_root="./">
+<html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
     <title>Appunti &#8212; issLab2025 1.0 documentation</title>
-    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=649a27d8" />
-    <link rel="stylesheet" type="text/css" href="_static/sphinxdoc.css?v=34905f61" />
-    <link rel="stylesheet" type="text/css" href="_static/custom.css?v=cb2d0677" />
-    <script src="_static/documentation_options.js?v=f2a433a1"></script>
-    <script src="_static/doctools.js?v=9bcbadda"></script>
-    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinxdoc.css" />
+    <link rel="stylesheet" type="text/css" href="_static/custom.css" />
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="_static/doctools.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
-    <link rel="search" title="Search" href="search.html" /> 
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Cargo24" href="Cargo24.html" /> 
   </head><body>
-    <div class="related" role="navigation" aria-label="Related">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
           <a href="genindex.html" title="General Index"
              accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="Cargo24.html" title="Cargo24"
+             accesskey="P">previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="index.html">issLab2025 1.0 documentation</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">Appunti</a></li> 
       </ul>
@@ -32,13 +39,13 @@
           <div class="body" role="main">
             
   <section id="appunti">
-<h1>Appunti<a class="headerlink" href="#appunti" title="Link to this heading">¶</a></h1>
+<h1>Appunti<a class="headerlink" href="#appunti" title="Permalink to this heading">¶</a></h1>
 <section id="aggregatori-e-api-gateway">
-<h2>Aggregatori e API Gateway<a class="headerlink" href="#aggregatori-e-api-gateway" title="Link to this heading">¶</a></h2>
+<h2>Aggregatori e API Gateway<a class="headerlink" href="#aggregatori-e-api-gateway" title="Permalink to this heading">¶</a></h2>
 <p>Sto costruendo un sistema software a microservizi che comprende prodotti, clienti, pagamenti e carico/scarico di mersi su un cargo. La logica di business si può riassumere come segue: un cliente regitsra un prodotto che vuole sia trasportato dal cargo a un certa destinazione, dopo opportuno pagamento. Ho già realizzato i singoli microservizi e vorrei sapere se, per costruire il sistema finale, sia utile, opportuno o necessario introdurre un aggregatore o una API gateway o entrambi.</p>
 <p>Introducendo un aggregatore o una API Gateway, puoi migliorare significativamente la progettazione e il funzionamento del tuo sistema a microservizi. Analizziamo la loro utilità in base al tuo contesto:</p>
 <section id="api-gateway">
-<h3>1. API Gateway<a class="headerlink" href="#api-gateway" title="Link to this heading">¶</a></h3>
+<h3>1. API Gateway<a class="headerlink" href="#api-gateway" title="Permalink to this heading">¶</a></h3>
 <p>Un’API Gateway è altamente consigliata in un’architettura a microservizi per i seguenti motivi:</p>
 <ul class="simple">
 <li><p>Punto di ingresso unico: Un’API Gateway funge da punto centrale attraverso cui i client (ad esempio, web app o mobile app) interagiscono con i microservizi, eliminando la necessità di conoscere la loro posizione e il loro contratto API.</p></li>
@@ -48,7 +55,7 @@
 </ul>
 </section>
 <section id="aggregatore">
-<h3>2. Aggregatore<a class="headerlink" href="#aggregatore" title="Link to this heading">¶</a></h3>
+<h3>2. Aggregatore<a class="headerlink" href="#aggregatore" title="Permalink to this heading">¶</a></h3>
 <p>Un aggregatore, rispetto a una semplice API Gateway, svolge un ruolo più complesso:</p>
 <ul class="simple">
 <li><p>Composizione di servizi: Se ci sono casi in cui i dati di più microservizi devono essere combinati in una risposta unica (es., dati del cliente, del prodotto e dei pagamenti per fornire una vista completa di un ordine), un aggregatore può orchestrare e combinare tali informazioni.</p></li>
@@ -56,7 +63,7 @@
 </ul>
 </section>
 <section id="quando-usarli-insieme">
-<h3>Quando usarli insieme?<a class="headerlink" href="#quando-usarli-insieme" title="Link to this heading">¶</a></h3>
+<h3>Quando usarli insieme?<a class="headerlink" href="#quando-usarli-insieme" title="Permalink to this heading">¶</a></h3>
 <p>In molti casi, è utile usare entrambi, ma con compiti distinti:</p>
 <ol class="arabic simple">
 <li><p>API Gateway:</p></li>
@@ -77,7 +84,7 @@
 </div></blockquote>
 </section>
 <section id="caso-specifico-il-tuo-sistema">
-<h3>Caso specifico: il tuo sistema<a class="headerlink" href="#caso-specifico-il-tuo-sistema" title="Link to this heading">¶</a></h3>
+<h3>Caso specifico: il tuo sistema<a class="headerlink" href="#caso-specifico-il-tuo-sistema" title="Permalink to this heading">¶</a></h3>
 <p>Nel tuo scenario, entrambi potrebbero essere utili per diverse ragioni:</p>
 <ul class="simple">
 <li><p>API Gateway:</p>
@@ -94,7 +101,7 @@
 </ul>
 </section>
 <section id="esempio-di-flusso-con-entrambi">
-<h3>Esempio di flusso con entrambi:<a class="headerlink" href="#esempio-di-flusso-con-entrambi" title="Link to this heading">¶</a></h3>
+<h3>Esempio di flusso con entrambi:<a class="headerlink" href="#esempio-di-flusso-con-entrambi" title="Permalink to this heading">¶</a></h3>
 <ol class="arabic simple">
 <li><p>Un cliente effettua una richiesta per registrare un prodotto per il trasporto.</p></li>
 <li><p>La richiesta passa attraverso l’API Gateway, che la instrada al microservizio corretto o all’aggregatore.</p></li>
@@ -103,7 +110,7 @@
 </ol>
 </section>
 <section id="aa-conclusione">
-<h3>AA - Conclusione<a class="headerlink" href="#aa-conclusione" title="Link to this heading">¶</a></h3>
+<h3>AA - Conclusione<a class="headerlink" href="#aa-conclusione" title="Permalink to this heading">¶</a></h3>
 <ul class="simple">
 <li><p>API Gateway: Quasi essenziale in un sistema a microservizi, per gestione di accesso, sicurezza e orchestrazione base.</p></li>
 <li><p>Aggregatore: Utile per semplificare la logica complessa e ridurre le chiamate client-microservizi.</p></li>
@@ -112,11 +119,11 @@
 </section>
 </section>
 <section id="uso-di-eventi-nel-sistema-cargo">
-<h2>Uso di eventi nel sistema cargo<a class="headerlink" href="#uso-di-eventi-nel-sistema-cargo" title="Link to this heading">¶</a></h2>
+<h2>Uso di eventi nel sistema cargo<a class="headerlink" href="#uso-di-eventi-nel-sistema-cargo" title="Permalink to this heading">¶</a></h2>
 <p>Con riferimento al problema precedente, vorrei qualche suggerimento e/o considerazione sulle situazioni in cui sia utile che uno dei servizi indicati interagisca con gli altri o gli utenti esterni al sistema, tramire emissione di ‘eventi’ usando un broker publish-subscribe</p>
 <p>L’uso di un broker di messaggistica basato su un modello publish-subscribe può essere estremamente utile in un sistema a microservizi come il tuo. Questo approccio consente ai servizi di comunicare in modo asincrono e decouplato, migliorando la scalabilità e l’estensibilità. Di seguito, alcune considerazioni e suggerimenti relativi al tuo caso:</p>
 <section id="quando-usare-il-modello-publish-subscribe">
-<h3>Quando usare il modello Publish-Subscribe<a class="headerlink" href="#quando-usare-il-modello-publish-subscribe" title="Link to this heading">¶</a></h3>
+<h3>Quando usare il modello Publish-Subscribe<a class="headerlink" href="#quando-usare-il-modello-publish-subscribe" title="Permalink to this heading">¶</a></h3>
 <ol class="arabic simple">
 <li><p>Eventi di dominio importanti:</p></li>
 </ol>
@@ -154,7 +161,7 @@
 </div></blockquote>
 </section>
 <section id="esempi-specifici-di-utilizzo-nel-tuo-sistema">
-<h3>Esempi specifici di utilizzo nel tuo sistema<a class="headerlink" href="#esempi-specifici-di-utilizzo-nel-tuo-sistema" title="Link to this heading">¶</a></h3>
+<h3>Esempi specifici di utilizzo nel tuo sistema<a class="headerlink" href="#esempi-specifici-di-utilizzo-nel-tuo-sistema" title="Permalink to this heading">¶</a></h3>
 <ol class="arabic simple">
 <li><ol class="arabic simple">
 <li><p>Microservizio “Clienti”</p></li>
@@ -213,7 +220,7 @@
 </div></blockquote>
 </section>
 <section id="vantaggi-dell-approccio-publish-subscribe">
-<h3>Vantaggi dell’approccio Publish-Subscribe<a class="headerlink" href="#vantaggi-dell-approccio-publish-subscribe" title="Link to this heading">¶</a></h3>
+<h3>Vantaggi dell’approccio Publish-Subscribe<a class="headerlink" href="#vantaggi-dell-approccio-publish-subscribe" title="Permalink to this heading">¶</a></h3>
 <ol class="arabic simple">
 <li><p>Scalabilità:</p></li>
 </ol>
@@ -242,7 +249,7 @@
 </div></blockquote>
 </section>
 <section id="considerazioni-sull-implementazione">
-<h3>Considerazioni sull’implementazione<a class="headerlink" href="#considerazioni-sull-implementazione" title="Link to this heading">¶</a></h3>
+<h3>Considerazioni sull’implementazione<a class="headerlink" href="#considerazioni-sull-implementazione" title="Permalink to this heading">¶</a></h3>
 <ol class="arabic simple">
 <li><p>Scelta del broker:</p></li>
 </ol>
@@ -282,12 +289,12 @@ Esempio di payload evento PaymentConfirmed:</p>
 </ul>
 </section>
 <section id="conclusione1">
-<h3>Conclusione1<a class="headerlink" href="#conclusione1" title="Link to this heading">¶</a></h3>
+<h3>Conclusione1<a class="headerlink" href="#conclusione1" title="Permalink to this heading">¶</a></h3>
 <p>Integrare un sistema di eventi tramite un broker publish-subscribe è estremamente utile per un’architettura a microservizi come la tua. Migliorerà la scalabilità, la resilienza e la flessibilità, consentendo ai servizi di evolversi e interagire senza dipendenze rigide. Progettare eventi chiari e semantici è fondamentale per il successo dell’approccio.</p>
 </section>
 </section>
 <section id="ma-forse-ci-sono-anche-svantaggi">
-<h2>Ma forse ci sono anche svantaggi<a class="headerlink" href="#ma-forse-ci-sono-anche-svantaggi" title="Link to this heading">¶</a></h2>
+<h2>Ma forse ci sono anche svantaggi<a class="headerlink" href="#ma-forse-ci-sono-anche-svantaggi" title="Permalink to this heading">¶</a></h2>
 <p>Grazie. Credo però che l’uso di eventi con meccanismi publish-subscribe abbia anche qualche svantaggio e ponga diverse problematiche non banali</p>
 <p>Hai assolutamente ragione: l’uso di eventi e meccanismi publish-subscribe porta grandi vantaggi, ma introduce anche una serie di sfide e svantaggi che è importante considerare attentamente. Ecco un elenco di problematiche non banali associate a questo approccio, con possibili strategie per mitigarle:</p>
 <ol class="arabic simple">
@@ -496,7 +503,7 @@ per ridurre il carico di gestione.</p></li>
 </li>
 </ol>
 <section id="conclusione2">
-<h3>Conclusione2<a class="headerlink" href="#conclusione2" title="Link to this heading">¶</a></h3>
+<h3>Conclusione2<a class="headerlink" href="#conclusione2" title="Permalink to this heading">¶</a></h3>
 <p>Sebbene il modello publish-subscribe porti benefici significativi, la sua implementazione non è priva di sfide. Per mitigare questi problemi, è cruciale:</p>
 <ul class="simple">
 <li><p>Progettare il sistema tenendo conto delle problematiche di tracciabilità, ordine e gestione degli errori.</p></li>
@@ -559,7 +566,7 @@ PSA REFLEX (CON EVENTUALE PSA FREE) - sangue</p>
           </div>
         </div>
       </div>
-      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
   <div>
     <h3><a href="index.html">Table of Contents</a></h3>
@@ -591,6 +598,11 @@ PSA REFLEX (CON EVENTUALE PSA FREE) - sangue</p>
 </ul>
 
   </div>
+  <div>
+    <h4>Previous topic</h4>
+    <p class="topless"><a href="Cargo24.html"
+                          title="previous chapter">Cargo24</a></p>
+  </div>
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
     <ul class="this-page-menu">
@@ -598,7 +610,7 @@ PSA REFLEX (CON EVENTUALE PSA FREE) - sangue</p>
             rel="nofollow">Show Source</a></li>
     </ul>
    </div>
-<search id="searchbox" style="display: none" role="search">
+<div id="searchbox" style="display: none" role="search">
   <h3 id="searchlabel">Quick search</h3>
     <div class="searchformwrapper">
     <form class="search" action="search.html" method="get">
@@ -606,25 +618,28 @@ PSA REFLEX (CON EVENTUALE PSA FREE) - sangue</p>
       <input type="submit" value="Go" />
     </form>
     </div>
-</search>
+</div>
 <script>document.getElementById('searchbox').style.display = "block"</script>
         </div>
       </div>
       <div class="clearer"></div>
     </div>
-    <div class="related" role="navigation" aria-label="Related">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
           <a href="genindex.html" title="General Index"
              >index</a></li>
+        <li class="right" >
+          <a href="Cargo24.html" title="Cargo24"
+             >previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="index.html">issLab2025 1.0 documentation</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">Appunti</a></li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
-    &#169; Copyright 2024, ANatali.
-      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.1.3.
+        &#169; Copyright 2024, ANatali.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 5.0.2.
     </div>
   </body>
 </html>

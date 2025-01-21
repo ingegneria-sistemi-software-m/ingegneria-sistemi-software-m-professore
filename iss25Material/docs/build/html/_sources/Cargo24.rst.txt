@@ -33,7 +33,7 @@ Cargo24
 Servizi e GUI
 ----------------------------------
 
-Si veda |? `Cargo Overview`_, |? `Cargo History`_.   
+Si veda  `Cargo Overview`_,  `Cargo History`_.   
 
 
 .. :guilabel:`Cargo Overview`
@@ -64,7 +64,7 @@ Si veda |? `Cargo Overview`_, |? `Cargo History`_.
     :widths: 30,70
     :width: 100%
     
-    * - cargoproduct |? `CorePOJO`_
+    * - cargoproduct  `CorePOJO`_
 
         .. image::  ./_static/img/Cargo/ProductServiceLogic.JPG
            :align: center 
@@ -80,7 +80,7 @@ Si veda |? `Cargo Overview`_, |? `Cargo History`_.
         **caller**: ``ProductServiceCaller`` in Cargo25
 
 
-    * - :ref:`cargoserviceM2M` |? `PojoSpring`_
+    * - :ref:`cargoserviceM2M`  `PojoSpring`_
 
         .. image::  ./_static/img/m2m/cargoserviceM2M.jpg
            :align: center 
