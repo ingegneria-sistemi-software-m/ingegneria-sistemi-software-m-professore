@@ -134,4 +134,18 @@ essere generati da altri componenti.
   :width: 100%   
  
 
+-----------------------------------------
+Progetto conwayactorsqak
+-----------------------------------------
+
+.. image::  ./_static/img/conway/conwactorsqak.jpg
+  :align: center 
+  :width: 100%  
+
  
+
+
+
+
+
+
