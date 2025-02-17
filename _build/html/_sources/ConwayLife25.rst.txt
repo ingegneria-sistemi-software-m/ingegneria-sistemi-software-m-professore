@@ -1,0 +1,253 @@
+.. role:: red
+.. role:: blue
+.. role:: silde2
+.. role:: red 
+.. role:: blue 
+.. role:: brown 
+.. role:: remark
+.. role:: worktodo
+.. role:: slide
+.. role:: slide1
+.. role:: slide2
+.. role:: slide3
+.. role:: slidekp
+.. role:: worktodo 
+
+.. _Gioco della vita: https://it.wikipedia.org/wiki/Gioco_della_vita
+
+.. _LifeCore: file:///C:/Didattica2025/mcrsv24/conwaygui/src/main/java/unibo/disi/conwaygui/app/LifeCore.java
+.. _LifeControl: file:///C:/Didattica2025/mcrsv24/conwaygui/src/main/java/unibo/disi/conwaygui/app/LifeControl.java
+.. _OutInMqtt: file:///C:/Didattica2025/mcrsv24/conwaygui/src/main/java/unibo/disi/conwaygui/app/OutInMqtt.java
+
+.. _WSConwaygui: file:///C:/Didattica2025/mcrsv24/conwaygui/src/main/java/unibo/disi/conwaygui/ws/WSConwaygui.java
+.. _life.qak: file:///C:/Didattica2025/mcrsv24/conwayqak/src/life.qak
+.. _LifeCoreAgain: file:///C:/Didattica2025/mcrsv24/conwayqak/src/main/java/LifeCoreAgain.java
+ 
+.. _OutInMqttForactor: file:///C:/Didattica2025/mcrsv24/conwayqak/src/main/java/OutInMqttForactor.java
+
+===================================
+ConwayLife25
+===================================
+
+
+#. :ref:`Requisiti ConwayLife25`
+#. :ref:`Progetto conwaygui`
+#. :ref:`ConwayLife25 gui`
+#. :ref:`Progetto conwayqak`
+#. :ref:`Progetto conwayactorsqak`
+#. :ref:`Progetto conwaycellsqak`
+#. :ref:`Progetto conwaymasterqak`
+
+---------------------------------------
+Overview ConwayLife25
+---------------------------------------
+
+Il `Gioco della vita`_ è un automa cellulare sviluppato dal matematico inglese *John Horton Conway* nel 1970.
+
+Il `Gioco della vita`_ di Conway viene usato come esempio di come realizzare un sistema software 
+per passi successivi di complessità crescente.
+
++++++++++++++++++++++++++++++++++++
+ConwayLife25: il core
++++++++++++++++++++++++++++++++++++
+
+#. Il punto di partenza è il 'cuore' del gioco, cioè la logica di calcolo delle celle vive e morte. 
+   Per questo calcolo è essenziale il concetto di **stato** di una cella e il concetto di **vicinato** di una cella.
+#. Lo stato di una cella può essere **vivo** o **morto** e viene modificato in base al numero di celle vive nel 
+   suo vicinato, secondo le seguenti regole:
+
+   - Una cella viva con meno di due celle vive adiacenti muore (per isolamento).
+   - Una cella viva con due o tre celle vive adiacenti sopravvive alla generazione successiva.
+   - Una cella viva con più di tre celle vive adiacenti muore (per sovrappopolazione).
+   - Una cella morta con esattamente tre celle vive adiacenti diventa una cella viva (per riproduzione).
+#. L'insieme delle celle forma concettualmente una griglia bidimensionale infinita, ma per ovvie ragioni, 
+   noi farmeo riferimento a una griglia finita di dimensione ``NxN``, con 3<=N<=10.
+#. In una griglia infinita, il vicinato di una cella è costituito dalle ``8`` celle adiacenti 
+   (orizzontali, verticali e diagonali). Nel nostro caso di griglia finita, il vicinato di una cella (ai bordi) 
+   potrebbe avere anche solo ``3`` o ``5`` celle.
+#. In una prima fase, partiremo dalla ovvia assunzione che la griglia sia rappresentata da una matrice NxN di celle, 
+   ciascuna delle quali ha uno stato. Il vicinato di una cella può essere stabilito in base agli indici della componente
+   della  matrice che rappresenta la cella.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ ConwayLife25 core: i progetti
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+#. Progetto uniboConway: realizzazione del 'core' in JavaScript (main.resources.conwayJS),
+   che permette la visualizzazione e il controllo della griglia all'interno in una pagina HTML
+   (funzione LifeCore), senza l'uso di alcun server.  
+   La pagina propone anche pulsanti per avviare, fermare e terminare il gioco ed è organizzata come un
+   insieme di funzioni.
+#. Progetto main.java.conway: realizzazione del 'core' in Java (main.java.conway). La funzione LifeCore della
+   soluzione JavaScript viene riscritta in Java.
+   La classe LifeCore assume l'esistenza di  
+   un dispositivo di I/O (OutIn) per visualizzare lo stato corrente delle celle della griglia.
+   Viene aggiunta di un componente di controllo (LifeControl)
+   permette di avviare, fermare e terminare il gioco.
+#. Progetto conwaygui: realizzazione di un micro-servizio in SpringBoot che offre una pagina HTML che permette
+   di visualizzare lo stato della griglia  e permette a un utente umano
+   di interagire con il LifeControl  mediante un broker MQTT.
+
+La 
+
++++++++++++++++++++++++++++++++++++
+ConwayLife25: le celle come attori
++++++++++++++++++++++++++++++++++++
+
++++++++++++++
+X
++++++++++++++
+
+
+#. Un componente necessarrio è un **dispositivo di I/O** che permetta di visualizzare lo stato delle celle.
+#. Un componente di **controllo** permette di avviare, fermare e terminare il gioco.
+#. Un componente di **interfaccia** permette di interagire con l'utente.
+
++++++++++++++
+A 
++++++++++++++
+
+#. Il punto di partenza è il 'cuore' del gioco, cioè la logica di calcolo delle celle vive e morte. 
+   Per questo calcolo è essenziale il concetto di **stato** di una cella e il concetto di **vicinato** di una cella.
+#. In una griglia infinita, il vicinato di una cella è costituito dalle ``8`` celle adiacenti 
+   (orizzontali, verticali e diagonali). Per ovvie ragioni, noi useremo una griglia finita, per 
+   cui il vicinato di una cella potrebbe avere anche solo ``3`` o ``5`` celle.
+#. Lo stato di una cella può essere **vivo** o **morto** e viene modificato in base al numero di celle vive nel 
+   suo vicinato, secondo le seguenti regole:
+
+   - Una cella viva con meno di due celle vive adiacenti muore (per isolamento).
+   - Una cella viva con due o tre celle vive adiacenti sopravvive alla generazione successiva.
+   - Una cella viva con più di tre celle vive adiacenti muore (per sovrappopolazione).
+   - Una cella morta con esattamente tre celle vive adiacenti diventa una cella viva (per riproduzione).
+
+
+---------------------------------------
+Requisiti ConwayLife25
+---------------------------------------
+
+:slide3:`Goal`: 
+Progettare e costruire un :blue:`sistema software` che realizza il gioco della vita di Conway.
+
+
+-----------------------------------------
+Progetto conwaygui
+-----------------------------------------
+
+.. image::  ./_static/img/conway/conwayguiseqdiagr.jpg
+  :align: center 
+  :width: 100%  
+
+.. list-table::
+    :widths: 15,35,50
+    :width: 100%
+    
+    * - **Componente**
+      - **Ruolo e Tipo**    
+      - **Note**
+    * - `LifeCore`_
+      - Logica del game in Java   
+      - Ha un riferimento a *OutInMqtt* per fare il display delle celle.
+        Le sue operazioni sono invocate da :slidekp:`LifeControl`
+    * - `LifeControl`_
+      - Controllo del game in Java   
+      - Riceve comandi (``start/stop/exit``)  dalla GUI  mediante *OutInMqtt* e usa *LifeCore*.
+    * - `OutInMqtt`_
+      - Dispositivo di I/O in Java   
+      - Interagisce con le pagine HTML vie MQTT usando ``MqttConnection25`` perchè l'uso di una *receiveMsg* bloccante
+        è accettabile.
+
+        In alternativa potrebbe usare *MqttConnectionBase* ( e *MqttConnCallback*)
+    * - `WSConwaygui`_
+      - Gestione in Java di informazioni da/a pagina HTML    
+      - Estende  *AbstractWebSocketHandler*  di *org.springframework.web.socket.handler*.
+        Usa ``MqttConnection25`` per inviare comandi a *LifeControl* e per fare update delle pagine
+        (metodo *broadcastToWebSocket*)
+        cone le informazioni ricevute da *LifeControl*.  
+        
+
+
+
+
+-----------------------------------------
+ConwayLife25 gui
+-----------------------------------------
+ 
+
+.. list-table::
+    :widths: 60,40
+    :width: 100%
+    
+    * - 
+        .. image::  ./_static/img/conway/conwaygui.jpg
+           :align: center 
+           :width: 50%  
+      - **xxx**    
+
+
+
+ 
+-----------------------------------------
+Progetto conwayqak
+-----------------------------------------
+
+Il componente `LifeControl`_ è riscritto come actor-qak e il sistema è stato esteso con un componente `OutInMqttForactor`_
+che trasforma i messaggi ricevuti via MQTT in **dispatch** per l'actor `lifecontrol` definito in `life.qak`_.
+
+.. image::  ./_static/img/conway/conwayqakarch.jpg   
+  :align: center    
+  :width: 100%   
+
+.. list-table::
+    :widths: 15,35,50
+    :width: 100%
+    
+    * - **Componente**
+      - **Ruolo e Tipo**    
+      - **Note**
+    * - `LifeCoreAgain`_
+      - Logica del game in Java.  
+      - E' lo stesso codice di `LifeCore`_. Ha un riferimento a *OutInMqtt* per fare il display delle celle.
+        Le sue operazioni sono invocate dall':slidekp:`actor lifecontrol` definito in `life.qak`_.
+    * - `life.qak`_
+      - Logica del controllo del game **in qak**. 
+      - Gestisce messaggi (dispatch) inviati da   `OutInMqtt`_.
+    * - `OutInMqttForactor`_
+      - Dispositivo di I/O in Java
+      - Interagisce con le pagine HTML vie MQTT usando *MqttConnection25*.
+        Diversamente da `OutInMqtt`_, alla ricezione di un messaggio, invia un dispatch al suo 'owner'
+        cioè all'**actor lifecontrol**
+         
+Il refactoring del controllo come actor agevola la gestione di eventi e messaggi aggiuntivi che potrebbero
+essere generati da altri componenti.
+
+
+.. image::  ./_static/img/conway/conwayqakarchPlus.jpg
+  :align: center 
+  :width: 100%   
+ 
+
+-----------------------------------------
+Progetto conwayactorsqak
+-----------------------------------------
+
+.. image::  ./_static/img/conway/conwactorsqak.jpg
+  :align: center 
+  :width: 100%  
+
+
+ 
+
+
+-----------------------------------------
+Progetto conwaycellsqak
+-----------------------------------------
+
+ 
+-----------------------------------------
+Progetto conwaymasterqak
+-----------------------------------------
+
+
+
+
+

@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="./">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>iss25Material &#8212; issLab2025 1.0 documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=649a27d8" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinxdoc.css?v=34905f61" />
+    <link rel="stylesheet" type="text/css" href="_static/custom.css" />
+    <script src="_static/documentation_options.js?v=f2a433a1"></script>
+    <script src="_static/doctools.js?v=9bcbadda"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="cargosystem25" href="cargosystem25.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="Related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="cargosystem25.html" title="cargosystem25"
+             accesskey="N">next</a> |</li>
+        <li class="nav-item nav-item-0"><a href="#">issLab2025 1.0 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">iss25Material</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="iss25material">
+<h1>iss25Material<a class="headerlink" href="#iss25material" title="Link to this heading">¶</a></h1>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="cargosystem25.html">cargosystem25</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="cargosystem25.html#requisiti">Requisiti</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cargosystem25.html#impostazioni-preliminari">Impostazioni preliminari</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cargosystem25.html#progetto-cargoproduct">Progetto cargoproduct</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="cargosystem25.html#key-points-cargoproduct">Key-points cargoproduct</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="cargosystem25.html#progetto-cargoservicem2m">Progetto cargoserviceM2M</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="cargosystem25.html#key-points-cargoservicem2m">Key-points cargoserviceM2M</a></li>
+<li class="toctree-l3"><a class="reference internal" href="cargosystem25.html#uso-di-cargoservicem2m">Uso di cargoserviceM2M</a></li>
+<li class="toctree-l3"><a class="reference internal" href="cargosystem25.html#deployment-di-cargoservicem2m">Deployment di cargoserviceM2M</a></li>
+<li class="toctree-l3"><a class="reference internal" href="cargosystem25.html#cargoservicem2m-su-raspberry">cargoserviceM2M su Raspberry</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="cargosystem25.html#progetto-cargoservicem2mgui">Progetto cargoserviceM2MGui</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="cargosystem25.html#key-points-cargoservicem2mgui">Key-points cargoserviceM2MGui</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="cargosystem25.html#sistema-cargoservicem2m">Sistema cargoserviceM2M</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cargosystem25.html#cargoservicem2m-con-eventi">cargoserviceM2M con eventi</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="cargosystem25.html#ossevazioni-preliminari">Ossevazioni preliminari</a></li>
+<li class="toctree-l3"><a class="reference internal" href="cargosystem25.html#pub-sub-o-websocket">Pub-sub o WebSocket?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="cargosystem25.html#key-points-cargoservicem2m-con-eventi">Key-points cargoserviceM2M con eventi</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="cargosystem25.html#cargosystem25-con-attori-qak">cargosystem25 con attori qak</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="cargosystem25.html#progetto-cargoservice">Progetto cargoservice</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="cargosystem25.html#key-points-cargoservice">Key-points cargoservice</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="cargosystem25.html#progetto-cargoserviceqakgui">Progetto cargoserviceQakGui</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="cargosystem25.html#key-points-cargoserviceqakgui">Key-points cargoserviceQakGui</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="cargosystem25.html#progetto-cargoservicem2mqaklocal">Progetto cargoserviceM2MQakLocal</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="cargosystem25.html#key-points-cargoservicem2mqaklocal">Key-points cargoserviceM2MQakLocal</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="cargoserviceM2M.html">cargoserviceM2M</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="cargoserviceM2M.html#m2m-start">M2M start</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cargoserviceM2M.html#m2m-first-run">M2M first run</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cargoserviceM2M.html#m2m-required-library">M2M required library</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cargoserviceM2M.html#m2m-build-gradle">M2M build.gradle</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cargoserviceM2M.html#m2m-gitignore">M2M .gitignore</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cargoserviceM2M.html#m2m-application-and-run">M2M application and run</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cargoserviceM2M.html#m2m-usage">M2M usage</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cargoserviceM2M.html#m2m-logging">M2M logging</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cargoserviceM2M.html#m2m-testing-local">M2M testing  local</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cargoserviceM2M.html#m2m-testing-using-elk">M2M testing using ELK</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cargoserviceM2M.html#m2m-on-docker">M2M on Docker</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cargoserviceM2M.html#m2m-discoverable">M2M discoverable</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cargoserviceM2M.html#m2m-discoverable-usage">M2M discoverable usage</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cargoserviceM2M.html#m2m-connection-e-interaction">M2M: Connection e Interaction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cargoserviceM2M.html#m2m-ws">M2M ws</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cargoserviceM2M.html#m2m-su-raspberrypi">M2M su RaspberryPi</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cargoserviceM2M.html#m2m-con-netty">M2M con Netty</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="cargoserviceM2MGui.html">cargoserviceM2MGui</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="cargoserviceM2MGui.html#m2m-gui-start">M2M-GUI start</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cargoserviceM2MGui.html#m2m-gui-first-run">M2M-GUI first run</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cargoserviceM2MGui.html#m2m-gui-build-gradle">M2M-GUI build.gradle</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cargoserviceM2MGui.html#m2m-gui-application-and-run">M2M-GUI application and run</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cargoserviceM2MGui.html#m2m-gui-usage">M2M-GUI usage</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cargoserviceM2MGui.html#m2m-gui-logging">M2M-GUI logging</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cargoserviceM2MGui.html#m2m-gui-testing-local">M2M-GUI testing  local</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cargoserviceM2MGui.html#m2m-gui-testing-using-elk">M2M-GUI testing using ELK</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cargoserviceM2MGui.html#m2m-gui-on-docker">M2M-GUI on Docker</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cargoserviceM2MGui.html#m2m-gui-discoverable">M2M-GUI discoverable</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cargoserviceM2MGui.html#m2m-gui-discoverable-usage">M2M-GUI discoverable usage</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cargoserviceM2MGui.html#m2m-gui-connection-e-interaction">M2M-GUI: Connection e Interaction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cargoserviceM2MGui.html#m2m-gui-su-raspberrypi">M2M-GUI su RaspberryPi</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Cargo24.html">Cargo24</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="Cargo24.html#servizi-e-gui">Servizi e GUI</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Cargo24.html#c-didattica2024qak24cargo">C:Didattica2024qak24cargo:</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Cargo24.html#pslcallerhttp">PSLCallerHTTP</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Cargo24.html#il-mcrsrv-productservice">Il mcrsrv ProductService</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="ConwayLife25.html">ConwayLife25</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="ConwayLife25.html#overview-conwaylife25">Overview ConwayLife25</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="ConwayLife25.html#conwaylife25-il-core">ConwayLife25: il core</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="ConwayLife25.html#conwaylife25-core-i-progetti">ConwayLife25 core: i progetti</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="ConwayLife25.html#conwaylife25-le-celle-come-attori">ConwayLife25: le celle come attori</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ConwayLife25.html#x">X</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ConwayLife25.html#a">A</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="ConwayLife25.html#requisiti-conwaylife25">Requisiti ConwayLife25</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ConwayLife25.html#progetto-conwaygui">Progetto conwaygui</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ConwayLife25.html#conwaylife25-gui">ConwayLife25 gui</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ConwayLife25.html#progetto-conwayqak">Progetto conwayqak</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ConwayLife25.html#progetto-conwayactorsqak">Progetto conwayactorsqak</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ConwayLife25.html#progetto-conwaycellsqak">Progetto conwaycellsqak</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ConwayLife25.html#progetto-conwaymasterqak">Progetto conwaymasterqak</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Appunti.html">Appunti</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="Appunti.html#aggregatori-e-api-gateway">Aggregatori e API Gateway</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="Appunti.html#api-gateway">1. API Gateway</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Appunti.html#aggregatore">2. Aggregatore</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Appunti.html#quando-usarli-insieme">Quando usarli insieme?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Appunti.html#caso-specifico-il-tuo-sistema">Caso specifico: il tuo sistema</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Appunti.html#esempio-di-flusso-con-entrambi">Esempio di flusso con entrambi:</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Appunti.html#aa-conclusione">AA - Conclusione</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="Appunti.html#uso-di-eventi-nel-sistema-cargo">Uso di eventi nel sistema cargo</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="Appunti.html#quando-usare-il-modello-publish-subscribe">Quando usare il modello Publish-Subscribe</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Appunti.html#esempi-specifici-di-utilizzo-nel-tuo-sistema">Esempi specifici di utilizzo nel tuo sistema</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Appunti.html#vantaggi-dell-approccio-publish-subscribe">Vantaggi dell’approccio Publish-Subscribe</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Appunti.html#considerazioni-sull-implementazione">Considerazioni sull’implementazione</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Appunti.html#conclusione1">Conclusione1</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="Appunti.html#ma-forse-ci-sono-anche-svantaggi">Ma forse ci sono anche svantaggi</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="Appunti.html#conclusione2">Conclusione2</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Studenti2025.html">Studenti2025</a></li>
+</ul>
+</div>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+  <div>
+    <h4>Next topic</h4>
+    <p class="topless"><a href="cargosystem25.html"
+                          title="next chapter">cargosystem25</a></p>
+  </div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/index.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="Related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="cargosystem25.html" title="cargosystem25"
+             >next</a> |</li>
+        <li class="nav-item nav-item-0"><a href="#">issLab2025 1.0 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">iss25Material</a></li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+    &#169; Copyright 2024, ANatali.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.1.3.
+    </div>
+  </body>
+</html>
