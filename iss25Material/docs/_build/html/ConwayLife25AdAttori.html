@@ -1,0 +1,693 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>ConwayLife25AdAttori &#8212; issLab2025 1.0 documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinxdoc.css" />
+    <link rel="stylesheet" type="text/css" href="_static/custom.css" />
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="QakActors25" href="QakActors25.html" />
+    <link rel="prev" title="MQTTConnection" href="MQTTConnection.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="QakActors25.html" title="QakActors25"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="MQTTConnection.html" title="MQTTConnection"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">issLab2025 1.0 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">ConwayLife25AdAttori</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="conwaylife25adattori">
+<h1>ConwayLife25AdAttori<a class="headerlink" href="#conwaylife25adattori" title="Permalink to this heading">¶</a></h1>
+<p><a class="reference internal" href="ConwayLife25.html#conwaylife25-obiettivi-e-fasi-del-lavoro"><span class="std std-ref">ConwayLife25: Obiettivi e fasi del lavoro</span></a></p>
+<p>Parte I: da JavaScript a Java</p>
+<ol class="arabic simple">
+<li><p><a class="reference internal" href="ConwayLife25.html#conwaylife25-il-core-e-la-griglia"><span class="std std-ref">ConwayLife25: il core e la griglia</span></a></p></li>
+<li><p><a class="reference internal" href="ConwayLife25.html#conwaylife25-in-javascript"><span class="std std-ref">ConwayLife25 in JavaScript</span></a></p></li>
+<li><p><a class="reference internal" href="ConwayLife25.html#conwaylife25-in-java"><span class="std std-ref">ConwayLife25 in Java</span></a></p></li>
+<li><p><a class="reference internal" href="ConwayLife25.html#conwaylife25-una-gui-per-java"><span class="std std-ref">ConwayLife25 una GUI per Java</span></a></p></li>
+<li><p><a class="reference internal" href="ConwayLife25.html#conwaylife25-un-microservizio-java"><span class="std std-ref">ConwayLife25: un microservizio Java</span></a></p></li>
+<li><p><a class="reference internal" href="ConwayLife25.html#conwaygui-standalone"><span class="std std-ref">conwaygui standalone</span></a></p></li>
+</ol>
+<p>Parte II: verso gli attori</p>
+<ol class="arabic simple">
+<li><p><a class="reference internal" href="#conwaylife25-il-controller-come-actor"><span class="std std-ref">ConwayLife25 il controller come actor</span></a></p></li>
+</ol>
+<p>Parte III: celle come attori locali</p>
+<ol class="arabic simple">
+<li><p><a class="reference internal" href="#progetto-conwayactorsqak"><span class="std std-ref">Progetto conwayactorsqak</span></a></p></li>
+</ol>
+<p>Parte IV: celle come attori distribuiti</p>
+<ol class="arabic simple">
+<li><p><a class="reference internal" href="#progetto-conwaycellsqak"><span class="std std-ref">Progetto conwaycellsqak</span></a></p></li>
+<li><p><a class="reference internal" href="#progetto-conwaymasterqak"><span class="std std-ref">Progetto conwaymasterqak</span></a></p></li>
+</ol>
+<section id="conwaylife25-il-controller-come-actor">
+<h2>ConwayLife25 il controller come actor<a class="headerlink" href="#conwaylife25-il-controller-come-actor" title="Permalink to this heading">¶</a></h2>
+<p>Nel <span class="slide3">Progetto conwayqak</span>,
+il componente <a class="reference external" href="file:///C:/Didattica2025/mcrsv24/conwaygui/src/main/java/conwayLifeMqtt/LifeController.java">LifeController</a> è riscritto nel file <a class="reference external" href="file:///C:/Didattica2025/mcrsv24/conwayqak/src/conway.qak">conway.qak</a> come un <span class="xref std std-ref">ActorQak</span>  di nome <code class="docutils literal notranslate"><span class="pre">lifecontroller</span></code> scritto in
+<a class="reference internal" href="QakActors25.html#linguaggio-qak"><span class="std std-ref">Linguaggio qak</span></a>  e il sistema viene esteso con un componente <a class="reference external" href="file:///C:/Didattica2025/mcrsv24/conwayqak/src/main/java/OutInMqttForactor.java">OutInMqttForactor</a>
+che trasforma i messaggi ricevuti via <code class="docutils literal notranslate"><span class="pre">MQTT</span></code> in <strong>dispatch</strong> per l’actor <code class="docutils literal notranslate"><span class="pre">lifecontroller</span></code>.</p>
+</section>
+<section id="id1">
+<h2>conway.qak<a class="headerlink" href="#id1" title="Permalink to this heading">¶</a></h2>
+<a class="reference internal image-reference" href="_images/conwayqakarch.jpg"><img alt="_images/conwayqakarch.jpg" class="align-center" src="_images/conwayqakarch.jpg" style="width: 100%;" /></a>
+<table class="docutils align-default" style="width: 100%">
+<colgroup>
+<col style="width: 15%" />
+<col style="width: 35%" />
+<col style="width: 50%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>File</strong></p></td>
+<td><p><strong>Ruolo e Tipo</strong></p></td>
+<td><p><strong>Note</strong></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference external" href="file:///C:/Didattica2025/mcrsv24/conwayqak/src/main/java/LifeCoreAgain.java">LifeCoreAgain</a></p></td>
+<td><p>Logica del game in Java.</p></td>
+<td><p>E’ lo stesso codice di <a class="reference external" href="file:///C:/Didattica2025/mcrsv24/conwaygui/src/main/java/conwayLifeMqtt/Life.java">Life</a>. Ha un riferimento a <a class="reference external" href="file:///C:/Didattica2025/mcrsv24/conwayqak/src/main/java/OutInMqttForactor.java">OutInMqttForactor</a> per fare il display delle celle.
+Le sue operazioni sono invocate dall’actor <a class="reference external" href="file:///C:/Didattica2025/mcrsv24/conwaygui/src/main/java/conwayLifeMqtt/LifeController.java">LifeController</a> definito in <a class="reference external" href="file:///C:/Didattica2025/mcrsv24/conwayqak/src/conway.qak">conway.qak</a>.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference external" href="file:///C:/Didattica2025/mcrsv24/conwayqak/src/conway.qak">conway.qak</a></p></td>
+<td><p>Definisce l’actor <a class="reference external" href="file:///C:/Didattica2025/mcrsv24/conwaygui/src/main/java/conwayLifeMqtt/LifeController.java">LifeController</a> che contiene la logica del controllo del game espressa nel
+<a class="reference internal" href="QakActors25.html#linguaggio-qak"><span class="std std-ref">Linguaggio qak</span></a>.</p></td>
+<td><p>Gestisce messaggi (<em>dispatch</em>) inviati da   <a class="reference external" href="file:///C:/Didattica2025/mcrsv24/conwayqak/src/main/java/OutInMqttForactor.java">OutInMqttForactor</a>.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference external" href="file:///C:/Didattica2025/mcrsv24/conwayqak/src/main/java/OutInMqttForactor.java">OutInMqttForactor</a></p></td>
+<td><p>Dispositivo di I/O in Java</p></td>
+<td><p>Interagisce con le pagine HTML vie MQTT usando <em>MqttConnection25</em>.
+Diversamente da <a class="reference internal" href="ConwayLife25.html#outinmqtt-java"><span class="std std-ref">OutInMqtt.java</span></a>, alla ricezione di un messaggio, invia un dispatch al suo ‘owner’
+cioè all’<strong>actor lifecontroller</strong></p></td>
+</tr>
+</tbody>
+</table>
+<section id="esecuzione-conwayqak">
+<h3>Esecuzione conwayqak<a class="headerlink" href="#esecuzione-conwayqak" title="Permalink to this heading">¶</a></h3>
+<ol class="arabic simple">
+<li><p>Impostare <span class="xref std std-ref">Esecuzione conwaygui standalone</span></p></li>
+<li><p>Eseguire  <span class="slide3">gradlew run</span> in <strong>conwayqak</strong></p></li>
+</ol>
+<p>Vediamo dunque come realizzare il refactoring del <a class="reference external" href="file:///C:/Didattica2025/mcrsv24/conwaygui/src/main/java/conwayLifeMqtt/LifeController.java">LifeController</a> come actor nel modello  <a class="reference external" href="file:///C:/Didattica2025/mcrsv24/conwayqak/src/conway.qak">conway.qak</a>
+e i vantaggi che se ne ottengono.</p>
+</section>
+<section id="messaggi-e-contesto">
+<h3>Messaggi e contesto<a class="headerlink" href="#messaggi-e-contesto" title="Permalink to this heading">¶</a></h3>
+<p>Come primo punto, notiamo che le regole del <a class="reference internal" href="QakActors25.html#linguaggio-qak"><span class="std std-ref">Linguaggio qak</span></a> impongono di specificare subito  i messaggi
+che possono essere scambiati nel sistema.</p>
+<table class="docutils align-default" style="width: 100%">
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">System</span>  <span class="n">conwayqak</span>
+<span class="o">//</span><span class="n">mqttBroker</span> <span class="s2">&quot;localhost&quot;</span> <span class="p">:</span> <span class="mi">1883</span> <span class="n">eventTopic</span> <span class="s2">&quot;lifein&quot;</span>
+
+<span class="n">Dispatch</span> <span class="n">start</span> <span class="p">:</span> <span class="n">start</span><span class="p">(</span><span class="n">V</span><span class="p">)</span>
+<span class="n">Dispatch</span> <span class="n">stop</span>  <span class="p">:</span> <span class="n">stop</span><span class="p">(</span><span class="n">V</span><span class="p">)</span>
+<span class="n">Dispatch</span> <span class="n">changeCellState</span> <span class="p">:</span> <span class="n">changeCellState</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">Y</span><span class="p">)</span>
+
+<span class="n">Context</span> <span class="n">ctxlife</span> <span class="n">ip</span> <span class="p">[</span><span class="n">host</span><span class="o">=</span><span class="s2">&quot;localhost&quot;</span> <span class="n">port</span><span class="o">=</span><span class="mi">8920</span> <span class="p">]</span>
+
+<span class="n">QActor</span> <span class="n">lifecontroller</span>
+  <span class="n">context</span> <span class="n">ctxlife</span> <span class="n">withobj</span> <span class="n">life</span> <span class="n">using</span> <span class="s2">&quot;LifeCoreAgain()&quot;</span>
+      <span class="n">withobj</span> <span class="n">life</span> <span class="n">using</span> <span class="s2">&quot;LifeCoreAgain()&quot;</span>
+                <span class="n">withobj</span> <span class="n">outdev</span> <span class="n">using</span>
+       <span class="s2">&quot;OutInMqttForactor.activateSingleton(myself, </span><span class="se">\&quot;</span><span class="s2">guiin</span><span class="se">\&quot;</span><span class="s2">) &quot;</span> <span class="p">{</span>
+    <span class="kn">import</span> <span class="s2">&quot;main.java.*&quot;</span>
+    <span class="o">....</span>
+    <span class="p">}</span>
+</pre></div>
+</div>
+</td>
+<td><p>I messaggi sono tutti comandi inivati dalla gui</p>
+<p><span class="slide3">Context</span> indica l’IP e porta del ‘microservizio’ Qak</p>
+<p>L’actor di nome <code class="docutils literal notranslate"><span class="pre">lifecontroller</span></code> incapsula</p>
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="generazione-di-codice">
+<h3>Generazione di codice<a class="headerlink" href="#generazione-di-codice" title="Permalink to this heading">¶</a></h3>
+<p>Il modello è associato a alla <a class="reference internal" href="QakActors25.html#qak-software-factory"><span class="std std-ref">Qak software factory</span></a>, che genera:</p>
+<ul class="simple">
+<li><p>codice eseguibile in Kotlin;</p></li>
+<li><p>file Prolog che rapprenta conosceza sulla struttura del sistema;</p></li>
+<li><p>codice Python che permette di generare automaticamente una rappresentazione grafica dall’architettura del sistema:</p></li>
+</ul>
+<table class="docutils align-default" style="width: 100%">
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><a class="reference internal image-reference" href="_images/conwayqakfilearch.jpg"><img alt="_images/conwayqakfilearch.jpg" class="align-center" src="_images/conwayqakfilearch.jpg" style="width: 100%;" /></a>
+</td>
+<td><p>Il diagramma mostra che l’actor <em>lifecontroller</em> :</p>
+<ul class="simple">
+<li><p>include un ogetto Java (POJO), cioè una istanza di <a class="reference external" href="file:///C:/Didattica2025/mcrsv24/conwayqak/src/main/java/OutInMqttForactor.java">OutInMqttForactor</a></p></li>
+<li><p>gestisce eventi deniminati <em>alarm</em>  e <em>kernel_rawmsg</em> , di cui pareleremo in seguito</p></li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="facile-modificabilita">
+<h3>Facile modificabilità<a class="headerlink" href="#facile-modificabilita" title="Permalink to this heading">¶</a></h3>
+<p>Notiamo che la figura <span class="slidekp">non visualizza</span> alcuno dei dispatch (<code class="docutils literal notranslate"><span class="pre">start/stop/changeCellState</span></code>) dichiarati.</p>
+<p>Ciò in quanto questi messaggi sono costruiti e inviati dall POJO <a class="reference external" href="file:///C:/Didattica2025/mcrsv24/conwayqak/src/main/java/OutInMqttForactor.java">OutInMqttForactor</a> che riceve i messaggi
+inviati dalla GUI e li trasforma in dispatch per l’actor <cite>lifecontroller</cite>.</p>
+<p>Per chiarire meglio l’architettura, possiamo introdurre nel modello un actor <code class="docutils literal notranslate"><span class="pre">guimock</span></code>,
+che funge anche da tester.</p>
+<table class="docutils align-default" style="width: 100%">
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><a class="reference internal image-reference" href="_images/conwayqakmodelarch.jpg"><img alt="_images/conwayqakmodelarch.jpg" class="align-center" src="_images/conwayqakmodelarch.jpg" style="width: 100%;" /></a>
+</td>
+<td><p>Il diagramma mostra che i dispatch <code class="docutils literal notranslate"><span class="pre">start/stop/changeCellState</span></code> provengono dalla GUI.</p>
+<p>Quando il prodotto verrà distribuito, l’actor <code class="docutils literal notranslate"><span class="pre">guimock</span></code> verrà escluso dal modello.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="struttura-di-lifecontroller">
+<h3>Struttura di lifecontroller<a class="headerlink" href="#struttura-di-lifecontroller" title="Permalink to this heading">¶</a></h3>
+<p>Come ogni attore qak, il comportamento del <code class="docutils literal notranslate"><span class="pre">lifecontroller</span></code> viene rappresentato come un <a class="reference external" href="https://it.wikipedia.org/wiki/Automa_a_stati_finiti">Automa a stati finiti</a>
+secondo quanto riportato in <span class="xref std std-ref">QakActors24: Introduzione</span>.</p>
+<table class="docutils align-default" style="width: 100%">
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>Struttura del codice dell’actor</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">QActor</span> <span class="n">lifecontroller</span> <span class="n">context</span> <span class="n">ctxlife</span>  <span class="p">{</span>
+    <span class="n">withobj</span> <span class="n">life</span> <span class="n">using</span> <span class="s2">&quot;LifeCoreAgain()&quot;</span>
+    <span class="n">withobj</span> <span class="n">outdev</span> <span class="n">using</span>
+      <span class="s2">&quot;OutInMqttForactor.activateSingleton(myself, </span><span class="se">\&quot;</span><span class="s2">guiin</span><span class="se">\&quot;</span><span class="s2">) &quot;</span><span class="p">{</span>
+<span class="kn">import</span> <span class="s2">&quot;main.java.*&quot;</span>
+<span class="p">[</span><span class="c1">#</span>
+   <span class="n">var</span> <span class="n">running</span> <span class="o">=</span> <span class="n">false</span> <span class="o">//</span><span class="n">true</span> <span class="n">quando</span> <span class="n">play</span>
+
+  <span class="o">//</span><span class="n">METODI</span> <span class="n">GLOBALI</span> <span class="n">ALL</span><span class="s1">&#39;ACTOR</span>
+  <span class="n">suspend</span> <span class="n">fun</span> <span class="n">fromRawDataToApplMessage</span><span class="p">(</span><span class="n">message</span><span class="p">:</span> <span class="n">String</span><span class="p">)</span> <span class="p">{</span>
+    <span class="o">...</span>
+  <span class="p">}</span>
+
+<span class="c1">#]</span>
+  <span class="o">...</span>
+</pre></div>
+</div>
+<a class="reference internal image-reference" href="_images/conwayqakfilearch.jpg"><img alt="_images/conwayqakfilearch.jpg" class="align-center" src="_images/conwayqakfilearch.jpg" style="width: 100%;" /></a>
+<p>Per eseguire, si veda: <a class="reference internal" href="#esecuzione-conwayqak"><span class="std std-ref">Esecuzione conwayqak</span></a></p>
+</td>
+<td><p><em>lifecontroller</em>    :</p>
+<ul class="simple">
+<li><p>incapsula una istanza di <a class="reference external" href="file:///C:/Didattica2025/mcrsv24/conwayqak/src/main/java/LifeCoreAgain.java">LifeCoreAgain</a></p></li>
+<li><p>incapsula una istanza di <a class="reference external" href="file:///C:/Didattica2025/mcrsv24/conwayqak/src/main/java/OutInMqttForactor.java">OutInMqttForactor</a></p></li>
+<li><p>defnisce una varibaile <span class="slide3">running</span> che indica se il gioco è in esecuzione</p></li>
+<li><p>definisce una funzione di utilità <a class="reference internal" href="#fromrawdatatoapplmessage"><span class="std std-ref">fromRawDataToApplMessage</span></a></p></li>
+<li><p>si comporta nel modo tipico degli <a class="reference internal" href="Principi.html#automi-a-stati-finiti"><span class="std std-ref">Automi a stati finiti</span></a></p></li>
+</ul>
+<a class="reference internal image-reference" href="_images/LifeControllerFSM.png"><img alt="_images/LifeControllerFSM.png" class="align-center" src="_images/LifeControllerFSM.png" style="width: 100%;" /></a>
+<ol class="arabic simple">
+<li><p><a class="reference internal" href="#inizializzazione"><span class="std std-ref">Inizializzazione</span></a> (<em>s0</em> e <em>work</em>)</p></li>
+<li><p><a class="reference internal" href="#stato-changecellstate"><span class="std std-ref">Stato changeCellState</span></a></p></li>
+<li><p><a class="reference internal" href="#stato-handlestart"><span class="std std-ref">Stato handleStart</span></a></p></li>
+<li><p><a class="reference internal" href="#stato-play"><span class="std std-ref">Stato Play</span></a></p></li>
+<li><p><a class="reference internal" href="#stato-handlestop"><span class="std std-ref">Stato handleStop</span></a></p></li>
+</ol>
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="fromrawdatatoapplmessage">
+<h3>fromRawDataToApplMessage<a class="headerlink" href="#fromrawdatatoapplmessage" title="Permalink to this heading">¶</a></h3>
+<table class="docutils align-default" style="width: 100%">
+<colgroup>
+<col style="width: 45%" />
+<col style="width: 55%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><span class="slidekp">Utility globale</span></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="c1">#</span>
+
+  <span class="o">//</span><span class="n">Overrides</span> <span class="n">un</span> <span class="n">metodo</span> <span class="n">default</span> <span class="n">built</span><span class="o">-</span><span class="ow">in</span> <span class="n">nell</span><span class="s1">&#39;actor</span>
+  <span class="n">suspend</span> <span class="n">fun</span> <span class="n">fromRawDataToApplMessage</span><span class="p">(</span><span class="n">message</span><span class="p">:</span> <span class="n">String</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">message</span> <span class="o">==</span> <span class="s2">&quot;start&quot;</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">val</span> <span class="n">cmdmsg</span><span class="o">=</span>
+        <span class="n">MsgUtil</span><span class="o">.</span><span class="n">buildDispatch</span><span class="p">(</span><span class="s2">&quot;gui&quot;</span><span class="p">,</span> <span class="s2">&quot;start&quot;</span><span class="p">,</span> <span class="s2">&quot;start(init)&quot;</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
+        <span class="n">autoMsg</span><span class="p">(</span> <span class="n">cmdmsg</span> <span class="p">)</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">message</span> <span class="o">==</span> <span class="s2">&quot;stop&quot;</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">val</span> <span class="n">cmdmsg</span><span class="o">=</span>
+        <span class="n">MsgUtil</span><span class="o">.</span><span class="n">buildDispatch</span><span class="p">(</span><span class="s2">&quot;gui&quot;</span><span class="p">,</span> <span class="s2">&quot;stop&quot;</span><span class="p">,</span> <span class="s2">&quot;stop(ok)&quot;</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
+        <span class="n">autoMsg</span><span class="p">(</span><span class="n">cmdmsg</span> <span class="p">)</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">message</span> <span class="o">==</span> <span class="s2">&quot;exit&quot;</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">System</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">message</span><span class="o">.</span><span class="n">startsWith</span><span class="p">(</span><span class="s2">&quot;cell&quot;</span><span class="p">))</span> <span class="p">{</span>
+        <span class="n">val</span> <span class="n">parts</span><span class="p">:</span> <span class="n">Array</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="o">=</span>
+                <span class="n">message</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;-&quot;</span><span class="o">.</span><span class="n">toRegex</span><span class="p">())</span><span class="o">.</span><span class="n">toTypedArray</span><span class="p">()</span>
+        <span class="n">val</span> <span class="n">y</span><span class="p">:</span> <span class="n">Int</span> <span class="o">=</span> <span class="n">parts</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">toInt</span><span class="p">()</span>
+        <span class="n">val</span> <span class="n">x</span><span class="p">:</span> <span class="n">Int</span> <span class="o">=</span> <span class="n">parts</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">toInt</span><span class="p">()</span>
+        <span class="n">val</span> <span class="n">cmd</span><span class="p">:</span> <span class="n">String</span> <span class="o">=</span>
+          <span class="s2">&quot;changeCellState(X,Y)&quot;</span>
+            <span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;X&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span> <span class="o">+</span> <span class="n">x</span><span class="p">)</span>
+            <span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;Y&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span> <span class="o">+</span> <span class="n">y</span><span class="p">)</span>
+        <span class="n">val</span> <span class="n">cmdmsg</span><span class="o">=</span>
+          <span class="n">MsgUtil</span><span class="o">.</span><span class="n">buildDispatch</span><span class="p">(</span><span class="s2">&quot;gui&quot;</span><span class="p">,</span><span class="s2">&quot;changeCellState&quot;</span><span class="p">,</span><span class="n">cmd</span><span class="p">,</span><span class="n">name</span><span class="p">)</span>
+        <span class="n">autoMsg</span><span class="p">(</span><span class="n">cmdmsg</span> <span class="p">)</span>
+    <span class="p">}</span>
+  <span class="p">}</span><span class="o">//</span><span class="n">fromRawDataToApplMessage</span>
+ <span class="c1">#]</span>
+</pre></div>
+</div>
+</td>
+<td><p><span class="slide3">var running</span>: variabile di stato che vale <strong>true</strong> quando l’attore sta eseguendo il gioco</p>
+<p>Notariamo che:</p>
+<ul class="simple">
+<li><p>la GUI emette e riceve informazioni in forma di String non meglio definite</p></li>
+<li><p>ogni <span class="xref std std-ref">ActorQak</span> opera con riferimento a messaggi strutturati che realizano
+la interfaccia <span class="xref std std-ref">IApplMessage</span></p></li>
+</ul>
+<p>E’ necessaria una <span class="remark">conversione</span> dal <em>linguaggio della GUI</em> al <em>linguaggio degli attori</em>:</p>
+<p><span class="slide3">fromRawDataToApplMessage</span>: trasforma una stringa nel payload di un <em>dispatch</em>
+<span class="xref std std-ref">IApplMessage</span> e invia il dispatch all’attore stesso con il metodo
+<a class="reference internal" href="QakActors25.html#operazioni-di-messaggista-punto-a-punto"><span class="std std-ref">autoMsg</span></a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="inizializzazione">
+<h3>Inizializzazione<a class="headerlink" href="#inizializzazione" title="Permalink to this heading">¶</a></h3>
+<table class="docutils align-default" style="width: 100%">
+<colgroup>
+<col style="width: 45%" />
+<col style="width: 55%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>Punto <span class="slidekp">1</span> in <a class="reference internal" href="#struttura-di-lifecontroller"><span class="std std-ref">Struttura di lifecontroller</span></a></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">QActor</span> <span class="n">lifecontrol</span> <span class="n">context</span> <span class="n">ctxlife</span>  <span class="p">{</span>
+<span class="kn">import</span> <span class="s2">&quot;main.java.*&quot;</span>
+<span class="o">...</span>
+
+  <span class="n">State</span> <span class="n">s0</span> <span class="n">initial</span><span class="p">{</span>
+      <span class="p">[</span><span class="c1">#</span>
+  <span class="o">/*</span><span class="mi">1</span><span class="o">*/</span>  <span class="n">life</span><span class="o">.</span><span class="n">setOutInDev</span><span class="p">(</span><span class="n">outdev</span><span class="p">)</span> <span class="o">//</span><span class="n">Injection</span>
+      <span class="c1">#]</span>
+  <span class="p">}</span>
+  <span class="n">Goto</span> <span class="n">work</span>
+
+  <span class="n">State</span> <span class="n">work</span><span class="p">{</span>
+  <span class="p">}</span>
+  <span class="o">/*</span><span class="mi">2</span><span class="o">*/</span> <span class="n">Transition</span> <span class="n">t0</span>
+    <span class="n">whenMsg</span> <span class="n">changeCellState</span> <span class="o">-&gt;</span> <span class="n">changeCellState</span>
+    <span class="n">whenMsg</span> <span class="n">start</span> <span class="o">-&gt;</span> <span class="n">handleStart</span>
+    <span class="n">whenMsg</span> <span class="n">stop</span>  <span class="o">-&gt;</span> <span class="n">handleStop</span>
+</pre></div>
+</div>
+</td>
+<td><p><span class="slidekp">/*1*/</span> Inietta il riferimento a outdev nell’oggetto life, cioè
+un riferimento a <code class="docutils literal notranslate"><span class="pre">OutInMqttForactor</span></code> in <code class="docutils literal notranslate"><span class="pre">LifeCoreAgain</span></code> per
+permette a <code class="docutils literal notranslate"><span class="pre">LifeCoreAgain</span></code> di inviare messaggi alla GUI</p>
+<p><span class="slidekp">/*2*/</span> Attende uno dei possibili comandi dalla GUI e cambia di stato quando
+uno di essi viene inserito nella <span class="xref std std-ref">msgQueue</span>  dell’attore</p>
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="stato-changecellstate">
+<h3>Stato changeCellState<a class="headerlink" href="#stato-changecellstate" title="Permalink to this heading">¶</a></h3>
+<table class="docutils align-default" style="width: 100%">
+<colgroup>
+<col style="width: 45%" />
+<col style="width: 55%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>Punto <span class="slidekp">2</span> in <a class="reference internal" href="#struttura-di-lifecontroller"><span class="std std-ref">Struttura di lifecontroller</span></a>:
+l’attore elabora il comando <code class="docutils literal notranslate"><span class="pre">cell-i-j</span></code> inviato dalla GUI e
+trasformato nel dispatch <code class="docutils literal notranslate"><span class="pre">changeCellState</span></code> da <a class="reference internal" href="#fromrawdatatoapplmessage"><span class="std std-ref">fromRawDataToApplMessage</span></a></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">State</span> <span class="n">changeCellState</span><span class="p">{</span>
+  <span class="n">printCurrentMessage</span>
+<span class="o">/*</span><span class="mi">1</span><span class="o">*/</span>  <span class="n">onMsg</span><span class="p">(</span> <span class="n">changeCellState</span> <span class="p">:</span> <span class="n">changeCellState</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">Y</span><span class="p">)</span> <span class="p">){</span>
+    <span class="p">[</span><span class="c1">#</span>
+<span class="o">/*</span><span class="mi">2</span><span class="o">*/</span>  <span class="n">val</span> <span class="n">X</span> <span class="o">=</span> <span class="n">payloadArg</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">toInt</span><span class="p">()</span>
+<span class="o">/*</span><span class="mi">3</span><span class="o">*/</span>  <span class="n">val</span> <span class="n">Y</span> <span class="o">=</span> <span class="n">payloadArg</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">toInt</span><span class="p">()</span>
+<span class="o">/*</span><span class="mi">4</span><span class="o">*/</span>  <span class="n">life</span><span class="o">.</span><span class="n">changeCellState</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">Y</span><span class="p">)</span>
+    <span class="c1">#]</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+<span class="o">/*</span><span class="mi">5</span><span class="o">*/</span> <span class="n">Goto</span> <span class="n">work</span>
+</pre></div>
+</div>
+</td>
+<td><p><span class="slidekp">/*1*/</span> <a class="reference internal" href="QakActors25.html#accesso-al-contenuto-dei-messaggi"><span class="std std-ref">Accede al contenuto del  messaggio</span></a></p>
+<p><span class="slidekp">/*2*/</span> Usa il meotdo built-in <a class="reference internal" href="QakActors25.html#payloadarg"><span class="std std-ref">payloadArg</span></a> per accedere al primo argomento del messaggio</p>
+<p><span class="slidekp">/*3*/</span> Usa il meotdo built-in <a class="reference internal" href="QakActors25.html#payloadarg"><span class="std std-ref">payloadArg</span></a> per accedere al seocndo argomento del messaggio</p>
+<p><span class="slidekp">/*4*/</span> Invoca il metodo <em>changeCellState</em> dell’oggetto <a class="reference external" href="file:///C:/Didattica2025/mcrsv24/conwayqak/src/main/java/LifeCoreAgain.java">LifeCoreAgain</a></p>
+<p><span class="slidekp">/*5*/</span> Torna allo <a class="reference internal" href="#inizializzazione"><span class="std std-ref">stato work</span></a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="stato-handlestart">
+<h3>Stato handleStart<a class="headerlink" href="#stato-handlestart" title="Permalink to this heading">¶</a></h3>
+<table class="docutils align-default" style="width: 100%">
+<colgroup>
+<col style="width: 45%" />
+<col style="width: 55%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>Punto <span class="slidekp">3</span> in <a class="reference internal" href="#struttura-di-lifecontroller"><span class="std std-ref">Struttura di lifecontroller</span></a>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">State</span> <span class="n">handleStart</span><span class="p">{</span>
+<span class="o">/*</span><span class="mi">1</span><span class="o">*/</span> <span class="n">onMsg</span><span class="p">(</span> <span class="n">start</span> <span class="p">:</span> <span class="n">start</span><span class="p">(</span><span class="n">V</span><span class="p">)</span> <span class="p">){</span>
+<span class="o">/*</span><span class="mi">2</span><span class="o">*/</span>   <span class="p">[</span><span class="c1"># var cmdfromgui = payloadArg(0) == &quot;init&quot; #]</span>
+<span class="o">/*</span><span class="mi">3</span><span class="o">*/</span>     <span class="k">if</span> <span class="p">[</span><span class="c1"># cmdfromgui #]{</span>
+             <span class="p">[</span><span class="c1"># running = true #]</span>
+          <span class="p">}</span> <span class="o">//</span><span class="p">(</span><span class="n">ri</span><span class="p">)</span><span class="n">parte</span>
+    <span class="o">//</span><span class="n">altrimenti</span> <span class="n">è</span> <span class="n">start</span><span class="p">(</span><span class="k">continue</span><span class="p">)</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+<span class="n">Goto</span> <span class="n">play</span> <span class="k">if</span> <span class="p">[</span><span class="c1"># running   #]  else work</span>
+</pre></div>
+</div>
+</td>
+<td><p><span class="slidekp">/*1*/</span><a class="reference internal" href="QakActors25.html#accesso-al-contenuto-dei-messaggi"><span class="std std-ref">Accede al contenuto del  messaggio</span></a></p>
+<dl>
+<dt><span class="slidekp">/*2*/`Usa il meotdo built-in :ref:`payloadArg</span> per accedere all’argomento del messaggio</dt><dd><p>e controlla che sia <strong>“init”</strong></p>
+<p><span class="slidekp">/*3*/</span> Se la GUI ha inviato il messaggio <code class="docutils literal notranslate"><span class="pre">start(init)</span></code> pone la variabile <span class="slide3">running</span> a <strong>true</strong>
+in modo da (ri)attivare il gioco.</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="stato-play">
+<h3>Stato Play<a class="headerlink" href="#stato-play" title="Permalink to this heading">¶</a></h3>
+<table class="docutils align-default" style="width: 100%">
+<colgroup>
+<col style="width: 45%" />
+<col style="width: 55%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>Punto <span class="slidekp">4</span> in <a class="reference internal" href="#struttura-di-lifecontroller"><span class="std std-ref">Struttura di lifecontroller</span></a>:
+l’attore elabora il comando <code class="docutils literal notranslate"><span class="pre">cell-i-j</span></code> inviato dalla GUI e
+trasformato nel dispatch <code class="docutils literal notranslate"><span class="pre">changeCellState</span></code> da <a class="reference internal" href="#fromrawdatatoapplmessage"><span class="std std-ref">fromRawDataToApplMessage</span></a></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">State</span> <span class="n">play</span><span class="p">{</span>
+<span class="o">/*</span><span class="mi">1</span><span class="o">*/</span>  <span class="p">[</span><span class="c1"># life.playStep() #]</span>
+<span class="o">/*</span><span class="mi">2</span><span class="o">*/</span>   <span class="n">delay</span> <span class="mi">1000</span> <span class="o">//</span><span class="n">avoid</span> <span class="n">too</span> <span class="n">fast</span>
+<span class="o">/*</span><span class="mi">3</span><span class="o">*/</span>   <span class="n">autodispatch</span> <span class="n">start</span> <span class="p">:</span> <span class="n">start</span><span class="p">(</span><span class="k">continue</span><span class="p">)</span>
+<span class="p">}</span>
+<span class="o">/*</span><span class="mi">4</span><span class="o">*/</span> <span class="n">Goto</span> <span class="n">work</span>
+</pre></div>
+</div>
+</td>
+<td><p><span class="slidekp">/*1*/</span> Invoca il metodo <em>play</em> dell’oggetto <a class="reference external" href="file:///C:/Didattica2025/mcrsv24/conwayqak/src/main/java/LifeCoreAgain.java">LifeCoreAgain</a></p>
+<p>:slidekp:<a href="#id2"><span class="problematic" id="id3">`</span></a>/<em>2</em>/<a href="#id4"><span class="problematic" id="id5">`</span></a>Attende 1 secondo per rallentare un po’ il gioco</p>
+<p><span class="slidekp">/*3*/`Si :ref:`autoinvia&lt;Operazioni di messaggista punto a punto&gt;</span>
+il messaggio <code class="docutils literal notranslate"><span class="pre">start(continue)</span></code> per continuare il gioco</p>
+<p><span class="slidekp">/*4*/</span> Torna allo <a class="reference internal" href="#inizializzazione"><span class="std std-ref">stato work</span></a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="stato-handlestop">
+<h3>Stato handleStop<a class="headerlink" href="#stato-handlestop" title="Permalink to this heading">¶</a></h3>
+<table class="docutils align-default" style="width: 100%">
+<colgroup>
+<col style="width: 45%" />
+<col style="width: 55%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>Punto <span class="slidekp">5</span> in <a class="reference internal" href="#struttura-di-lifecontroller"><span class="std std-ref">Struttura di lifecontroller</span></a>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">State</span> <span class="n">handleStop</span><span class="p">{</span>
+  <span class="k">if</span> <span class="p">[</span><span class="c1"># running == false #]{</span>
+    <span class="n">println</span><span class="p">(</span><span class="s2">&quot;$name | already stopped&quot;</span><span class="p">)</span> <span class="n">color</span> <span class="n">magenta</span>
+  <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+    <span class="n">println</span><span class="p">(</span><span class="s2">&quot;$name | STOPPED &quot;</span><span class="p">)</span> <span class="n">color</span> <span class="n">red</span>
+    <span class="p">[</span><span class="c1"># running = false #]</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+<span class="n">Goto</span> <span class="n">work</span>
+</pre></div>
+</div>
+</td>
+<td><p>Cambia il valore della variabile <span class="slide3">running</span> a <strong>false</strong> e torna allo <a class="reference internal" href="#inizializzazione"><span class="std std-ref">stato work</span></a></p>
+<p>La variabile <span class="slide3">running</span> viene rimessa a <strong>true</strong> nello stato <span class="xref std std-ref">handleStart</span></p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>La impostazione del controllo come  <a class="reference internal" href="Principi.html#automi-a-stati-finiti"><span class="std std-ref">automa a stati finiti</span></a>,
+in cui le transizioni di stato sono
+indotte (<em>triggered</em>) da messaggi, <span class="slide2">agevola la gestione di eventi e messaggi aggiuntivi</span> che potrebbero
+essere generati da altri componenti.</p>
+<p>Il lettore è inviato ad estendere il comportamento dell’actor <cite>lifecontroller&lt;Struttura di lifecontroller&gt;</cite>
+per gestire un <span class="slidekp">evento di allarme</span>
+e di impostare un test del nuovo comportamento.</p>
+</section>
+</section>
+<section id="evento-kernel-rawmsg">
+<h2>Evento kernel_rawmsg<a class="headerlink" href="#evento-kernel-rawmsg" title="Permalink to this heading">¶</a></h2>
+<p>L’evento</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Event</span> <span class="n">kernel_rawmsg</span> <span class="p">:</span> <span class="n">kernel_rawmsg</span><span class="p">(</span><span class="n">V</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>viene emesso dalla <a class="reference internal" href="QakActors25.html#qak-infrastructure"><span class="std std-ref">Qak infrastructure</span></a> quando riceve un messaggio via <code class="docutils literal notranslate"><span class="pre">MQTT</span></code> (emesso da un ente ‘alieno’)
+come stringa che non corrisponde alla rappresentazione di un <span class="xref std std-ref">IApplMessage</span>.</p>
+<p>La gestione di questo evento potrebbe consistere nella esecuzione del metodo <a class="reference internal" href="#fromrawdatatoapplmessage"><span class="std std-ref">fromRawDataToApplMessage</span></a>
+o di un meotodo simile, capace di mappare una stringa in un <em>dispatch</em> o in una <em>request</em> o in un altro evento
+che possa essere gestito dall’actor.</p>
+</section>
+</section>
+<section id="celle-come-attori-locali">
+<h1>Celle come attori locali<a class="headerlink" href="#celle-come-attori-locali" title="Permalink to this heading">¶</a></h1>
+<p>Oltre al  <a class="reference internal" href="#struttura-di-lifecontroller"><span class="std std-ref">lifecontroller</span></a>, anche ciascuna cella può essere realizzata come un attore.</p>
+<p>Idealmente, il sistema dovrebbe essere costruito usando <cite>N</cite> computer fisici, su ciacuno dei quali attivare una cella.
+In una prima fase, conviene che le celle siano attori locali, cioè attori che operano all’interno di una unica JVM.</p>
+<section id="progetto-conwayactorsqak">
+<h2>Progetto conwayactorsqak<a class="headerlink" href="#progetto-conwayactorsqak" title="Permalink to this heading">¶</a></h2>
+<p>Nel <span class="slide3">Progetto conwayactorsqak</span> il sistema viene descritto in <a class="reference internal" href="QakActors25.html#linguaggio-qak"><span class="std std-ref">Linguaggio qak</span></a> nel modello
+<a class="reference external" href="file:///C:/Didattica2025/mcrsv24/conwayactorsqak/src/conwayactors.qak">conwayactors.qak</a>.</p>
+<p>Il modello si base sulle seguenti idee:</p>
+<ul class="simple">
+<li><p>viene simulata la esistenza di <code class="docutils literal notranslate"><span class="pre">N</span></code> giocatori (<span class="slide3">player</span>), ciascuno dei quali crea una cella;</p></li>
+<li><p>un attore di nome <code class="docutils literal notranslate"><span class="pre">gamemaster</span></code> crea dinamicamente gli <code class="docutils literal notranslate"><span class="pre">N</span></code>  <em>player</em>;</p></li>
+<li><p>ciascun <em>player</em> crea dinamicamente una cella, che comunica al <em>gamemaster</em> la sua esistenza;</p></li>
+<li><p>il gioco parte quando il  <code class="docutils literal notranslate"><span class="pre">gamemaster</span></code> ha ricevuto le notifiche di esistenza da parte di tutte le <code class="docutils literal notranslate"><span class="pre">N</span></code> celle.</p></li>
+</ul>
+<table class="docutils align-default" style="width: 100%">
+<colgroup>
+<col style="width: 45%" />
+<col style="width: 55%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><a class="reference internal image-reference" href="_images/conwayactorsqakarch.png"><img alt="_images/conwayactorsqakarch.png" class="align-center" src="_images/conwayactorsqakarch.png" style="width: 70%;" /></a>
+</td>
+<td><ul class="simple">
+<li><p>ogni cella viene realizzata come un attore</p></li>
+<li><p>le celle sono create dinamicamente da un attore denominato <code class="docutils literal notranslate"><span class="pre">player</span></code></p></li>
+<li><p>il coordinamento tra le celle è ottenuto introducendo un attore di nome <code class="docutils literal notranslate"><span class="pre">gamemaster</span></code>,
+che viene quindi impostato con la stessa <a class="reference internal" href="#struttura-di-lifecontroller"><span class="std std-ref">Struttura di lifecontroller</span></a> discussa in precedenza;</p></li>
+<li><p>le celle vengono visualizzate attraverso la <a class="reference internal" href="ConwayLife25.html#conwaygui-standalone"><span class="std std-ref">conwaygui standalone</span></a></p></li>
+<li><p>tutto il sistema gira in una stessa JVM</p></li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Ogni cella interagisce con il dispositivo di output verso la <a class="reference internal" href="ConwayLife25.html#conwaygui-standalone"><span class="std std-ref">conwaygui standalone</span></a>
+<span class="slide2">senza la dipendenza dovuta alla ottimizzazione</span>.</p>
+<a class="reference internal image-reference" href="_images/conwactorsqak.jpg"><img alt="_images/conwactorsqak.jpg" class="align-center" src="_images/conwactorsqak.jpg" style="width: 100%;" /></a>
+<p>Questa versione costituisce la base per un ulteriore sviluppo in cui le celle sono attori
+che operano in macchine distinte.</p>
+</section>
+</section>
+<section id="celle-come-attori-distribuiti">
+<h1>Celle come attori distribuiti<a class="headerlink" href="#celle-come-attori-distribuiti" title="Permalink to this heading">¶</a></h1>
+<p>La sperimentazione del sistema costruito usando <code class="docutils literal notranslate"><span class="pre">N</span></code> computer fisici, su ciacuno dei quali attivare una cella
+è previsto avvenga in Lab2, grazie alla presenza di <code class="docutils literal notranslate"><span class="pre">N</span></code> studenti, ciascuno con il suo PC su cui
+attivare una cella, in uno di due modi:</p>
+<ul class="simple">
+<li><p>eseguendo il programma in locale</p></li>
+<li><p>attivando un container con l’immagine Docker della cella</p></li>
+</ul>
+<section id="progetto-conwaycellsqak">
+<h2>Progetto conwaycellsqak<a class="headerlink" href="#progetto-conwaycellsqak" title="Permalink to this heading">¶</a></h2>
+<p>Nel <span class="slide3">Progetto conwaycellsqak</span>, una cella viene descritta in <a class="reference internal" href="QakActors25.html#linguaggio-qak"><span class="std std-ref">Linguaggio qak</span></a> nel modello
+<a class="reference external" href="file:///C:/Didattica2025/mcrsv24/conwaycellsqak/src/conwaycells.qak">conwaycellsqak.qak</a>:</p>
+<table class="docutils align-default" style="width: 100%">
+<colgroup>
+<col style="width: 45%" />
+<col style="width: 55%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><a class="reference internal image-reference" href="_images/conwaycellsqakarch.png"><img alt="_images/conwaycellsqakarch.png" class="align-center" src="_images/conwaycellsqakarch.png" style="width: 70%;" /></a>
+</td>
+<td><ul class="simple">
+<li><p>ogni cella viene realizzata come un attore</p></li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Non disponendo (come accade normalmente) di <code class="docutils literal notranslate"><span class="pre">N</span></code> nodi computazionali (ed <code class="docutils literal notranslate"><span class="pre">N</span></code> operatori umani)
+le celle sono attivabili in altri modi:</p>
+<ul class="simple">
+<li><p>eseguendo su un singolo PC un file bat come <a class="reference external" href="file:///C:/Didattica2025/mcrsv24/conwaycellsqak/activatecells_9.bat">activatecells_9.bat</a></p></li>
+<li><p>eseguendo su un singolo PC un file yml come <a href="#id6"><span class="problematic" id="id7">`</span></a><a class="reference external" href="file:///C:/Didattica2025/mcrsv24/conwaycellsqak/docker-compose-cells9.yml">docker-compose-cells9.yml</a></p></li>
+</ul>
+</section>
+<section id="progetto-conwaymasterqak">
+<h2>Progetto conwaymasterqak<a class="headerlink" href="#progetto-conwaymasterqak" title="Permalink to this heading">¶</a></h2>
+<p>Nel <span class="slide3">Progetto conwaymasterqak</span>, il coordinatore del gioco viene descritto in <a class="reference internal" href="QakActors25.html#linguaggio-qak"><span class="std std-ref">Linguaggio qak</span></a> nel modello
+<a class="reference external" href="file:///C:/Didattica2025/mcrsv24/conwaymasterqak/src/conwaymaster.qak">conwaymaster.qak</a>:</p>
+<table class="docutils align-default" style="width: 100%">
+<colgroup>
+<col style="width: 45%" />
+<col style="width: 55%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><a class="reference internal image-reference" href="_images/conwaymasterqakarch.png"><img alt="_images/conwaymasterqakarch.png" class="align-center" src="_images/conwaymasterqakarch.png" style="width: 70%;" /></a>
+</td>
+<td><ul class="simple">
+<li><p>…</p></li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <div>
+    <h3><a href="index.html">Table of Contents</a></h3>
+    <ul>
+<li><a class="reference internal" href="#">ConwayLife25AdAttori</a><ul>
+<li><a class="reference internal" href="#conwaylife25-il-controller-come-actor">ConwayLife25 il controller come actor</a></li>
+<li><a class="reference internal" href="#id1">conway.qak</a><ul>
+<li><a class="reference internal" href="#esecuzione-conwayqak">Esecuzione conwayqak</a></li>
+<li><a class="reference internal" href="#messaggi-e-contesto">Messaggi e contesto</a></li>
+<li><a class="reference internal" href="#generazione-di-codice">Generazione di codice</a></li>
+<li><a class="reference internal" href="#facile-modificabilita">Facile modificabilità</a></li>
+<li><a class="reference internal" href="#struttura-di-lifecontroller">Struttura di lifecontroller</a></li>
+<li><a class="reference internal" href="#fromrawdatatoapplmessage">fromRawDataToApplMessage</a></li>
+<li><a class="reference internal" href="#inizializzazione">Inizializzazione</a></li>
+<li><a class="reference internal" href="#stato-changecellstate">Stato changeCellState</a></li>
+<li><a class="reference internal" href="#stato-handlestart">Stato handleStart</a></li>
+<li><a class="reference internal" href="#stato-play">Stato Play</a></li>
+<li><a class="reference internal" href="#stato-handlestop">Stato handleStop</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#evento-kernel-rawmsg">Evento kernel_rawmsg</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#celle-come-attori-locali">Celle come attori locali</a><ul>
+<li><a class="reference internal" href="#progetto-conwayactorsqak">Progetto conwayactorsqak</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#celle-come-attori-distribuiti">Celle come attori distribuiti</a><ul>
+<li><a class="reference internal" href="#progetto-conwaycellsqak">Progetto conwaycellsqak</a></li>
+<li><a class="reference internal" href="#progetto-conwaymasterqak">Progetto conwaymasterqak</a></li>
+</ul>
+</li>
+</ul>
+
+  </div>
+  <div>
+    <h4>Previous topic</h4>
+    <p class="topless"><a href="MQTTConnection.html"
+                          title="previous chapter">MQTTConnection</a></p>
+  </div>
+  <div>
+    <h4>Next topic</h4>
+    <p class="topless"><a href="QakActors25.html"
+                          title="next chapter">QakActors25</a></p>
+  </div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/ConwayLife25AdAttori.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="QakActors25.html" title="QakActors25"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="MQTTConnection.html" title="MQTTConnection"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">issLab2025 1.0 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">ConwayLife25AdAttori</a></li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2024, ANatali.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 5.0.2.
+    </div>
+  </body>
+</html>

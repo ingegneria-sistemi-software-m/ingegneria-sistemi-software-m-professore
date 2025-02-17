@@ -1,0 +1,536 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>SpringBootIntro25 &#8212; issLab2025 1.0 documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinxdoc.css" />
+    <link rel="stylesheet" type="text/css" href="_static/custom.css" />
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="nav-item nav-item-0"><a href="index.html">issLab2025 1.0 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">SpringBootIntro25</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="springbootintro25">
+<h1>SpringBootIntro25<a class="headerlink" href="#springbootintro25" title="Permalink to this heading">¶</a></h1>
+<p><span class="slide">Una prima applicazione</span></p>
+<section id="un-controller-applicativo">
+<h2>Un Controller applicativo<a class="headerlink" href="#un-controller-applicativo" title="Permalink to this heading">¶</a></h2>
+<p>L’introduzione di un Controller può essere utile per offire più funzionalità, come ad esempio
+la possibilità di trasferire immagini.</p>
+<p><span class="slide1">Un controller più evoluto</span></p>
+<section id="hicontrollerappl">
+<h3>HIControllerAppl<a class="headerlink" href="#hicontrollerappl" title="Permalink to this heading">¶</a></h3>
+<p>Commentiamo l’annotazione <code class="docutils literal notranslate"><span class="pre">&#64;Controller</span></code> in <a class="reference internal" href="SpringBootInit25.html#hicontrollerdemo"><span class="std std-ref">HIControllerDemo</span></a> e definiamo un nuovo controller.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">org.springframework.ui.Model</span>
+
+<span class="nd">@Controller</span>
+<span class="o">//</span><span class="nd">@RequestMapping</span><span class="p">(</span><span class="s2">&quot;/Api&quot;</span><span class="p">)</span>
+<span class="n">public</span> <span class="k">class</span> <span class="nc">HIControllerAppl</span> <span class="p">{</span>
+    <span class="nd">@Value</span><span class="p">(</span><span class="s2">&quot;$</span><span class="si">{spring.application.name}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="n">String</span> <span class="n">appName</span><span class="p">;</span>
+
+<span class="nd">@GetMapping</span><span class="p">(</span><span class="s2">&quot;/&quot;</span><span class="p">)</span>
+<span class="n">public</span> <span class="n">String</span> <span class="n">homePage</span><span class="p">(</span><span class="n">Model</span> <span class="n">model</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">model</span><span class="o">.</span><span class="n">addAttribute</span><span class="p">(</span><span class="s2">&quot;arg&quot;</span><span class="p">,</span> <span class="n">appName</span><span class="p">);</span>
+    <span class="k">return</span> <span class="s2">&quot;GuiNoImages&quot;</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="nd">@GetMapping</span><span class="p">(</span><span class="s2">&quot;/img&quot;</span><span class="p">)</span>
+<span class="n">public</span> <span class="n">String</span> <span class="n">textOnly</span><span class="p">(</span><span class="n">Model</span> <span class="n">model</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">model</span><span class="o">.</span><span class="n">addAttribute</span><span class="p">(</span><span class="s2">&quot;arg&quot;</span><span class="p">,</span> <span class="n">appName</span><span class="p">);</span>
+    <span class="k">return</span> <span class="s2">&quot;GuiAlsoImages&quot;</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p><span class="slide1">Una pagina per inviare messaggi</span></p>
+<section id="guinoimages-html">
+<h4>GuiNoImages.html<a class="headerlink" href="#guinoimages-html" title="Permalink to this heading">¶</a></h4>
+<p>In <strong>resource/templates</strong> inseriamo un file simile a <span class="xref std std-ref">index.html</span>,
+che include anche campi i cui valori
+possono essere fissati dal controller (grazie a <a class="reference external" href="https://www.thymeleaf.org/">Thymeleaf</a>) mediante  il Model.</p>
+<table class="docutils align-default" style="width: 100%">
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">html</span> <span class="n">xmlns</span><span class="p">:</span><span class="n">th</span><span class="o">=</span><span class="s2">&quot;http://www.thymeleaf.org&quot;</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="n">head</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="n">title</span><span class="o">&gt;</span><span class="n">GuiNoImages</span><span class="o">&lt;/</span><span class="n">title</span><span class="o">&gt;</span>
+<span class="o">&lt;/</span><span class="n">head</span><span class="o">&gt;</span>
+
+<span class="o">&lt;</span><span class="n">body</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="n">h1</span><span class="o">&gt;</span><span class="n">GuiNoImages</span><span class="o">&lt;/</span><span class="n">h1</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">Welcome</span> <span class="n">to</span>
+<span class="o">&lt;</span><span class="n">b</span><span class="o">&gt;&lt;</span><span class="n">span</span> <span class="n">th</span><span class="p">:</span><span class="n">text</span><span class="o">=</span><span class="s2">&quot;$</span><span class="si">{arg}</span><span class="s2">&quot;</span><span class="o">&gt;</span><span class="n">Our</span> <span class="n">Arg</span><span class="o">&lt;/</span><span class="n">span</span><span class="o">&gt;&lt;/</span><span class="n">b</span><span class="o">&gt;.&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="n">textarea</span> <span class="nb">id</span><span class="o">=</span><span class="s2">&quot;messageArea&quot;</span>
+  <span class="n">name</span><span class="o">=</span><span class="s2">&quot;messageArea&quot;</span> <span class="n">rows</span><span class="o">=</span><span class="s2">&quot;10&quot;</span> <span class="n">cols</span><span class="o">=</span><span class="s2">&quot;60&quot;</span><span class="o">&gt;</span>
+<span class="o">&lt;/</span><span class="n">textarea</span><span class="o">&gt;</span>
+
+<span class="o">&lt;</span><span class="n">div</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">Type</span> <span class="n">a</span> <span class="n">message</span> <span class="ow">and</span> <span class="n">hit</span> <span class="n">send</span><span class="p">:</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="nb">input</span> <span class="nb">id</span><span class="o">=</span><span class="s2">&quot;inputmessage&quot;</span><span class="o">/&gt;</span>
+    <span class="o">&lt;</span><span class="n">button</span> <span class="nb">id</span><span class="o">=</span><span class="s2">&quot;sendMessage&quot;</span><span class="o">&gt;</span><span class="n">Send</span><span class="o">&lt;/</span><span class="n">button</span><span class="o">&gt;</span>
+<span class="o">&lt;/</span><span class="n">div</span><span class="o">&gt;</span>
+
+<span class="o">&lt;</span><span class="n">script</span> <span class="n">src</span><span class="o">=</span><span class="s2">&quot;../wsminimal.js&quot;</span><span class="o">&gt;&lt;/</span><span class="n">script</span><span class="o">&gt;</span>
+<span class="o">&lt;/</span><span class="n">body</span><span class="o">&gt;</span>
+<span class="o">&lt;/</span><span class="n">html</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+</td>
+<td><a class="reference internal image-reference" href="_images/GuiNoImages.png"><img alt="_images/GuiNoImages.png" src="_images/GuiNoImages.png" style="width: 100%;" /></a>
+</td>
+</tr>
+</tbody>
+</table>
+<p><span class="slide1">Una pagina per inviare anche immagini</span></p>
+</section>
+</section>
+<section id="guialsoimages-html">
+<h3>GuiAlsoImages.html<a class="headerlink" href="#guialsoimages-html" title="Permalink to this heading">¶</a></h3>
+<p>Il file <code class="docutils literal notranslate"><span class="pre">GuiAlsoImages.html</span></code> definisce una pagina HTML che permette, oltre all’invio e ricezione di
+testi, il trasferimento di immagini.</p>
+<table class="docutils align-default" style="width: 100%">
+<colgroup>
+<col style="width: 55%" />
+<col style="width: 45%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>Questo file:</p>
+<ul class="simple">
+<li><p>fa uso di <a class="reference external" href="https://getbootstrap.com/">Bootstrap</a>, una libreria  utile per realizzare pagine web reattive e
+mobile-first, con HTML, CSS e JavaScript; la libreria usa il preprocessore CSS
+scritto in Ruby denominato <code class="docutils literal notranslate"><span class="pre">Sass</span></code> (<em>Syntactically Awesome Style Sheets</em>)</p></li>
+<li><p>utilizza <a class="reference internal" href="#lo-script-wsalsoimages-js"><span class="std std-ref">Lo script wsalsoimages.js</span></a></p></li>
+<li><p>presenta all’utente:</p>
+<ul>
+<li><p>pulsanti per la (dis)connessione alla WS (<code class="docutils literal notranslate"><span class="pre">URL=ws://&lt;ServerIP&gt;:8085/socket</span></code>)</p></li>
+<li><p>pulsanti per l’invio di testi e di immagini</p></li>
+<li><p>un’area di output per la visualizzazione di informazioni inviate dal server</p></li>
+</ul>
+</li>
+</ul>
+</td>
+<td><a class="reference internal image-reference" href="_images/GuiAlsoImages.png"><img alt="_images/GuiAlsoImages.png" src="_images/GuiAlsoImages.png" style="width: 100%;" /></a>
+</td>
+</tr>
+</tbody>
+</table>
+<section id="struttura-generale-del-file-guialsoimages-html">
+<h4>Struttura generale del file GuiAlsoImages.html<a class="headerlink" href="#struttura-generale-del-file-guialsoimages-html" title="Permalink to this heading">¶</a></h4>
+<div class="highlight-html notranslate"><div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">html</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">head</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">link</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;/webjars/bootstrap/css/bootstrap.min.css&quot;</span> <span class="na">rel</span><span class="o">=</span><span class="s">&quot;stylesheet&quot;</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">script</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;/webjars/jquery/jquery.min.js&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">title</span><span class="p">&gt;</span>GuiAlsoImages<span class="p">&lt;/</span><span class="nt">title</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">head</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">body</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">div</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;main-content&quot;</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;container-fluid pt-3&quot;</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">h1</span><span class="p">&gt;</span>GuiAlsoImages<span class="p">&lt;/</span><span class="nt">h1</span><span class="p">&gt;</span>
+    <span class="cm">&lt;!-- Connessione/Disconnessione alla WebSocket --&gt;</span>
+    <span class="cm">&lt;!-- Inserzione di testi e immagini            --&gt;</span>
+    <span class="cm">&lt;!-- Area di output testuale                   --&gt;</span>
+    <span class="cm">&lt;!-- Area per le immagini                      --&gt;</span>
+  <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+  <span class="p">&lt;/</span><span class="nt">body</span><span class="p">&gt;</span>
+</pre></div>
+</div>
+<p>Notiamo la necessità dell’uso di un <a class="reference external" href="https://getbootstrap.com/docs/5.1/layout/containers/">WebJarsContainer</a> come elemento-base del layout Bootstrap.</p>
+<p><span class="slide2">La libreria Bootstrap</span></p>
+</section>
+<section id="bootstrap-e-webjars">
+<h4>Bootstrap  e webJars<a class="headerlink" href="#bootstrap-e-webjars" title="Permalink to this heading">¶</a></h4>
+<p>L’uso di <a class="reference external" href="https://getbootstrap.com/">Bootstrap</a> avviene attraverso i <a class="reference external" href="https://mvnrepository.com/artifact/org.webjars">WebJars</a>, introducendo in <em>build.gradle</em> le seguenti
+nuove dipendenze:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">implementation</span> <span class="s1">&#39;org.webjars:webjars-locator-core&#39;</span>
+<span class="n">implementation</span> <span class="s1">&#39;org.webjars:bootstrap:5.1.3&#39;</span>
+<span class="n">implementation</span> <span class="s1">&#39;org.webjars:jquery:3.6.0&#39;</span>
+</pre></div>
+</div>
+<p>I <span class="blue">WebJar</span> (che non sono legati a Spring) sono dipendenze lato client impacchettate in file JAR.
+Per approfondire, si veda: <a class="reference external" href="https://getbootstrap.com/docs/5.1/getting-started/introduction/">WebJarsDocs</a> e <a class="reference external" href="https://getbootstrap.com/docs/5.1/examples/">WebJarsExamples</a>.</p>
+<p><span class="slide2">Campi connect/disconnect</span></p>
+</section>
+<section id="connessione-disconnessione-alla-websocket">
+<h4>Connessione/Disconnessione alla WebSocket<a class="headerlink" href="#connessione-disconnessione-alla-websocket" title="Permalink to this heading">¶</a></h4>
+<table class="docutils align-default" style="width: 100%">
+<colgroup>
+<col style="width: 30%" />
+<col style="width: 70%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>La parte di pagina relativa alla (dis)connessione:</p>
+<a class="reference internal image-reference" href="_images/connectGui.PNG"><img alt="_images/connectGui.PNG" class="align-center" src="_images/connectGui.PNG" style="width: 100%;" /></a>
+<p>Si veda anche (su <a class="reference internal" href="#lo-script-wsalsoimages-js"><span class="std std-ref">wsalsoimages</span></a>):</p>
+<p><a class="reference internal" href="#funzioni-di-dis-connessione-su-websocket"><span class="std std-ref">Funzioni di (dis)connessione su webSocket</span></a></p>
+</td>
+<td><p>viene prodotta come segue:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">div</span> <span class="n">class</span><span class="o">=</span><span class="s2">&quot;row&quot;</span><span class="o">&gt;</span>
+ <span class="o">&lt;</span><span class="n">div</span> <span class="n">class</span><span class="o">=</span><span class="s2">&quot;col-md-6&quot;</span><span class="o">&gt;</span>
+  <span class="o">&lt;</span><span class="n">form</span> <span class="n">class</span><span class="o">=</span><span class="s2">&quot;form-inline&quot;</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="n">div</span> <span class="n">class</span><span class="o">=</span><span class="s2">&quot;form-group&quot;</span><span class="o">&gt;</span>
+      <span class="o">&lt;</span><span class="n">label</span> <span class="k">for</span><span class="o">=</span><span class="s2">&quot;connect&quot;</span><span class="o">&gt;</span><span class="n">WebSocket</span> <span class="n">connection</span><span class="p">:</span><span class="o">&lt;/</span><span class="n">label</span><span class="o">&gt;</span>
+      <span class="o">&lt;</span><span class="n">button</span> <span class="nb">id</span><span class="o">=</span><span class="s2">&quot;connect&quot;</span> <span class="n">class</span><span class="o">=</span><span class="s2">&quot;btn btn-default&quot;</span>
+                <span class="nb">type</span><span class="o">=</span><span class="s2">&quot;submit&quot;</span><span class="o">&gt;</span><span class="n">Connect</span><span class="o">&lt;/</span><span class="n">button</span><span class="o">&gt;</span>
+      <span class="o">&lt;</span><span class="n">button</span> <span class="nb">id</span><span class="o">=</span><span class="s2">&quot;disconnect&quot;</span> <span class="n">class</span><span class="o">=</span><span class="s2">&quot;btn btn-default&quot;</span>
+                <span class="nb">type</span><span class="o">=</span><span class="s2">&quot;submit&quot;</span> <span class="n">disabled</span><span class="o">=</span><span class="s2">&quot;disabled&quot;</span><span class="o">&gt;</span><span class="n">Disconnect</span>
+      <span class="o">&lt;/</span><span class="n">button</span><span class="o">&gt;</span>
+    <span class="o">&lt;/</span><span class="n">div</span><span class="o">&gt;</span>
+  <span class="o">&lt;/</span><span class="n">form</span><span class="o">&gt;</span>
+ <span class="o">&lt;/</span><span class="n">div</span><span class="o">&gt;</span>
+<span class="o">&lt;/</span><span class="n">div</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+<p><span class="slide2">Campi di invio testi/immagini</span></p>
+</section>
+<section id="inserzione-di-testi-e-immagini">
+<h4>Inserzione di testi e immagini<a class="headerlink" href="#inserzione-di-testi-e-immagini" title="Permalink to this heading">¶</a></h4>
+<table class="docutils align-default" style="width: 100%">
+<colgroup>
+<col style="width: 30%" />
+<col style="width: 70%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>La parte di pagina relativa ai pulsanti di invio:</p>
+<a class="reference internal image-reference" href="_images/inputGui.PNG"><img alt="_images/inputGui.PNG" class="align-center" src="_images/inputGui.PNG" style="width: 100%;" /></a>
+<p>Si veda anche:</p>
+<p><a class="reference internal" href="#funzioni-di-gestione-pulsanti"><span class="std std-ref">Funzioni di gestione pulsanti</span></a></p>
+</td>
+<td><p>viene prodotta come segue:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">div</span> <span class="n">class</span><span class="o">=</span><span class="s2">&quot;row&quot;</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="n">div</span> <span class="n">class</span><span class="o">=</span><span class="s2">&quot;col-md-6&quot;</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="n">form</span> <span class="n">class</span><span class="o">=</span><span class="s2">&quot;form-inline&quot;</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="n">div</span> <span class="n">class</span><span class="o">=</span><span class="s2">&quot;form-group&quot;</span><span class="o">&gt;</span>
+        <span class="o">&lt;</span><span class="n">label</span> <span class="k">for</span><span class="o">=</span><span class="s2">&quot;inputmsg&quot;</span><span class="o">&gt;</span><span class="n">Input</span> <span class="p">(</span><span class="n">text</span><span class="p">)</span><span class="o">&lt;/</span><span class="n">label</span><span class="o">&gt;</span>
+        <span class="o">&lt;</span><span class="nb">input</span> <span class="nb">type</span><span class="o">=</span><span class="s2">&quot;text&quot;</span> <span class="nb">id</span><span class="o">=</span><span class="s2">&quot;inputmsg&quot;</span>
+                <span class="n">class</span><span class="o">=</span><span class="s2">&quot;form-control&quot;</span> <span class="n">placeholder</span><span class="o">=</span><span class="s2">&quot;Input here...&quot;</span><span class="o">&gt;</span>
+    <span class="o">&lt;/</span><span class="n">div</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="n">button</span> <span class="nb">id</span><span class="o">=</span><span class="s2">&quot;sendmsg&quot;</span>
+        <span class="n">class</span><span class="o">=</span><span class="s2">&quot;btn btn-default&quot;</span> <span class="nb">type</span><span class="o">=</span><span class="s2">&quot;submit&quot;</span><span class="o">&gt;</span><span class="n">Send</span> <span class="n">text</span><span class="o">&lt;/</span><span class="n">button</span><span class="o">&gt;</span>
+    <span class="o">&lt;/</span><span class="n">form</span><span class="o">&gt;</span>
+<span class="o">&lt;/</span><span class="n">div</span><span class="o">&gt;</span>
+<span class="o">&lt;/</span><span class="n">div</span><span class="o">&gt;</span>
+
+<span class="o">&lt;</span><span class="n">div</span> <span class="n">class</span><span class="o">=</span><span class="s2">&quot;row&quot;</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="n">div</span> <span class="n">class</span><span class="o">=</span><span class="s2">&quot;col-md-6&quot;</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="n">form</span> <span class="n">class</span><span class="o">=</span><span class="s2">&quot;form-inline&quot;</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="n">div</span> <span class="n">class</span><span class="o">=</span><span class="s2">&quot;form-group&quot;</span><span class="o">&gt;</span>
+        <span class="o">&lt;</span><span class="n">label</span> <span class="k">for</span><span class="o">=</span><span class="s2">&quot;myfile&quot;</span><span class="o">&gt;</span><span class="n">Input</span> <span class="p">(</span><span class="n">image</span><span class="p">)</span><span class="o">&lt;/</span><span class="n">label</span><span class="o">&gt;</span>
+        <span class="o">&lt;</span><span class="nb">input</span> <span class="nb">type</span><span class="o">=</span><span class="s2">&quot;file&quot;</span> <span class="nb">id</span><span class="o">=</span><span class="s2">&quot;myfile&quot;</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;myfile&quot;</span>
+                <span class="n">class</span><span class="o">=</span><span class="s2">&quot;form-control&quot;</span> <span class="n">accept</span><span class="o">=</span><span class="s2">&quot;image/*&quot;</span><span class="o">/&gt;</span>
+    <span class="o">&lt;/</span><span class="n">div</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="n">button</span> <span class="nb">id</span><span class="o">=</span><span class="s2">&quot;sendImage&quot;</span>
+        <span class="n">class</span><span class="o">=</span><span class="s2">&quot;btn btn-default&quot;</span> <span class="nb">type</span><span class="o">=</span><span class="s2">&quot;submit&quot;</span><span class="o">&gt;</span><span class="n">Send</span> <span class="n">Image</span><span class="o">&lt;/</span><span class="n">button</span><span class="o">&gt;</span>
+    <span class="o">&lt;/</span><span class="n">form</span><span class="o">&gt;</span>
+    <span class="o">&lt;/</span><span class="n">div</span><span class="o">&gt;</span>
+<span class="o">&lt;/</span><span class="n">div</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+<p><span class="slide2">Aree di visualizzazione</span></p>
+</section>
+<section id="area-di-output">
+<h4>Area di output<a class="headerlink" href="#area-di-output" title="Permalink to this heading">¶</a></h4>
+<table class="docutils align-default" style="width: 100%">
+<colgroup>
+<col style="width: 30%" />
+<col style="width: 70%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>La parte di pagina relativa all’area di output:</p>
+<a class="reference internal image-reference" href="_images/outputGui.PNG"><img alt="_images/outputGui.PNG" class="align-center" src="_images/outputGui.PNG" style="width: 100%;" /></a>
+<p>Si veda anche:</p>
+<p><a class="reference internal" href="#funzioni-di-invio-su-ws"><span class="std std-ref">Funzioni di invio su WS</span></a></p>
+</td>
+<td><p>viene prodotta come segue:</p>
+<div class="highlight-html notranslate"><div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;row&quot;</span><span class="p">&gt;</span>
+ <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;col-md-12&quot;</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">table</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;conversation&quot;</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;table table-striped&quot;</span><span class="p">&gt;</span>
+     <span class="p">&lt;</span><span class="nt">thead</span><span class="p">&gt;</span>
+      <span class="p">&lt;</span><span class="nt">tr</span><span class="p">&gt;</span>
+         <span class="p">&lt;</span><span class="nt">th</span><span class="p">&gt;</span>Output Area<span class="p">&lt;/</span><span class="nt">th</span><span class="p">&gt;</span>
+       <span class="p">&lt;/</span><span class="nt">tr</span><span class="p">&gt;</span>
+     <span class="p">&lt;/</span><span class="nt">thead</span><span class="p">&gt;</span>
+     <span class="p">&lt;</span><span class="nt">tbody</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;output&quot;</span><span class="p">&gt;</span>
+     <span class="p">&lt;/</span><span class="nt">tbody</span><span class="p">&gt;</span>
+    <span class="p">&lt;/</span><span class="nt">table</span><span class="p">&gt;</span>
+ <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+</pre></div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="area-delle-immagini">
+<h4>Area delle immagini<a class="headerlink" href="#area-delle-immagini" title="Permalink to this heading">¶</a></h4>
+<table class="docutils align-default" style="width: 100%">
+<colgroup>
+<col style="width: 30%" />
+<col style="width: 70%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>La parte di pagina relativa all’area delle immagini:</p>
+<a class="reference internal image-reference" href="_images/imageGui.PNG"><img alt="_images/imageGui.PNG" class="align-center" src="_images/imageGui.PNG" style="width: 100%;" /></a>
+<p>Si veda anche:</p>
+<p><a class="reference internal" href="#aggiornamento-aree-di-output"><span class="std std-ref">Aggiornamento aree di output</span></a></p>
+</td>
+<td><p>viene prodotta in modo simile a quanto fatto in <span class="xref std std-ref">index.html</span>:</p>
+<div class="highlight-html notranslate"><div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">h5</span><span class="p">&gt;</span>Image area<span class="p">&lt;/</span><span class="nt">h5</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">hr</span><span class="p">/&gt;</span>
+    <span class="p">&lt;</span><span class="nt">p</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;imageArea&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+</pre></div>
+</div>
+<p>Ciò in quanto si intende aggiornare quest’area ad ogni immagine.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p><span class="slide1">Nuove funzioni in JS</span></p>
+</section>
+</section>
+<section id="lo-script-wsalsoimages-js">
+<h3>Lo script wsalsoimages.js<a class="headerlink" href="#lo-script-wsalsoimages-js" title="Permalink to this heading">¶</a></h3>
+<p>Lo script  <code class="docutils literal notranslate"><span class="pre">wsalsoimages.js</span></code> utilizza <span class="xref std std-ref">jQuery</span> per realizzare funzioni:</p>
+<ul class="simple">
+<li><p>per la connessione/disconnessione mediante WebSocket: <a class="reference internal" href="#funzioni-di-dis-connessione-su-websocket"><span class="std std-ref">Funzioni di (dis)connessione su webSocket</span></a>;</p></li>
+<li><p>per permettere all’utente di inserire messaggi e immagini da inviare al server mediante WebSocket:
+<a class="reference internal" href="#funzioni-di-gestione-pulsanti"><span class="std std-ref">Funzioni di gestione pulsanti</span></a>;</p></li>
+<li><p>per visualizzare informazioni ricevute dal server: <a class="reference internal" href="#aggiornamento-aree-di-output"><span class="std std-ref">Aggiornamento aree di output</span></a>.</p></li>
+</ul>
+<section id="riferimenti-a-oggetti-della-pagina">
+<h4>Riferimenti a oggetti della pagina<a class="headerlink" href="#riferimenti-a-oggetti-della-pagina" title="Permalink to this heading">¶</a></h4>
+<div class="highlight-js notranslate"><div class="highlight"><pre><span></span><span class="kd">var</span><span class="w"> </span><span class="nx">socket</span><span class="p">;</span><span class="w">  </span><span class="c1">//set by connect() called by the enduser</span>
+<span class="kd">var</span><span class="w"> </span><span class="nx">sockConnected</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">false</span><span class="p">;</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">imageWindow</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s2">&quot;imageArea&quot;</span><span class="p">);</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">fileInput</span><span class="w">   </span><span class="o">=</span><span class="w"> </span><span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s2">&quot;myfile&quot;</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>Gli elementi della pagina  <code class="docutils literal notranslate"><span class="pre">imageArea</span></code> e <code class="docutils literal notranslate"><span class="pre">myfile</span></code> sono ovviamwnte quelli definiti nel file
+<a class="reference internal" href="#inserzione-di-testi-e-immagini"><span class="std std-ref">GuiAlsoImages.html</span></a>.</p>
+<p><span class="slide2">Connessione/Disconnessione</span></p>
+</section>
+<section id="funzioni-di-dis-connessione-su-websocket">
+<h4>Funzioni di (dis)connessione su webSocket<a class="headerlink" href="#funzioni-di-dis-connessione-su-websocket" title="Permalink to this heading">¶</a></h4>
+<p>Al caricamento della pagina si vuole sia attivo il solo pulsante <strong>Connect</strong>, che va disattivato
+(a favore di <em>Disconnect</em>) una volta premuto.</p>
+<p>La creazione della WebSocket è accompagnata dalla definizione di callback relativi
+alla apertura della socket e alla ricezione di messaggi dal server.</p>
+<div class="highlight-js notranslate"><div class="highlight"><pre><span></span><span class="kd">function</span><span class="w"> </span><span class="nx">connect</span><span class="p">(){</span>
+<span class="w">    </span><span class="kd">var</span><span class="w"> </span><span class="nx">host</span><span class="w">     </span><span class="o">=</span><span class="w"> </span><span class="nb">document</span><span class="p">.</span><span class="nx">location</span><span class="p">.</span><span class="nx">host</span><span class="p">;</span>
+<span class="w">    </span><span class="kd">var</span><span class="w"> </span><span class="nx">pathname</span><span class="w"> </span><span class="o">=</span><span class="w">  </span><span class="s2">&quot;/&quot;</span><span class="p">;</span><span class="w">    </span><span class="c1">//document.location.pathname;</span>
+<span class="w">    </span><span class="kd">var</span><span class="w"> </span><span class="nx">addr</span><span class="w">     </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;ws://&quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">host</span><span class="w">  </span><span class="o">+</span><span class="w"> </span><span class="nx">pathname</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s2">&quot;socket&quot;</span><span class="w">  </span><span class="p">;</span>
+
+<span class="w">    </span><span class="c1">// Assicura che sia aperta un unica connessione</span>
+<span class="w">    </span><span class="k">if</span><span class="p">(</span><span class="nx">socket</span><span class="w"> </span><span class="o">!==</span><span class="w"> </span><span class="kc">undefined</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nx">socket</span><span class="p">.</span><span class="nx">readyState</span><span class="w"> </span><span class="o">!==</span><span class="w"> </span><span class="nx">WebSocket</span><span class="p">.</span><span class="nx">CLOSED</span><span class="p">){</span>
+<span class="w">         </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;Connessione WebSocket già  stabilita&quot;</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="nx">socket</span><span class="w">            </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">WebSocket</span><span class="p">(</span><span class="nx">addr</span><span class="p">);</span>
+<span class="w">    </span><span class="nx">socket</span><span class="p">.</span><span class="nx">binaryType</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;arraybuffer&quot;</span><span class="p">;</span>
+
+<span class="w">    </span><span class="nx">socket</span><span class="p">.</span><span class="nx">onopen</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kd">function</span><span class="w"> </span><span class="p">(</span><span class="nx">event</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="nx">setConnected</span><span class="p">(</span><span class="kc">true</span><span class="p">);</span>
+<span class="w">        </span><span class="nx">addMessageToWindow</span><span class="p">(</span><span class="s2">&quot;Connected&quot;</span><span class="p">);</span>
+<span class="w">    </span><span class="p">};</span>
+<span class="w">    </span><span class="c1">//RICEZIONE di messaggi dal server</span>
+<span class="w">    </span><span class="nx">socket</span><span class="p">.</span><span class="nx">onmessage</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kd">function</span><span class="w"> </span><span class="p">(</span><span class="nx">event</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">event</span><span class="p">.</span><span class="nx">data</span><span class="w"> </span><span class="ow">instanceof</span><span class="w"> </span><span class="nb">ArrayBuffer</span><span class="p">){</span><span class="w"> </span><span class="c1">//Image</span>
+<span class="w">            </span><span class="nx">setImageInWindow</span><span class="p">(</span><span class="nx">event</span><span class="p">.</span><span class="nx">data</span><span class="p">);</span>
+<span class="w">        </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="nx">addMessageToWindow</span><span class="p">(</span><span class="sb">`</span><span class="si">${</span><span class="nx">event</span><span class="p">.</span><span class="nx">data</span><span class="si">}</span><span class="sb">`</span><span class="p">);</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="nx">socket</span><span class="p">.</span><span class="nx">onclose</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kd">function</span><span class="w"> </span><span class="p">(</span><span class="nx">event</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nx">alert</span><span class="p">(</span><span class="s2">&quot;onclose event=&quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">event</span><span class="p">.</span><span class="nx">reason</span><span class="p">)</span>
+<span class="w">        </span><span class="nx">connect</span><span class="p">();</span><span class="w"> </span><span class="c1">//AUTOMATIC RECONNECTION...</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span><span class="c1">//connect</span>
+
+<span class="kd">function</span><span class="w"> </span><span class="nx">disconnect</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">setConnected</span><span class="p">(</span><span class="kc">false</span><span class="p">);</span><span class="w"> </span><span class="p">}</span>
+
+<span class="kd">function</span><span class="w"> </span><span class="nx">setConnected</span><span class="p">(</span><span class="nx">connected</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">$</span><span class="p">(</span><span class="s2">&quot;#connect&quot;</span><span class="p">).</span><span class="nx">prop</span><span class="p">(</span><span class="s2">&quot;disabled&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">connected</span><span class="p">);</span>
+<span class="w">    </span><span class="nx">$</span><span class="p">(</span><span class="s2">&quot;#disconnect&quot;</span><span class="p">).</span><span class="nx">prop</span><span class="p">(</span><span class="s2">&quot;disabled&quot;</span><span class="p">,</span><span class="w"> </span><span class="o">!</span><span class="nx">connected</span><span class="p">);</span>
+<span class="w">    </span><span class="nx">$</span><span class="p">(</span><span class="s2">&quot;#output&quot;</span><span class="p">).</span><span class="nx">html</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p><span class="slide2">Gestione dei pulsanti</span></p>
+</section>
+<section id="funzioni-di-gestione-pulsanti">
+<h4>Funzioni di gestione pulsanti<a class="headerlink" href="#funzioni-di-gestione-pulsanti" title="Permalink to this heading">¶</a></h4>
+<div class="highlight-js notranslate"><div class="highlight"><pre><span></span><span class="nx">$</span><span class="p">(</span><span class="kd">function</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">$</span><span class="p">(</span><span class="s2">&quot;form&quot;</span><span class="p">).</span><span class="nx">on</span><span class="p">(</span><span class="s1">&#39;submit&#39;</span><span class="p">,</span><span class="w"> </span><span class="kd">function</span><span class="w"> </span><span class="p">(</span><span class="nx">e</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">e</span><span class="p">.</span><span class="nx">preventDefault</span><span class="p">();</span><span class="w"> </span><span class="p">});</span>
+<span class="w">    </span><span class="nx">$</span><span class="p">(</span><span class="w"> </span><span class="s2">&quot;#connect&quot;</span><span class="w"> </span><span class="p">).</span><span class="nx">click</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">connect</span><span class="p">();</span><span class="w"> </span><span class="p">});</span>
+<span class="w">    </span><span class="nx">$</span><span class="p">(</span><span class="w"> </span><span class="s2">&quot;#disconnect&quot;</span><span class="w"> </span><span class="p">).</span><span class="nx">click</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">disconnect</span><span class="p">();</span><span class="w"> </span><span class="p">});</span>
+<span class="w">    </span><span class="nx">$</span><span class="p">(</span><span class="w"> </span><span class="s2">&quot;#sendmsg&quot;</span><span class="w"> </span><span class="p">).</span><span class="nx">click</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">sendMessage</span><span class="p">(</span><span class="nx">$</span><span class="p">(</span><span class="s2">&quot;#inputmsg&quot;</span><span class="p">).</span><span class="nx">val</span><span class="p">());});</span>
+<span class="w">    </span><span class="nx">$</span><span class="p">(</span><span class="w"> </span><span class="s2">&quot;#sendImage&quot;</span><span class="w"> </span><span class="p">).</span><span class="nx">click</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="kd">let</span><span class="w"> </span><span class="nx">f</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">fileInput</span><span class="p">.</span><span class="nx">files</span><span class="p">[</span><span class="mf">0</span><span class="p">];</span><span class="w"> </span><span class="nx">sendMessage</span><span class="p">(</span><span class="nx">f</span><span class="p">);});</span>
+<span class="p">});</span>
+</pre></div>
+</div>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">$(function</span> <span class="pre">()</span> <span class="pre">{</span> <span class="pre">...</span> <span class="pre">})</span></code> è uno short-hand per invocare una funzione dopo che tutti gli elementi del DOM
+della pagina sono stati caricati, ed equivale a:</p>
+<blockquote>
+<div><div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$(document).ready(function() { ... });
+</pre></div>
+</div>
+</div></blockquote>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">e.preventDefault()</span></code> viene usato per evitare che un click su un pulsante inneschi
+la navigazione verso l’URL da parte del browser.</p>
+<p>In sua assenza, il server riinivierebbe la pagina, perdendo così gli aggiornamenti sulle aree di output.</p>
+</li>
+</ul>
+<p><span class="slide2">Invio messaggi su WS</span></p>
+</section>
+<section id="funzioni-di-invio-su-ws">
+<h4>Funzioni di invio su WS<a class="headerlink" href="#funzioni-di-invio-su-ws" title="Permalink to this heading">¶</a></h4>
+<div class="highlight-js notranslate"><div class="highlight"><pre><span></span><span class="kd">function</span><span class="w"> </span><span class="nx">sendMessage</span><span class="p">(</span><span class="nx">message</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">if</span><span class="p">(</span><span class="w"> </span><span class="nx">socket</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="kc">null</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="o">!</span><span class="w"> </span><span class="nx">sockConnected</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="nx">alert</span><span class="p">(</span><span class="s2">&quot;Please connect ...&quot;</span><span class="p">);</span>
+<span class="w">    </span><span class="k">else</span><span class="w"> </span><span class="nx">socket</span><span class="p">.</span><span class="nx">send</span><span class="p">(</span><span class="nx">message</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p><span class="slide2">Output</span></p>
+</section>
+<section id="aggiornamento-aree-di-output">
+<h4>Aggiornamento aree di output<a class="headerlink" href="#aggiornamento-aree-di-output" title="Permalink to this heading">¶</a></h4>
+<p>Ricordando <a class="reference internal" href="#riferimenti-a-oggetti-della-pagina"><span class="std std-ref">Riferimenti a oggetti della pagina</span></a>:</p>
+<div class="highlight-js notranslate"><div class="highlight"><pre><span></span><span class="kd">function</span><span class="w"> </span><span class="nx">addMessageToWindow</span><span class="p">(</span><span class="nx">message</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">$</span><span class="p">(</span><span class="s2">&quot;#output&quot;</span><span class="p">).</span><span class="nx">append</span><span class="p">(</span><span class="s2">&quot;&lt;tr&gt;&lt;td&gt;&quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">message</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s2">&quot;&lt;/td&gt;&lt;/tr&gt;&quot;</span><span class="p">);</span>
+<span class="w"> </span><span class="p">}</span>
+
+
+<span class="kd">function</span><span class="w"> </span><span class="nx">setImageInWindow</span><span class="p">(</span><span class="nx">image</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="nx">url</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">URL</span><span class="p">.</span><span class="nx">createObjectURL</span><span class="p">(</span><span class="ow">new</span><span class="w"> </span><span class="nx">Blob</span><span class="p">([</span><span class="nx">image</span><span class="p">]));</span>
+<span class="w">    </span><span class="c1">//Usando DOM</span>
+<span class="w">    </span><span class="c1">//imageWindow.innerHTML = `&lt;img src=&quot;${url}&quot;/&gt;`</span>
+<span class="w">    </span><span class="c1">//Usando jQuery</span>
+<span class="w">    </span><span class="nx">$</span><span class="p">(</span><span class="s2">&quot;#imageArea&quot;</span><span class="p">).</span><span class="nx">html</span><span class="p">(</span><span class="sb">`&lt;img src=&quot;</span><span class="si">${</span><span class="nx">url</span><span class="si">}</span><span class="sb">&quot;/&gt;`</span><span class="p">);</span>
+<span class="p">}</span>
+
+
+<span class="c1">//Volendo appendere una immagine nella outputArea ...</span>
+<span class="kd">function</span><span class="w"> </span><span class="nx">addImageToWindow</span><span class="p">(</span><span class="nx">image</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="nx">url</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">URL</span><span class="p">.</span><span class="nx">createObjectURL</span><span class="p">(</span><span class="ow">new</span><span class="w"> </span><span class="nx">Blob</span><span class="p">([</span><span class="nx">image</span><span class="p">]));</span>
+<span class="w">    </span><span class="nx">$</span><span class="p">(</span><span class="s2">&quot;#output&quot;</span><span class="p">).</span><span class="nx">append</span><span class="p">(</span><span class="s2">&quot;&lt;tr&gt;&lt;td&gt;&quot;</span><span class="w"> </span><span class="o">+</span>
+<span class="w">        </span><span class="sb">`&lt;img src=&quot;</span><span class="si">${</span><span class="nx">url</span><span class="si">}</span><span class="sb">&quot;/&gt;`</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s2">&quot;&lt;/td&gt;&lt;/tr&gt;&quot;</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+</section>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <div>
+    <h3><a href="index.html">Table of Contents</a></h3>
+    <ul>
+<li><a class="reference internal" href="#">SpringBootIntro25</a><ul>
+<li><a class="reference internal" href="#un-controller-applicativo">Un Controller applicativo</a><ul>
+<li><a class="reference internal" href="#hicontrollerappl">HIControllerAppl</a><ul>
+<li><a class="reference internal" href="#guinoimages-html">GuiNoImages.html</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#guialsoimages-html">GuiAlsoImages.html</a><ul>
+<li><a class="reference internal" href="#struttura-generale-del-file-guialsoimages-html">Struttura generale del file GuiAlsoImages.html</a></li>
+<li><a class="reference internal" href="#bootstrap-e-webjars">Bootstrap  e webJars</a></li>
+<li><a class="reference internal" href="#connessione-disconnessione-alla-websocket">Connessione/Disconnessione alla WebSocket</a></li>
+<li><a class="reference internal" href="#inserzione-di-testi-e-immagini">Inserzione di testi e immagini</a></li>
+<li><a class="reference internal" href="#area-di-output">Area di output</a></li>
+<li><a class="reference internal" href="#area-delle-immagini">Area delle immagini</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#lo-script-wsalsoimages-js">Lo script wsalsoimages.js</a><ul>
+<li><a class="reference internal" href="#riferimenti-a-oggetti-della-pagina">Riferimenti a oggetti della pagina</a></li>
+<li><a class="reference internal" href="#funzioni-di-dis-connessione-su-websocket">Funzioni di (dis)connessione su webSocket</a></li>
+<li><a class="reference internal" href="#funzioni-di-gestione-pulsanti">Funzioni di gestione pulsanti</a></li>
+<li><a class="reference internal" href="#funzioni-di-invio-su-ws">Funzioni di invio su WS</a></li>
+<li><a class="reference internal" href="#aggiornamento-aree-di-output">Aggiornamento aree di output</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  </div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/SpringBootIntro25.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="nav-item nav-item-0"><a href="index.html">issLab2025 1.0 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">SpringBootIntro25</a></li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2024, ANatali.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 5.0.2.
+    </div>
+  </body>
+</html>

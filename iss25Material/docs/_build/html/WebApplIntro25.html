@@ -1,0 +1,264 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>WebApplIntro25 &#8212; issLab2025 1.0 documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinxdoc.css" />
+    <link rel="stylesheet" type="text/css" href="_static/custom.css" />
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="nav-item nav-item-0"><a href="index.html">issLab2025 1.0 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">WebApplIntro25</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="webapplintro25">
+<h1>WebApplIntro25<a class="headerlink" href="#webapplintro25" title="Permalink to this heading">¶</a></h1>
+<p>Lo sviluppo di una <a class="reference external" href="https://it.wikipedia.org/wiki/Applicazione_web">Applicazione web</a> -&gt; non può presceindere dall’uso di uno dei numerosi framework disponibili (si veda ad
+esempio <a class="reference external" href="https://www.geeksforgeeks.org/top-10-frameworks-for-web-applications/">WebappFrameworks</a> -&gt;).</p>
+<p>Per il nostro legame con Java, può essere opportuno, per ora, fare
+riferimento a <a class="reference external" href="https://spring.io/">Springio</a> -&gt;. Tuttavia, una adeguata alternativa potrebbe essere l’uso di framework basati su
+<a class="reference external" href="https://nodejs.org/it/">Node.js</a> -&gt;. ed <a class="reference external" href="https://expressjs.com/it/">Express</a> -&gt;.</p>
+<p>Sappiamo che l’uso di un framework aiuta a risolvere problemi ricorrenti in un dominio e
+impone precise regole per l’introduzione di componenti applicativi
+nel contesto dello schema architetturale che il framework utilizza per supportare le sue funzionalità.</p>
+<section id="applicazioni-web-concetti-base">
+<h2>Applicazioni Web: Concetti base<a class="headerlink" href="#applicazioni-web-concetti-base" title="Permalink to this heading">¶</a></h2>
+<p>Nel caso dei framework nel dominio delle applicazioni Web, troviamo un insieme di concetti e modi di operare comuni:</p>
+<ul class="simple">
+<li><p>l’uso di un WebServer (spesso Apache Tomcat) che rimane nascosto al livello applicativo;</p></li>
+<li><p>l’uso di una infrastruttura che abilita le comunicazioni Client-Server mediante il protocollo HTTP
+e gli schemi REST di interazione;</p></li>
+<li><p>la possibilità di definire componenti applicativi ‘innestabili’ nel framework secondo precisi meccanismi.
+<a class="reference external" href="https://spring.io/projects/spring-boot">SpringBoot</a> -&gt; si basa principalmente sul meccanismo delle <span class="xref std std-ref">Annotazioni</span> Java;</p></li>
+<li><p>il concetto di <span class="blue">Controller</span> come elemento-base per la gestione dei messaggi;</p></li>
+<li><p>l’uso di tools che agevolano la creazione dinamica di pagine HTML a partire da template con ‘parametri’
+che possono essere fissati dal <span class="blue">Controller</span>;</p></li>
+<li><p>l’abilitazione all’uso delle WebSocket per interazioni asincrone con i Client</p></li>
+</ul>
+<p>Lo schema di funzionamento può essere riassunto come segue:</p>
+<ol class="arabic simple">
+<li><p>un operatore umano usa un Browser per collegarsi  (<span class="blue">Human-Machine interaction</span> <span class="slide1">HMI</span>) via HTTP
+a una certa porta di un nodo remoto, usata come porta di ingresso dal WebServer</p></li>
+<li><p>l’infrastruttura del framework effettua una prima gestione del messaggio in arrivo in modo da confezionare
+oggetti computazionali (richieste e/o risposte) da trasferire ad opportuni metodi del <span class="blue">Controller</span>
+per agevolare la stesura del codice di gestione da parte dell’Application Designer. Spesso la perte infrastrutturale
+è organizzata secondo una <strong>pipeline</strong> che permette all’Application Designer di introdurre parti di elaborazione
+a questo livello</p></li>
+<li><p>i metodi del <span class="blue">Controller</span> realizzano la gestione dei messaggi in funzione dei i ‘verbi’ HTTP (GET,PUT,POST,DELETE)
+con cui sono stati inviati e prepara una pagina HTML di risposta, sfruttando opportuni template predefiniti di pagine.</p></li>
+</ol>
+<section id="modello-della-pagina">
+<h3>Modello della pagina<a class="headerlink" href="#modello-della-pagina" title="Permalink to this heading">¶</a></h3>
+<blockquote>
+<div><p>I <span class="brown">parametri dei template</span> vengono fissati utilizzando un <strong>Modello della pagina</strong> secondo un classico
+<span class="slide2">schema Model View Controller</span>.</p>
+<p>In <a class="reference external" href="https://spring.io/projects/spring-boot">SpringBoot</a> -&gt;, il modello fornisce attributi utilizzati per il rendering delle viste: si veda
+<a class="reference external" href="https://www.baeldung.com/spring-mvc-model-model-map-model-view">SpringMVCModel</a> -&gt;.</p>
+</div></blockquote>
+<ol class="arabic simple">
+<li><p>il <span class="blue">Controller</span> restituisce la pagina alla parte infrastruttrale che l’aveva chiamato, la quale provvede a inviare
+la pagina al Client che aveva effettuato la richiesta HTTP;</p></li>
+<li><p>se l’operatore umano è sostituito da una macchina  si parla di <span class="blue">Machine-To-Machine</span> (<span class="slide1">M2M</span>) interaction.
+I messaggi vengono girati a un <span class="blue">Controller</span> specializato per inviare ripsoste in forma di dati, molto spesso
+in formato XML o JSon.</p></li>
+</ol>
+</section>
+</section>
+<section id="architettura-del-webserver">
+<h2>Architettura del WebServer<a class="headerlink" href="#architettura-del-webserver" title="Permalink to this heading">¶</a></h2>
+<p>Dal punto di vista architetturale, l’organizzazione interna del codice del WebServer dovrà essere ispirata ai principi della
+<a class="reference external" href="https://clevercoder.net/2018/09/08/clean-architecture-summary-review">CleanArchitecture</a>.</p>
+<p><span class="slide1">CleanArchitecture</span></p>
+<table class="docutils align-center" style="width: 100%">
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><img alt="_images/cleanArchCone.jpg" src="_images/cleanArchCone.jpg" />
+</td>
+<td><img alt="_images/cleanArch.jpg" src="_images/cleanArch.jpg" />
+</td>
+</tr>
+</tbody>
+</table>
+<p>In accordo al principio della <a class="reference external" href="https://en.wikipedia.org/wiki/Dependency_inversion_principle">inversione delle dipendenze</a> -&gt;:</p>
+<ul class="simple">
+<li><p><span class="remark">I componenti di alto livello non devono dipendere da componenti di livello più basso.</span></p></li>
+</ul>
+<blockquote>
+<div><p>Il concetto di <span class="blue">inversione</span> non significa che i livelli di livello inferiore dipendano direttamente dai livelli di livello superiore.
+Entrambi i livelli dovrebbero dipendere da <span class="blue">astrazioni</span> (<em>interfacce</em>) che espongono il comportamento richiesto
+dai livelli di livello superiore.</p>
+</div></blockquote>
+<p>Con queste premesse, il compito che ci attende è, in generale, quello di realizzare la parte
+<strong>Presenter</strong>,  in modo da continuare a tenere separati i casi d’uso dall’interfaccia utente.</p>
+<p><span class="slide1">Componenti-base</span></p>
+<p>Come ogni applicazione <a class="reference external" href="https://spring.io/projects/spring-boot">SpringBoot</a> -&gt;, gli elementi salienti sono:</p>
+<ul class="simple">
+<li><p><span class="slide2">Il Controller</span>: Un WebServer Controller che si occupa della Human-Interaction  (che di norma denomineremo <strong>HIController</strong>)
+che presenta all’end user una pagina HTML.</p></li>
+<li><p><span class="slide2">La pagina HTML</span>: Una pagina HTML  che include campi il cui valore può essere definito attraverso
+un oggetto <code class="docutils literal notranslate"><span class="pre">org.springframework.ui.Model</span></code> che viene trasferito a  <code class="docutils literal notranslate"><span class="pre">HIController</span></code> dalla infrastruttura
+Spring e gestito mediante la Java template engine <code class="docutils literal notranslate"><span class="pre">Theamleaf</span></code>.</p></li>
+<li><p><span class="slide2">Funzioni JavaScript</span>: Un file JavaScript  che include funzioni utili per la gestione della pagina lato client.</p></li>
+<li><p><span class="slide2">Le WebSocket</span>: l’suo  delle <a class="reference external" href="https://it.wikipedia.org/wiki/WebSocket">WebSocket</a> -&gt;, per l’aggiornamento automatico della pagina
+da parte del server.
+Per poter utilizzare le <a class="reference external" href="https://it.wikipedia.org/wiki/WebSocket">WebSocket</a> -&gt;,  <a class="reference external" href="https://spring.io/projects/spring-boot">SpringBoot</a> -&gt; richiede l’introduzione Un componente
+che implementa l’interfaccia <code class="docutils literal notranslate"><span class="pre">WebSocketConfigurer</span></code>
+di  <em>org.springframework.web.socket.config.annotation</em>.
+Per un esempio, si veda <a class="reference internal" href="SpringBootInit25.html#configurazione-con-websocketconfigurer"><span class="std std-ref">Configurazione con WebSocketConfigurer</span></a>.</p></li>
+</ul>
+</section>
+<section id="flask-vs-spring-boot-what-are-the-differences">
+<h2>Flask vs Spring Boot: What are the differences?<a class="headerlink" href="#flask-vs-spring-boot-what-are-the-differences" title="Permalink to this heading">¶</a></h2>
+<p>Flask and Spring Boot are two popular frameworks used for building web applications. Let’s explore the key differences between Flask and Spring Boot.</p>
+<ol class="arabic simple">
+<li><p><strong>Language and Framework Compatibility</strong>: Flask is a microframework for Python, allowing developers to have more control over the application structure. On the other hand, Spring Boot is built on top of the Java Spring framework, providing a full-stack solution for Java web development.</p></li>
+<li><p><strong>Scope and Features</strong>: Flask is known for its simplicity and lightweight nature, making it a popular choice for small to medium-sized applications. It provides only the essential features for web development, allowing developers to choose and add additional libraries or components as per their requirements. Spring Boot, on the other hand, comes with a wide range of features and integrations out-of-the-box, making it suitable for large-scale enterprise applications.</p></li>
+<li><p><strong>Deployment and Containerization</strong>: Flask applications can be deployed using any web server that supports the WSGI protocol, such as Apache or Nginx. Flask also provides a built-in development server for quick testing. Spring Boot, on the other hand, includes an embedded Tomcat or Undertow server, allowing application deployment as a standalone executable JAR file. This makes it easier to package and deploy Spring Boot applications as Docker containers.</p></li>
+<li><p><strong>Community Ecosystem</strong>: Flask has a smaller but active community, with a wide range of third-party libraries and extensions available through the Flask extension registry. However, compared to Spring Boot, the ecosystem for Flask is relatively smaller. Spring Boot has a large and mature community, with extensive documentation, tutorials, and a vast number of libraries available through Spring’s official repository.</p></li>
+<li><p><strong>Testing and Integration</strong>: Flask provides a testing framework that makes it easy to write unit tests for applications. It also integrates well with third-party testing libraries like pytest and nose. Spring Boot, on the other hand, offers a comprehensive testing framework with support for unit testing, integration testing, and end-to-end testing. Spring Boot also has strong support for integration with popular testing frameworks like JUnit and Mockito.</p></li>
+<li><p><strong>Database and ORM</strong>: Flask provides support for various ORM (Object-Relational Mapping) libraries like SQLAlchemy and peewee, allowing developers to work with different databases. Spring Boot, on the other hand, has built-in support for the Spring Data JPA library, which offers seamless integration with different database technologies through the Hibernate ORM. Spring Boot also provides support for NoSQL databases like MongoDB through Spring Data MongoDB.</p></li>
+</ol>
+<p>In summary, Flask is a lightweight and flexible framework for Python web development, while Spring Boot provides a full-stack solution for Java web development, with a wide range of features and integrations. Flask is often preferred for smaller projects or when the developers require more control and flexibility, while Spring Boot is suitable for large-scale enterprise applications with more extensive out-of-the-box functionality.</p>
+</section>
+<section id="installate-tyk">
+<h2>Installate tyk<a class="headerlink" href="#installate-tyk" title="Permalink to this heading">¶</a></h2>
+<p><a class="reference external" href="https://tyk.io/">https://tyk.io/</a>: The universal API management tool for REST, GraphQL, gRPC and Async APIs</p>
+<section id="installare-wget-in-windows">
+<h3>Installare wget in Windows<a class="headerlink" href="#installare-wget-in-windows" title="Permalink to this heading">¶</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">winget</span> <span class="n">install</span> <span class="n">wget</span>
+</pre></div>
+</div>
+</section>
+<section id="installo-tyk-con-docker">
+<h3>Installo tyk con docker<a class="headerlink" href="#installo-tyk-con-docker" title="Permalink to this heading">¶</a></h3>
+<p>Riferimento dato nel libro <strong>Machine-Learning-in-Microservices</strong> (pg.164).</p>
+<p>Usando cygwin64
+mi metto in <em>C:/Didattica2024/qak24/WebGuiOutput/src/main/resources/flask</em> ed eseguo
+quanto riportato in <a class="reference external" href="https://tyk.io/docs/tyk-oss/ce-docker/">https://tyk.io/docs/tyk-oss/ce-docker/</a></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span># WARNING, THIS WILL REMOVE ALL VOLUMES
+docker volume rm $(docker volume ls -q)
+
+#
+docker container prune
+docker volume prune
+
+
+//Step 1 - Create a network
+docker network create tyk
+
+//Step 2 - Deploy Redis into the network, with the 6379 port open
+docker run -itd --rm --name tyk-redis --network tyk -p 127.0.0.1:6379:6379 redis:4.0-alpine
+
+//Step 3 - Next, let’s download a JSON tyk.conf configuration file
+wget https://raw.githubusercontent.com/TykTechnologies/tyk-gateway-docker/master/tyk.standalone.conf
+
+//Step 4 - Run the Gateway, mounting the conf file into the container
+docker run \
+--name tyk_gateway \
+--network tyk \
+-p 8080:8080 \
+-v C:/Didattica2024/qak24/WebGuiOutput/src/main/resources/flask/tyk.standalone.conf:/opt/tyk-gateway/tyk.conf \
+-v C:/Didattica2024/qak24/WebGuiOutput/apps:/opt/tyk-gateway/apps \
+docker.tyk.io/tyk-gateway/tyk-gateway:latest
+
+
+curl localhost:8080/hello
+{&quot;status&quot;:&quot;pass&quot;,&quot;version&quot;:&quot;v4.0.0&quot;,&quot;description&quot;:&quot;Tyk GW&quot;,
+ &quot;details&quot;:{&quot;redis&quot;:{&quot;status&quot;:&quot;pass&quot;,&quot;componentType&quot;:&quot;datastore&quot;,
+ &quot;time&quot;:&quot;2024-08-06T15:41:08Z&quot;}}}
+</pre></div>
+</div>
+</section>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <div>
+    <h3><a href="index.html">Table of Contents</a></h3>
+    <ul>
+<li><a class="reference internal" href="#">WebApplIntro25</a><ul>
+<li><a class="reference internal" href="#applicazioni-web-concetti-base">Applicazioni Web: Concetti base</a><ul>
+<li><a class="reference internal" href="#modello-della-pagina">Modello della pagina</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#architettura-del-webserver">Architettura del WebServer</a></li>
+<li><a class="reference internal" href="#flask-vs-spring-boot-what-are-the-differences">Flask vs Spring Boot: What are the differences?</a></li>
+<li><a class="reference internal" href="#installate-tyk">Installate tyk</a><ul>
+<li><a class="reference internal" href="#installare-wget-in-windows">Installare wget in Windows</a></li>
+<li><a class="reference internal" href="#installo-tyk-con-docker">Installo tyk con docker</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  </div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/WebApplIntro25.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="nav-item nav-item-0"><a href="index.html">issLab2025 1.0 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">WebApplIntro25</a></li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2024, ANatali.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 5.0.2.
+    </div>
+  </body>
+</html>
