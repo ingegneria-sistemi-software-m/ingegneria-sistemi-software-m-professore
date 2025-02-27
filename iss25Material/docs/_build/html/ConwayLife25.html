@@ -517,8 +517,8 @@ e di inviare comandi di gestione dell’applicazione con i pulsanti <code class=
 <p>I files relativi alla sua realizazione sono:</p>
 <ul class="simple">
 <li><p><a class="reference internal" href="#id1"><span class="std std-ref">guipage.html</span></a>: pagina HTML</p></li>
-<li><p><a class="reference internal" href="#iomap-js"><span class="std std-ref">iomap.js</span></a>: mappa con le celle</p></li>
-<li><p><a class="reference internal" href="#commsocket-js"><span class="std std-ref">commsocket.js</span></a>: gestione della WebSocket lato client</p></li>
+<li><p><a class="reference internal" href="#id3"><span class="std std-ref">iomap.js</span></a>: mappa con le celle</p></li>
+<li><p><a class="reference internal" href="#id2"><span class="std std-ref">commsocket.js</span></a>: gestione della WebSocket lato client</p></li>
 </ul>
 </td>
 </tr>
@@ -561,12 +561,14 @@ connessi) durante la evoluzione del gioco, senza che un utente debba fare nulla.
 Questo richiede l’uso di  <a class="reference external" href="https://it.wikipedia.org/wiki/WebSocket">WebSocket</a> che permettono di inviare messaggi dal server alla pagina HTML.</p></li>
 </ul>
 </li>
+<li><p><span class="slidekp">e se si ferma?</span> La pagina HTML potrebbe diventare vuota o rimanere stabile.
+Come evitare che il gico continui senza che l’utente se ne accorga?</p></li>
 <li><p><span class="slidekp">come si riduce il traffico di rete?</span></p>
 <ul class="simple">
 <li><p>il traffico di rete può essere ridotto inviando solo le informazioni necessarie per aggiornare la pagina HTML.
 Ad esempio, inviare <span class="slide3">solo le celle che cambiano stato</span> e non tutta la griglia.</p></li>
 <li><p>tuttavia, un utente che si collega mentre il gioco è in corso dovrebbe vedere lo stato attuale
-della griglia in modo corretto. Questo richiede che il server invii al nuovo utente la griglia attuale.</p></li>
+della griglia in modo corretto. Questo richiede che il server invii al nuovo utente tutta la griglia attuale.</p></li>
 </ul>
 </li>
 </ol>
@@ -629,7 +631,7 @@ ricevuti sulla WS e per trasmettare messaggi sulla WS</p></li>
 <li><p><span class="slide3">Gradle</span>: per la costruzione del progetto: si veda <a class="reference external" href="_static/GradleTutorialForCompleteBeginners.pdf">gradle-tutorial</a>
 e <a class="reference internal" href="Primipassioperativi25.html#creazione-progetto-con-gradle"><span class="std std-ref">Creazione progetto con Gradle</span></a></p></li>
 <li><p><span class="slide3">SpringBoot</span>: per costruire l’applicazione Web iniziando da <a class="reference internal" href="SpringBootInit25.html#springbootinit25"><span class="std std-ref">SpringBootInit25</span></a>
-e <a class="reference internal" href="SpringBootInit25.html#springbootwebsocket"><span class="std std-ref">SpringBootWebSocket</span></a></p></li>
+e <span class="xref std std-ref">SpringBootInit25#SpringBootWebSocket</span></p></li>
 <li><p><span class="slide3">Annotazioni</span>: intensivamente usate da SpringBoot, introdotte in <a class="reference internal" href="Annotazioni.html#annotazioni"><span class="std std-ref">Annotazioni</span></a></p></li>
 <li><p><span class="slide3">WebSocket</span>: protocollo full-duplex su TCP, introdotto in <a class="reference internal" href="unibo.basicomm23.html#id1"><span class="std std-ref">Websocket</span></a></p></li>
 <li><p>JavaScript</p></li>
@@ -695,14 +697,15 @@ configurato per scrivere i log su file</p></li>
     &lt;script src=&quot;outarea.js&quot;&gt;&lt;/script&gt;
 &lt;body&gt;
   &lt;h1&gt;Welcome to the conwaygui&lt;/h1&gt;
-  &lt;p&gt;Application name=&lt;b&gt;&lt;span th:text=&quot;${arg}&quot;&gt;Still unknown&lt;/span&gt;&lt;/b&gt;.&lt;/p&gt;
+  &lt;p&gt;Application name=
+    &lt;b&gt;&lt;span th:text=&quot;${arg}&quot;&gt;Still unknown&lt;/span&gt;&lt;/b&gt;.&lt;/p&gt;
 &lt;hr/&gt;
 
 &lt;!--  INPUT AREA--&gt;
   &lt;button onClick=&quot;sendCmdToServer(&#39;start&#39;); return false&quot;&gt;START&lt;/button&gt;
   &lt;button onClick=&quot;sendCmdToServer(&#39;stop&#39;);  return false&quot;&gt;STOP&lt;/button&gt;
+  &lt;button onClick=&quot;sendCmdToServer(&#39;clear&#39;); return false&quot;&gt;CLEAR&lt;/button&gt;
   &lt;button onClick=&quot;sendCmdToServer(&#39;exit&#39;);  return false&quot;&gt;EXIT&lt;/button&gt;
-
 
 &lt;!--  OUTPUT AREA --&gt;
   &lt;ol id=&quot;msgslist&quot;&gt;&lt;/ol&gt;
@@ -713,6 +716,7 @@ configurato per scrivere i log su file</p></li>
       &lt;div id=&quot;map&quot; class=&quot;grid&quot;&gt;&lt;/div&gt;
     &lt;/div&gt;
 
+&lt;script src=&quot;buttoninput.js&quot;&gt;&lt;/script&gt;
 &lt;script src=&quot;iomap.js&quot;&gt;&lt;/script&gt;
 &lt;/body&gt;
 &lt;/html&gt;
@@ -725,71 +729,48 @@ configurato per scrivere i log su file</p></li>
 <li><p><span class="remark">PULSANTI</span> che invocano <em>sendCmdToServer</em></p></li>
 <li><p><span class="remark">OUTPUT AREA</span> (<strong>msgslist</strong>) in cui vengono visualizzati i messaggi inviati dal server</p></li>
 <li><p><span class="remark">MAP AREA</span> (<strong>map</strong>)in cui vengono visualizzate le celle</p></li>
-<li><p>l’ordine in cui vengono caricati i file <code class="docutils literal notranslate"><span class="pre">js</span></code></p></li>
+<li><p><span class="slide3">l’ordine</span> in cui vengono caricati i file <code class="docutils literal notranslate"><span class="pre">js</span></code></p></li>
 </ul>
 <p>Si veda:</p>
 <ul class="simple">
-<li><p><a class="reference internal" href="#commsocket-js"><span class="std std-ref">commsocket.js</span></a>: funzioni di comunicazione via WS</p></li>
-<li><p><a class="reference internal" href="#outarea-js"><span class="std std-ref">outarea.js</span></a>: funzioni di gestone della OUTPUT AREA</p></li>
-<li><p><a class="reference internal" href="#iomap-js"><span class="std std-ref">iomap.js</span></a>: funzioni di gestione della mappa delle celle</p></li>
+<li><p><a class="reference internal" href="#id2"><span class="std std-ref">commsocket.js</span></a>: funzioni di comunicazione via WS</p></li>
+<li><p><a class="reference internal" href="#id4"><span class="std std-ref">outarea.js</span></a>: funzioni di gestone della OUTPUT AREA</p></li>
+<li><p><a class="reference internal" href="#id3"><span class="std std-ref">iomap.js</span></a>: funzioni di gestione della mappa delle celle</p></li>
 </ul>
 </td>
 </tr>
 </tbody>
 </table>
 </section>
-<section id="commsocket-js">
-<h3>commsocket.js<a class="headerlink" href="#commsocket-js" title="Link to this heading">¶</a></h3>
+<section id="id2">
+<h3>commsocket.js<a class="headerlink" href="#id2" title="Link to this heading">¶</a></h3>
 <table class="docutils align-default" style="width: 100%">
 <colgroup>
-<col style="width: 30.0%" />
-<col style="width: 70.0%" />
+<col style="width: 50.0%" />
+<col style="width: 50.0%" />
 </colgroup>
 <tbody>
-<tr class="row-odd"><td><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">var</span> <span class="n">socketToGui</span> <span class="o">=</span> <span class="n">null</span><span class="p">;</span>
-
-<span class="o">//</span><span class="n">OUTPUT</span>
-<span class="n">function</span> <span class="n">sendCmdToServer</span><span class="p">(</span><span class="n">cmd</span><span class="p">)</span> <span class="p">{</span>
-  <span class="n">socketToGui</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">cmd</span><span class="p">);</span>
-<span class="p">}</span>
-
-<span class="o">//</span><span class="n">CREAZIONE</span> <span class="n">DELLA</span> <span class="n">CONNESSIONE</span> <span class="n">WEBSOCKET</span> <span class="n">DELLA</span> <span class="n">GUI</span>
-<span class="n">function</span> <span class="n">createSocketForGui</span><span class="p">(){</span>
-  <span class="n">socketToGui</span> <span class="o">=</span> <span class="n">new</span> <span class="n">WebSocket</span><span class="p">(</span><span class="s1">&#39;ws://localhost:7110/wsupdates&#39;</span><span class="p">);</span>
-    <span class="n">socketToGui</span><span class="o">.</span><span class="n">onopen</span> <span class="o">=</span> <span class="n">function</span><span class="p">(</span><span class="n">event</span><span class="p">)</span> <span class="p">{</span>
-      <span class="n">console</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="s2">&quot;socketToGui onopen event=&quot;</span><span class="o">+</span><span class="n">event</span><span class="p">)</span>
-    <span class="p">};</span>
-    <span class="n">socketToGui</span><span class="o">.</span><span class="n">onmessage</span> <span class="o">=</span> <span class="n">function</span><span class="p">(</span><span class="n">event</span><span class="p">)</span> <span class="p">{</span>
-      <span class="n">handleWsMessage</span><span class="p">(</span><span class="n">event</span><span class="p">)</span>
-    <span class="p">};</span>
-    <span class="n">socketToGui</span><span class="o">.</span><span class="n">onclose</span> <span class="o">=</span> <span class="n">function</span><span class="p">(</span><span class="n">event</span><span class="p">)</span> <span class="p">{</span>
-      <span class="n">console</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="s2">&quot;--- socketToGui CLOSEEEE &quot;</span><span class="o">+</span><span class="n">event</span><span class="p">)</span>
-    <span class="p">};</span>
-    <span class="n">socketToGui</span><span class="o">.</span><span class="n">addEventListener</span><span class="p">(</span><span class="s2">&quot;error&quot;</span><span class="p">,</span> <span class="p">(</span><span class="n">event</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
-      <span class="n">console</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="s2">&quot;socketToGui error: &quot;</span><span class="p">,</span> <span class="n">event</span><span class="p">);</span>
-    <span class="p">});</span>
-<span class="p">}</span>
-
-<span class="o">//</span><span class="n">CREATE</span>
-<span class="n">createSocketForGui</span><span class="p">();</span>
-</pre></div>
-</div>
-</td>
-<td><p>Contiene le funzioni che creano la web socket di comunicazione con il
+<tr class="row-odd"><td><p>file: <a class="reference external" href="../../../../conwaygui/src/main/resources/static/commsocket.js">commsocket.js</a></p>
+<p>Contiene le funzioni che creano la web socket di comunicazione con il
 server e la trasmissione-ricezione di messaggi.</p>
 <a class="reference internal image-reference" href="_images/conwayguimqtt.PNG"><img alt="_images/conwayguimqtt.PNG" class="align-center" src="_images/conwayguimqtt.PNG" style="width: 60%;" />
 </a>
+</td>
+<td><p>Funzioni:</p>
 <ul class="simple">
-<li><p>Ricezione messaggi: <a class="reference internal" href="#commsocket-handlewsmessage"><span class="std std-ref">commsocket handleWsMessage</span></a></p></li>
-<li><p>Trasmissione messaggi: <a class="reference internal" href="#commsocket-sendcmdtoserver"><span class="std std-ref">commsocket sendCmdToServer</span></a></p></li>
-<li><p>Lato server: <a class="reference external" href="file:///C:/Didattica2025/qak25/conwaygui/src/main/java/unibo/disi/conwaygui/ws/WSConwayguiLifeMqtt.java">WSConwayguiLifeMqtt</a></p></li>
+<li><p><span class="blue">discoverServiceUrl()</span>: chiamata al caricamento, scopre l’URL del servizio inviando
+(con <span class="slide3">fetch(‘/getserverip’)</span>) una richiesta al server</p></li>
+<li><p><span class="blue">createSocketForGui(serviceUrl)</span>: chiamata da <em>discoverServiceUrl()</em> per creare la WS</p></li>
+<li><p><span class="blue">handleWsMessage(event)</span>: chiamata quando la WS riceve un messaggio dal server
+per <a class="reference internal" href="#aggiornare-la-gui"><span class="std std-ref">aggiornare la GUI</span></a></p></li>
+<li><p><span class="blue">sendCmdToServer(cmd)</span>: chiamata per inviare un comando al server</p></li>
 </ul>
 </td>
 </tr>
 </tbody>
 </table>
-<section id="commsocket-handlewsmessage">
-<h4>commsocket handleWsMessage<a class="headerlink" href="#commsocket-handlewsmessage" title="Link to this heading">¶</a></h4>
+<section id="aggiornare-la-gui">
+<h4>aggiornare la GUI<a class="headerlink" href="#aggiornare-la-gui" title="Link to this heading">¶</a></h4>
 <p>Funzione che gestisce i messaggi ricevuti dalla GUI.</p>
 <table class="docutils align-default" style="width: 100%">
 <colgroup>
@@ -800,158 +781,68 @@ server e la trasmissione-ricezione di messaggi.</p>
 <tr class="row-odd"><td><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">function</span> <span class="n">handleWsMessage</span><span class="p">(</span><span class="n">event</span><span class="p">){</span>
     <span class="n">const</span> <span class="n">message</span> <span class="o">=</span> <span class="n">event</span><span class="o">.</span><span class="n">data</span><span class="p">;</span>
     <span class="k">if</span> <span class="p">(</span><span class="n">message</span><span class="o">.</span><span class="n">startsWith</span><span class="p">(</span><span class="s2">&quot;cell(&quot;</span><span class="p">))</span> <span class="p">{</span>
-      <span class="o">//</span> <span class="n">Estrae</span> <span class="n">la</span> <span class="n">posizione</span> <span class="n">e</span> <span class="n">il</span> <span class="n">colore</span>
+    <span class="o">//</span> <span class="n">Estrae</span> <span class="n">la</span> <span class="n">posizione</span> <span class="n">e</span> <span class="n">il</span> <span class="n">colore</span>
       <span class="n">const</span> <span class="p">[</span><span class="n">_</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">v</span><span class="p">]</span> <span class="o">=</span>
-          <span class="n">message</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="o">/</span><span class="n">cell</span>\<span class="p">((</span>\<span class="n">d</span><span class="o">+</span><span class="p">),(</span>\<span class="n">d</span><span class="o">+</span><span class="p">),([</span><span class="o">^</span><span class="p">)]</span><span class="o">+</span><span class="p">)</span>\<span class="p">)</span><span class="o">/</span><span class="p">);</span>
-      <span class="n">updateCellColor</span><span class="p">(</span><span class="n">parseInt</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="n">parseInt</span><span class="p">(</span><span class="n">y</span><span class="p">),</span> <span class="n">parseInt</span><span class="p">(</span><span class="n">v</span><span class="p">));</span>
-    <span class="p">}</span>
-    <span class="k">else</span> <span class="p">{</span>
-      <span class="n">var</span> <span class="nb">list</span> <span class="o">=</span> <span class="n">document</span><span class="o">.</span><span class="n">getElementById</span><span class="p">(</span><span class="s2">&quot;msgslist&quot;</span><span class="p">)</span>
-      <span class="n">const</span> <span class="n">li</span> <span class="o">=</span> <span class="n">document</span><span class="o">.</span><span class="n">createElement</span><span class="p">(</span><span class="s1">&#39;li&#39;</span><span class="p">);</span>
-      <span class="n">li</span><span class="o">.</span><span class="n">setAttribute</span><span class="p">(</span><span class="s2">&quot;name&quot;</span><span class="p">,</span> <span class="s2">&quot;product&quot;</span><span class="p">)</span>
-      <span class="n">li</span><span class="o">.</span><span class="n">appendChild</span><span class="p">(</span><span class="n">document</span><span class="o">.</span><span class="n">createTextNode</span><span class="p">(</span><span class="n">message</span><span class="p">))</span>
-      <span class="nb">list</span><span class="o">.</span><span class="n">appendChild</span><span class="p">(</span><span class="n">li</span><span class="p">);</span>
-    <span class="p">}</span>
+        <span class="n">message</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="o">/</span><span class="n">cell</span>\<span class="p">((</span>\<span class="n">d</span><span class="o">+</span><span class="p">),(</span>\<span class="n">d</span><span class="o">+</span><span class="p">),([</span><span class="o">^</span><span class="p">)]</span><span class="o">+</span><span class="p">)</span>\<span class="p">)</span><span class="o">/</span><span class="p">);</span>
+        <span class="n">pdateCellColor</span><span class="p">(</span><span class="n">parseInt</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="n">parseInt</span><span class="p">(</span><span class="n">y</span><span class="p">),</span> <span class="n">parseInt</span><span class="p">(</span><span class="n">v</span><span class="p">));</span>
+    <span class="p">}</span><span class="k">else</span>  <span class="n">addItem</span><span class="p">(</span><span class="n">message</span><span class="p">);</span>
 <span class="p">}</span>
 </pre></div>
 </div>
 </td>
 <td><ul class="simple">
 <li><p>forma del msg: <code class="docutils literal notranslate"><span class="pre">cell(i,j,v)</span></code></p></li>
-<li><p>updateCellColor: in <a class="reference internal" href="#iomap-js"><span class="std std-ref">iomap.js</span></a></p></li>
-<li><p>msgslist: in <a class="reference internal" href="#id1"><span class="std std-ref">guipage.html</span></a></p></li>
+<li><p><span class="blue">updateCellColor</span>: in <a class="reference internal" href="#id3"><span class="std std-ref">iomap.js</span></a></p></li>
+<li><p><span class="blue">ddItem</span>: in <a class="reference internal" href="#id3"><span class="std std-ref">iomap.js</span></a></p></li>
+<li><p><span class="blue">msgslist</span>: in <a class="reference internal" href="#id1"><span class="std std-ref">guipage.html</span></a></p></li>
 </ul>
 </td>
 </tr>
 </tbody>
 </table>
 </section>
-<section id="commsocket-sendcmdtoserver">
-<h4>commsocket sendCmdToServer<a class="headerlink" href="#commsocket-sendcmdtoserver" title="Link to this heading">¶</a></h4>
-<p>Funzione che invia messaggi dalla GUI al server.</p>
+</section>
+<section id="id3">
+<h3>iomap.js<a class="headerlink" href="#id3" title="Link to this heading">¶</a></h3>
 <table class="docutils align-default" style="width: 100%">
 <colgroup>
 <col style="width: 30.0%" />
 <col style="width: 70.0%" />
 </colgroup>
 <tbody>
-<tr class="row-odd"><td><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">function</span> <span class="n">sendCmdToServer</span><span class="p">(</span><span class="n">cmd</span><span class="p">){</span>
-  <span class="n">socketToGui</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">cmd</span><span class="p">);</span>
-<span class="p">}</span>
-</pre></div>
-</div>
-</td>
-<td><p>La funzione è chiamata da <a class="reference internal" href="#iomap-createmaprep"><span class="std std-ref">iomap createMapRep</span></a></p></td>
-</tr>
-</tbody>
-</table>
-</section>
-</section>
-<section id="iomap-js">
-<h3>iomap.js<a class="headerlink" href="#iomap-js" title="Link to this heading">¶</a></h3>
-<section id="iomap-createmaprep">
-<h4>iomap createMapRep<a class="headerlink" href="#iomap-createmaprep" title="Link to this heading">¶</a></h4>
-<table class="docutils align-default" style="width: 100%">
-<colgroup>
-<col style="width: 30.0%" />
-<col style="width: 70.0%" />
-</colgroup>
-<tbody>
-<tr class="row-odd"><td><div class="highlight-default notranslate"><div class="highlight"><pre><span></span>const mapContainer = document.getElementById(&quot;map&quot;);
-mapContainer.innerHTML = &#39;&#39;;
-
-function createMapRep(){
-for( let i=1; i&lt;=20; i++ ){
-    for( let j=1; j&lt;=20; j++ ){
-        const cellElement = document.createElement(&quot;div&quot;);
-        cellElement.classList.add(&quot;cell&quot;);
-        cellElement.classList.add(&quot;live&quot;);
-        cellElement.id = `cell-${i}-${j}`;
-        cellElement.addEventListener(&#39;click&#39;, function() {
-           sendCmdToServer(&quot;&quot;+cellElement.id);
-        });
-        mapContainer.appendChild(cellElement);
-}//for
-}//for
-}//createMapRep
-
-function updateCellColor(newX, newY,color){ ... }
-
-createMapRep();
-</pre></div>
-</div>
-</td>
-<td><p>Contiene le funzioni che creano e gestiscono la rappresentazione
+<tr class="row-odd"><td><p>file: <a class="reference external" href="../../../../conwaygui/src/main/resources/static/iomap.js">iomap.js</a></p>
+<p>Contiene le funzioni che creano e gestiscono la rappresentazione
 della celle in forma di matricce <code class="docutils literal notranslate"><span class="pre">NxN</span></code> che funge da dispositivo di input/output.</p>
+</td>
+<td><p>Funzioni:</p>
 <ul class="simple">
-<li><p>La funzione è invocata al termine del caricamento del file</p></li>
-<li><p>La forma del msg inviato al server usando <a class="reference internal" href="#commsocket-sendcmdtoserver"><span class="std std-ref">sendCmdToServer</span></a>: <code class="docutils literal notranslate"><span class="pre">cell-i-j</span></code></p></li>
-<li><p>La funzione <a class="reference internal" href="#iomap-updatecellcolor"><span class="std std-ref">iomap updateCellColor</span></a> è invocata da <a class="reference internal" href="#commsocket-handlewsmessage"><span class="std std-ref">commsocket handleWsMessage</span></a></p></li>
+<li><p><span class="blue">createMapRep()</span>: chiamata al caricamento del file, crea la rappresentazione della griglia
+inviando al server messaggi con contenuto <code class="docutils literal notranslate"><span class="pre">cell-i-j</span></code></p></li>
+<li><p><span class="blue">updateCellColor(newX, newY,color)</span>: chiamata per aggiornare il colore di una cella
+modificando lo stile</p></li>
 </ul>
 </td>
 </tr>
 </tbody>
 </table>
 </section>
-<section id="iomap-updatecellcolor">
-<h4>iomap updateCellColor<a class="headerlink" href="#iomap-updatecellcolor" title="Link to this heading">¶</a></h4>
-<table class="docutils align-default" style="width: 100%">
-<colgroup>
-<col style="width: 30.0%" />
-<col style="width: 70.0%" />
-</colgroup>
-<tbody>
-<tr class="row-odd"><td><div class="highlight-default notranslate"><div class="highlight"><pre><span></span>function updateCellColor(newX, newY,color) {
-  const newRobotCell =
-    document.getElementById(`cell-${newY}-${newX}`);
-  if( newRobotCell.classList.contains(&quot;live&quot;) ){
-    newRobotCell.classList.remove(&quot;live&quot;);
-  }
-  else if( newRobotCell.classList.contains(&quot;dead&quot;) ){
-    newRobotCell.classList.remove(&quot;dead&quot;);
-  }
-  if (color == 1) {
-    newRobotCell.classList.add(&quot;dead&quot;);
-  }else if (color == 0) {
-    newRobotCell.classList.add(&quot;live&quot;);
-  }
-}
-</pre></div>
-</div>
-</td>
-<td><ul class="simple">
-<li><p>modifica il colore della cella modificando lo stile</p></li>
-<li><p>viene invocata da <a class="reference internal" href="#commsocket-handlewsmessage"><span class="std std-ref">commsocket handleWsMessage</span></a></p></li>
-</ul>
-</td>
-</tr>
-</tbody>
-</table>
-</section>
-</section>
-<section id="outarea-js">
-<h3>outarea.js<a class="headerlink" href="#outarea-js" title="Link to this heading">¶</a></h3>
+<section id="id4">
+<h3>outarea.js<a class="headerlink" href="#id4" title="Link to this heading">¶</a></h3>
 <section id="outarea-additem">
 <h4>outarea addItem<a class="headerlink" href="#outarea-additem" title="Link to this heading">¶</a></h4>
 <table class="docutils align-default" style="width: 100%">
 <colgroup>
-<col style="width: 30.0%" />
-<col style="width: 70.0%" />
+<col style="width: 45.0%" />
+<col style="width: 55.0%" />
 </colgroup>
 <tbody>
-<tr class="row-odd"><td><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">function</span> <span class="n">addItem</span><span class="p">(</span><span class="n">item</span><span class="p">){</span>
-  <span class="n">var</span> <span class="nb">list</span> <span class="o">=</span> <span class="n">document</span><span class="o">.</span><span class="n">getElementById</span><span class="p">(</span><span class="s2">&quot;msgslist&quot;</span><span class="p">)</span>
-  <span class="n">const</span> <span class="n">li</span> <span class="o">=</span> <span class="n">document</span><span class="o">.</span><span class="n">createElement</span><span class="p">(</span><span class="s1">&#39;li&#39;</span><span class="p">);</span>
-  <span class="n">li</span><span class="o">.</span><span class="n">appendChild</span><span class="p">(</span><span class="n">document</span><span class="o">.</span><span class="n">createTextNode</span><span class="p">(</span><span class="n">item</span><span class="p">))</span>
-  <span class="nb">list</span><span class="o">.</span><span class="n">appendChild</span><span class="p">(</span><span class="n">li</span><span class="p">);</span>
-<span class="p">}</span>
-</pre></div>
-</div>
-</td>
-<td><p>Contiene le funzioni che gestiscono l’OUTPUT AREA (<code class="docutils literal notranslate"><span class="pre">&quot;msgslist&quot;</span></code>)
+<tr class="row-odd"><td><p>File: <a class="reference external" href="../../../../conwaygui/src/main/resources/static/outarea.js">outarea.js</a></p>
+<p>Contiene le funzioni che gestiscono l’OUTPUT AREA (<code class="docutils literal notranslate"><span class="pre">&quot;msgslist&quot;</span></code>)
 definita in <a class="reference internal" href="#id1"><span class="std std-ref">guipage.html</span></a>, in cui vengono visualizzati i messaggi inviati dal server</p>
+</td>
+<td><p>Funzioni:</p>
 <ul class="simple">
-<li><p>aggiunge un elemento alla lista dei messaggi inviati dal server</p></li>
+<li><p><span class="blue">addItem</span>: aggiunge un elemento alla lista dei messaggi</p></li>
 </ul>
 </td>
 </tr>
@@ -963,12 +854,28 @@ definita in <a class="reference internal" href="#id1"><span class="std std-ref">
 <section id="conwaylife25-un-microservizio-java">
 <h2>ConwayLife25: un microservizio Java<a class="headerlink" href="#conwaylife25-un-microservizio-java" title="Link to this heading">¶</a></h2>
 <p>A questo punto, inseriamo il codice delll’applicazione <a class="reference internal" href="#conwaylife25-in-java"><span class="std std-ref">ConwayLife25 in Java</span></a> entro
-il <span class="remark">package conwayLifeLocal</span>
+il <span class="remark">package conway</span>
 e usiamo le <a class="reference external" href="https://it.wikipedia.org/wiki/WebSocket">WebSocket</a> come strumento per l’aggiornamento
 dinamico della pagina <code class="docutils literal notranslate"><span class="pre">HTML</span></code> (<strong>output</strong>) e come strumento per l’invio di comandi (<strong>input</strong>) all’applicazione Java.</p>
+<section id="conwaygui-un-processo-di-sviluppo">
+<h3>conwaygui: un processo di sviluppo<a class="headerlink" href="#conwaygui-un-processo-di-sviluppo" title="Link to this heading">¶</a></h3>
+<ol class="arabic simple">
+<li><p>Definizione del software relativo al core-business applicativo (con Cell e Grid)  e suo testing</p></li>
+<li><p>Definizione di un progetto SpringBoot partendo da <a class="reference internal" href="SpringBootInit25.html#primi-passi-con-springboot"><span class="std std-ref">Primi passi con SpringBoot</span></a></p></li>
+<li><p>Directory <span class="remark">userDocs</span> con <strong>diario di bordo</strong> <code class="docutils literal notranslate"><span class="pre">conwaygui_v0.html</span></code>  da <span class="slide2">Aggiornare incrementalmente</span></p></li>
+<li><p><span class="slide3">Innesto esplicito</span> nel package <code class="docutils literal notranslate"><span class="pre">conway</span></code> (o implicito, con un file jar) del core-bsuiness Java nel workspace del progetto</p></li>
+<li><p>Definizione del Controller della GUI <a class="reference external" href="../../../../conwaygui/src/main/java/unibo/disi/conwaygui/controller/ConwayGuiControllerLifeLocal.java">ConwayGuiControllerLifeLocal</a> con funzione <span class="remark">getserverip</span>
+che restituisce l’IP del server</p></li>
+<li><p>Definizione della pagina HTML <a class="reference internal" href="#id1"><span class="std std-ref">guipage.html</span></a></p></li>
+<li><p>Definizione del codice JavaScript da inserire nella pagina HTML per la costruzione della mappa</p></li>
+<li><p>Definizione lato client (<a class="reference internal" href="#id2"><span class="std std-ref">commsocket.js</span></a>) e lato server (<a class="reference external" href="file:///C:/Didattica2025/qak25/conwaygui/src/main/java/unibo/disi/conwaygui/ws/WSConwayguiLifeLocal.java">WSConwayguiLifeLocal</a>)
+della interazione via WebSocket</p></li>
+<li><p>Definizione del dispositivo <a class="reference external" href="file:///C:/Didattica2025/qak25/conwaygui/src/main/java/conway/devices/ConwayOutput.java">ConwayOutput</a> che invia dati via WebSocket</p></li>
+</ol>
 <p>Il codice Java inserito come parte integrante del servizio:</p>
 <ul class="simple">
 <li><p>ha la stessa struttura introdotta in <a class="reference internal" href="#conwaylife25-in-java"><span class="std std-ref">ConwayLife25 in Java</span></a></p></li>
+<li><p>la classe <a class="reference external" href="../../../../conwaygui/src/main/java/conway/Life.java">Life</a> non ha il compito di visualizzare le celle, compito assunto dal <a class="reference external" href="../../../../conwaygui/src/main/java/unibo/disi/conwaygui/controller/ConwayGuiControllerLifeLocal.java">ConwayGuiControllerLifeLocal</a></p></li>
 <li><p>elimina ogni dispositivo di input, in quanto i comandi-utente vengono inviati tramite WebSocket</p></li>
 <li><p>definisce un dispositivo di output <code class="docutils literal notranslate"><span class="pre">ConwayOutput</span></code> che implementa <a class="reference internal" href="#ioutdev-interface"><span class="std std-ref">IOutDev interface</span></a> inviando messaggi
 alla pagina HTML tramite WebSocket</p></li>
@@ -985,17 +892,32 @@ alla pagina HTML tramite WebSocket</p></li>
 </a>
 </td>
 <td><ul class="simple">
-<li><p><a href="#id2"><span class="problematic" id="id3">`LifeController`_</span></a>: esegue  i comandi inviati da <code class="docutils literal notranslate"><span class="pre">WSConwayguiLifeLocal</span></code></p></li>
-<li><p><a class="reference external" href="../../../../conwaygui/src/main/java/conwayLifeLocal/LifeLocal.java">LifeLocal</a>: esegue la logica del gioco, come in precedenza</p></li>
-<li><p><a href="#id4"><span class="problematic" id="id5">`OutDev`_</span></a>: usa <code class="docutils literal notranslate"><span class="pre">WSConwayguiLifeLocal</span></code> per visualizzare ‘on the fly’ lo stato di una cella</p></li>
+<li><p><a class="reference external" href="../../../../conwaygui/src/main/java/unibo/disi/conwaygui/controller/ConwayGuiControllerLifeLocal.java">ConwayGuiControllerLifeLocal</a>: esegue  i comandi inviati da <code class="docutils literal notranslate"><span class="pre">WSConwayguiLifeLocal</span></code></p></li>
+<li><p><a class="reference external" href="../../../../conwaygui/src/main/java/conway/Life.java">Life</a>: esegue la logica del gioco, come in precedenza</p></li>
+<li><p><a class="reference external" href="file:///C:/Didattica2025/qak25/conwaygui/src/main/java/conway/devices/ConwayOutput.java">ConwayOutput</a>: usa <code class="docutils literal notranslate"><span class="pre">WSConwayguiLifeLocal</span></code> per visualizzare ‘on the fly’ lo stato di una cella</p></li>
 <li><p><a class="reference external" href="file:///C:/Didattica2025/qak25/conwaygui/src/main/java/unibo/disi/conwaygui/ws/WSConwayguiLifeLocal.java">WSConwayguiLifeLocal</a>:  Estende  <em>AbstractWebSocketHandler</em>  di <em>org.springframework.web.socket.handler</em>.
-Fa update delle pagine (metodo <em>broadcastToWebSocket</em>) quando invocato da <a href="#id6"><span class="problematic" id="id7">`OutDev`_</span></a>.</p></li>
+Fa update delle pagine (metodo <em>broadcastToWebSocket</em>) quando invocato da <a class="reference external" href="file:///C:/Didattica2025/qak25/conwaygui/src/main/java/conway/devices/ConwayOutput.java">ConwayOutput</a>.</p></li>
 </ul>
 </td>
 </tr>
 </tbody>
 </table>
 </div></blockquote>
+<p><span class="slide1">Una ulteriore analisi</span></p>
+</section>
+<section id="conwaygui-ulteriore-analisi-del-problema">
+<h3>conwaygui: ulteriore analisi del problema<a class="headerlink" href="#conwaygui-ulteriore-analisi-del-problema" title="Link to this heading">¶</a></h3>
+<ol class="arabic simple">
+<li><p><span class="slidekp">chi controlle l’owner?</span>. La parte di ‘core business’ scritta in Java non
+si occupa di controllare gli accessi, lasciando questa responsabilità alla GUI.</p>
+<ul class="simple">
+<li><p>il controllo di chi può controllare il gioco ricade nel tema ampio di requisiti di
+sicurezza e questi requisiti <span class="slide3">potrebbero/dovrebbero</span> essere considerati parte integrante
+dei requisiti del gioco.</p></li>
+</ul>
+</li>
+</ol>
+</section>
 <section id="conwaygui-service-deployment">
 <h3>conwaygui service deployment<a class="headerlink" href="#conwaygui-service-deployment" title="Link to this heading">¶</a></h3>
 <p>Il deployment del servizio può avvenire mediante una <span class="slide2">immagine Docker</span> che può
@@ -1007,21 +929,32 @@ essere creata ed eseguita con i seguenti comandi (si veda anche <a class="refere
 <col style="width: 60.0%" />
 </colgroup>
 <tbody>
-<tr class="row-odd"><td><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">docker</span>  <span class="n">build</span> <span class="o">-</span><span class="n">t</span> <span class="n">conwayguilifelocal</span><span class="p">:</span><span class="mf">1.0</span> <span class="o">.</span>
+<tr class="row-odd"><td><p><a class="reference external" href="file:///C:/Didattica2025/qak25/conwaygui/Dockerfile">Dockerfile</a></p>
+<p>permette di costruire una immagine Docker che denominiamo <code class="docutils literal notranslate"><span class="pre">conwayguilifelocal:2.0</span></code></p>
+</td>
+<td><p>Posizionarsi sulla directory  che contiene il file <code class="docutils literal notranslate"><span class="pre">Dockerfile</span></code>
+e il file <code class="docutils literal notranslate"><span class="pre">build/distributions/conwaygui-1.0.tar</span></code></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">gradle</span> <span class="n">DistTar</span>  <span class="o">//</span> <span class="n">crea</span> <span class="n">la</span> <span class="n">distribuzione</span>
+<span class="n">docker</span>  <span class="n">build</span> <span class="o">-</span><span class="n">t</span> <span class="n">conwayguilifelocal</span><span class="p">:</span><span class="mf">2.0</span> <span class="o">.</span>
 </pre></div>
 </div>
 </td>
-<td><p>costruisce una immagine docker di nome <code class="docutils literal notranslate"><span class="pre">conwayguilifelocal:1.0</span></code> usando il file
-<a class="reference external" href="file:///C:/Didattica2025/qak25/conwaygui/Dockerfile">Dockerfile for conwaygui</a></p></td>
 </tr>
-<tr class="row-even"><td><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">docker</span> <span class="n">run</span> <span class="o">-</span><span class="n">it</span> <span class="o">--</span><span class="n">rm</span> <span class="o">--</span><span class="n">name</span> <span class="n">conwayguilife</span> <span class="o">-</span><span class="n">p7110</span><span class="p">:</span><span class="mi">7110</span>
-  <span class="o">--</span><span class="n">network</span> <span class="n">cargo</span><span class="o">-</span><span class="n">network</span>
-  <span class="o">--</span><span class="n">env</span> <span class="s2">&quot;MQTTBROKER_URL=tcp://mosquitto:1883&quot;</span>
-  <span class="n">conwayguilifelocal</span><span class="p">:</span><span class="mf">1.0</span>
+<tr class="row-even"><td><p>Eseguiamo l’immagine creando un nuovo container</p></td>
+<td><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">docker</span> <span class="n">run</span> <span class="o">-</span><span class="n">it</span> <span class="o">--</span><span class="n">rm</span> <span class="o">--</span><span class="n">name</span> <span class="n">conwayguilife</span> <span class="o">-</span><span class="n">p7110</span><span class="p">:</span><span class="mi">7110</span>
+  <span class="o">--</span><span class="n">env</span> <span class="s2">&quot;HOST_IP=192.168.1.132&quot;</span>
+  <span class="n">conwayguilifelocal</span><span class="p">:</span><span class="mf">2.0</span>
 </pre></div>
 </div>
 </td>
-<td><p>esegue l’immagine creando un nuovo container</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference external" href="file:///C:/Didattica2025/qak25/conwaygui/conwaygui.yaml">conwaygui.yaml</a></p>
+<p>Un file Docker Compose che semplifica la creazione e l’esecuzione di più container Docker.</p>
+</td>
+<td><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">docker</span><span class="o">-</span><span class="n">compose</span> <span class="o">-</span><span class="n">f</span> <span class="n">conwaygui</span><span class="o">.</span><span class="n">yaml</span> <span class="o">-</span><span class="n">p</span> <span class="n">conwaygui</span> <span class="n">up</span>
+</pre></div>
+</div>
+</td>
 </tr>
 </tbody>
 </table>
@@ -1066,23 +999,20 @@ essere creata ed eseguita con i seguenti comandi (si veda anche <a class="refere
 <li><a class="reference internal" href="#conwaygui-build-gradle">conwaygui build.gradle</a></li>
 <li><a class="reference internal" href="#conwaygui-logback-xml">conwaygui logback.xml</a></li>
 <li><a class="reference internal" href="#id1">guipage.html</a></li>
-<li><a class="reference internal" href="#commsocket-js">commsocket.js</a><ul>
-<li><a class="reference internal" href="#commsocket-handlewsmessage">commsocket handleWsMessage</a></li>
-<li><a class="reference internal" href="#commsocket-sendcmdtoserver">commsocket sendCmdToServer</a></li>
+<li><a class="reference internal" href="#id2">commsocket.js</a><ul>
+<li><a class="reference internal" href="#aggiornare-la-gui">aggiornare la GUI</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#iomap-js">iomap.js</a><ul>
-<li><a class="reference internal" href="#iomap-createmaprep">iomap createMapRep</a></li>
-<li><a class="reference internal" href="#iomap-updatecellcolor">iomap updateCellColor</a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#outarea-js">outarea.js</a><ul>
+<li><a class="reference internal" href="#id3">iomap.js</a></li>
+<li><a class="reference internal" href="#id4">outarea.js</a><ul>
 <li><a class="reference internal" href="#outarea-additem">outarea addItem</a></li>
 </ul>
 </li>
 </ul>
 </li>
 <li><a class="reference internal" href="#conwaylife25-un-microservizio-java">ConwayLife25: un microservizio Java</a><ul>
+<li><a class="reference internal" href="#conwaygui-un-processo-di-sviluppo">conwaygui: un processo di sviluppo</a></li>
+<li><a class="reference internal" href="#conwaygui-ulteriore-analisi-del-problema">conwaygui: ulteriore analisi del problema</a></li>
 <li><a class="reference internal" href="#conwaygui-service-deployment">conwaygui service deployment</a></li>
 </ul>
 </li>
