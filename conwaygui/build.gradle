@@ -45,10 +45,10 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.springframework.boot:spring-boot-starter-websocket'
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
-//	testImplementation 'org.springframework.boot:spring-boot-starter-test'
-//	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+ 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+ 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 
-    testImplementation 'junit:junit:4.13.2'
+    //testImplementation 'junit:junit:4.13.2'
    /* JSON ********************************************************************************* */
      implementation 'com.googlecode.json-simple:json-simple:1.1.1'
 

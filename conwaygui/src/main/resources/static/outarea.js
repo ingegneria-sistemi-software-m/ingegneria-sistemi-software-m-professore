@@ -8,3 +8,8 @@ outarea.js
         li.appendChild(document.createTextNode(item))
 		list.appendChild(li);			 
     }
+	
+	function clearOutArea(){
+		const lista = document.getElementById('msgslist');  
+		lista.innerHTML = ''; // Rimuovi tutti i nodi figli
+	}

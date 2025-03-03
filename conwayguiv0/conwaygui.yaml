@@ -1,0 +1,14 @@
+#version: '3'
+services:
+  conwaygui:
+    image: docker.io/natbodocker/conwayguilifelocal:1.1
+##    image: conwayguilifelocal:1.0
+    ports:
+      - "7110:7110"
+    environment:
+      - HOST_IP=192.168.1.132
+#      - HOST_IP=192.168.1.9
+#    network_mode: "host"
+
+
+## docker-compose -f conwaygui.yaml -p conwaygui up   

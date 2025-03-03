@@ -297,7 +297,8 @@ soluzione JavaScript. Le dipendenze tra le classi sono visualizzate nel diagramm
 <td><ul class="simple">
 <li><p><a class="reference internal" href="#ioutdev-interface"><span class="std std-ref">IOutDev.java</span></a>: contratto per la visualizzazione dello stati di una cella</p></li>
 <li><p><a class="reference external" href="../../../../conway25Java/src/main/java/conway/Life.java">Life.java</a>: definisce  funzioni per la gestione della griglia e del gioco</p></li>
-<li><p><a class="reference external" href="../../../../conway25Java/src/main/java/conway/LifeController.java">LifeController.java</a>: definisce funzioni per il controllo del gioco</p></li>
+<li><p><a class="reference external" href="../../../../conway25Java/src/main/java/conway/LifeController.java">LifeController.java</a>: definisce funzioni per il controllo di base del gioco e
+per la visualizzazione della griglia</p></li>
 <li><p><a class="reference external" href="../../../../conway25Java/src/main/java/conway/devices/ConwayOutput.java">ConwayOutput.java</a>: implementa <code class="docutils literal notranslate"><span class="pre">IOutDev.java</span></code> su <em>System.out</em></p></li>
 <li><p><a class="reference external" href="../../../../conway25Java/src/main/java/conway/devices/ConwayInputMock.java">ConwayInputMock.java</a>: simula l’input dell’utente per la configurazione iniziale</p></li>
 </ul>
@@ -616,7 +617,7 @@ e, se non presente, crearla e copiarvi dentro le librerie necessarie</p>
 <li><p>definita parte <span class="remark">static</span></p></li>
 <li><p>definito in <strong>src/main/reources/templates</strong> il file <a class="reference internal" href="#id1"><span class="std std-ref">guipage.html</span></a></p></li>
 <li><p>definito <code class="docutils literal notranslate"><span class="pre">WebSocketConfiguration</span></code> che implementa <code class="docutils literal notranslate"><span class="pre">WebSocketConfigurer</span></code> per la gestione delle WebSocket (WS)</p></li>
-<li><p>definito <code class="docutils literal notranslate"><span class="pre">WSConwayguiLifeLocal</span></code> che estende <code class="docutils literal notranslate"><span class="pre">AbstractWebSocketHandler</span></code> per la gestione dei messaggi
+<li><p>definito <code class="docutils literal notranslate"><span class="pre">WSIoDev</span></code> che estende <code class="docutils literal notranslate"><span class="pre">AbstractWebSocketHandler</span></code> per la gestione dei messaggi
 ricevuti sulla WS e per trasmettare messaggi sulla WS</p></li>
 </ul>
 </td>
@@ -674,7 +675,7 @@ può essere <strong>lanciata da Eclipse</strong> e non solo con <cite>gradlew bo
 <h3>conwaygui logback.xml<a class="headerlink" href="#conwaygui-logback-xml" title="Link to this heading">¶</a></h3>
 <p>Si noti:</p>
 <ul class="simple">
-<li><p>il file <a class="reference external" href="file:///C:/Didattica2025/qak25/conwaygui/src/main/resources/logback.xml">logback.xml</a>  nella directory <strong>src/main/resources</strong>,
+<li><p>il file <a class="reference external" href="../../../../conwaygui/src/main/resources/logback.xml">logback.xml</a>  nella directory <strong>src/main/resources</strong>,
 configurato per scrivere i log su file</p></li>
 <li><p>eliminando il file si manifetstano messaggi di log sulla console</p></li>
 <li><p>lasciando il file si possono vedere i log sul file <strong>conwaygui/logs/conwaygui.log</strong></p></li>
@@ -753,13 +754,14 @@ configurato per scrivere i log su file</p></li>
 <tr class="row-odd"><td><p>file: <a class="reference external" href="../../../../conwaygui/src/main/resources/static/commsocket.js">commsocket.js</a></p>
 <p>Contiene le funzioni che creano la web socket di comunicazione con il
 server e la trasmissione-ricezione di messaggi.</p>
-<a class="reference internal image-reference" href="_images/conwayguimqtt.PNG"><img alt="_images/conwayguimqtt.PNG" class="align-center" src="_images/conwayguimqtt.PNG" style="width: 60%;" />
+<a class="reference internal image-reference" href="_images/wsiodev.png"><img alt="_images/wsiodev.png" class="align-center" src="_images/wsiodev.png" style="width: 60%;" />
 </a>
 </td>
 <td><p>Funzioni:</p>
 <ul class="simple">
 <li><p><span class="blue">discoverServiceUrl()</span>: chiamata al caricamento, scopre l’URL del servizio inviando
-(con <span class="slide3">fetch(‘/getserverip’)</span>) una richiesta al server</p></li>
+(con <span class="slide3">fetch(‘/getserverip’)</span>) una richiesta al server. Vedi
+<a class="reference internal" href="#id5"><span class="std std-ref">ConwayGuiControllerLifeLocal</span></a></p></li>
 <li><p><span class="blue">createSocketForGui(serviceUrl)</span>: chiamata da <em>discoverServiceUrl()</em> per creare la WS</p></li>
 <li><p><span class="blue">handleWsMessage(event)</span>: chiamata quando la WS riceve un messaggio dal server
 per <a class="reference internal" href="#aggiornare-la-gui"><span class="std std-ref">aggiornare la GUI</span></a></p></li>
@@ -868,16 +870,19 @@ dinamico della pagina <code class="docutils literal notranslate"><span class="pr
 che restituisce l’IP del server</p></li>
 <li><p>Definizione della pagina HTML <a class="reference internal" href="#id1"><span class="std std-ref">guipage.html</span></a></p></li>
 <li><p>Definizione del codice JavaScript da inserire nella pagina HTML per la costruzione della mappa</p></li>
-<li><p>Definizione lato client (<a class="reference internal" href="#id2"><span class="std std-ref">commsocket.js</span></a>) e lato server (<a class="reference external" href="file:///C:/Didattica2025/qak25/conwaygui/src/main/java/unibo/disi/conwaygui/ws/WSConwayguiLifeLocal.java">WSConwayguiLifeLocal</a>)
+<li><p>Definizione lato client <span class="slide2">front-end</span> (<a class="reference internal" href="#id2"><span class="std std-ref">commsocket.js</span></a>) e lato server <span class="slide2">back-end</span> (<a class="reference external" href="../../../../conwaygui/src/main/java/conway/devices/WSIoDev.java">WSIoDev</a>)
 della interazione via WebSocket</p></li>
-<li><p>Definizione del dispositivo <a class="reference external" href="file:///C:/Didattica2025/qak25/conwaygui/src/main/java/conway/devices/ConwayOutput.java">ConwayOutput</a> che invia dati via WebSocket</p></li>
+<li><p>Definizione del dispositivo <a class="reference external" href="../../../../conwaygui/src/main/java/conway/devices/ConwayOutput.java">ConwayOutput</a> che invia dati via WebSocket</p></li>
 </ol>
+</section>
+<section id="codice-embedded-del-servizio">
+<h3>Codice embedded del servizio<a class="headerlink" href="#codice-embedded-del-servizio" title="Link to this heading">¶</a></h3>
 <p>Il codice Java inserito come parte integrante del servizio:</p>
 <ul class="simple">
-<li><p>ha la stessa struttura introdotta in <a class="reference internal" href="#conwaylife25-in-java"><span class="std std-ref">ConwayLife25 in Java</span></a></p></li>
+<li><p>ha la stessa struttura introdotta in <a class="reference internal" href="#conwaylife25-in-java"><span class="std std-ref">ConwayLife25 in Java</span></a> ma con un diverso <a class="reference internal" href="#id6"><span class="std std-ref">LifeController</span></a></p></li>
 <li><p>la classe <a class="reference external" href="../../../../conwaygui/src/main/java/conway/Life.java">Life</a> non ha il compito di visualizzare le celle, compito assunto dal <a class="reference external" href="../../../../conwaygui/src/main/java/unibo/disi/conwaygui/controller/ConwayGuiControllerLifeLocal.java">ConwayGuiControllerLifeLocal</a></p></li>
 <li><p>elimina ogni dispositivo di input, in quanto i comandi-utente vengono inviati tramite WebSocket</p></li>
-<li><p>definisce un dispositivo di output <code class="docutils literal notranslate"><span class="pre">ConwayOutput</span></code> che implementa <a class="reference internal" href="#ioutdev-interface"><span class="std std-ref">IOutDev interface</span></a> inviando messaggi
+<li><p>definisce un dispositivo di output <a class="reference external" href="../../../../conwaygui/src/main/java/conway/devices/WSIoDev.java">WSIoDev</a> che implementa <a class="reference internal" href="#ioutdev-interface"><span class="std std-ref">IOutDev interface</span></a> inviando messaggi
 alla pagina HTML tramite WebSocket</p></li>
 </ul>
 <p>In questo modo abbiamo un primo microservizio.</p>
@@ -892,17 +897,76 @@ alla pagina HTML tramite WebSocket</p></li>
 </a>
 </td>
 <td><ul class="simple">
-<li><p><a class="reference external" href="../../../../conwaygui/src/main/java/unibo/disi/conwaygui/controller/ConwayGuiControllerLifeLocal.java">ConwayGuiControllerLifeLocal</a>: esegue  i comandi inviati da <code class="docutils literal notranslate"><span class="pre">WSConwayguiLifeLocal</span></code></p></li>
+<li><p><a class="reference internal" href="#id5"><span class="std std-ref">ConwayGuiControllerLifeLocal</span></a>: il controller SpringBoot</p></li>
 <li><p><a class="reference external" href="../../../../conwaygui/src/main/java/conway/Life.java">Life</a>: esegue la logica del gioco, come in precedenza</p></li>
-<li><p><a class="reference external" href="file:///C:/Didattica2025/qak25/conwaygui/src/main/java/conway/devices/ConwayOutput.java">ConwayOutput</a>: usa <code class="docutils literal notranslate"><span class="pre">WSConwayguiLifeLocal</span></code> per visualizzare ‘on the fly’ lo stato di una cella</p></li>
-<li><p><a class="reference external" href="file:///C:/Didattica2025/qak25/conwaygui/src/main/java/unibo/disi/conwaygui/ws/WSConwayguiLifeLocal.java">WSConwayguiLifeLocal</a>:  Estende  <em>AbstractWebSocketHandler</em>  di <em>org.springframework.web.socket.handler</em>.
-Fa update delle pagine (metodo <em>broadcastToWebSocket</em>) quando invocato da <a class="reference external" href="file:///C:/Didattica2025/qak25/conwaygui/src/main/java/conway/devices/ConwayOutput.java">ConwayOutput</a>.</p></li>
+<li><p><a class="reference internal" href="#id6"><span class="std std-ref">LifeController</span></a>: definisce funzioni per il controllo logico del gioco</p></li>
+<li><p><a class="reference internal" href="#id7"><span class="std std-ref">WSIoDev</span></a>:  Estende  <span class="blue">AbstractWebSocketHandler</span> di <em>org.springframework.web.socket.handler</em>.</p></li>
 </ul>
 </td>
 </tr>
 </tbody>
 </table>
 </div></blockquote>
+<p>Questo microservizio è l’evoluzione di una versione  mostrata in precedenza:</p>
+<blockquote>
+<div><table class="docutils align-default" style="width: 100%">
+<colgroup>
+<col style="width: 50.0%" />
+<col style="width: 50.0%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><a class="reference internal image-reference" href="_images/conwayguilocalv0.jpg"><img alt="_images/conwayguilocalv0.jpg" class="align-center" src="_images/conwayguilocalv0.jpg" style="width: 100%;" />
+</a>
+</td>
+<td><p>Il codice di questa versione si trova in <a class="reference external" href="../../../../conwayguiv0">conwayguiv0</a>.</p>
+<p>Il <strong>LifeController</strong> di questa versione include una funzione</p>
+<p><code class="docutils literal notranslate"><span class="pre">public</span> <span class="pre">void</span> <span class="pre">elabMsg(String</span> <span class="pre">message)</span></code></p>
+<p>che nella nuova versione è di pertinenza di <a class="reference external" href="../../../../conwaygui/src/main/java/conway/devices/WSIoDev.java">WSIoDev</a>.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+</section>
+<section id="id5">
+<h3>ConwayGuiControllerLifeLocal<a class="headerlink" href="#id5" title="Link to this heading">¶</a></h3>
+<p><a class="reference external" href="../../../../conwaygui/src/main/java/unibo/disi/conwaygui/controller/ConwayGuiControllerLifeLocal.java">ConwayGuiControllerLifeLocal</a> :</p>
+<ul class="simple">
+<li><p>un controller SpringBoot che si occupa di gestire le richieste HTTP</p></li>
+<li><p>fornisce la pagina HTML</p></li>
+<li><p>definisce la funzione <code class="docutils literal notranslate"><span class="pre">getserverip</span></code> per dare un servizio che fornisve
+l’indirizzo IP   del server su rete locale e anche il suo indirizzo IP pubblico</p></li>
+</ul>
+<p><span class="slide2">Come fa la pagina MTML a conoscere l’indirizzo IP del server?</span></p>
+<p>La funzione <code class="docutils literal notranslate"><span class="pre">getserverip</span></code> è invocabile via HTTP con <code class="docutils literal notranslate"><span class="pre">IPADDR:7110/getserverip</span></code>
+e viene utilizzata dalla funzione <strong>discoverServiceUrl</strong> in <a class="reference internal" href="#id2"><span class="std std-ref">commsocket.js</span></a>
+che fissa, al caricamanto della pagina HTML,
+l’indirizzo <code class="docutils literal notranslate"><span class="pre">IPADDR</span></code> del server.</p>
+<p>In questo modo, la pagina HTML può inviare messaggi al server tramite WebSocket.</p>
+</section>
+<section id="id6">
+<h3>LifeController<a class="headerlink" href="#id6" title="Link to this heading">¶</a></h3>
+<p>Il <a class="reference external" href="../../../../conwaygui/src/main/java/conway/LifeController.java">LifeController</a>:</p>
+<ul class="simple">
+<li><p>definisce funzioni per il controllo del gioco (come <code class="docutils literal notranslate"><span class="pre">play</span></code>, <code class="docutils literal notranslate"><span class="pre">startTheGame</span></code>, etc.)</p></li>
+<li><p>viene chiamato da <a class="reference external" href="../../../../conwaygui/src/main/java/conway/devices/WSIoDev.java">WSIoDev</a> quando questi riceve un comando da un utente</p></li>
+<li><p>invoca le funzioni di <a class="reference external" href="../../../../conwaygui/src/main/java/conway/Life.java">Life</a> per eseguire le operazioni richieste</p></li>
+<li><p>invoca le funzioni di output di <a class="reference external" href="../../../../conwaygui/src/main/java/conway/devices/WSIoDev.java">WSIoDev</a> per visualizzare lo stato delle celle o inviare
+messaggi alla pagina HTML</p></li>
+</ul>
+</section>
+<section id="id7">
+<h3>WSIoDev<a class="headerlink" href="#id7" title="Link to this heading">¶</a></h3>
+<p><a class="reference external" href="../../../../conwaygui/src/main/java/conway/devices/WSIoDev.java">WSIoDev</a> opera come un dispositivo di I/O. Come dispositivo di output:</p>
+<ul class="simple">
+<li><p>implementa <span class="xref std std-ref">IOutDev</span> inviando informazioni su tutti i client connessi alla WbeSocket.</p></li>
+</ul>
+<p>Come dispositivo di inpuut:</p>
+<ul class="simple">
+<li><p>riceve i messaggi ricevuti sulla WebSocket,
+converte il contenuto informativo in accordo alle regole della business logigc,
+e invoca <a class="reference internal" href="#id6"><span class="std std-ref">LifeController</span></a> per la loro elaborazione</p></li>
+</ul>
 <p><span class="slide1">Una ulteriore analisi</span></p>
 </section>
 <section id="conwaygui-ulteriore-analisi-del-problema">
@@ -921,15 +985,14 @@ dei requisiti del gioco.</p></li>
 <section id="conwaygui-service-deployment">
 <h3>conwaygui service deployment<a class="headerlink" href="#conwaygui-service-deployment" title="Link to this heading">¶</a></h3>
 <p>Il deployment del servizio può avvenire mediante una <span class="slide2">immagine Docker</span> che può
-essere creata ed eseguita con i seguenti comandi (si veda anche <a class="reference external" href="file:///C:/Didattica2024/qak24/iss24Material/docs/_build/html/_static/IntroDocker23.html">IntroDocker</a>):</p>
-<blockquote>
-<div><table class="docutils align-default" style="width: 100%">
+essere creata ed eseguita con i seguenti comandi (si veda anche <a class="reference external" href="../../../../iss24Material/docs/_build/html/_static/IntroDocker23.html">IntroDocker</a>):</p>
+<table class="docutils align-default" style="width: 100%">
 <colgroup>
 <col style="width: 40.0%" />
 <col style="width: 60.0%" />
 </colgroup>
 <tbody>
-<tr class="row-odd"><td><p><a class="reference external" href="file:///C:/Didattica2025/qak25/conwaygui/Dockerfile">Dockerfile</a></p>
+<tr class="row-odd"><td><p><a class="reference external" href="../../../../conwaygui/Dockerfile">Dockerfile</a></p>
 <p>permette di costruire una immagine Docker che denominiamo <code class="docutils literal notranslate"><span class="pre">conwayguilifelocal:2.0</span></code></p>
 </td>
 <td><p>Posizionarsi sulla directory  che contiene il file <code class="docutils literal notranslate"><span class="pre">Dockerfile</span></code>
@@ -948,7 +1011,7 @@ e il file <code class="docutils literal notranslate"><span class="pre">build/dis
 </div>
 </td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference external" href="file:///C:/Didattica2025/qak25/conwaygui/conwaygui.yaml">conwaygui.yaml</a></p>
+<tr class="row-odd"><td><p><a class="reference external" href="../../../../conwaygui/conwaygui.yaml">conwaygui.yaml</a></p>
 <p>Un file Docker Compose che semplifica la creazione e l’esecuzione di più container Docker.</p>
 </td>
 <td><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">docker</span><span class="o">-</span><span class="n">compose</span> <span class="o">-</span><span class="n">f</span> <span class="n">conwaygui</span><span class="o">.</span><span class="n">yaml</span> <span class="o">-</span><span class="n">p</span> <span class="n">conwaygui</span> <span class="n">up</span>
@@ -958,8 +1021,96 @@ e il file <code class="docutils literal notranslate"><span class="pre">build/dis
 </tr>
 </tbody>
 </table>
-</div></blockquote>
+<p><span class="slide1">Interagire con il servizio</span></p>
 </section>
+</section>
+<section id="id8">
+<h2>ConwayCallerWS<a class="headerlink" href="#id8" title="Link to this heading">¶</a></h2>
+<table class="docutils align-default" style="width: 100%">
+<colgroup>
+<col style="width: 20.0%" />
+<col style="width: 80.0%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference external" href="../../../../conwaygui/src/main/java/conway/caller/ConwayCallerWS.java">ConwayCallerWS</a></p></td>
+<td><p>Programma Java che usa la libreria <a class="reference external" href="https://docs.oracle.com/javaee/7/api/javax/websocket/package-summary.html">javax.websocket</a> per creare una
+WS connessa con il micro-servizio <a class="reference internal" href="#conwaylife25-un-microservizio-java"><span class="std std-ref">ConwayLife25</span></a>.
+La WS viene usata per inviare comandi al micro-servizio a per ricevere
+le informazioni che questo emette.</p></td>
+</tr>
+</tbody>
+</table>
+<p>Le informazioni ricevute sulla WS possono essere gestire dal metodo
+annotato con  <code class="docutils literal notranslate"><span class="pre">&#64;onMessage</span></code>.</p>
+<p>Notiamo che il metodo <code class="docutils literal notranslate"><span class="pre">&#64;onMessage</span></code> è un <span class="slide3">metodo di callback</span>, cioè un metodo che viene invocato
+da <span class="slide2">un’altra entità</span> (in questo caso la libreria delle WebSocket) quando si verifica un evento
+(in questo caso la ricezione di un messaggio)
+allo scopo di rendere disponibile il messaggio alla logica del programma.</p>
+<p>Questa ‘intrusione’ della libreria all’interno programma
+può portare a problemi nella programmazione.</p>
+<p><span class="slide1">L’astrazione Interconnessione</span></p>
+<section id="supporti-custom-per-la-comunicazione">
+<h3>Supporti custom per la comunicazione<a class="headerlink" href="#supporti-custom-per-la-comunicazione" title="Link to this heading">¶</a></h3>
+<p>Il concetto <a class="reference internal" href="unibo.basicomm23.html#interconnessione"><span class="std std-ref">Interconnessione</span></a> vuole catturare l’idea di un <em>canale di comunicazione bidirezionale</em>
+e viene realizzato
+dalla libreria <a class="reference internal" href="unibo.basicomm23.html#unibo-basicomm23"><span class="std std-ref">unibo.basicomm23-1.0.jar</span></a>
+che fornosce supporti  per le comunicazioni via rete mediante un insieme di
+<a class="reference internal" href="unibo.basicomm23.html#unibo-basicomm23-msg-protocoltype"><span class="std std-ref">protocolli</span></a>.</p>
+<p>I protocolli TCP, UDP, WS, CoAP, MQTT costituiscono ciascuno un diverso supporto implementativo
+alla stessa idea astratta, che viene catturata dalla interfaccia <a class="reference internal" href="unibo.basicomm23.html#unibo-basicomm23-interfaces-interaction"><span class="std std-ref">unibo.basicomm23.interfaces.Interaction</span></a>.
+che prefigura due categorie di messaggi:</p>
+<ul class="simple">
+<li><p>semplici String non meglio definite</p></li>
+<li><p>strutture che corrispondono alla interfaccia <a class="reference internal" href="unibo.basicomm23.html#unibo-basicomm23-interfaces-iapplmessage"><span class="std std-ref">unibo.basicomm23.interfaces.IApplMessage</span></a>,
+che implica la introduczione di diversi <a class="reference internal" href="unibo.basicomm23.html#tipi-di-messaggi"><span class="std std-ref">Tipi di messaggi</span></a>.</p></li>
+</ul>
+<p>La creazione di oggetti che implementano l’interfaccia
+interfaccia <a class="reference internal" href="unibo.basicomm23.html#unibo-basicomm23-interfaces-interaction"><span class="std std-ref">unibo.basicomm23.interfaces.Interaction</span></a>
+può avvenire usando una
+<a class="reference external" href="https://www.tutorialspoint.com/design_pattern/factory_pattern.htm">Factory</a>  appositamente defiita: la <a class="reference internal" href="unibo.basicomm23.html#unibo-basicomm23-utils-connectionfactory"><span class="std std-ref">unibo.basicomm23.utils.ConnectionFactory</span></a>.</p>
+<p>In questo progetto ci interessano due diverse implementazioni di <a class="reference internal" href="unibo.basicomm23.html#interconnessione"><span class="std std-ref">Interconnessione</span></a>:</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#wsinteraction"><span class="std std-ref">WsInteraction</span></a> per la comunicazione via WebSocket</p></li>
+<li><p><a class="reference internal" href="MQTTConnection.html#mqttinteractionbase"><span class="std std-ref">MqttInteractionBase</span></a> e <a class="reference internal" href="MQTTConnection.html#mqttinteraction"><span class="std std-ref">MqttInteraction</span></a> per la comunicazione via MQTT</p></li>
+</ul>
+</section>
+<section id="wsinteraction">
+<h3>WsInteraction<a class="headerlink" href="#wsinteraction" title="Link to this heading">¶</a></h3>
+<p>La classe <a class="reference internal" href="unibo.basicomm23.html#unibo-basicomm23-ws-wsconnection"><span class="std std-ref">unibo.basicomm23.ws.WsConnection</span></a> fornisce un <span class="slide2">oggetto osservabile</span>,
+(per la ricezione dei messaggi inviati dal servizio)
+che implementa l’interfaccia <a class="reference internal" href="unibo.basicomm23.html#unibo-basicomm23-interfaces-iobserver"><span class="std std-ref">unibo.basicomm23.interfaces.IObserver</span></a>, del cui uso abbiamo
+un esempio in <a class="reference internal" href="#id9"><span class="std std-ref">ConwayCallerWSInteraction</span></a></p>
+</section>
+</section>
+<section id="id9">
+<h2>ConwayCallerWSInteraction<a class="headerlink" href="#id9" title="Link to this heading">¶</a></h2>
+<table class="docutils align-default" style="width: 100%">
+<colgroup>
+<col style="width: 20.0%" />
+<col style="width: 80.0%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference external" href="../../../../conwaygui/src/main/java/conway/caller/ConwayCallerWSInteraction.java">ConwayCallerWSInteraction</a></p></td>
+<td><p>Programma Java che crea una <a class="reference internal" href="unibo.basicomm23.html#unibo-basicomm23-ws-wsconnection"><span class="std std-ref">unibo.basicomm23.ws.WsConnection</span></a> con
+il micro-servizio <a class="reference internal" href="#conwaylife25-un-microservizio-java"><span class="std std-ref">ConwayLife25</span></a> usando la
+<a class="reference internal" href="unibo.basicomm23.html#unibo-basicomm23-utils-connectionfactory"><span class="std std-ref">unibo.basicomm23.utils.ConnectionFactory</span></a> nascondendo al livello implementativo
+i dettagli relativi all’uso della libreria <a class="reference external" href="https://docs.oracle.com/javaee/7/api/javax/websocket/package-summary.html">javax.websocket</a>.</p>
+<p>Una <a class="reference internal" href="unibo.basicomm23.html#unibo-basicomm23-ws-wsconnection"><span class="std std-ref">unibo.basicomm23.ws.WsConnection</span></a> è un oggetto osservabile da parte
+di utilizzatori che
+implememntano la interfaccia <a class="reference internal" href="unibo.basicomm23.html#unibo-basicomm23-interfaces-iobserver"><span class="std std-ref">unibo.basicomm23.interfaces.IObserver</span></a>.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p><span class="slide1">L’osservazione</span></p>
+<p>In quanto oggetto osservabile,  i messaggi emessi dal servizio sulla
+<a class="reference internal" href="unibo.basicomm23.html#unibo-basicomm23-ws-wsconnection"><span class="std std-ref">unibo.basicomm23.ws.WsConnection</span></a>
+possono essere ricevuti da oggetti che usano la connessione e implementano la interfaccia
+<a class="reference internal" href="unibo.basicomm23.html#unibo-basicomm23-interfaces-iobserver"><span class="std std-ref">unibo.basicomm23.interfaces.IObserver</span></a>.</p>
+<p>Anche in questo caso, notiamo che la ricezione dei messaggi inviati dal servizio
+non è un atto deliberato del programma, in quanto
+il supporto della libreria si ‘introfula’ ancora nel codice dell’oggetto osservatore,
+invocandone il metodo <code class="docutils literal notranslate"><span class="pre">update</span></code>.</p>
 </section>
 </section>
 
@@ -1012,10 +1163,20 @@ e il file <code class="docutils literal notranslate"><span class="pre">build/dis
 </li>
 <li><a class="reference internal" href="#conwaylife25-un-microservizio-java">ConwayLife25: un microservizio Java</a><ul>
 <li><a class="reference internal" href="#conwaygui-un-processo-di-sviluppo">conwaygui: un processo di sviluppo</a></li>
+<li><a class="reference internal" href="#codice-embedded-del-servizio">Codice embedded del servizio</a></li>
+<li><a class="reference internal" href="#id5">ConwayGuiControllerLifeLocal</a></li>
+<li><a class="reference internal" href="#id6">LifeController</a></li>
+<li><a class="reference internal" href="#id7">WSIoDev</a></li>
 <li><a class="reference internal" href="#conwaygui-ulteriore-analisi-del-problema">conwaygui: ulteriore analisi del problema</a></li>
 <li><a class="reference internal" href="#conwaygui-service-deployment">conwaygui service deployment</a></li>
 </ul>
 </li>
+<li><a class="reference internal" href="#id8">ConwayCallerWS</a><ul>
+<li><a class="reference internal" href="#supporti-custom-per-la-comunicazione">Supporti custom per la comunicazione</a></li>
+<li><a class="reference internal" href="#wsinteraction">WsInteraction</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id9">ConwayCallerWSInteraction</a></li>
 </ul>
 </li>
 </ul>

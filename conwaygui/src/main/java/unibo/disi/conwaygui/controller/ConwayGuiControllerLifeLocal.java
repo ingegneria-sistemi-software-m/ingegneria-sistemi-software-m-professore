@@ -7,21 +7,17 @@ import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.net.SocketException;
 import java.net.URL;
-import java.net.UnknownHostException;
 import java.util.Enumeration;
 
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.ModelAndView;
 import conway.Life;
 import conway.LifeController;
+import conway.devices.WSIoDev;
 import unibo.basicomm23.utils.CommUtils;
  
  
@@ -39,13 +35,15 @@ public class ConwayGuiControllerLifeLocal {
 	private boolean started = false;
 	
 	public ConwayGuiControllerLifeLocal() {
-		CommUtils.outblue("ConwayGuiControllerLifeLocal CREATING ... " + appName + " at " + serverport);
 		initLifeApplication();
 	}
 	
 	protected void initLifeApplication() {
+		CommUtils.outyellow("ConwayGuiControllerLifeLocal CREATING ... "  );
         life             = new Life( 20,20 );
-        lifeController   = new LifeController(life);   		
+        lifeController   = new LifeController(life);   	
+		CommUtils.outyellow("ConwayGuiControllerLifeLocal injects  lifeController in wsiodev"  );
+        WSIoDev.getInstance().setLifeCotrol(lifeController); //injections
 	}
 
 	@GetMapping("/")
@@ -71,24 +69,27 @@ public class ConwayGuiControllerLifeLocal {
 	@RequestMapping("/getserverip")
 	@ResponseBody
 	public String getserverip() {
-		System.out.println("doing getserverip"  );
+		System.out.println("ConwayGuiControllerLifeLocal doing getserverip"  );
 		String p    = CommUtils.getEnvvarValue("HOST_IP"); // in docker-compose
 		if( p != null ) {
 			String s = "{\"host\":\"P\"}".replace("P",p );
-			System.out.println("s con HOST_IP=" + s);		      
+			System.out.println("ConwayGuiControllerLifeLocal con HOST_IP=" + s);		      
 			return s;				
 		}
-		//String myip = getMyPublicip();
 		String myip = getServerLocalIp();
-		System.out.println("getserverip: myip=" + myip);
+		System.out.println("ConwayGuiControllerLifeLocal getserverip: myip=" + myip);
 		if( myip == null ) { //non ho la rete ...
 			String s = "{\"host\":\"localhost\"}";
-			System.out.println("s senza myip=" + s);		      
+			System.out.println("ConwayGuiControllerLifeLocal senza myip=" + s);		      
 			return s;				
 		}
  		else {
-			String s = "{\"host\":\"P\"}".replace("P",myip );
-			System.out.println("s con myip=" + s);		      
+ 			String mypubip = getMyPublicip();
+ 			System.out.println("ConwayGuiControllerLifeLocal getserverip: mypubip=" + mypubip);
+
+ 			
+ 			String s = "{\"host\":\"P\"}".replace("P",myip );
+			System.out.println("ConwayGuiControllerLifeLocal con myip=" + s);		      
 			return s;				
  		}
 	}
@@ -137,10 +138,9 @@ public class ConwayGuiControllerLifeLocal {
                 while (indirizzi.hasMoreElements()) {
                     InetAddress indirizzo = indirizzi.nextElement();
                     if (!indirizzo.isLoopbackAddress()) { // Esclude l'indirizzo loopback (127.0.0.1)
-                        //System.out.println(interfaccia.getDisplayName() + ": " + indirizzo.getHostAddress());
-                        
+                        //System.out.println(interfaccia.getDisplayName() + ": " + indirizzo.getHostAddress());                        
                         if( indirizzo.getHostAddress().startsWith("192.168")) {
-                        	System.out.println("================= " + indirizzo.getHostAddress());
+                        	System.out.println("ConwayGuiControllerLifeLocal ==== " + indirizzo.getHostAddress());
                         	return indirizzo.getHostAddress();
                         }
                     }

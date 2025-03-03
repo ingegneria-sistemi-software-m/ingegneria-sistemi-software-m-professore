@@ -5,7 +5,6 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
- 
 
 //By default, JUnit comes with a bundled copy of hamcrest-core
 
@@ -13,8 +12,9 @@ public class conway25JavaTest {
 private static Life life;
 private static LifeController cc;
     
-	@BeforeClass
-	public static void setup() {
+	//@BeforeClass
+	@Before
+	public void setup() {
 		System.out.println("setup");
     	//configureTheSystem
         life  = new Life( 3,3 );

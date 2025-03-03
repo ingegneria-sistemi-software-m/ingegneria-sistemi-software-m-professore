@@ -37,7 +37,7 @@ function createSocketForGui(serviceUrl){
 		socketToGui.onmessage = function(event) {  
 		//event generato da WSServer broadcastToWebSocket
 			//console.log("--- socketToGui ONMESSAGE "+event.data)
-			handleWsMessage(event) //in iomap.js
+			handleWsMessage(event) 
 		};
 		socketToGui.onclose = function(event) {
 		  // Handle connection close
@@ -56,9 +56,10 @@ function handleWsMessage(event){
            // Estrae la posizione e il colore
             const [_, x, y, v] = message.match(/cell\((\d+),(\d+),([^)]+)\)/);
             updateCellColor(parseInt(x), parseInt(y), parseInt(v));
-        }
-        else {
-            addItem(message); //in iomap.js
+        }else if (message.startsWith("clear")) {
+			clearOutArea() //in outarea.js
+        }else {
+            addItem(message); //in outarea.js
         }
 }
 
