@@ -14,8 +14,7 @@ function createMapRep(){
         cellElement.classList.add("live");
         cellElement.id = `cell-${i}-${j}`;
         cellElement.addEventListener('click', function() {
-            sendCmdToServer(""+cellElement.id);  //cell-i-j
-            //sendCellClickedMsg(cellElement.id );  
+            sendCmdToServer(""+cellElement.id);  //cell-i-j in commsocket.js
             //alert(""+cellElement.id );
         });
         mapContainer.appendChild(cellElement);

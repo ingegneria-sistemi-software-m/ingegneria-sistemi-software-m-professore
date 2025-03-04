@@ -28,20 +28,14 @@ public class Life {
         nextGrid = new Grid(rows,cols);   
         CommUtils.outyellow("Life | createGrids done");
     }
-
-//    public int getRowsNum(){
-//        return rows;
-//    }
-//    public int getColsNum(){
-//        return cols;
-//    }
-    
+   
     public Grid getGrid() {
     	return grid;
     }
     public Grid getNextGrid() {
     	return nextGrid;
     }
+    
     //Called by ConwayGuiControllerLifeLocal
     public void resetGrids() {
          for (int i = 0; i < rows; i++) {
@@ -49,7 +43,7 @@ public class Life {
                 grid.setCellValue(i,j,false);
                 nextGrid.setCellValue(i,j,false);            }
         }
-        //CommUtils.outyellow("Life | resetGrids done");
+        CommUtils.outyellow("Life | resetGrids done");
     }
 
 
@@ -57,36 +51,28 @@ public class Life {
         int count = 0;
         if (row-1 >= 0) {
         	if( grid.getCellValue(row-1,col) ) count++;
-            //if ( grid[row-1][col]  ) count++;
         }
         if (row-1 >= 0 && col-1 >= 0) {
         	if( grid.getCellValue(row-1,col-1) ) count++;
-            //if (grid[row-1][col-1] == 1) count++;
         }
         if (row-1 >= 0 && col+1 < cols) {
         	if( grid.getCellValue(row-1,col+1) ) count++;
-            //if (grid[row-1][col+1] == 1) count++;
         }
         if (col-1 >= 0) {
         	if( grid.getCellValue(row,col-1) ) count++;
-            //if (grid[row][col-1] == 1) count++;
-        }
+         }
         if (col+1 < cols) {
         	if( grid.getCellValue(row,col+1) ) count++;
-            //if (grid[row][col+1] == 1) count++;
-        }
+       }
         if (row+1 < rows) {
         	if( grid.getCellValue(row+1,col) ) count++;
-            //if (grid[row+1][col] == 1) count++;
-        }
+         }
         if (row+1 < rows && col-1 >= 0) {
         	if( grid.getCellValue(row+1,col-1) ) count++;
-            //if (grid[row+1][col-1] == 1) count++;
         }
         if (row+1 < rows && col+1 < cols) {
         	if( grid.getCellValue(row+1,col+1) ) count++;
-            //if (grid[row+1][col+1] == 1) count++;
-        }
+       }
         return count;
     }
 
@@ -157,10 +143,7 @@ public class Life {
     public Cell getCell(int i, int j){
     	return grid.getCell(i, j);
     }
-//    public void switchAndDisplayCellState(int i, int j){
-//    	//grid.getCell(i, j).switchAndDisplayCellState();  
-//    	grid.getCell(i, j).switchCellState(); 
-//    } 
+
 
     public  boolean getCellState( int i, int j  ) {
     	CommUtils.outcyan( "call state " + i + "," +j + " " +  grid.getCellValue(i, j));

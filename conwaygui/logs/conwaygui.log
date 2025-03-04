@@ -2694,3 +2694,1168 @@ unibo.disi.conwaygui.controller.ConwayGuiControllerLifeLocal#config() mapped.
 2025-02-27 09:27:39 [http-nio-7110-exec-1] - Initializing Spring DispatcherServlet 'dispatcherServlet'
 2025-02-27 09:27:39 [http-nio-7110-exec-1] - Initializing Servlet 'dispatcherServlet'
 2025-02-27 09:27:39 [http-nio-7110-exec-1] - Completed initialization in 1 ms
+2025-02-27 14:49:24 [Test worker] - Could not detect default configuration classes for test class [unibo.disi.conwaygui.ConwayguiApplicationTests]: ConwayguiApplicationTests does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2025-02-27 14:49:25 [Test worker] - Found @SpringBootConfiguration unibo.disi.conwaygui.ConwayguiApplication for test class unibo.disi.conwaygui.ConwayguiApplicationTests
+2025-02-27 14:49:25 [Test worker] - Starting ConwayguiApplicationTests using Java 17.0.11 with PID 28712 (started by anatali in C:\Didattica2025\qak25\conwaygui)
+2025-02-27 14:49:25 [Test worker] - No active profile set, falling back to 1 default profile: "default"
+2025-02-27 14:49:28 [Test worker] - Adding welcome page: class path resource [static/index.html]
+2025-02-27 14:49:28 [Test worker] - Started ConwayguiApplicationTests in 3.392 seconds (process running for 5.933)
+2025-02-27 15:04:35 [restartedMain] - Starting ConwayguiApplication using Java 17.0.11 with PID 28824 (C:\Didattica2025\qak25\conwaygui\build\classes\java\main started by anatali in C:\Didattica2025\qak25\conwaygui)
+2025-02-27 15:04:35 [restartedMain] - No active profile set, falling back to 1 default profile: "default"
+2025-02-27 15:04:35 [restartedMain] - Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2025-02-27 15:04:35 [restartedMain] - For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2025-02-27 15:04:36 [restartedMain] - Tomcat initialized with port 7110 (http)
+2025-02-27 15:04:36 [restartedMain] - Initializing ProtocolHandler ["http-nio-7110"]
+2025-02-27 15:04:36 [restartedMain] - Starting service [Tomcat]
+2025-02-27 15:04:36 [restartedMain] - Starting Servlet engine: [Apache Tomcat/10.1.34]
+2025-02-27 15:04:36 [restartedMain] - Initializing Spring embedded WebApplicationContext
+2025-02-27 15:04:36 [restartedMain] - Root WebApplicationContext: initialization completed in 1322 ms
+2025-02-27 15:04:36 [restartedMain] - Adding welcome page: class path resource [static/index.html]
+2025-02-27 15:04:36 [restartedMain] - LiveReload server is running on port 35729
+2025-02-27 15:04:36 [restartedMain] - Starting ProtocolHandler ["http-nio-7110"]
+2025-02-27 15:04:36 [restartedMain] - Tomcat started on port 7110 (http) with context path '/'
+2025-02-27 15:04:36 [restartedMain] - Started ConwayguiApplication in 2.358 seconds (process running for 3.04)
+2025-02-27 15:04:49 [http-nio-7110-exec-1] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-02-27 15:04:49 [http-nio-7110-exec-1] - Initializing Servlet 'dispatcherServlet'
+2025-02-27 15:04:49 [http-nio-7110-exec-1] - Completed initialization in 1 ms
+2025-02-27 15:07:12 [SpringApplicationShutdownHook] - Commencing graceful shutdown. Waiting for active requests to complete
+2025-02-27 15:07:13 [tomcat-shutdown] - Graceful shutdown complete
+2025-02-27 15:08:14 [restartedMain] - Starting ConwayguiApplication using Java 17.0.11 with PID 24336 (C:\Didattica2025\qak25\conwaygui\build\classes\java\main started by anatali in C:\Didattica2025\qak25\conwaygui)
+2025-02-27 15:08:14 [restartedMain] - No active profile set, falling back to 1 default profile: "default"
+2025-02-27 15:08:15 [restartedMain] - Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2025-02-27 15:08:15 [restartedMain] - For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2025-02-27 15:08:16 [restartedMain] - Tomcat initialized with port 7110 (http)
+2025-02-27 15:08:16 [restartedMain] - Initializing ProtocolHandler ["http-nio-7110"]
+2025-02-27 15:08:16 [restartedMain] - Starting service [Tomcat]
+2025-02-27 15:08:16 [restartedMain] - Starting Servlet engine: [Apache Tomcat/10.1.34]
+2025-02-27 15:08:16 [restartedMain] - Initializing Spring embedded WebApplicationContext
+2025-02-27 15:08:16 [restartedMain] - Root WebApplicationContext: initialization completed in 1293 ms
+2025-02-27 15:08:16 [restartedMain] - Adding welcome page: class path resource [static/index.html]
+2025-02-27 15:08:16 [restartedMain] - LiveReload server is running on port 35729
+2025-02-27 15:08:16 [restartedMain] - Starting ProtocolHandler ["http-nio-7110"]
+2025-02-27 15:08:16 [restartedMain] - Tomcat started on port 7110 (http) with context path '/'
+2025-02-27 15:08:16 [restartedMain] - Started ConwayguiApplication in 2.325 seconds (process running for 2.953)
+2025-02-27 15:08:20 [http-nio-7110-exec-1] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-02-27 15:08:20 [http-nio-7110-exec-1] - Initializing Servlet 'dispatcherServlet'
+2025-02-27 15:08:20 [http-nio-7110-exec-1] - Completed initialization in 1 ms
+2025-02-27 15:09:56 [http-nio-7110-exec-5] - Closing session due to exception for StandardWebSocketSession[id=4b21f05a-4944-657c-136a-0dc9e509fe7a, uri=ws://localhost:7110/wsupdates]
+java.lang.IllegalStateException: The remote endpoint was in state [TEXT_PARTIAL_WRITING] which is an invalid state for called method
+	at org.apache.tomcat.websocket.WsRemoteEndpointImplBase$StateMachine.checkState(WsRemoteEndpointImplBase.java:1250)
+	at org.apache.tomcat.websocket.WsRemoteEndpointImplBase$StateMachine.textPartialStart(WsRemoteEndpointImplBase.java:1215)
+	at org.apache.tomcat.websocket.WsRemoteEndpointImplBase.sendPartialString(WsRemoteEndpointImplBase.java:222)
+	at org.apache.tomcat.websocket.WsRemoteEndpointBasic.sendText(WsRemoteEndpointBasic.java:48)
+	at org.springframework.web.socket.adapter.standard.StandardWebSocketSession.sendTextMessage(StandardWebSocketSession.java:217)
+	at org.springframework.web.socket.adapter.AbstractWebSocketSession.sendMessage(AbstractWebSocketSession.java:108)
+	at unibo.disi.conwaygui.ws.WSConwayguiLifeLocal.broadcastToWebSocket(WSConwayguiLifeLocal.java:56)
+	at conway.devices.ConwayOutput.display(ConwayOutput.java:30)
+	at conway.devices.ConwayOutput.displayCell(ConwayOutput.java:24)
+	at conway.LifeController.resetAndDisplayGrids(LifeController.java:72)
+	at conway.LifeController.elabMsg(LifeController.java:109)
+	at unibo.disi.conwaygui.ws.WSConwayguiLifeLocal.handleTextMessage(WSConwayguiLifeLocal.java:76)
+	at org.springframework.web.socket.handler.AbstractWebSocketHandler.handleMessage(AbstractWebSocketHandler.java:43)
+	at org.springframework.web.socket.handler.WebSocketHandlerDecorator.handleMessage(WebSocketHandlerDecorator.java:75)
+	at org.springframework.web.socket.handler.LoggingWebSocketHandlerDecorator.handleMessage(LoggingWebSocketHandlerDecorator.java:56)
+	at org.springframework.web.socket.handler.ExceptionWebSocketHandlerDecorator.handleMessage(ExceptionWebSocketHandlerDecorator.java:58)
+	at org.springframework.web.socket.adapter.standard.StandardWebSocketHandlerAdapter.handleTextMessage(StandardWebSocketHandlerAdapter.java:113)
+	at org.springframework.web.socket.adapter.standard.StandardWebSocketHandlerAdapter$3.onMessage(StandardWebSocketHandlerAdapter.java:84)
+	at org.springframework.web.socket.adapter.standard.StandardWebSocketHandlerAdapter$3.onMessage(StandardWebSocketHandlerAdapter.java:81)
+	at org.apache.tomcat.websocket.WsFrameBase.sendMessageText(WsFrameBase.java:390)
+	at org.apache.tomcat.websocket.server.WsFrameServer.sendMessageText(WsFrameServer.java:130)
+	at org.apache.tomcat.websocket.WsFrameBase.processDataText(WsFrameBase.java:484)
+	at org.apache.tomcat.websocket.WsFrameBase.processData(WsFrameBase.java:284)
+	at org.apache.tomcat.websocket.WsFrameBase.processInputBuffer(WsFrameBase.java:130)
+	at org.apache.tomcat.websocket.server.WsFrameServer.onDataAvailable(WsFrameServer.java:85)
+	at org.apache.tomcat.websocket.server.WsFrameServer.doOnDataAvailable(WsFrameServer.java:184)
+	at org.apache.tomcat.websocket.server.WsFrameServer.notifyDataAvailable(WsFrameServer.java:164)
+	at org.apache.tomcat.websocket.server.WsHttpUpgradeHandler.upgradeDispatch(WsHttpUpgradeHandler.java:152)
+	at org.apache.coyote.http11.upgrade.UpgradeProcessorInternal.dispatch(UpgradeProcessorInternal.java:60)
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:57)
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:905)
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1741)
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1190)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659)
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:63)
+	at java.base/java.lang.Thread.run(Thread.java:842)
+2025-02-27 15:10:26 [restartedMain] - Starting ConwayguiApplication using Java 17.0.11 with PID 15700 (C:\Didattica2025\qak25\conwaygui\build\classes\java\main started by anatali in C:\Didattica2025\qak25\conwaygui)
+2025-02-27 15:10:26 [restartedMain] - No active profile set, falling back to 1 default profile: "default"
+2025-02-27 15:10:26 [restartedMain] - Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2025-02-27 15:10:26 [restartedMain] - For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2025-02-27 15:10:27 [restartedMain] - Tomcat initialized with port 7110 (http)
+2025-02-27 15:10:27 [restartedMain] - Initializing ProtocolHandler ["http-nio-7110"]
+2025-02-27 15:10:27 [restartedMain] - Starting service [Tomcat]
+2025-02-27 15:10:27 [restartedMain] - Starting Servlet engine: [Apache Tomcat/10.1.34]
+2025-02-27 15:10:27 [restartedMain] - Initializing Spring embedded WebApplicationContext
+2025-02-27 15:10:27 [restartedMain] - Root WebApplicationContext: initialization completed in 1222 ms
+2025-02-27 15:10:27 [restartedMain] - Adding welcome page: class path resource [static/index.html]
+2025-02-27 15:10:28 [restartedMain] - LiveReload server is running on port 35729
+2025-02-27 15:10:28 [restartedMain] - Starting ProtocolHandler ["http-nio-7110"]
+2025-02-27 15:10:28 [restartedMain] - Tomcat started on port 7110 (http) with context path '/'
+2025-02-27 15:10:28 [restartedMain] - Started ConwayguiApplication in 2.223 seconds (process running for 2.853)
+2025-02-27 15:10:33 [http-nio-7110-exec-1] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-02-27 15:10:33 [http-nio-7110-exec-1] - Initializing Servlet 'dispatcherServlet'
+2025-02-27 15:10:33 [http-nio-7110-exec-1] - Completed initialization in 1 ms
+2025-02-27 15:11:00 [restartedMain] - Starting ConwayguiApplication using Java 17.0.11 with PID 29200 (C:\Didattica2025\qak25\conwaygui\build\classes\java\main started by anatali in C:\Didattica2025\qak25\conwaygui)
+2025-02-27 15:11:00 [restartedMain] - No active profile set, falling back to 1 default profile: "default"
+2025-02-27 15:11:00 [restartedMain] - Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2025-02-27 15:11:00 [restartedMain] - For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2025-02-27 15:11:01 [restartedMain] - Tomcat initialized with port 7110 (http)
+2025-02-27 15:11:01 [restartedMain] - Initializing ProtocolHandler ["http-nio-7110"]
+2025-02-27 15:11:01 [restartedMain] - Starting service [Tomcat]
+2025-02-27 15:11:01 [restartedMain] - Starting Servlet engine: [Apache Tomcat/10.1.34]
+2025-02-27 15:11:02 [restartedMain] - Initializing Spring embedded WebApplicationContext
+2025-02-27 15:11:02 [restartedMain] - Root WebApplicationContext: initialization completed in 1926 ms
+2025-02-27 15:11:02 [restartedMain] - Adding welcome page: class path resource [static/index.html]
+2025-02-27 15:11:02 [restartedMain] - LiveReload server is running on port 35729
+2025-02-27 15:11:02 [restartedMain] - Starting ProtocolHandler ["http-nio-7110"]
+2025-02-27 15:11:02 [restartedMain] - Tomcat started on port 7110 (http) with context path '/'
+2025-02-27 15:11:02 [restartedMain] - Started ConwayguiApplication in 2.958 seconds (process running for 3.646)
+2025-02-27 15:11:04 [http-nio-7110-exec-1] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-02-27 15:11:04 [http-nio-7110-exec-1] - Initializing Servlet 'dispatcherServlet'
+2025-02-27 15:11:04 [http-nio-7110-exec-1] - Completed initialization in 1 ms
+2025-02-27 15:11:55 [restartedMain] - Starting ConwayguiApplication using Java 17.0.11 with PID 26548 (C:\Didattica2025\qak25\conwaygui\build\classes\java\main started by anatali in C:\Didattica2025\qak25\conwaygui)
+2025-02-27 15:11:55 [restartedMain] - No active profile set, falling back to 1 default profile: "default"
+2025-02-27 15:11:55 [restartedMain] - Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2025-02-27 15:11:55 [restartedMain] - For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2025-02-27 15:11:56 [restartedMain] - Tomcat initialized with port 7110 (http)
+2025-02-27 15:11:56 [restartedMain] - Initializing ProtocolHandler ["http-nio-7110"]
+2025-02-27 15:11:56 [restartedMain] - Starting service [Tomcat]
+2025-02-27 15:11:56 [restartedMain] - Starting Servlet engine: [Apache Tomcat/10.1.34]
+2025-02-27 15:11:56 [restartedMain] - Initializing Spring embedded WebApplicationContext
+2025-02-27 15:11:56 [restartedMain] - Root WebApplicationContext: initialization completed in 1221 ms
+2025-02-27 15:11:56 [restartedMain] - Adding welcome page: class path resource [static/index.html]
+2025-02-27 15:11:56 [restartedMain] - LiveReload server is running on port 35729
+2025-02-27 15:11:56 [restartedMain] - Starting ProtocolHandler ["http-nio-7110"]
+2025-02-27 15:11:56 [restartedMain] - Tomcat started on port 7110 (http) with context path '/'
+2025-02-27 15:11:56 [restartedMain] - Started ConwayguiApplication in 2.228 seconds (process running for 2.885)
+2025-02-27 15:12:29 [http-nio-7110-exec-1] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-02-27 15:12:29 [http-nio-7110-exec-1] - Initializing Servlet 'dispatcherServlet'
+2025-02-27 15:12:29 [http-nio-7110-exec-1] - Completed initialization in 0 ms
+2025-02-27 15:17:13 [SpringApplicationShutdownHook] - Commencing graceful shutdown. Waiting for active requests to complete
+2025-02-27 15:17:14 [tomcat-shutdown] - Graceful shutdown complete
+2025-02-28 11:49:40 [restartedMain] - Starting ConwayguiApplication using Java 17.0.5 with PID 61612 (C:\Didattica2025\qak25\conwaygui\build\classes\java\main started by utente in C:\Didattica2025\qak25\conwaygui)
+2025-02-28 11:49:40 [restartedMain] - No active profile set, falling back to 1 default profile: "default"
+2025-02-28 11:49:40 [restartedMain] - Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2025-02-28 11:49:40 [restartedMain] - For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2025-02-28 11:49:41 [restartedMain] - Tomcat initialized with port 7110 (http)
+2025-02-28 11:49:41 [restartedMain] - Initializing ProtocolHandler ["http-nio-7110"]
+2025-02-28 11:49:41 [restartedMain] - Starting service [Tomcat]
+2025-02-28 11:49:41 [restartedMain] - Starting Servlet engine: [Apache Tomcat/10.1.34]
+2025-02-28 11:49:41 [restartedMain] - Initializing Spring embedded WebApplicationContext
+2025-02-28 11:49:41 [restartedMain] - Root WebApplicationContext: initialization completed in 1328 ms
+2025-02-28 11:49:41 [restartedMain] - Adding welcome page: class path resource [static/index.html]
+2025-02-28 11:49:42 [restartedMain] - LiveReload server is running on port 35729
+2025-02-28 11:49:42 [restartedMain] - Starting ProtocolHandler ["http-nio-7110"]
+2025-02-28 11:49:42 [restartedMain] - Tomcat started on port 7110 (http) with context path '/'
+2025-02-28 11:49:42 [restartedMain] - Started ConwayguiApplication in 2.4 seconds (process running for 3.034)
+2025-02-28 11:49:49 [http-nio-7110-exec-1] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-02-28 11:49:49 [http-nio-7110-exec-1] - Initializing Servlet 'dispatcherServlet'
+2025-02-28 11:49:49 [http-nio-7110-exec-1] - Completed initialization in 1 ms
+2025-02-28 12:21:21 [File Watcher] - Restarting due to 1 class path change (0 additions, 0 deletions, 1 modification)
+2025-02-28 12:21:21 [Thread-5] - Commencing graceful shutdown. Waiting for active requests to complete
+2025-02-28 12:21:21 [tomcat-shutdown] - Pausing ProtocolHandler ["http-nio-7110"]
+2025-02-28 12:21:22 [tomcat-shutdown] - Graceful shutdown complete
+2025-02-28 12:21:22 [Thread-5] - Stopping ProtocolHandler ["http-nio-7110"]
+2025-02-28 12:21:22 [restartedMain] - Starting ConwayguiApplication using Java 17.0.5 with PID 61612 (C:\Didattica2025\qak25\conwaygui\build\classes\java\main started by utente in C:\Didattica2025\qak25\conwaygui)
+2025-02-28 12:21:22 [restartedMain] - No active profile set, falling back to 1 default profile: "default"
+2025-02-28 12:21:22 [restartedMain] - Tomcat initialized with port 7110 (http)
+2025-02-28 12:21:22 [restartedMain] - Initializing ProtocolHandler ["http-nio-7110"]
+2025-02-28 12:21:22 [restartedMain] - Starting service [Tomcat]
+2025-02-28 12:21:22 [restartedMain] - Starting Servlet engine: [Apache Tomcat/10.1.34]
+2025-02-28 12:21:22 [restartedMain] - Initializing Spring embedded WebApplicationContext
+2025-02-28 12:21:22 [restartedMain] - Root WebApplicationContext: initialization completed in 300 ms
+2025-02-28 12:21:22 [restartedMain] - Adding welcome page: class path resource [static/index.html]
+2025-02-28 12:21:22 [restartedMain] - LiveReload server is running on port 35729
+2025-02-28 12:21:22 [restartedMain] - Starting ProtocolHandler ["http-nio-7110"]
+2025-02-28 12:21:22 [restartedMain] - Tomcat started on port 7110 (http) with context path '/'
+2025-02-28 12:21:22 [restartedMain] - Started ConwayguiApplication in 0.452 seconds (process running for 1903.649)
+2025-02-28 12:21:22 [restartedMain] - Condition evaluation unchanged
+2025-02-28 15:30:04 [restartedMain] - Starting ConwayguiApplication using Java 17.0.5 with PID 43100 (C:\Didattica2025\qak25\conwaygui\build\classes\java\main started by utente in C:\Didattica2025\qak25\conwaygui)
+2025-02-28 15:30:04 [restartedMain] - No active profile set, falling back to 1 default profile: "default"
+2025-02-28 15:30:04 [restartedMain] - Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2025-02-28 15:30:04 [restartedMain] - For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2025-02-28 15:30:06 [restartedMain] - Tomcat initialized with port 7110 (http)
+2025-02-28 15:30:06 [restartedMain] - Initializing ProtocolHandler ["http-nio-7110"]
+2025-02-28 15:30:06 [restartedMain] - Starting service [Tomcat]
+2025-02-28 15:30:06 [restartedMain] - Starting Servlet engine: [Apache Tomcat/10.1.34]
+2025-02-28 15:30:06 [restartedMain] - Initializing Spring embedded WebApplicationContext
+2025-02-28 15:30:06 [restartedMain] - Root WebApplicationContext: initialization completed in 1324 ms
+2025-02-28 15:30:06 [restartedMain] - Adding welcome page: class path resource [static/index.html]
+2025-02-28 15:30:06 [restartedMain] - LiveReload server is running on port 35729
+2025-02-28 15:30:06 [restartedMain] - Starting ProtocolHandler ["http-nio-7110"]
+2025-02-28 15:30:06 [restartedMain] - Tomcat started on port 7110 (http) with context path '/'
+2025-02-28 15:30:06 [restartedMain] - Started ConwayguiApplication in 2.361 seconds (process running for 2.946)
+2025-02-28 15:30:08 [http-nio-7110-exec-1] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-02-28 15:30:08 [http-nio-7110-exec-1] - Initializing Servlet 'dispatcherServlet'
+2025-02-28 15:30:08 [http-nio-7110-exec-1] - Completed initialization in 0 ms
+2025-02-28 15:42:27 [restartedMain] - Starting ConwayguiApplication using Java 17.0.5 with PID 53560 (C:\Didattica2025\qak25\conwaygui\build\classes\java\main started by utente in C:\Didattica2025\qak25\conwaygui)
+2025-02-28 15:42:27 [restartedMain] - No active profile set, falling back to 1 default profile: "default"
+2025-02-28 15:42:27 [restartedMain] - Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2025-02-28 15:42:27 [restartedMain] - For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2025-02-28 15:42:29 [restartedMain] - Tomcat initialized with port 7110 (http)
+2025-02-28 15:42:29 [restartedMain] - Initializing ProtocolHandler ["http-nio-7110"]
+2025-02-28 15:42:29 [restartedMain] - Starting service [Tomcat]
+2025-02-28 15:42:29 [restartedMain] - Starting Servlet engine: [Apache Tomcat/10.1.34]
+2025-02-28 15:42:29 [restartedMain] - Initializing Spring embedded WebApplicationContext
+2025-02-28 15:42:29 [restartedMain] - Root WebApplicationContext: initialization completed in 1406 ms
+2025-02-28 15:42:29 [restartedMain] - Adding welcome page: class path resource [static/index.html]
+2025-02-28 15:42:29 [restartedMain] - LiveReload server is running on port 35729
+2025-02-28 15:42:29 [restartedMain] - Starting ProtocolHandler ["http-nio-7110"]
+2025-02-28 15:42:29 [restartedMain] - Tomcat started on port 7110 (http) with context path '/'
+2025-02-28 15:42:29 [restartedMain] - Started ConwayguiApplication in 2.432 seconds (process running for 3.042)
+2025-02-28 15:42:33 [http-nio-7110-exec-1] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-02-28 15:42:33 [http-nio-7110-exec-1] - Initializing Servlet 'dispatcherServlet'
+2025-02-28 15:42:33 [http-nio-7110-exec-1] - Completed initialization in 0 ms
+2025-02-28 15:43:28 [restartedMain] - Starting ConwayguiApplication using Java 17.0.5 with PID 27472 (C:\Didattica2025\qak25\conwaygui\build\classes\java\main started by utente in C:\Didattica2025\qak25\conwaygui)
+2025-02-28 15:43:28 [restartedMain] - No active profile set, falling back to 1 default profile: "default"
+2025-02-28 15:43:28 [restartedMain] - Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2025-02-28 15:43:28 [restartedMain] - For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2025-02-28 15:43:29 [restartedMain] - Tomcat initialized with port 7110 (http)
+2025-02-28 15:43:29 [restartedMain] - Initializing ProtocolHandler ["http-nio-7110"]
+2025-02-28 15:43:29 [restartedMain] - Starting service [Tomcat]
+2025-02-28 15:43:29 [restartedMain] - Starting Servlet engine: [Apache Tomcat/10.1.34]
+2025-02-28 15:43:29 [restartedMain] - Initializing Spring embedded WebApplicationContext
+2025-02-28 15:43:29 [restartedMain] - Root WebApplicationContext: initialization completed in 1282 ms
+2025-02-28 15:43:29 [restartedMain] - Adding welcome page: class path resource [static/index.html]
+2025-02-28 15:43:30 [restartedMain] - LiveReload server is running on port 35729
+2025-02-28 15:43:30 [restartedMain] - Starting ProtocolHandler ["http-nio-7110"]
+2025-02-28 15:43:30 [restartedMain] - Tomcat started on port 7110 (http) with context path '/'
+2025-02-28 15:43:30 [restartedMain] - Started ConwayguiApplication in 2.312 seconds (process running for 2.93)
+2025-02-28 15:43:33 [http-nio-7110-exec-1] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-02-28 15:43:33 [http-nio-7110-exec-1] - Initializing Servlet 'dispatcherServlet'
+2025-02-28 15:43:33 [http-nio-7110-exec-1] - Completed initialization in 1 ms
+2025-02-28 15:45:07 [restartedMain] - Starting ConwayguiApplication using Java 17.0.5 with PID 62872 (C:\Didattica2025\qak25\conwaygui\build\classes\java\main started by utente in C:\Didattica2025\qak25\conwaygui)
+2025-02-28 15:45:07 [restartedMain] - No active profile set, falling back to 1 default profile: "default"
+2025-02-28 15:45:07 [restartedMain] - Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2025-02-28 15:45:07 [restartedMain] - For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2025-02-28 15:45:09 [restartedMain] - Tomcat initialized with port 7110 (http)
+2025-02-28 15:45:09 [restartedMain] - Initializing ProtocolHandler ["http-nio-7110"]
+2025-02-28 15:45:09 [restartedMain] - Starting service [Tomcat]
+2025-02-28 15:45:09 [restartedMain] - Starting Servlet engine: [Apache Tomcat/10.1.34]
+2025-02-28 15:45:09 [restartedMain] - Initializing Spring embedded WebApplicationContext
+2025-02-28 15:45:09 [restartedMain] - Root WebApplicationContext: initialization completed in 1229 ms
+2025-02-28 15:45:09 [restartedMain] - Adding welcome page: class path resource [static/index.html]
+2025-02-28 15:45:09 [restartedMain] - LiveReload server is running on port 35729
+2025-02-28 15:45:09 [restartedMain] - Starting ProtocolHandler ["http-nio-7110"]
+2025-02-28 15:45:09 [restartedMain] - Tomcat started on port 7110 (http) with context path '/'
+2025-02-28 15:45:09 [restartedMain] - Started ConwayguiApplication in 2.314 seconds (process running for 3.018)
+2025-02-28 15:45:17 [http-nio-7110-exec-1] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-02-28 15:45:17 [http-nio-7110-exec-1] - Initializing Servlet 'dispatcherServlet'
+2025-02-28 15:45:17 [http-nio-7110-exec-1] - Completed initialization in 1 ms
+2025-02-28 15:46:26 [restartedMain] - Starting ConwayguiApplication using Java 17.0.5 with PID 57524 (C:\Didattica2025\qak25\conwaygui\build\classes\java\main started by utente in C:\Didattica2025\qak25\conwaygui)
+2025-02-28 15:46:26 [restartedMain] - No active profile set, falling back to 1 default profile: "default"
+2025-02-28 15:46:26 [restartedMain] - Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2025-02-28 15:46:26 [restartedMain] - For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2025-02-28 15:46:27 [restartedMain] - Tomcat initialized with port 7110 (http)
+2025-02-28 15:46:27 [restartedMain] - Initializing ProtocolHandler ["http-nio-7110"]
+2025-02-28 15:46:27 [restartedMain] - Starting service [Tomcat]
+2025-02-28 15:46:27 [restartedMain] - Starting Servlet engine: [Apache Tomcat/10.1.34]
+2025-02-28 15:46:27 [restartedMain] - Initializing Spring embedded WebApplicationContext
+2025-02-28 15:46:27 [restartedMain] - Root WebApplicationContext: initialization completed in 1243 ms
+2025-02-28 15:46:27 [restartedMain] - Adding welcome page: class path resource [static/index.html]
+2025-02-28 15:46:27 [restartedMain] - LiveReload server is running on port 35729
+2025-02-28 15:46:27 [restartedMain] - Starting ProtocolHandler ["http-nio-7110"]
+2025-02-28 15:46:27 [restartedMain] - Tomcat started on port 7110 (http) with context path '/'
+2025-02-28 15:46:27 [restartedMain] - Started ConwayguiApplication in 2.25 seconds (process running for 2.863)
+2025-02-28 15:46:30 [http-nio-7110-exec-1] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-02-28 15:46:30 [http-nio-7110-exec-1] - Initializing Servlet 'dispatcherServlet'
+2025-02-28 15:46:30 [http-nio-7110-exec-1] - Completed initialization in 0 ms
+2025-02-28 15:57:07 [restartedMain] - Starting ConwayguiApplication using Java 17.0.5 with PID 62376 (C:\Didattica2025\qak25\conwaygui\build\classes\java\main started by utente in C:\Didattica2025\qak25\conwaygui)
+2025-02-28 15:57:07 [restartedMain] - No active profile set, falling back to 1 default profile: "default"
+2025-02-28 15:57:07 [restartedMain] - Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2025-02-28 15:57:07 [restartedMain] - For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2025-02-28 15:57:08 [restartedMain] - Tomcat initialized with port 7110 (http)
+2025-02-28 15:57:08 [restartedMain] - Initializing ProtocolHandler ["http-nio-7110"]
+2025-02-28 15:57:08 [restartedMain] - Starting service [Tomcat]
+2025-02-28 15:57:08 [restartedMain] - Starting Servlet engine: [Apache Tomcat/10.1.34]
+2025-02-28 15:57:08 [restartedMain] - Initializing Spring embedded WebApplicationContext
+2025-02-28 15:57:08 [restartedMain] - Root WebApplicationContext: initialization completed in 1258 ms
+2025-02-28 15:57:09 [restartedMain] - Adding welcome page: class path resource [static/index.html]
+2025-02-28 15:57:09 [restartedMain] - LiveReload server is running on port 35729
+2025-02-28 15:57:09 [restartedMain] - Starting ProtocolHandler ["http-nio-7110"]
+2025-02-28 15:57:09 [restartedMain] - Tomcat started on port 7110 (http) with context path '/'
+2025-02-28 15:57:09 [restartedMain] - Started ConwayguiApplication in 2.243 seconds (process running for 2.842)
+2025-02-28 15:57:10 [http-nio-7110-exec-1] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-02-28 15:57:10 [http-nio-7110-exec-1] - Initializing Servlet 'dispatcherServlet'
+2025-02-28 15:57:10 [http-nio-7110-exec-1] - Completed initialization in 1 ms
+2025-03-01 09:48:17 [restartedMain] - Starting ConwayguiApplication using Java 17.0.11 with PID 13512 (C:\Didattica2025\qak25\conwaygui\build\classes\java\main started by anatali in C:\Didattica2025\qak25\conwaygui)
+2025-03-01 09:48:17 [restartedMain] - No active profile set, falling back to 1 default profile: "default"
+2025-03-01 09:48:18 [restartedMain] - Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2025-03-01 09:48:18 [restartedMain] - For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2025-03-01 09:48:24 [restartedMain] - Tomcat initialized with port 7110 (http)
+2025-03-01 09:48:24 [restartedMain] - Initializing ProtocolHandler ["http-nio-7110"]
+2025-03-01 09:48:24 [restartedMain] - Starting service [Tomcat]
+2025-03-01 09:48:24 [restartedMain] - Starting Servlet engine: [Apache Tomcat/10.1.34]
+2025-03-01 09:48:24 [restartedMain] - Initializing Spring embedded WebApplicationContext
+2025-03-01 09:48:24 [restartedMain] - Root WebApplicationContext: initialization completed in 6319 ms
+2025-03-01 09:48:25 [restartedMain] - Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'webSocketConfiguration' defined in file [C:\Didattica2025\qak25\conwaygui\build\classes\java\main\unibo\disi\conwaygui\ws\WebSocketConfiguration.class]: Unsatisfied dependency expressed through constructor parameter 0: No qualifying bean of type 'conway.devices.WSConwayguiLifeLocal' available: expected at least 1 bean which qualifies as autowire candidate. Dependency annotations: {}
+2025-03-01 09:48:25 [restartedMain] - Stopping service [Tomcat]
+2025-03-01 09:48:25 [restartedMain] - 
+
+Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
+2025-03-01 09:48:25 [restartedMain] - 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+Parameter 0 of constructor in unibo.disi.conwaygui.ws.WebSocketConfiguration required a bean of type 'conway.devices.WSConwayguiLifeLocal' that could not be found.
+
+
+Action:
+
+Consider defining a bean of type 'conway.devices.WSConwayguiLifeLocal' in your configuration.
+
+2025-03-01 10:22:54 [restartedMain] - Starting ConwayguiApplication using Java 17.0.11 with PID 16552 (C:\Didattica2025\qak25\conwaygui\build\classes\java\main started by anatali in C:\Didattica2025\qak25\conwaygui)
+2025-03-01 10:22:54 [restartedMain] - No active profile set, falling back to 1 default profile: "default"
+2025-03-01 10:22:54 [restartedMain] - Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2025-03-01 10:22:54 [restartedMain] - For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2025-03-01 10:22:56 [restartedMain] - Tomcat initialized with port 7110 (http)
+2025-03-01 10:22:56 [restartedMain] - Initializing ProtocolHandler ["http-nio-7110"]
+2025-03-01 10:22:56 [restartedMain] - Starting service [Tomcat]
+2025-03-01 10:22:56 [restartedMain] - Starting Servlet engine: [Apache Tomcat/10.1.34]
+2025-03-01 10:22:56 [restartedMain] - Initializing Spring embedded WebApplicationContext
+2025-03-01 10:22:56 [restartedMain] - Root WebApplicationContext: initialization completed in 2208 ms
+2025-03-01 10:22:57 [restartedMain] - Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'webSocketConfiguration' defined in file [C:\Didattica2025\qak25\conwaygui\build\classes\java\main\unibo\disi\conwaygui\ws\WebSocketConfiguration.class]: Unsatisfied dependency expressed through constructor parameter 0: No qualifying bean of type 'conway.devices.WSConwayguiLifeLocal' available: expected at least 1 bean which qualifies as autowire candidate. Dependency annotations: {}
+2025-03-01 10:22:57 [restartedMain] - Stopping service [Tomcat]
+2025-03-01 10:22:57 [restartedMain] - 
+
+Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
+2025-03-01 10:22:57 [restartedMain] - 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+Parameter 0 of constructor in unibo.disi.conwaygui.ws.WebSocketConfiguration required a bean of type 'conway.devices.WSConwayguiLifeLocal' that could not be found.
+
+
+Action:
+
+Consider defining a bean of type 'conway.devices.WSConwayguiLifeLocal' in your configuration.
+
+2025-03-01 15:19:11 [restartedMain] - Starting ConwayguiApplication using Java 17.0.5 with PID 63520 (C:\Didattica2025\qak25\conwaygui\build\classes\java\main started by utente in C:\Didattica2025\qak25\conwaygui)
+2025-03-01 15:19:11 [restartedMain] - No active profile set, falling back to 1 default profile: "default"
+2025-03-01 15:19:11 [restartedMain] - Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2025-03-01 15:19:11 [restartedMain] - For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2025-03-01 15:19:13 [restartedMain] - Tomcat initialized with port 7110 (http)
+2025-03-01 15:19:13 [restartedMain] - Initializing ProtocolHandler ["http-nio-7110"]
+2025-03-01 15:19:13 [restartedMain] - Starting service [Tomcat]
+2025-03-01 15:19:13 [restartedMain] - Starting Servlet engine: [Apache Tomcat/10.1.34]
+2025-03-01 15:19:13 [restartedMain] - Initializing Spring embedded WebApplicationContext
+2025-03-01 15:19:13 [restartedMain] - Root WebApplicationContext: initialization completed in 1285 ms
+2025-03-01 15:19:13 [restartedMain] - Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'webSocketConfiguration' defined in file [C:\Didattica2025\qak25\conwaygui\build\classes\java\main\unibo\disi\conwaygui\ws\WebSocketConfiguration.class]: Unsatisfied dependency expressed through constructor parameter 0: No qualifying bean of type 'conway.devices.WSConwayguiLifeLocal' available: expected at least 1 bean which qualifies as autowire candidate. Dependency annotations: {}
+2025-03-01 15:19:13 [restartedMain] - Stopping service [Tomcat]
+2025-03-01 15:19:13 [restartedMain] - 
+
+Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
+2025-03-01 15:19:13 [restartedMain] - 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+Parameter 0 of constructor in unibo.disi.conwaygui.ws.WebSocketConfiguration required a bean of type 'conway.devices.WSConwayguiLifeLocal' that could not be found.
+
+
+Action:
+
+Consider defining a bean of type 'conway.devices.WSConwayguiLifeLocal' in your configuration.
+
+2025-03-01 15:21:20 [restartedMain] - Starting ConwayguiApplication using Java 17.0.5 with PID 67520 (C:\Didattica2025\qak25\conwaygui\build\classes\java\main started by utente in C:\Didattica2025\qak25\conwaygui)
+2025-03-01 15:21:20 [restartedMain] - No active profile set, falling back to 1 default profile: "default"
+2025-03-01 15:21:20 [restartedMain] - Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2025-03-01 15:21:20 [restartedMain] - For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2025-03-01 15:21:21 [restartedMain] - Tomcat initialized with port 7110 (http)
+2025-03-01 15:21:21 [restartedMain] - Initializing ProtocolHandler ["http-nio-7110"]
+2025-03-01 15:21:21 [restartedMain] - Starting service [Tomcat]
+2025-03-01 15:21:21 [restartedMain] - Starting Servlet engine: [Apache Tomcat/10.1.34]
+2025-03-01 15:21:21 [restartedMain] - Initializing Spring embedded WebApplicationContext
+2025-03-01 15:21:21 [restartedMain] - Root WebApplicationContext: initialization completed in 1229 ms
+2025-03-01 15:21:21 [restartedMain] - Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'webSocketConfiguration' defined in file [C:\Didattica2025\qak25\conwaygui\build\classes\java\main\unibo\disi\conwaygui\ws\WebSocketConfiguration.class]: Unsatisfied dependency expressed through constructor parameter 0: No qualifying bean of type 'conway.devices.WSConwayguiLifeLocal' available: expected at least 1 bean which qualifies as autowire candidate. Dependency annotations: {}
+2025-03-01 15:21:21 [restartedMain] - Stopping service [Tomcat]
+2025-03-01 15:21:21 [restartedMain] - 
+
+Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
+2025-03-01 15:21:22 [restartedMain] - 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+Parameter 0 of constructor in unibo.disi.conwaygui.ws.WebSocketConfiguration required a bean of type 'conway.devices.WSConwayguiLifeLocal' that could not be found.
+
+
+Action:
+
+Consider defining a bean of type 'conway.devices.WSConwayguiLifeLocal' in your configuration.
+
+2025-03-01 15:22:27 [restartedMain] - Starting ConwayguiApplication using Java 17.0.5 with PID 23560 (C:\Didattica2025\qak25\conwaygui\build\classes\java\main started by utente in C:\Didattica2025\qak25\conwaygui)
+2025-03-01 15:22:27 [restartedMain] - No active profile set, falling back to 1 default profile: "default"
+2025-03-01 15:22:27 [restartedMain] - Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2025-03-01 15:22:27 [restartedMain] - For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2025-03-01 15:22:28 [restartedMain] - Tomcat initialized with port 7110 (http)
+2025-03-01 15:22:28 [restartedMain] - Initializing ProtocolHandler ["http-nio-7110"]
+2025-03-01 15:22:28 [restartedMain] - Starting service [Tomcat]
+2025-03-01 15:22:28 [restartedMain] - Starting Servlet engine: [Apache Tomcat/10.1.34]
+2025-03-01 15:22:28 [restartedMain] - Initializing Spring embedded WebApplicationContext
+2025-03-01 15:22:28 [restartedMain] - Root WebApplicationContext: initialization completed in 1215 ms
+2025-03-01 15:22:28 [restartedMain] - Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'webSocketConfiguration' defined in file [C:\Didattica2025\qak25\conwaygui\build\classes\java\main\unibo\disi\conwaygui\ws\WebSocketConfiguration.class]: Unsatisfied dependency expressed through constructor parameter 0: No qualifying bean of type 'conway.devices.WSConwayguiLifeLocal' available: expected at least 1 bean which qualifies as autowire candidate. Dependency annotations: {}
+2025-03-01 15:22:28 [restartedMain] - Stopping service [Tomcat]
+2025-03-01 15:22:28 [restartedMain] - 
+
+Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
+2025-03-01 15:22:28 [restartedMain] - 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+Parameter 0 of constructor in unibo.disi.conwaygui.ws.WebSocketConfiguration required a bean of type 'conway.devices.WSConwayguiLifeLocal' that could not be found.
+
+
+Action:
+
+Consider defining a bean of type 'conway.devices.WSConwayguiLifeLocal' in your configuration.
+
+2025-03-01 15:23:06 [restartedMain] - Starting ConwayguiApplication using Java 17.0.5 with PID 55532 (C:\Didattica2025\qak25\conwaygui\build\classes\java\main started by utente in C:\Didattica2025\qak25\conwaygui)
+2025-03-01 15:23:06 [restartedMain] - No active profile set, falling back to 1 default profile: "default"
+2025-03-01 15:23:06 [restartedMain] - Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2025-03-01 15:23:06 [restartedMain] - For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2025-03-01 15:23:07 [restartedMain] - Tomcat initialized with port 7110 (http)
+2025-03-01 15:23:07 [restartedMain] - Initializing ProtocolHandler ["http-nio-7110"]
+2025-03-01 15:23:07 [restartedMain] - Starting service [Tomcat]
+2025-03-01 15:23:07 [restartedMain] - Starting Servlet engine: [Apache Tomcat/10.1.34]
+2025-03-01 15:23:07 [restartedMain] - Initializing Spring embedded WebApplicationContext
+2025-03-01 15:23:07 [restartedMain] - Root WebApplicationContext: initialization completed in 905 ms
+2025-03-01 15:23:07 [restartedMain] - Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'webSocketConfiguration' defined in file [C:\Didattica2025\qak25\conwaygui\build\classes\java\main\unibo\disi\conwaygui\ws\WebSocketConfiguration.class]: Unsatisfied dependency expressed through constructor parameter 0: No qualifying bean of type 'conway.devices.WSConwayguiLifeLocal' available: expected at least 1 bean which qualifies as autowire candidate. Dependency annotations: {}
+2025-03-01 15:23:07 [restartedMain] - Stopping service [Tomcat]
+2025-03-01 15:23:07 [restartedMain] - 
+
+Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
+2025-03-01 15:23:07 [restartedMain] - 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+Parameter 0 of constructor in unibo.disi.conwaygui.ws.WebSocketConfiguration required a bean of type 'conway.devices.WSConwayguiLifeLocal' that could not be found.
+
+
+Action:
+
+Consider defining a bean of type 'conway.devices.WSConwayguiLifeLocal' in your configuration.
+
+2025-03-01 15:24:46 [restartedMain] - Starting ConwayguiApplication using Java 17.0.5 with PID 58276 (C:\Didattica2025\qak25\conwaygui\build\classes\java\main started by utente in C:\Didattica2025\qak25\conwaygui)
+2025-03-01 15:24:46 [restartedMain] - No active profile set, falling back to 1 default profile: "default"
+2025-03-01 15:24:46 [restartedMain] - Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2025-03-01 15:24:46 [restartedMain] - For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2025-03-01 15:24:47 [restartedMain] - Tomcat initialized with port 7110 (http)
+2025-03-01 15:24:47 [restartedMain] - Initializing ProtocolHandler ["http-nio-7110"]
+2025-03-01 15:24:47 [restartedMain] - Starting service [Tomcat]
+2025-03-01 15:24:47 [restartedMain] - Starting Servlet engine: [Apache Tomcat/10.1.34]
+2025-03-01 15:24:47 [restartedMain] - Initializing Spring embedded WebApplicationContext
+2025-03-01 15:24:47 [restartedMain] - Root WebApplicationContext: initialization completed in 907 ms
+2025-03-01 15:24:47 [restartedMain] - Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'webSocketConfiguration' defined in file [C:\Didattica2025\qak25\conwaygui\build\classes\java\main\unibo\disi\conwaygui\ws\WebSocketConfiguration.class]: Unsatisfied dependency expressed through constructor parameter 0: No qualifying bean of type 'conway.devices.WSConwayguiLifeLocal' available: expected at least 1 bean which qualifies as autowire candidate. Dependency annotations: {}
+2025-03-01 15:24:47 [restartedMain] - Stopping service [Tomcat]
+2025-03-01 15:24:47 [restartedMain] - 
+
+Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
+2025-03-01 15:24:47 [restartedMain] - 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+Parameter 0 of constructor in unibo.disi.conwaygui.ws.WebSocketConfiguration required a bean of type 'conway.devices.WSConwayguiLifeLocal' that could not be found.
+
+
+Action:
+
+Consider defining a bean of type 'conway.devices.WSConwayguiLifeLocal' in your configuration.
+
+2025-03-01 15:27:25 [restartedMain] - Starting ConwayguiApplication using Java 17.0.5 with PID 69984 (C:\Didattica2025\qak25\conwaygui\build\classes\java\main started by utente in C:\Didattica2025\qak25\conwaygui)
+2025-03-01 15:27:25 [restartedMain] - No active profile set, falling back to 1 default profile: "default"
+2025-03-01 15:27:25 [restartedMain] - Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2025-03-01 15:27:25 [restartedMain] - For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2025-03-01 15:27:26 [restartedMain] - Tomcat initialized with port 7110 (http)
+2025-03-01 15:27:26 [restartedMain] - Initializing ProtocolHandler ["http-nio-7110"]
+2025-03-01 15:27:26 [restartedMain] - Starting service [Tomcat]
+2025-03-01 15:27:26 [restartedMain] - Starting Servlet engine: [Apache Tomcat/10.1.34]
+2025-03-01 15:27:26 [restartedMain] - Initializing Spring embedded WebApplicationContext
+2025-03-01 15:27:26 [restartedMain] - Root WebApplicationContext: initialization completed in 915 ms
+2025-03-01 15:27:26 [restartedMain] - Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'webSocketConfiguration' defined in file [C:\Didattica2025\qak25\conwaygui\build\classes\java\main\unibo\disi\conwaygui\ws\WebSocketConfiguration.class]: Unsatisfied dependency expressed through constructor parameter 0: No qualifying bean of type 'conway.devices.WSConwayguiLifeLocal' available: expected at least 1 bean which qualifies as autowire candidate. Dependency annotations: {}
+2025-03-01 15:27:26 [restartedMain] - Stopping service [Tomcat]
+2025-03-01 15:27:26 [restartedMain] - 
+
+Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
+2025-03-01 15:27:26 [restartedMain] - 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+Parameter 0 of constructor in unibo.disi.conwaygui.ws.WebSocketConfiguration required a bean of type 'conway.devices.WSConwayguiLifeLocal' that could not be found.
+
+
+Action:
+
+Consider defining a bean of type 'conway.devices.WSConwayguiLifeLocal' in your configuration.
+
+2025-03-01 15:27:52 [restartedMain] - Starting ConwayguiApplication using Java 17.0.5 with PID 57540 (C:\Didattica2025\qak25\conwaygui\build\classes\java\main started by utente in C:\Didattica2025\qak25\conwaygui)
+2025-03-01 15:27:52 [restartedMain] - No active profile set, falling back to 1 default profile: "default"
+2025-03-01 15:27:52 [restartedMain] - Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2025-03-01 15:27:52 [restartedMain] - For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2025-03-01 15:27:53 [restartedMain] - Tomcat initialized with port 7110 (http)
+2025-03-01 15:27:53 [restartedMain] - Initializing ProtocolHandler ["http-nio-7110"]
+2025-03-01 15:27:53 [restartedMain] - Starting service [Tomcat]
+2025-03-01 15:27:53 [restartedMain] - Starting Servlet engine: [Apache Tomcat/10.1.34]
+2025-03-01 15:27:53 [restartedMain] - Initializing Spring embedded WebApplicationContext
+2025-03-01 15:27:53 [restartedMain] - Root WebApplicationContext: initialization completed in 949 ms
+2025-03-01 15:27:53 [restartedMain] - Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'webSocketConfiguration' defined in file [C:\Didattica2025\qak25\conwaygui\build\classes\java\main\unibo\disi\conwaygui\ws\WebSocketConfiguration.class]: Unsatisfied dependency expressed through constructor parameter 0: No qualifying bean of type 'conway.devices.WSConwayguiLifeLocal' available: expected at least 1 bean which qualifies as autowire candidate. Dependency annotations: {}
+2025-03-01 15:27:53 [restartedMain] - Stopping service [Tomcat]
+2025-03-01 15:27:53 [restartedMain] - 
+
+Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
+2025-03-01 15:27:53 [restartedMain] - 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+Parameter 0 of constructor in unibo.disi.conwaygui.ws.WebSocketConfiguration required a bean of type 'conway.devices.WSConwayguiLifeLocal' that could not be found.
+
+
+Action:
+
+Consider defining a bean of type 'conway.devices.WSConwayguiLifeLocal' in your configuration.
+
+2025-03-01 15:34:43 [restartedMain] - Starting ConwayguiApplication using Java 17.0.5 with PID 65196 (C:\Didattica2025\qak25\conwaygui\build\classes\java\main started by utente in C:\Didattica2025\qak25\conwaygui)
+2025-03-01 15:34:43 [restartedMain] - No active profile set, falling back to 1 default profile: "default"
+2025-03-01 15:34:43 [restartedMain] - Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2025-03-01 15:34:43 [restartedMain] - For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2025-03-01 15:34:44 [restartedMain] - Tomcat initialized with port 7110 (http)
+2025-03-01 15:34:44 [restartedMain] - Initializing ProtocolHandler ["http-nio-7110"]
+2025-03-01 15:34:44 [restartedMain] - Starting service [Tomcat]
+2025-03-01 15:34:44 [restartedMain] - Starting Servlet engine: [Apache Tomcat/10.1.34]
+2025-03-01 15:34:44 [restartedMain] - Initializing Spring embedded WebApplicationContext
+2025-03-01 15:34:44 [restartedMain] - Root WebApplicationContext: initialization completed in 920 ms
+2025-03-01 15:34:44 [restartedMain] - Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'webSocketConfiguration' defined in file [C:\Didattica2025\qak25\conwaygui\build\classes\java\main\unibo\disi\conwaygui\ws\WebSocketConfiguration.class]: Unsatisfied dependency expressed through constructor parameter 0: No qualifying bean of type 'conway.devices.WSConwayguiLifeLocal' available: expected at least 1 bean which qualifies as autowire candidate. Dependency annotations: {}
+2025-03-01 15:34:44 [restartedMain] - Stopping service [Tomcat]
+2025-03-01 15:34:44 [restartedMain] - 
+
+Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
+2025-03-01 15:34:44 [restartedMain] - 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+Parameter 0 of constructor in unibo.disi.conwaygui.ws.WebSocketConfiguration required a bean of type 'conway.devices.WSConwayguiLifeLocal' that could not be found.
+
+
+Action:
+
+Consider defining a bean of type 'conway.devices.WSConwayguiLifeLocal' in your configuration.
+
+2025-03-01 15:35:51 [restartedMain] - Starting ConwayguiApplication using Java 17.0.5 with PID 37656 (C:\Didattica2025\qak25\conwaygui\build\classes\java\main started by utente in C:\Didattica2025\qak25\conwaygui)
+2025-03-01 15:35:51 [restartedMain] - No active profile set, falling back to 1 default profile: "default"
+2025-03-01 15:35:51 [restartedMain] - Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2025-03-01 15:35:51 [restartedMain] - For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2025-03-01 15:35:52 [restartedMain] - Tomcat initialized with port 7110 (http)
+2025-03-01 15:35:52 [restartedMain] - Initializing ProtocolHandler ["http-nio-7110"]
+2025-03-01 15:35:52 [restartedMain] - Starting service [Tomcat]
+2025-03-01 15:35:52 [restartedMain] - Starting Servlet engine: [Apache Tomcat/10.1.34]
+2025-03-01 15:35:52 [restartedMain] - Initializing Spring embedded WebApplicationContext
+2025-03-01 15:35:52 [restartedMain] - Root WebApplicationContext: initialization completed in 902 ms
+2025-03-01 15:35:52 [restartedMain] - Adding welcome page: class path resource [static/index.html]
+2025-03-01 15:35:53 [restartedMain] - LiveReload server is running on port 35729
+2025-03-01 15:35:53 [restartedMain] - Starting ProtocolHandler ["http-nio-7110"]
+2025-03-01 15:35:53 [restartedMain] - Tomcat started on port 7110 (http) with context path '/'
+2025-03-01 15:35:53 [restartedMain] - Started ConwayguiApplication in 1.637 seconds (process running for 2.118)
+2025-03-01 15:36:02 [http-nio-7110-exec-1] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-03-01 15:36:02 [http-nio-7110-exec-1] - Initializing Servlet 'dispatcherServlet'
+2025-03-01 15:36:02 [http-nio-7110-exec-1] - Completed initialization in 1 ms
+2025-03-01 15:36:06 [http-nio-7110-exec-9] - Closing session due to exception for StandardWebSocketSession[id=58946c41-cc2e-0472-504f-9012cd7e48fc, uri=ws://192.168.1.132:7110/wsupdates]
+java.lang.NullPointerException: Cannot invoke "conway.LifeController.swithCellState(int, int)" because "this.gameControl" is null
+	at conway.devices.WSConwayguiLifeLocal.elabMsg(WSConwayguiLifeLocal.java:113)
+	at conway.devices.WSConwayguiLifeLocal.handleTextMessage(WSConwayguiLifeLocal.java:92)
+	at org.springframework.web.socket.handler.AbstractWebSocketHandler.handleMessage(AbstractWebSocketHandler.java:43)
+	at org.springframework.web.socket.handler.WebSocketHandlerDecorator.handleMessage(WebSocketHandlerDecorator.java:75)
+	at org.springframework.web.socket.handler.LoggingWebSocketHandlerDecorator.handleMessage(LoggingWebSocketHandlerDecorator.java:56)
+	at org.springframework.web.socket.handler.ExceptionWebSocketHandlerDecorator.handleMessage(ExceptionWebSocketHandlerDecorator.java:58)
+	at org.springframework.web.socket.adapter.standard.StandardWebSocketHandlerAdapter.handleTextMessage(StandardWebSocketHandlerAdapter.java:113)
+	at org.springframework.web.socket.adapter.standard.StandardWebSocketHandlerAdapter$3.onMessage(StandardWebSocketHandlerAdapter.java:84)
+	at org.springframework.web.socket.adapter.standard.StandardWebSocketHandlerAdapter$3.onMessage(StandardWebSocketHandlerAdapter.java:81)
+	at org.apache.tomcat.websocket.WsFrameBase.sendMessageText(WsFrameBase.java:390)
+	at org.apache.tomcat.websocket.server.WsFrameServer.sendMessageText(WsFrameServer.java:130)
+	at org.apache.tomcat.websocket.WsFrameBase.processDataText(WsFrameBase.java:484)
+	at org.apache.tomcat.websocket.WsFrameBase.processData(WsFrameBase.java:284)
+	at org.apache.tomcat.websocket.WsFrameBase.processInputBuffer(WsFrameBase.java:130)
+	at org.apache.tomcat.websocket.server.WsFrameServer.onDataAvailable(WsFrameServer.java:85)
+	at org.apache.tomcat.websocket.server.WsFrameServer.doOnDataAvailable(WsFrameServer.java:184)
+	at org.apache.tomcat.websocket.server.WsFrameServer.notifyDataAvailable(WsFrameServer.java:164)
+	at org.apache.tomcat.websocket.server.WsHttpUpgradeHandler.upgradeDispatch(WsHttpUpgradeHandler.java:152)
+	at org.apache.coyote.http11.upgrade.UpgradeProcessorInternal.dispatch(UpgradeProcessorInternal.java:60)
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:57)
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:905)
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1741)
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1190)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659)
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:63)
+	at java.base/java.lang.Thread.run(Thread.java:833)
+2025-03-01 15:37:45 [restartedMain] - Starting ConwayguiApplication using Java 17.0.5 with PID 64408 (C:\Didattica2025\qak25\conwaygui\build\classes\java\main started by utente in C:\Didattica2025\qak25\conwaygui)
+2025-03-01 15:37:45 [restartedMain] - No active profile set, falling back to 1 default profile: "default"
+2025-03-01 15:37:45 [restartedMain] - Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2025-03-01 15:37:45 [restartedMain] - For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2025-03-01 15:37:46 [restartedMain] - Tomcat initialized with port 7110 (http)
+2025-03-01 15:37:46 [restartedMain] - Initializing ProtocolHandler ["http-nio-7110"]
+2025-03-01 15:37:46 [restartedMain] - Starting service [Tomcat]
+2025-03-01 15:37:46 [restartedMain] - Starting Servlet engine: [Apache Tomcat/10.1.34]
+2025-03-01 15:37:46 [restartedMain] - Initializing Spring embedded WebApplicationContext
+2025-03-01 15:37:46 [restartedMain] - Root WebApplicationContext: initialization completed in 900 ms
+2025-03-01 15:37:46 [restartedMain] - Adding welcome page: class path resource [static/index.html]
+2025-03-01 15:37:46 [restartedMain] - LiveReload server is running on port 35729
+2025-03-01 15:37:46 [restartedMain] - Starting ProtocolHandler ["http-nio-7110"]
+2025-03-01 15:37:46 [restartedMain] - Tomcat started on port 7110 (http) with context path '/'
+2025-03-01 15:37:46 [restartedMain] - Started ConwayguiApplication in 1.669 seconds (process running for 2.141)
+2025-03-01 15:37:54 [http-nio-7110-exec-1] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-03-01 15:37:54 [http-nio-7110-exec-1] - Initializing Servlet 'dispatcherServlet'
+2025-03-01 15:37:54 [http-nio-7110-exec-1] - Completed initialization in 1 ms
+2025-03-01 15:37:58 [http-nio-7110-exec-7] - Closing session due to exception for StandardWebSocketSession[id=6c3fa2c1-37d5-f032-a0cf-17e3c61a0491, uri=ws://192.168.1.132:7110/wsupdates]
+java.lang.NullPointerException: Cannot invoke "conway.LifeController.swithCellState(int, int)" because "this.gameControl" is null
+	at conway.devices.WSConwayguiLifeLocal.elabMsg(WSConwayguiLifeLocal.java:113)
+	at conway.devices.WSConwayguiLifeLocal.handleTextMessage(WSConwayguiLifeLocal.java:92)
+	at org.springframework.web.socket.handler.AbstractWebSocketHandler.handleMessage(AbstractWebSocketHandler.java:43)
+	at org.springframework.web.socket.handler.WebSocketHandlerDecorator.handleMessage(WebSocketHandlerDecorator.java:75)
+	at org.springframework.web.socket.handler.LoggingWebSocketHandlerDecorator.handleMessage(LoggingWebSocketHandlerDecorator.java:56)
+	at org.springframework.web.socket.handler.ExceptionWebSocketHandlerDecorator.handleMessage(ExceptionWebSocketHandlerDecorator.java:58)
+	at org.springframework.web.socket.adapter.standard.StandardWebSocketHandlerAdapter.handleTextMessage(StandardWebSocketHandlerAdapter.java:113)
+	at org.springframework.web.socket.adapter.standard.StandardWebSocketHandlerAdapter$3.onMessage(StandardWebSocketHandlerAdapter.java:84)
+	at org.springframework.web.socket.adapter.standard.StandardWebSocketHandlerAdapter$3.onMessage(StandardWebSocketHandlerAdapter.java:81)
+	at org.apache.tomcat.websocket.WsFrameBase.sendMessageText(WsFrameBase.java:390)
+	at org.apache.tomcat.websocket.server.WsFrameServer.sendMessageText(WsFrameServer.java:130)
+	at org.apache.tomcat.websocket.WsFrameBase.processDataText(WsFrameBase.java:484)
+	at org.apache.tomcat.websocket.WsFrameBase.processData(WsFrameBase.java:284)
+	at org.apache.tomcat.websocket.WsFrameBase.processInputBuffer(WsFrameBase.java:130)
+	at org.apache.tomcat.websocket.server.WsFrameServer.onDataAvailable(WsFrameServer.java:85)
+	at org.apache.tomcat.websocket.server.WsFrameServer.doOnDataAvailable(WsFrameServer.java:184)
+	at org.apache.tomcat.websocket.server.WsFrameServer.notifyDataAvailable(WsFrameServer.java:164)
+	at org.apache.tomcat.websocket.server.WsHttpUpgradeHandler.upgradeDispatch(WsHttpUpgradeHandler.java:152)
+	at org.apache.coyote.http11.upgrade.UpgradeProcessorInternal.dispatch(UpgradeProcessorInternal.java:60)
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:57)
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:905)
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1741)
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1190)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659)
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:63)
+	at java.base/java.lang.Thread.run(Thread.java:833)
+2025-03-01 15:38:54 [restartedMain] - Starting ConwayguiApplication using Java 17.0.5 with PID 68484 (C:\Didattica2025\qak25\conwaygui\build\classes\java\main started by utente in C:\Didattica2025\qak25\conwaygui)
+2025-03-01 15:38:54 [restartedMain] - No active profile set, falling back to 1 default profile: "default"
+2025-03-01 15:38:54 [restartedMain] - Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2025-03-01 15:38:54 [restartedMain] - For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2025-03-01 15:38:55 [restartedMain] - Tomcat initialized with port 7110 (http)
+2025-03-01 15:38:55 [restartedMain] - Initializing ProtocolHandler ["http-nio-7110"]
+2025-03-01 15:38:55 [restartedMain] - Starting service [Tomcat]
+2025-03-01 15:38:55 [restartedMain] - Starting Servlet engine: [Apache Tomcat/10.1.34]
+2025-03-01 15:38:55 [restartedMain] - Initializing Spring embedded WebApplicationContext
+2025-03-01 15:38:55 [restartedMain] - Root WebApplicationContext: initialization completed in 903 ms
+2025-03-01 15:38:55 [restartedMain] - Adding welcome page: class path resource [static/index.html]
+2025-03-01 15:38:55 [restartedMain] - LiveReload server is running on port 35729
+2025-03-01 15:38:55 [restartedMain] - Starting ProtocolHandler ["http-nio-7110"]
+2025-03-01 15:38:55 [restartedMain] - Tomcat started on port 7110 (http) with context path '/'
+2025-03-01 15:38:55 [restartedMain] - Started ConwayguiApplication in 1.637 seconds (process running for 2.117)
+2025-03-01 15:39:00 [http-nio-7110-exec-1] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-03-01 15:39:00 [http-nio-7110-exec-1] - Initializing Servlet 'dispatcherServlet'
+2025-03-01 15:39:00 [http-nio-7110-exec-1] - Completed initialization in 1 ms
+2025-03-01 15:39:06 [http-nio-7110-exec-10] - Closing session due to exception for StandardWebSocketSession[id=b7ceaec2-f721-fb24-52f7-8a6b44647d28, uri=ws://192.168.1.132:7110/wsupdates]
+java.lang.NullPointerException: Cannot invoke "conway.LifeController.clearTheGame()" because "this.gameControl" is null
+	at conway.devices.WSConwayguiLifeLocal.elabMsg(WSConwayguiLifeLocal.java:107)
+	at conway.devices.WSConwayguiLifeLocal.handleTextMessage(WSConwayguiLifeLocal.java:92)
+	at org.springframework.web.socket.handler.AbstractWebSocketHandler.handleMessage(AbstractWebSocketHandler.java:43)
+	at org.springframework.web.socket.handler.WebSocketHandlerDecorator.handleMessage(WebSocketHandlerDecorator.java:75)
+	at org.springframework.web.socket.handler.LoggingWebSocketHandlerDecorator.handleMessage(LoggingWebSocketHandlerDecorator.java:56)
+	at org.springframework.web.socket.handler.ExceptionWebSocketHandlerDecorator.handleMessage(ExceptionWebSocketHandlerDecorator.java:58)
+	at org.springframework.web.socket.adapter.standard.StandardWebSocketHandlerAdapter.handleTextMessage(StandardWebSocketHandlerAdapter.java:113)
+	at org.springframework.web.socket.adapter.standard.StandardWebSocketHandlerAdapter$3.onMessage(StandardWebSocketHandlerAdapter.java:84)
+	at org.springframework.web.socket.adapter.standard.StandardWebSocketHandlerAdapter$3.onMessage(StandardWebSocketHandlerAdapter.java:81)
+	at org.apache.tomcat.websocket.WsFrameBase.sendMessageText(WsFrameBase.java:390)
+	at org.apache.tomcat.websocket.server.WsFrameServer.sendMessageText(WsFrameServer.java:130)
+	at org.apache.tomcat.websocket.WsFrameBase.processDataText(WsFrameBase.java:484)
+	at org.apache.tomcat.websocket.WsFrameBase.processData(WsFrameBase.java:284)
+	at org.apache.tomcat.websocket.WsFrameBase.processInputBuffer(WsFrameBase.java:130)
+	at org.apache.tomcat.websocket.server.WsFrameServer.onDataAvailable(WsFrameServer.java:85)
+	at org.apache.tomcat.websocket.server.WsFrameServer.doOnDataAvailable(WsFrameServer.java:184)
+	at org.apache.tomcat.websocket.server.WsFrameServer.notifyDataAvailable(WsFrameServer.java:164)
+	at org.apache.tomcat.websocket.server.WsHttpUpgradeHandler.upgradeDispatch(WsHttpUpgradeHandler.java:152)
+	at org.apache.coyote.http11.upgrade.UpgradeProcessorInternal.dispatch(UpgradeProcessorInternal.java:60)
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:57)
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:905)
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1741)
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1190)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659)
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:63)
+	at java.base/java.lang.Thread.run(Thread.java:833)
+2025-03-01 15:41:40 [restartedMain] - Starting ConwayguiApplication using Java 17.0.5 with PID 68440 (C:\Didattica2025\qak25\conwaygui\build\classes\java\main started by utente in C:\Didattica2025\qak25\conwaygui)
+2025-03-01 15:41:40 [restartedMain] - No active profile set, falling back to 1 default profile: "default"
+2025-03-01 15:41:40 [restartedMain] - Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2025-03-01 15:41:40 [restartedMain] - For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2025-03-01 15:41:41 [restartedMain] - Tomcat initialized with port 7110 (http)
+2025-03-01 15:41:41 [restartedMain] - Initializing ProtocolHandler ["http-nio-7110"]
+2025-03-01 15:41:41 [restartedMain] - Starting service [Tomcat]
+2025-03-01 15:41:41 [restartedMain] - Starting Servlet engine: [Apache Tomcat/10.1.34]
+2025-03-01 15:41:41 [restartedMain] - Initializing Spring embedded WebApplicationContext
+2025-03-01 15:41:41 [restartedMain] - Root WebApplicationContext: initialization completed in 1171 ms
+2025-03-01 15:41:41 [restartedMain] - Adding welcome page: class path resource [static/index.html]
+2025-03-01 15:41:42 [restartedMain] - LiveReload server is running on port 35729
+2025-03-01 15:41:42 [restartedMain] - Starting ProtocolHandler ["http-nio-7110"]
+2025-03-01 15:41:42 [restartedMain] - Tomcat started on port 7110 (http) with context path '/'
+2025-03-01 15:41:42 [restartedMain] - Started ConwayguiApplication in 2.138 seconds (process running for 2.814)
+2025-03-01 15:41:45 [http-nio-7110-exec-1] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-03-01 15:41:45 [http-nio-7110-exec-1] - Initializing Servlet 'dispatcherServlet'
+2025-03-01 15:41:45 [http-nio-7110-exec-1] - Completed initialization in 0 ms
+2025-03-01 15:45:57 [restartedMain] - Starting ConwayguiApplication using Java 17.0.5 with PID 61656 (C:\Didattica2025\qak25\conwaygui\build\classes\java\main started by utente in C:\Didattica2025\qak25\conwaygui)
+2025-03-01 15:45:57 [restartedMain] - No active profile set, falling back to 1 default profile: "default"
+2025-03-01 15:45:57 [restartedMain] - Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2025-03-01 15:45:57 [restartedMain] - For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2025-03-01 15:45:57 [restartedMain] - Tomcat initialized with port 7110 (http)
+2025-03-01 15:45:57 [restartedMain] - Initializing ProtocolHandler ["http-nio-7110"]
+2025-03-01 15:45:57 [restartedMain] - Starting service [Tomcat]
+2025-03-01 15:45:57 [restartedMain] - Starting Servlet engine: [Apache Tomcat/10.1.34]
+2025-03-01 15:45:57 [restartedMain] - Initializing Spring embedded WebApplicationContext
+2025-03-01 15:45:57 [restartedMain] - Root WebApplicationContext: initialization completed in 890 ms
+2025-03-01 15:45:58 [restartedMain] - Adding welcome page: class path resource [static/index.html]
+2025-03-01 15:45:58 [restartedMain] - LiveReload server is running on port 35729
+2025-03-01 15:45:58 [restartedMain] - Starting ProtocolHandler ["http-nio-7110"]
+2025-03-01 15:45:58 [restartedMain] - Tomcat started on port 7110 (http) with context path '/'
+2025-03-01 15:45:58 [restartedMain] - Started ConwayguiApplication in 1.624 seconds (process running for 2.101)
+2025-03-01 15:46:05 [http-nio-7110-exec-1] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-03-01 15:46:05 [http-nio-7110-exec-1] - Initializing Servlet 'dispatcherServlet'
+2025-03-01 15:46:05 [http-nio-7110-exec-1] - Completed initialization in 1 ms
+2025-03-01 15:48:33 [restartedMain] - Starting ConwayguiApplication using Java 17.0.5 with PID 65672 (C:\Didattica2025\qak25\conwaygui\build\classes\java\main started by utente in C:\Didattica2025\qak25\conwaygui)
+2025-03-01 15:48:33 [restartedMain] - No active profile set, falling back to 1 default profile: "default"
+2025-03-01 15:48:33 [restartedMain] - Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2025-03-01 15:48:33 [restartedMain] - For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2025-03-01 15:48:34 [restartedMain] - Tomcat initialized with port 7110 (http)
+2025-03-01 15:48:34 [restartedMain] - Initializing ProtocolHandler ["http-nio-7110"]
+2025-03-01 15:48:34 [restartedMain] - Starting service [Tomcat]
+2025-03-01 15:48:34 [restartedMain] - Starting Servlet engine: [Apache Tomcat/10.1.34]
+2025-03-01 15:48:34 [restartedMain] - Initializing Spring embedded WebApplicationContext
+2025-03-01 15:48:34 [restartedMain] - Root WebApplicationContext: initialization completed in 898 ms
+2025-03-01 15:48:34 [restartedMain] - Adding welcome page: class path resource [static/index.html]
+2025-03-01 15:48:34 [restartedMain] - LiveReload server is running on port 35729
+2025-03-01 15:48:34 [restartedMain] - Starting ProtocolHandler ["http-nio-7110"]
+2025-03-01 15:48:34 [restartedMain] - Tomcat started on port 7110 (http) with context path '/'
+2025-03-01 15:48:34 [restartedMain] - Started ConwayguiApplication in 1.592 seconds (process running for 2.074)
+2025-03-01 15:48:39 [http-nio-7110-exec-1] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-03-01 15:48:39 [http-nio-7110-exec-1] - Initializing Servlet 'dispatcherServlet'
+2025-03-01 15:48:39 [http-nio-7110-exec-1] - Completed initialization in 1 ms
+2025-03-01 15:49:15 [SpringApplicationShutdownHook] - Commencing graceful shutdown. Waiting for active requests to complete
+2025-03-01 15:49:15 [tomcat-shutdown] - Graceful shutdown complete
+2025-03-01 15:51:39 [restartedMain] - Starting ConwayguiApplication using Java 17.0.5 with PID 72128 (C:\Didattica2025\qak25\conwaygui\build\classes\java\main started by utente in C:\Didattica2025\qak25\conwaygui)
+2025-03-01 15:51:39 [restartedMain] - No active profile set, falling back to 1 default profile: "default"
+2025-03-01 15:51:39 [restartedMain] - Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2025-03-01 15:51:39 [restartedMain] - For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2025-03-01 15:51:40 [restartedMain] - Tomcat initialized with port 7110 (http)
+2025-03-01 15:51:40 [restartedMain] - Initializing ProtocolHandler ["http-nio-7110"]
+2025-03-01 15:51:40 [restartedMain] - Starting service [Tomcat]
+2025-03-01 15:51:40 [restartedMain] - Starting Servlet engine: [Apache Tomcat/10.1.34]
+2025-03-01 15:51:40 [restartedMain] - Initializing Spring embedded WebApplicationContext
+2025-03-01 15:51:40 [restartedMain] - Root WebApplicationContext: initialization completed in 974 ms
+2025-03-01 15:51:40 [restartedMain] - Adding welcome page: class path resource [static/index.html]
+2025-03-01 15:51:40 [restartedMain] - LiveReload server is running on port 35729
+2025-03-01 15:51:40 [restartedMain] - Starting ProtocolHandler ["http-nio-7110"]
+2025-03-01 15:51:40 [restartedMain] - Tomcat started on port 7110 (http) with context path '/'
+2025-03-01 15:51:40 [restartedMain] - Started ConwayguiApplication in 1.704 seconds (process running for 2.215)
+2025-03-01 15:51:41 [http-nio-7110-exec-1] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-03-01 15:51:41 [http-nio-7110-exec-1] - Initializing Servlet 'dispatcherServlet'
+2025-03-01 15:51:41 [http-nio-7110-exec-1] - Completed initialization in 1 ms
+2025-03-01 15:52:44 [restartedMain] - Starting ConwayguiApplication using Java 17.0.5 with PID 72448 (C:\Didattica2025\qak25\conwaygui\build\classes\java\main started by utente in C:\Didattica2025\qak25\conwaygui)
+2025-03-01 15:52:44 [restartedMain] - No active profile set, falling back to 1 default profile: "default"
+2025-03-01 15:52:44 [restartedMain] - Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2025-03-01 15:52:44 [restartedMain] - For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2025-03-01 15:52:45 [restartedMain] - Tomcat initialized with port 7110 (http)
+2025-03-01 15:52:45 [restartedMain] - Initializing ProtocolHandler ["http-nio-7110"]
+2025-03-01 15:52:45 [restartedMain] - Starting service [Tomcat]
+2025-03-01 15:52:45 [restartedMain] - Starting Servlet engine: [Apache Tomcat/10.1.34]
+2025-03-01 15:52:45 [restartedMain] - Initializing Spring embedded WebApplicationContext
+2025-03-01 15:52:45 [restartedMain] - Root WebApplicationContext: initialization completed in 876 ms
+2025-03-01 15:52:45 [restartedMain] - Adding welcome page: class path resource [static/index.html]
+2025-03-01 15:52:45 [restartedMain] - LiveReload server is running on port 35729
+2025-03-01 15:52:45 [restartedMain] - Starting ProtocolHandler ["http-nio-7110"]
+2025-03-01 15:52:45 [restartedMain] - Tomcat started on port 7110 (http) with context path '/'
+2025-03-01 15:52:45 [restartedMain] - Started ConwayguiApplication in 1.599 seconds (process running for 2.084)
+2025-03-01 15:54:09 [restartedMain] - Starting ConwayguiApplication using Java 17.0.5 with PID 70152 (C:\Didattica2025\qak25\conwaygui\build\classes\java\main started by utente in C:\Didattica2025\qak25\conwaygui)
+2025-03-01 15:54:09 [restartedMain] - No active profile set, falling back to 1 default profile: "default"
+2025-03-01 15:54:09 [restartedMain] - Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2025-03-01 15:54:09 [restartedMain] - For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2025-03-01 15:54:10 [restartedMain] - Tomcat initialized with port 7110 (http)
+2025-03-01 15:54:10 [restartedMain] - Initializing ProtocolHandler ["http-nio-7110"]
+2025-03-01 15:54:10 [restartedMain] - Starting service [Tomcat]
+2025-03-01 15:54:10 [restartedMain] - Starting Servlet engine: [Apache Tomcat/10.1.34]
+2025-03-01 15:54:10 [restartedMain] - Initializing Spring embedded WebApplicationContext
+2025-03-01 15:54:10 [restartedMain] - Root WebApplicationContext: initialization completed in 920 ms
+2025-03-01 15:54:10 [restartedMain] - Adding welcome page: class path resource [static/index.html]
+2025-03-01 15:54:11 [restartedMain] - LiveReload server is running on port 35729
+2025-03-01 15:54:11 [restartedMain] - Starting ProtocolHandler ["http-nio-7110"]
+2025-03-01 15:54:11 [restartedMain] - Tomcat started on port 7110 (http) with context path '/'
+2025-03-01 15:54:11 [restartedMain] - Started ConwayguiApplication in 1.727 seconds (process running for 2.256)
+2025-03-01 15:58:04 [restartedMain] - Starting ConwayguiApplication using Java 17.0.5 with PID 62204 (C:\Didattica2025\qak25\conwaygui\build\classes\java\main started by utente in C:\Didattica2025\qak25\conwaygui)
+2025-03-01 15:58:04 [restartedMain] - No active profile set, falling back to 1 default profile: "default"
+2025-03-01 15:58:04 [restartedMain] - Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2025-03-01 15:58:04 [restartedMain] - For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2025-03-01 15:58:04 [restartedMain] - Tomcat initialized with port 7110 (http)
+2025-03-01 15:58:04 [restartedMain] - Initializing ProtocolHandler ["http-nio-7110"]
+2025-03-01 15:58:04 [restartedMain] - Starting service [Tomcat]
+2025-03-01 15:58:04 [restartedMain] - Starting Servlet engine: [Apache Tomcat/10.1.34]
+2025-03-01 15:58:05 [restartedMain] - Initializing Spring embedded WebApplicationContext
+2025-03-01 15:58:05 [restartedMain] - Root WebApplicationContext: initialization completed in 886 ms
+2025-03-01 15:58:05 [restartedMain] - Adding welcome page: class path resource [static/index.html]
+2025-03-01 15:58:05 [restartedMain] - LiveReload server is running on port 35729
+2025-03-01 15:58:05 [restartedMain] - Starting ProtocolHandler ["http-nio-7110"]
+2025-03-01 15:58:05 [restartedMain] - Tomcat started on port 7110 (http) with context path '/'
+2025-03-01 15:58:05 [restartedMain] - Started ConwayguiApplication in 1.617 seconds (process running for 2.091)
+2025-03-01 15:59:59 [restartedMain] - Starting ConwayguiApplication using Java 17.0.5 with PID 59424 (C:\Didattica2025\qak25\conwaygui\build\classes\java\main started by utente in C:\Didattica2025\qak25\conwaygui)
+2025-03-01 15:59:59 [restartedMain] - No active profile set, falling back to 1 default profile: "default"
+2025-03-01 15:59:59 [restartedMain] - Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2025-03-01 15:59:59 [restartedMain] - For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2025-03-01 16:00:00 [restartedMain] - Tomcat initialized with port 7110 (http)
+2025-03-01 16:00:00 [restartedMain] - Initializing ProtocolHandler ["http-nio-7110"]
+2025-03-01 16:00:00 [restartedMain] - Starting service [Tomcat]
+2025-03-01 16:00:00 [restartedMain] - Starting Servlet engine: [Apache Tomcat/10.1.34]
+2025-03-01 16:00:00 [restartedMain] - Initializing Spring embedded WebApplicationContext
+2025-03-01 16:00:00 [restartedMain] - Root WebApplicationContext: initialization completed in 881 ms
+2025-03-01 16:00:00 [restartedMain] - Adding welcome page: class path resource [static/index.html]
+2025-03-01 16:00:00 [restartedMain] - LiveReload server is running on port 35729
+2025-03-01 16:00:00 [restartedMain] - Starting ProtocolHandler ["http-nio-7110"]
+2025-03-01 16:00:00 [restartedMain] - Tomcat started on port 7110 (http) with context path '/'
+2025-03-01 16:00:00 [restartedMain] - Started ConwayguiApplication in 1.602 seconds (process running for 2.115)
+2025-03-01 16:01:34 [restartedMain] - Starting ConwayguiApplication using Java 17.0.5 with PID 56420 (C:\Didattica2025\qak25\conwaygui\build\classes\java\main started by utente in C:\Didattica2025\qak25\conwaygui)
+2025-03-01 16:01:34 [restartedMain] - No active profile set, falling back to 1 default profile: "default"
+2025-03-01 16:01:34 [restartedMain] - Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2025-03-01 16:01:34 [restartedMain] - For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2025-03-01 16:01:35 [restartedMain] - Tomcat initialized with port 7110 (http)
+2025-03-01 16:01:35 [restartedMain] - Initializing ProtocolHandler ["http-nio-7110"]
+2025-03-01 16:01:35 [restartedMain] - Starting service [Tomcat]
+2025-03-01 16:01:35 [restartedMain] - Starting Servlet engine: [Apache Tomcat/10.1.34]
+2025-03-01 16:01:35 [restartedMain] - Initializing Spring embedded WebApplicationContext
+2025-03-01 16:01:35 [restartedMain] - Root WebApplicationContext: initialization completed in 871 ms
+2025-03-01 16:01:35 [restartedMain] - Adding welcome page: class path resource [static/index.html]
+2025-03-01 16:01:35 [restartedMain] - LiveReload server is running on port 35729
+2025-03-01 16:01:35 [restartedMain] - Starting ProtocolHandler ["http-nio-7110"]
+2025-03-01 16:01:35 [restartedMain] - Tomcat started on port 7110 (http) with context path '/'
+2025-03-01 16:01:35 [restartedMain] - Started ConwayguiApplication in 1.612 seconds (process running for 2.112)
+2025-03-01 16:02:43 [restartedMain] - Starting ConwayguiApplication using Java 17.0.5 with PID 20024 (C:\Didattica2025\qak25\conwaygui\build\classes\java\main started by utente in C:\Didattica2025\qak25\conwaygui)
+2025-03-01 16:02:43 [restartedMain] - No active profile set, falling back to 1 default profile: "default"
+2025-03-01 16:02:43 [restartedMain] - Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2025-03-01 16:02:43 [restartedMain] - For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2025-03-01 16:02:44 [restartedMain] - Tomcat initialized with port 7110 (http)
+2025-03-01 16:02:44 [restartedMain] - Initializing ProtocolHandler ["http-nio-7110"]
+2025-03-01 16:02:44 [restartedMain] - Starting service [Tomcat]
+2025-03-01 16:02:44 [restartedMain] - Starting Servlet engine: [Apache Tomcat/10.1.34]
+2025-03-01 16:02:44 [restartedMain] - Initializing Spring embedded WebApplicationContext
+2025-03-01 16:02:44 [restartedMain] - Root WebApplicationContext: initialization completed in 884 ms
+2025-03-01 16:02:44 [restartedMain] - Adding welcome page: class path resource [static/index.html]
+2025-03-01 16:02:44 [restartedMain] - LiveReload server is running on port 35729
+2025-03-01 16:02:44 [restartedMain] - Starting ProtocolHandler ["http-nio-7110"]
+2025-03-01 16:02:44 [restartedMain] - Tomcat started on port 7110 (http) with context path '/'
+2025-03-01 16:02:44 [restartedMain] - Started ConwayguiApplication in 1.58 seconds (process running for 2.111)
+2025-03-01 16:02:53 [http-nio-7110-exec-1] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-03-01 16:02:53 [http-nio-7110-exec-1] - Initializing Servlet 'dispatcherServlet'
+2025-03-01 16:02:53 [http-nio-7110-exec-1] - Completed initialization in 0 ms
+2025-03-01 16:04:33 [restartedMain] - Starting ConwayguiApplication using Java 17.0.5 with PID 69152 (C:\Didattica2025\qak25\conwaygui\build\classes\java\main started by utente in C:\Didattica2025\qak25\conwaygui)
+2025-03-01 16:04:33 [restartedMain] - No active profile set, falling back to 1 default profile: "default"
+2025-03-01 16:04:33 [restartedMain] - Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2025-03-01 16:04:33 [restartedMain] - For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2025-03-01 16:04:34 [restartedMain] - Tomcat initialized with port 7110 (http)
+2025-03-01 16:04:34 [restartedMain] - Initializing ProtocolHandler ["http-nio-7110"]
+2025-03-01 16:04:34 [restartedMain] - Starting service [Tomcat]
+2025-03-01 16:04:34 [restartedMain] - Starting Servlet engine: [Apache Tomcat/10.1.34]
+2025-03-01 16:04:34 [restartedMain] - Initializing Spring embedded WebApplicationContext
+2025-03-01 16:04:34 [restartedMain] - Root WebApplicationContext: initialization completed in 973 ms
+2025-03-01 16:04:34 [restartedMain] - Adding welcome page: class path resource [static/index.html]
+2025-03-01 16:04:35 [restartedMain] - LiveReload server is running on port 35729
+2025-03-01 16:04:35 [restartedMain] - Starting ProtocolHandler ["http-nio-7110"]
+2025-03-01 16:04:35 [restartedMain] - Tomcat started on port 7110 (http) with context path '/'
+2025-03-01 16:04:35 [restartedMain] - Started ConwayguiApplication in 1.734 seconds (process running for 2.211)
+2025-03-01 16:04:41 [http-nio-7110-exec-1] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-03-01 16:04:41 [http-nio-7110-exec-1] - Initializing Servlet 'dispatcherServlet'
+2025-03-01 16:04:41 [http-nio-7110-exec-1] - Completed initialization in 1 ms
+2025-03-01 16:05:28 [restartedMain] - Starting ConwayguiApplication using Java 17.0.5 with PID 49444 (C:\Didattica2025\qak25\conwaygui\build\classes\java\main started by utente in C:\Didattica2025\qak25\conwaygui)
+2025-03-01 16:05:28 [restartedMain] - No active profile set, falling back to 1 default profile: "default"
+2025-03-01 16:05:28 [restartedMain] - Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2025-03-01 16:05:28 [restartedMain] - For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2025-03-01 16:05:29 [restartedMain] - Tomcat initialized with port 7110 (http)
+2025-03-01 16:05:29 [restartedMain] - Initializing ProtocolHandler ["http-nio-7110"]
+2025-03-01 16:05:29 [restartedMain] - Starting service [Tomcat]
+2025-03-01 16:05:29 [restartedMain] - Starting Servlet engine: [Apache Tomcat/10.1.34]
+2025-03-01 16:05:29 [restartedMain] - Initializing Spring embedded WebApplicationContext
+2025-03-01 16:05:29 [restartedMain] - Root WebApplicationContext: initialization completed in 912 ms
+2025-03-01 16:05:29 [restartedMain] - Adding welcome page: class path resource [static/index.html]
+2025-03-01 16:05:29 [restartedMain] - LiveReload server is running on port 35729
+2025-03-01 16:05:29 [restartedMain] - Starting ProtocolHandler ["http-nio-7110"]
+2025-03-01 16:05:29 [restartedMain] - Tomcat started on port 7110 (http) with context path '/'
+2025-03-01 16:05:29 [restartedMain] - Started ConwayguiApplication in 1.61 seconds (process running for 2.099)
+2025-03-01 16:05:35 [http-nio-7110-exec-1] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-03-01 16:05:35 [http-nio-7110-exec-1] - Initializing Servlet 'dispatcherServlet'
+2025-03-01 16:05:35 [http-nio-7110-exec-1] - Completed initialization in 1 ms
+2025-03-01 16:07:57 [restartedMain] - Starting ConwayguiApplication using Java 17.0.5 with PID 35772 (C:\Didattica2025\qak25\conwaygui\build\classes\java\main started by utente in C:\Didattica2025\qak25\conwaygui)
+2025-03-01 16:07:57 [restartedMain] - No active profile set, falling back to 1 default profile: "default"
+2025-03-01 16:07:57 [restartedMain] - Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2025-03-01 16:07:57 [restartedMain] - For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2025-03-01 16:07:58 [restartedMain] - Tomcat initialized with port 7110 (http)
+2025-03-01 16:07:58 [restartedMain] - Initializing ProtocolHandler ["http-nio-7110"]
+2025-03-01 16:07:58 [restartedMain] - Starting service [Tomcat]
+2025-03-01 16:07:58 [restartedMain] - Starting Servlet engine: [Apache Tomcat/10.1.34]
+2025-03-01 16:07:58 [restartedMain] - Initializing Spring embedded WebApplicationContext
+2025-03-01 16:07:58 [restartedMain] - Root WebApplicationContext: initialization completed in 896 ms
+2025-03-01 16:07:58 [restartedMain] - Adding welcome page: class path resource [static/index.html]
+2025-03-01 16:07:58 [restartedMain] - LiveReload server is running on port 35729
+2025-03-01 16:07:58 [restartedMain] - Starting ProtocolHandler ["http-nio-7110"]
+2025-03-01 16:07:58 [restartedMain] - Tomcat started on port 7110 (http) with context path '/'
+2025-03-01 16:07:58 [restartedMain] - Started ConwayguiApplication in 1.651 seconds (process running for 2.135)
+2025-03-01 16:08:04 [http-nio-7110-exec-1] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-03-01 16:08:04 [http-nio-7110-exec-1] - Initializing Servlet 'dispatcherServlet'
+2025-03-01 16:08:04 [http-nio-7110-exec-1] - Completed initialization in 0 ms
+2025-03-01 16:08:38 [restartedMain] - Starting ConwayguiApplication using Java 17.0.5 with PID 63188 (C:\Didattica2025\qak25\conwaygui\build\classes\java\main started by utente in C:\Didattica2025\qak25\conwaygui)
+2025-03-01 16:08:38 [restartedMain] - No active profile set, falling back to 1 default profile: "default"
+2025-03-01 16:08:38 [restartedMain] - Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2025-03-01 16:08:38 [restartedMain] - For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2025-03-01 16:08:38 [restartedMain] - Tomcat initialized with port 7110 (http)
+2025-03-01 16:08:38 [restartedMain] - Initializing ProtocolHandler ["http-nio-7110"]
+2025-03-01 16:08:38 [restartedMain] - Starting service [Tomcat]
+2025-03-01 16:08:38 [restartedMain] - Starting Servlet engine: [Apache Tomcat/10.1.34]
+2025-03-01 16:08:39 [restartedMain] - Initializing Spring embedded WebApplicationContext
+2025-03-01 16:08:39 [restartedMain] - Root WebApplicationContext: initialization completed in 865 ms
+2025-03-01 16:08:39 [restartedMain] - Adding welcome page: class path resource [static/index.html]
+2025-03-01 16:08:39 [restartedMain] - LiveReload server is running on port 35729
+2025-03-01 16:08:39 [restartedMain] - Starting ProtocolHandler ["http-nio-7110"]
+2025-03-01 16:08:39 [restartedMain] - Tomcat started on port 7110 (http) with context path '/'
+2025-03-01 16:08:39 [restartedMain] - Started ConwayguiApplication in 1.583 seconds (process running for 2.073)
+2025-03-01 16:08:45 [http-nio-7110-exec-1] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-03-01 16:08:45 [http-nio-7110-exec-1] - Initializing Servlet 'dispatcherServlet'
+2025-03-01 16:08:45 [http-nio-7110-exec-1] - Completed initialization in 0 ms
+2025-03-02 10:50:16 [restartedMain] - Starting ConwayguiApplication using Java 17.0.5 with PID 74968 (C:\Didattica2025\qak25\conwaygui\build\classes\java\main started by utente in C:\Didattica2025\qak25\conwaygui)
+2025-03-02 10:50:16 [restartedMain] - No active profile set, falling back to 1 default profile: "default"
+2025-03-02 10:50:16 [restartedMain] - Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2025-03-02 10:50:16 [restartedMain] - For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2025-03-02 10:50:17 [restartedMain] - Tomcat initialized with port 7110 (http)
+2025-03-02 10:50:17 [restartedMain] - Initializing ProtocolHandler ["http-nio-7110"]
+2025-03-02 10:50:17 [restartedMain] - Starting service [Tomcat]
+2025-03-02 10:50:17 [restartedMain] - Starting Servlet engine: [Apache Tomcat/10.1.34]
+2025-03-02 10:50:17 [restartedMain] - Initializing Spring embedded WebApplicationContext
+2025-03-02 10:50:17 [restartedMain] - Root WebApplicationContext: initialization completed in 1033 ms
+2025-03-02 10:50:17 [restartedMain] - Adding welcome page: class path resource [static/index.html]
+2025-03-02 10:50:17 [restartedMain] - LiveReload server is running on port 35729
+2025-03-02 10:50:17 [restartedMain] - Starting ProtocolHandler ["http-nio-7110"]
+2025-03-02 10:50:17 [restartedMain] - Tomcat started on port 7110 (http) with context path '/'
+2025-03-02 10:50:17 [restartedMain] - Started ConwayguiApplication in 1.878 seconds (process running for 2.428)
+2025-03-02 10:50:19 [http-nio-7110-exec-1] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-03-02 10:50:19 [http-nio-7110-exec-1] - Initializing Servlet 'dispatcherServlet'
+2025-03-02 10:50:19 [http-nio-7110-exec-1] - Completed initialization in 0 ms
+2025-03-02 10:50:29 [http-nio-7110-exec-6] - Closing session due to exception for StandardWebSocketSession[id=b05b5525-f6a0-6ca0-7ee0-b544e8d5370f, uri=ws://localhost:7110/wsupdates]
+java.lang.IllegalStateException: The remote endpoint was in state [TEXT_PARTIAL_WRITING] which is an invalid state for called method
+	at org.apache.tomcat.websocket.WsRemoteEndpointImplBase$StateMachine.checkState(WsRemoteEndpointImplBase.java:1250)
+	at org.apache.tomcat.websocket.WsRemoteEndpointImplBase$StateMachine.textPartialStart(WsRemoteEndpointImplBase.java:1215)
+	at org.apache.tomcat.websocket.WsRemoteEndpointImplBase.sendPartialString(WsRemoteEndpointImplBase.java:222)
+	at org.apache.tomcat.websocket.WsRemoteEndpointBasic.sendText(WsRemoteEndpointBasic.java:48)
+	at org.springframework.web.socket.adapter.standard.StandardWebSocketSession.sendTextMessage(StandardWebSocketSession.java:217)
+	at org.springframework.web.socket.adapter.AbstractWebSocketSession.sendMessage(AbstractWebSocketSession.java:108)
+	at conway.devices.WSIoDev.broadcastToWebSocket(WSIoDev.java:73)
+	at conway.devices.WSIoDev.display(WSIoDev.java:123)
+	at conway.devices.WSIoDev.displayCell(WSIoDev.java:133)
+	at conway.LifeController.displayGrid(LifeController.java:109)
+	at conway.LifeController.resetAndDisplayGrids(LifeController.java:117)
+	at conway.LifeController.clearTheGame(LifeController.java:63)
+	at conway.devices.WSIoDev.elabMsg(WSIoDev.java:111)
+	at conway.devices.WSIoDev.handleTextMessage(WSIoDev.java:95)
+	at org.springframework.web.socket.handler.AbstractWebSocketHandler.handleMessage(AbstractWebSocketHandler.java:43)
+	at org.springframework.web.socket.handler.WebSocketHandlerDecorator.handleMessage(WebSocketHandlerDecorator.java:75)
+	at org.springframework.web.socket.handler.LoggingWebSocketHandlerDecorator.handleMessage(LoggingWebSocketHandlerDecorator.java:56)
+	at org.springframework.web.socket.handler.ExceptionWebSocketHandlerDecorator.handleMessage(ExceptionWebSocketHandlerDecorator.java:58)
+	at org.springframework.web.socket.adapter.standard.StandardWebSocketHandlerAdapter.handleTextMessage(StandardWebSocketHandlerAdapter.java:113)
+	at org.springframework.web.socket.adapter.standard.StandardWebSocketHandlerAdapter$3.onMessage(StandardWebSocketHandlerAdapter.java:84)
+	at org.springframework.web.socket.adapter.standard.StandardWebSocketHandlerAdapter$3.onMessage(StandardWebSocketHandlerAdapter.java:81)
+	at org.apache.tomcat.websocket.WsFrameBase.sendMessageText(WsFrameBase.java:390)
+	at org.apache.tomcat.websocket.server.WsFrameServer.sendMessageText(WsFrameServer.java:130)
+	at org.apache.tomcat.websocket.WsFrameBase.processDataText(WsFrameBase.java:484)
+	at org.apache.tomcat.websocket.WsFrameBase.processData(WsFrameBase.java:284)
+	at org.apache.tomcat.websocket.WsFrameBase.processInputBuffer(WsFrameBase.java:130)
+	at org.apache.tomcat.websocket.server.WsFrameServer.onDataAvailable(WsFrameServer.java:85)
+	at org.apache.tomcat.websocket.server.WsFrameServer.doOnDataAvailable(WsFrameServer.java:184)
+	at org.apache.tomcat.websocket.server.WsFrameServer.notifyDataAvailable(WsFrameServer.java:164)
+	at org.apache.tomcat.websocket.server.WsHttpUpgradeHandler.upgradeDispatch(WsHttpUpgradeHandler.java:152)
+	at org.apache.coyote.http11.upgrade.UpgradeProcessorInternal.dispatch(UpgradeProcessorInternal.java:60)
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:57)
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:905)
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1741)
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1190)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659)
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:63)
+	at java.base/java.lang.Thread.run(Thread.java:833)
+2025-03-02 10:51:42 [restartedMain] - Starting ConwayguiApplication using Java 17.0.5 with PID 68620 (C:\Didattica2025\qak25\conwaygui\build\classes\java\main started by utente in C:\Didattica2025\qak25\conwaygui)
+2025-03-02 10:51:42 [restartedMain] - No active profile set, falling back to 1 default profile: "default"
+2025-03-02 10:51:42 [restartedMain] - Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2025-03-02 10:51:42 [restartedMain] - For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2025-03-02 10:51:43 [restartedMain] - Tomcat initialized with port 7110 (http)
+2025-03-02 10:51:43 [restartedMain] - Initializing ProtocolHandler ["http-nio-7110"]
+2025-03-02 10:51:43 [restartedMain] - Starting service [Tomcat]
+2025-03-02 10:51:43 [restartedMain] - Starting Servlet engine: [Apache Tomcat/10.1.34]
+2025-03-02 10:51:43 [restartedMain] - Initializing Spring embedded WebApplicationContext
+2025-03-02 10:51:43 [restartedMain] - Root WebApplicationContext: initialization completed in 938 ms
+2025-03-02 10:51:43 [restartedMain] - Adding welcome page: class path resource [static/index.html]
+2025-03-02 10:51:43 [restartedMain] - LiveReload server is running on port 35729
+2025-03-02 10:51:43 [restartedMain] - Starting ProtocolHandler ["http-nio-7110"]
+2025-03-02 10:51:43 [restartedMain] - Tomcat started on port 7110 (http) with context path '/'
+2025-03-02 10:51:43 [restartedMain] - Started ConwayguiApplication in 1.647 seconds (process running for 2.152)
+2025-03-02 10:51:45 [http-nio-7110-exec-1] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-03-02 10:51:45 [http-nio-7110-exec-1] - Initializing Servlet 'dispatcherServlet'
+2025-03-02 10:51:45 [http-nio-7110-exec-1] - Completed initialization in 0 ms
+2025-03-02 10:52:30 [SpringApplicationShutdownHook] - Commencing graceful shutdown. Waiting for active requests to complete
+2025-03-02 10:52:30 [tomcat-shutdown] - Graceful shutdown complete
+2025-03-02 10:54:46 [restartedMain] - Starting ConwayguiApplication using Java 17.0.5 with PID 42440 (C:\Didattica2025\qak25\conwaygui\build\classes\java\main started by utente in C:\Didattica2025\qak25\conwaygui)
+2025-03-02 10:54:46 [restartedMain] - No active profile set, falling back to 1 default profile: "default"
+2025-03-02 10:54:47 [restartedMain] - Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2025-03-02 10:54:47 [restartedMain] - For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2025-03-02 10:54:47 [restartedMain] - Tomcat initialized with port 7110 (http)
+2025-03-02 10:54:47 [restartedMain] - Initializing ProtocolHandler ["http-nio-7110"]
+2025-03-02 10:54:47 [restartedMain] - Starting service [Tomcat]
+2025-03-02 10:54:47 [restartedMain] - Starting Servlet engine: [Apache Tomcat/10.1.34]
+2025-03-02 10:54:47 [restartedMain] - Initializing Spring embedded WebApplicationContext
+2025-03-02 10:54:47 [restartedMain] - Root WebApplicationContext: initialization completed in 893 ms
+2025-03-02 10:54:48 [restartedMain] - Adding welcome page: class path resource [static/index.html]
+2025-03-02 10:54:48 [restartedMain] - LiveReload server is running on port 35729
+2025-03-02 10:54:48 [restartedMain] - Starting ProtocolHandler ["http-nio-7110"]
+2025-03-02 10:54:48 [restartedMain] - Tomcat started on port 7110 (http) with context path '/'
+2025-03-02 10:54:48 [restartedMain] - Started ConwayguiApplication in 1.661 seconds (process running for 2.181)
+2025-03-02 10:54:51 [http-nio-7110-exec-1] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-03-02 10:54:51 [http-nio-7110-exec-1] - Initializing Servlet 'dispatcherServlet'
+2025-03-02 10:54:51 [http-nio-7110-exec-1] - Completed initialization in 0 ms
+2025-03-02 10:56:20 [restartedMain] - Starting ConwayguiApplication using Java 17.0.5 with PID 8128 (C:\Didattica2025\qak25\conwaygui\build\classes\java\main started by utente in C:\Didattica2025\qak25\conwaygui)
+2025-03-02 10:56:20 [restartedMain] - No active profile set, falling back to 1 default profile: "default"
+2025-03-02 10:56:21 [restartedMain] - Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2025-03-02 10:56:21 [restartedMain] - For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2025-03-02 10:56:21 [restartedMain] - Tomcat initialized with port 7110 (http)
+2025-03-02 10:56:21 [restartedMain] - Initializing ProtocolHandler ["http-nio-7110"]
+2025-03-02 10:56:21 [restartedMain] - Starting service [Tomcat]
+2025-03-02 10:56:21 [restartedMain] - Starting Servlet engine: [Apache Tomcat/10.1.34]
+2025-03-02 10:56:21 [restartedMain] - Initializing Spring embedded WebApplicationContext
+2025-03-02 10:56:21 [restartedMain] - Root WebApplicationContext: initialization completed in 887 ms
+2025-03-02 10:56:22 [restartedMain] - Adding welcome page: class path resource [static/index.html]
+2025-03-02 10:56:22 [restartedMain] - LiveReload server is running on port 35729
+2025-03-02 10:56:22 [restartedMain] - Starting ProtocolHandler ["http-nio-7110"]
+2025-03-02 10:56:22 [restartedMain] - Tomcat started on port 7110 (http) with context path '/'
+2025-03-02 10:56:22 [restartedMain] - Started ConwayguiApplication in 1.608 seconds (process running for 2.111)
+2025-03-02 10:56:32 [http-nio-7110-exec-1] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-03-02 10:56:32 [http-nio-7110-exec-1] - Initializing Servlet 'dispatcherServlet'
+2025-03-02 10:56:32 [http-nio-7110-exec-1] - Completed initialization in 1 ms
+2025-03-02 11:05:22 [restartedMain] - Starting ConwayguiApplication using Java 17.0.5 with PID 20876 (C:\Didattica2025\qak25\conwaygui\build\classes\java\main started by utente in C:\Didattica2025\qak25\conwaygui)
+2025-03-02 11:05:22 [restartedMain] - No active profile set, falling back to 1 default profile: "default"
+2025-03-02 11:05:22 [restartedMain] - Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2025-03-02 11:05:22 [restartedMain] - For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2025-03-02 11:05:23 [restartedMain] - Tomcat initialized with port 7110 (http)
+2025-03-02 11:05:23 [restartedMain] - Initializing ProtocolHandler ["http-nio-7110"]
+2025-03-02 11:05:23 [restartedMain] - Starting service [Tomcat]
+2025-03-02 11:05:23 [restartedMain] - Starting Servlet engine: [Apache Tomcat/10.1.34]
+2025-03-02 11:05:23 [restartedMain] - Initializing Spring embedded WebApplicationContext
+2025-03-02 11:05:23 [restartedMain] - Root WebApplicationContext: initialization completed in 929 ms
+2025-03-02 11:05:23 [restartedMain] - Adding welcome page: class path resource [static/index.html]
+2025-03-02 11:05:24 [restartedMain] - LiveReload server is running on port 35729
+2025-03-02 11:05:24 [restartedMain] - Starting ProtocolHandler ["http-nio-7110"]
+2025-03-02 11:05:24 [restartedMain] - Tomcat started on port 7110 (http) with context path '/'
+2025-03-02 11:05:24 [restartedMain] - Started ConwayguiApplication in 1.673 seconds (process running for 2.178)
+2025-03-02 11:05:27 [http-nio-7110-exec-1] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-03-02 11:05:27 [http-nio-7110-exec-1] - Initializing Servlet 'dispatcherServlet'
+2025-03-02 11:05:27 [http-nio-7110-exec-1] - Completed initialization in 0 ms
+2025-03-02 11:06:13 [restartedMain] - Starting ConwayguiApplication using Java 17.0.5 with PID 68544 (C:\Didattica2025\qak25\conwaygui\build\classes\java\main started by utente in C:\Didattica2025\qak25\conwaygui)
+2025-03-02 11:06:13 [restartedMain] - No active profile set, falling back to 1 default profile: "default"
+2025-03-02 11:06:13 [restartedMain] - Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2025-03-02 11:06:13 [restartedMain] - For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2025-03-02 11:06:14 [restartedMain] - Tomcat initialized with port 7110 (http)
+2025-03-02 11:06:14 [restartedMain] - Initializing ProtocolHandler ["http-nio-7110"]
+2025-03-02 11:06:14 [restartedMain] - Starting service [Tomcat]
+2025-03-02 11:06:14 [restartedMain] - Starting Servlet engine: [Apache Tomcat/10.1.34]
+2025-03-02 11:06:14 [restartedMain] - Initializing Spring embedded WebApplicationContext
+2025-03-02 11:06:14 [restartedMain] - Root WebApplicationContext: initialization completed in 869 ms
+2025-03-02 11:06:14 [restartedMain] - Adding welcome page: class path resource [static/index.html]
+2025-03-02 11:06:14 [restartedMain] - LiveReload server is running on port 35729
+2025-03-02 11:06:14 [restartedMain] - Starting ProtocolHandler ["http-nio-7110"]
+2025-03-02 11:06:15 [restartedMain] - Tomcat started on port 7110 (http) with context path '/'
+2025-03-02 11:06:15 [restartedMain] - Started ConwayguiApplication in 1.575 seconds (process running for 2.074)
+2025-03-02 11:06:21 [http-nio-7110-exec-1] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-03-02 11:06:21 [http-nio-7110-exec-1] - Initializing Servlet 'dispatcherServlet'
+2025-03-02 11:06:21 [http-nio-7110-exec-1] - Completed initialization in 1 ms
+2025-03-02 11:07:40 [restartedMain] - Starting ConwayguiApplication using Java 17.0.5 with PID 74680 (C:\Didattica2025\qak25\conwaygui\build\classes\java\main started by utente in C:\Didattica2025\qak25\conwaygui)
+2025-03-02 11:07:40 [restartedMain] - No active profile set, falling back to 1 default profile: "default"
+2025-03-02 11:07:40 [restartedMain] - Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2025-03-02 11:07:40 [restartedMain] - For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2025-03-02 11:07:41 [restartedMain] - Tomcat initialized with port 7110 (http)
+2025-03-02 11:07:41 [restartedMain] - Initializing ProtocolHandler ["http-nio-7110"]
+2025-03-02 11:07:41 [restartedMain] - Starting service [Tomcat]
+2025-03-02 11:07:41 [restartedMain] - Starting Servlet engine: [Apache Tomcat/10.1.34]
+2025-03-02 11:07:41 [restartedMain] - Initializing Spring embedded WebApplicationContext
+2025-03-02 11:07:41 [restartedMain] - Root WebApplicationContext: initialization completed in 913 ms
+2025-03-02 11:07:41 [restartedMain] - Adding welcome page: class path resource [static/index.html]
+2025-03-02 11:07:41 [restartedMain] - LiveReload server is running on port 35729
+2025-03-02 11:07:41 [restartedMain] - Starting ProtocolHandler ["http-nio-7110"]
+2025-03-02 11:07:41 [restartedMain] - Tomcat started on port 7110 (http) with context path '/'
+2025-03-02 11:07:41 [restartedMain] - Started ConwayguiApplication in 1.674 seconds (process running for 2.166)
+2025-03-02 11:07:46 [http-nio-7110-exec-1] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-03-02 11:07:46 [http-nio-7110-exec-1] - Initializing Servlet 'dispatcherServlet'
+2025-03-02 11:07:46 [http-nio-7110-exec-1] - Completed initialization in 0 ms
+2025-03-02 11:10:33 [restartedMain] - Starting ConwayguiApplication using Java 17.0.5 with PID 76232 (C:\Didattica2025\qak25\conwaygui\build\classes\java\main started by utente in C:\Didattica2025\qak25\conwaygui)
+2025-03-02 11:10:33 [restartedMain] - No active profile set, falling back to 1 default profile: "default"
+2025-03-02 11:10:34 [restartedMain] - Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2025-03-02 11:10:34 [restartedMain] - For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2025-03-02 11:10:34 [restartedMain] - Tomcat initialized with port 7110 (http)
+2025-03-02 11:10:34 [restartedMain] - Initializing ProtocolHandler ["http-nio-7110"]
+2025-03-02 11:10:34 [restartedMain] - Starting service [Tomcat]
+2025-03-02 11:10:34 [restartedMain] - Starting Servlet engine: [Apache Tomcat/10.1.34]
+2025-03-02 11:10:34 [restartedMain] - Initializing Spring embedded WebApplicationContext
+2025-03-02 11:10:34 [restartedMain] - Root WebApplicationContext: initialization completed in 887 ms
+2025-03-02 11:10:35 [restartedMain] - Adding welcome page: class path resource [static/index.html]
+2025-03-02 11:10:35 [restartedMain] - LiveReload server is running on port 35729
+2025-03-02 11:10:35 [restartedMain] - Starting ProtocolHandler ["http-nio-7110"]
+2025-03-02 11:10:35 [restartedMain] - Tomcat started on port 7110 (http) with context path '/'
+2025-03-02 11:10:35 [restartedMain] - Started ConwayguiApplication in 1.596 seconds (process running for 2.082)
+2025-03-02 11:10:42 [http-nio-7110-exec-1] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-03-02 11:10:42 [http-nio-7110-exec-1] - Initializing Servlet 'dispatcherServlet'
+2025-03-02 11:10:42 [http-nio-7110-exec-1] - Completed initialization in 0 ms
+2025-03-02 12:19:34 [main] - Could not detect default configuration classes for test class [unibo.disi.conwaygui.ConwayguiApplicationTests]: ConwayguiApplicationTests does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2025-03-02 12:19:34 [main] - Found @SpringBootConfiguration unibo.disi.conwaygui.ConwayguiApplication for test class unibo.disi.conwaygui.ConwayguiApplicationTests
+2025-03-02 12:19:34 [main] - Restart disabled due to context in which it is running
+2025-03-02 12:19:34 [main] - Starting ConwayguiApplicationTests using Java 17.0.5 with PID 74760 (started by utente in C:\Didattica2025\qak25\conwaygui)
+2025-03-02 12:19:34 [main] - No active profile set, falling back to 1 default profile: "default"
+2025-03-02 12:19:35 [main] - Adding welcome page: class path resource [static/index.html]
+2025-03-02 12:19:36 [main] - Started ConwayguiApplicationTests in 1.6 seconds (process running for 2.831)
+2025-03-02 12:20:54 [main] - Could not detect default configuration classes for test class [unibo.disi.conwaygui.ConwayguiApplicationTests]: ConwayguiApplicationTests does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2025-03-02 12:20:54 [main] - Found @SpringBootConfiguration unibo.disi.conwaygui.ConwayguiApplication for test class unibo.disi.conwaygui.ConwayguiApplicationTests
+2025-03-02 12:20:54 [main] - Restart disabled due to context in which it is running
+2025-03-02 12:20:55 [main] - Starting ConwayguiApplicationTests using Java 17.0.5 with PID 71544 (started by utente in C:\Didattica2025\qak25\conwaygui)
+2025-03-02 12:20:55 [main] - No active profile set, falling back to 1 default profile: "default"
+2025-03-02 12:20:56 [main] - Adding welcome page: class path resource [static/index.html]
+2025-03-02 12:20:56 [main] - Started ConwayguiApplicationTests in 1.785 seconds (process running for 3.026)

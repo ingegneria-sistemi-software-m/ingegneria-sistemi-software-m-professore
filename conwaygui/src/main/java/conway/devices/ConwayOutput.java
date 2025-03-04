@@ -3,14 +3,13 @@ package conway.devices;
 import conway.Cell;
 import conway.IOutDev;
 import unibo.basicomm23.utils.CommUtils;
-import unibo.disi.conwaygui.ws.WSConwayguiLifeLocal;
 
 
 //
 public class ConwayOutput implements IOutDev{
-	private WSConwayguiLifeLocal ws;
+	private WSIoDev ws;
 	
-	public ConwayOutput(WSConwayguiLifeLocal ws) {
+	public ConwayOutput(WSIoDev ws) {
 		this.ws=ws;
 	}
 	

@@ -4,6 +4,7 @@ import org.springframework.web.socket.config.annotation.EnableWebSocket;
 import org.springframework.web.socket.config.annotation.WebSocketConfigurer;
 import org.springframework.web.socket.config.annotation.WebSocketHandlerRegistry;
 
+import conway.devices.WSIoDev;
 import unibo.basicomm23.utils.CommUtils;
 
  
@@ -12,13 +13,12 @@ import unibo.basicomm23.utils.CommUtils;
 public class WebSocketConfiguration implements WebSocketConfigurer {
 
 	public final String wsPath  = "wsupdates";
-	//private boolean workWithMqtt = true;  //check ConwayGuiControllerLifeMqtt
-	//private boolean workWithMqtt = false;  //check ConwayGuiControllerLifeLocal
-	
+
+    
 	@Override
 	public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
 		CommUtils.outblue( "WebSocketConfiguration | registerWebSocketHandlers" );		
-			WSConwayguiLifeLocal wsgui = WSConwayguiLifeLocal.getInstance();
+			WSIoDev wsgui = WSIoDev.getInstance();
 			registry.addHandler(wsgui, wsPath).setAllowedOrigins("*");
  	}
 }
