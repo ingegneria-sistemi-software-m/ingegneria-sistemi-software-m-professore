@@ -1,7 +1,7 @@
-package conway.caller;
+package demows.conway;
 
 import java.util.Observable;
-import javax.websocket.ClientEndpoint;
+//import javax.websocket.ClientEndpoint;
 import unibo.basicomm23.interfaces.IObserver;
 import unibo.basicomm23.interfaces.Interaction;
 import unibo.basicomm23.msg.ProtocolType;
@@ -12,7 +12,7 @@ import unibo.basicomm23.ws.WsConnection;
 /*
  *
  */
-@ClientEndpoint
+//@ClientEndpoint
 public class ConwayCallerWSInteraction implements IObserver{
     private Interaction conn;
     

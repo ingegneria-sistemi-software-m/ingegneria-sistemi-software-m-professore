@@ -1,0 +1,80 @@
+plugins {
+    //The application plugin is deprecated.
+    //id 'application'
+    id 'java'
+    id 'eclipse'
+}
+    
+version '1.0'
+ 
+java {
+    toolchain.languageVersion.set(JavaLanguageVersion.of(17))
+}
+
+repositories {
+    // Use Maven Central for resolving dependencies.
+    mavenCentral()
+    flatDir {   dirs '../unibolibs'	 }
+}
+
+sourceSets {
+    main {
+        java {
+            srcDirs = ['src/main/java']
+        }
+        resources {
+            srcDirs = ['src/main/resources']
+        }
+    }
+    test {
+        java {
+            srcDirs = ['src/test/java']
+        }
+        resources {
+            srcDirs = ['src/test/resources']
+        }
+    }
+}
+
+
+dependencies {
+    //Specifica che la dipendenza JUnit 4 è necessaria solo per la compilazione e l'esecuzione dei test
+	 testImplementation 'junit:junit:4.13.2'
+
+    /* LOG4J ***************************************************************************** */    
+    implementation 'ch.qos.logback:logback-classic:1.2.11'  //vs.1.5.7     1.2.11 (app1.log ok)     1.4.11
+
+    /* JSON ********************************************************************************* */
+     implementation 'com.googlecode.json-simple:json-simple:1.1.1'
+
+	//SOCKET.IO (for WEnv)
+    implementation group: 'javax.websocket', name: 'javax.websocket-api', version: '1.1'
+    //javax.websocket api is only the specification
+    implementation group: 'org.glassfish.tyrus.bundles', name: 'tyrus-standalone-client', version: '1.9'
+ 
+ 
+    /*  MQTT *******************************************************************************  */
+    // https://mvnrepository.com/artifact/org.eclipse.paho/org.eclipse.paho.client.mqttv3
+    implementation group: 'org.eclipse.paho', name: 'org.eclipse.paho.client.mqttv3', version: '1.2.5'
+
+    /* UNIBO *************************** */
+    implementation name: 'uniboInterfaces'
+    implementation name: '2p301'
+    implementation name: 'unibo.basicomm23-1.0' 
+
+}
+
+task run(type: JavaExec){
+	classpath = sourceSets.main.runtimeClasspath
+	mainClass = "demomqtt.level0.MqttSubscriber"
+}
+
+
+jar {
+    println("building jar")
+    from sourceSets.main.allSource
+    manifest {
+        attributes 'Main-Class': 'src/main/java/ '
+    }
+}
+ 
