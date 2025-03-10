@@ -36,22 +36,24 @@ sourceSets {
     }
 }
 
+//gradle dependencies
+//Assicurati di utilizzare una versione compatibile dell'implementazione di logging con la tua versione di SLF4J
 
 dependencies {
     //Specifica che la dipendenza JUnit 4 è necessaria solo per la compilazione e l'esecuzione dei test
 	 testImplementation 'junit:junit:4.13.2'
 
     /* LOG4J ***************************************************************************** */    
-    implementation 'ch.qos.logback:logback-classic:1.2.11'  //vs.1.5.7     1.2.11 (app1.log ok)     1.4.11
+    //implementation 'ch.qos.logback:logback-classic:2.0.13'  //vs.1.5.7     1.2.11 (app1.log ok)     1.4.11
+    implementation 'ch.qos.logback:logback-classic:1.5.7'  //vs.1.5.7     1.2.11 (app1.log ok)     1.4.11
+    
+    implementation 'org.slf4j:slf4j-jdk14:2.0.13'
 
     /* JSON ********************************************************************************* */
      implementation 'com.googlecode.json-simple:json-simple:1.1.1'
 
-	//SOCKET.IO (for WEnv)
-    implementation group: 'javax.websocket', name: 'javax.websocket-api', version: '1.1'
-    //javax.websocket api is only the specification
-    implementation group: 'org.glassfish.tyrus.bundles', name: 'tyrus-standalone-client', version: '1.9'
- 
+	//WSSOCKET
+     implementation group: 'org.java-websocket', name: 'Java-WebSocket', version: '1.6.0'
  
     /*  MQTT *******************************************************************************  */
     // https://mvnrepository.com/artifact/org.eclipse.paho/org.eclipse.paho.client.mqttv3

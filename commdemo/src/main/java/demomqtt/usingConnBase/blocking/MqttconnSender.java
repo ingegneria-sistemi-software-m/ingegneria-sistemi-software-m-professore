@@ -4,9 +4,7 @@ import unibo.basicomm23.mqtt.MqttConnectionBase;
 import unibo.basicomm23.utils.CommUtils;
 
 /*
-  * Il sender attiva anche la ricezione  e
- * attende di ricevere il messaggio trasmesso 
- * prima di inviare il messaggio succesivo
+ * Usa MqttConnectionBase per eseguire send sulla topic "unibo/conn"
  */
 public class MqttconnSender {
 	private final String MqttBroker = "tcp://localhost:1883";//"tcp://broker.hivemq.com"; //
@@ -15,35 +13,30 @@ public class MqttconnSender {
     private MqttConnectionBase mqttConn;
 
     public MqttconnSender() {
-    	mqttConn = new MqttConnectionBase(  MqttBroker, name, topic, null) ; //disaabilitazione receive implicita
-    	//mqttConn = new MqttConnectionBase(  MqttBroker, name, topic) ; //abilitazione receive implicita
+    	//mqttConn = new MqttConnectionBase(  MqttBroker, name, topic, null) ; //disaabilitazione receive implicita
+    	mqttConn = new MqttConnectionBase(  MqttBroker, name, topic) ; //abilitazione receive implicita
     }
-    
-  
-	
+ 	
 	public void doJob() {
 		new Thread() {
 			public void run() {
 				IApplMessage msgEvent    = CommUtils.buildEvent("sender", "alarm", "alarm(fire)" );
 				IApplMessage msgDispatch = CommUtils.buildDispatch("sender", "cmd", "cmd(move)", "receiver" );
 				IApplMessage msgRequest  = CommUtils.buildRequest("sender", "info", "info(move)", "receiver" );
-				CommUtils.outblue("sender | SENDS " +  msgEvent); 
+				CommUtils.outblue("sender | SENDS event " +  msgEvent); 
 				mqttConn.send(  msgEvent.toString()    );
 //				String msgsent = mqttConn.receive();
 //				CommUtils.outblue("sender | msgsent=" + msgsent ); 
-				CommUtils.outblue("sender | SENDS " +  msgDispatch); 
+				CommUtils.outblue("sender | SENDS dispatch " +  msgDispatch); 
 				CommUtils.delay(100);
 				mqttConn.send(  msgDispatch.toString() );
-//				msgsent = mqttConn.receive();
-//				CommUtils.outblue("sender | msgsent=" + msgsent ); 
+// 				String answer = mqttConn.receive();
+//				CommUtils.outblue("sender | answer=" + answer ); 
 				CommUtils.delay(100);
-				CommUtils.outblue("sender | SENDS " +  msgRequest); 
+				CommUtils.outblue("sender | SENDS request " +  msgRequest); 
 				mqttConn.send(  msgRequest.toString()  );
-//				msgsent = mqttConn.receive();
-//				CommUtils.outblue("sender | msgsent=" + msgsent ); 
-				CommUtils.delay(100);
-				CommUtils.outblue("sender | SENDS work done"  ); 
-				mqttConn.send(  "work done" );
+ 				String answer = mqttConn.receive();
+ 				CommUtils.outblue("sender | answer=" + answer ); 
 				CommUtils.delay(100);
 				CommUtils.outblue("sender | ENDS "  );		
 				mqttConn.send(  "END" );

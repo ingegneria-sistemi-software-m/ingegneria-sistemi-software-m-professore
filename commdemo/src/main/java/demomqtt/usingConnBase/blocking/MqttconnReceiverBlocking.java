@@ -1,13 +1,11 @@
 package demomqtt.usingConnBase.blocking;
-
-
-import unibo.basicomm23.interfaces.IApplMessage;
 import unibo.basicomm23.mqtt.MqttConnectionBase;
-import unibo.basicomm23.msg.ApplMessage;
+import unibo.basicomm23.mqtt.MqttConnectionCallbackForReceive;
 import unibo.basicomm23.utils.CommUtils;
 
 /*
- *  
+ *  Usa MqttConnectionBase con callback di receive implicita
+ *  per eseguire receive bloccante sulla topic "unibo/conn"
  */
 public class MqttconnReceiverBlocking {
 	private final String MqttBroker = "tcp://localhost:1883";//"tcp://broker.hivemq.com"; //
@@ -17,7 +15,7 @@ public class MqttconnReceiverBlocking {
     private MqttConnectionBase mqttConn;
 
     public MqttconnReceiverBlocking() {
-    	//usiamo il costruttore che implica una receive bloccante
+    	//usiamo il costruttore che implica la creazione di una MqttConnectionCallbackForReceive
     	mqttConn = new MqttConnectionBase(  MqttBroker, name, topic) ;  
     } 
 	
@@ -35,8 +33,16 @@ public class MqttconnReceiverBlocking {
     
 	protected void elabMessage(String message) {
 		try {
-			IApplMessage msgInput = new ApplMessage(message.toString());
-			CommUtils.outmagenta(name + " | elabMessage an IApplMessage = " + msgInput); 		
+			if( message.toString().equals("END") ) goon = false; 
+			CommUtils.outmagenta(name + " | elabMessage " + message); 
+			if( message.toString().contains("request") ) { //Faremo meglio in seguito ...
+				CommUtils.outmagenta(name + " | vorrei rispondere alla richiesta, ma come?  "  );
+				//Forse potrei usare una topic per la risposta ..
+			}
+			
+			
+//			IApplMessage msgInput = new ApplMessage(message.toString());
+//			CommUtils.outmagenta(name + " | elabMessage an IApplMessage = " + msgInput); 		
 //			CommUtils.outgreen(name + " |  msgid   = " + msgInput.msgId() );
 //			CommUtils.outgreen(name + " |  msgtype = " + msgInput.msgType() );
 //			CommUtils.outgreen(name + " |  emitter = " + msgInput.msgSender());

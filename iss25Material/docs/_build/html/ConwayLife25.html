@@ -1143,9 +1143,8 @@ può avvenire usando una
 che implementa l’interfaccia <a class="reference internal" href="unibo.basicomm23.html#unibo-basicomm23-interfaces-iobserver"><span class="std std-ref">unibo.basicomm23.interfaces.IObserver</span></a>, del cui uso abbiamo
 un esempio in <a class="reference internal" href="#id7"><span class="std std-ref">ConwayCallerWSInteraction</span></a></p>
 </section>
-</section>
 <section id="id7">
-<h2>ConwayCallerWSInteraction<a class="headerlink" href="#id7" title="Permalink to this heading">¶</a></h2>
+<h3>ConwayCallerWSInteraction<a class="headerlink" href="#id7" title="Permalink to this heading">¶</a></h3>
 <table class="docutils align-default" style="width: 100%">
 <colgroup>
 <col style="width: 20%" />
@@ -1173,7 +1172,12 @@ possono essere ricevuti da oggetti che usano la connessione e implementano la in
 non è un atto deliberato del programma, in quanto
 il supporto della libreria si ‘introfula’ ancora nel codice dell’oggetto osservatore,
 invocandone il metodo <code class="docutils literal notranslate"><span class="pre">update</span></code>.</p>
+<p><span class="slide2">Altre Interazioni via WS</span>: i primi esperimenti di interazione M2M inclusi nel
+progetto <a class="reference internal" href="#conwaygui-un-processo-di-sviluppo"><span class="std std-ref">conwaygui</span></a> sono un primo passo verso
+forme più generali di comunicazione che cominciamo a vedere nel progetto
+<a class="reference internal" href="commdemo.html#commdemo"><span class="std std-ref">commdemo</span></a>.</p>
 <p><span class="slide1">La GUI come pura interfaccia</span></p>
+</section>
 </section>
 <section id="conwaygui-con-servizio-remoto">
 <h2>ConwayGui con servizio remoto<a class="headerlink" href="#conwaygui-con-servizio-remoto" title="Permalink to this heading">¶</a></h2>
@@ -1181,14 +1185,160 @@ invocandone il metodo <code class="docutils literal notranslate"><span class="pr
 <span class="slide2">seconda versione</span> del sistema, usiamo <a class="reference external" href="https://spring.io/projects/spring-boot">SpringBoot</a> per realizzare la GUI
 <strong>solo come ‘dispositivo evoluto di I/O</strong>.  In particolare:</p>
 <ul class="simple">
-<li><p>la <span class="xref std std-ref">nuova GUI</span>
+<li><p>la <a class="reference internal" href="#conwayguialone"><span class="std std-ref">nuova GUI</span></a>
 ha la possibilià di scambiare informazioni con il mondo esterno usando un <span class="slide3">broker MQTT</span>
-Si veda :<span class="xref std std-ref">conwayguialone</span>:</p></li>
-<li><p>viene definito un progetto <span class="xref std std-ref">conway25JavaMqtt</span>  che realizza una versione
+Si veda :<a class="reference internal" href="#conwayguialone"><span class="std std-ref">conwayguialone</span></a>:</p></li>
+<li><p>viene definito un progetto <a class="reference internal" href="#id8"><span class="std std-ref">conway25JavaMqtt</span></a>  che realizza una versione
 della parte logica del servizio che potrà utilizzare e la GUI avvaledosi di una
 <span class="slidekp">implementazione di IOutDev</span> capace di comunicare via <code class="docutils literal notranslate"><span class="pre">MQTT</span></code> con la GUI.</p></li>
 </ul>
 <a class="reference internal image-reference" href="_images/conwayguiseqdiagr.jpg"><img alt="_images/conwayguiseqdiagr.jpg" class="align-center" src="_images/conwayguiseqdiagr.jpg" style="width: 100%;" /></a>
+<p>La interazione via <code class="docutils literal notranslate"><span class="pre">MQTT</span></code> potrebbe essere realizzata facendo <a class="reference internal" href="MQTTConnection.html#uso-diretto-della-libreria-paho"><span class="std std-ref">Uso diretto della libreria Paho</span></a>,
+e delle operazioni <em>publish/subscribe</em>.</p>
+<p>Noi riterremo invece più opportuno costruire, con la <strong>libreria Paho</strong>, <span class="slide2">astrazioni di comunicazione</span> di più
+alto livello, quali  <a class="reference internal" href="unibo.basicomm23.html#interconnessione"><span class="std std-ref">Interconnessione</span></a> introdotti in <a class="reference internal" href="#supporti-custom-per-la-comunicazione"><span class="std std-ref">Supporti custom per la comunicazione</span></a>.</p>
+<p>Vediamo qualche dettaglio.</p>
+<section id="id8">
+<h3>conway25JavaMqtt<a class="headerlink" href="#id8" title="Permalink to this heading">¶</a></h3>
+<p><span class="slide3">Progetto conway25JavaMqtt</span>.</p>
+<p>Il progetto  <a class="reference external" href="../../../../conway25JavaMqtt">conway25JavaMqtt</a> modifica il precedente <a class="reference internal" href="#codice-embedded-del-servizio"><span class="std std-ref">Codice embedded del servizio</span></a>
+introducendo un dispositivo di output <a class="reference external" href="../../../../conway25JavaMqtt/src/main/java/conwayMqtt/devices/OutInMqtt.java">OutInMqtt</a> che:</p>
+<ul class="simple">
+<li><p>invia messaggi di aggiornamento
+dello stato di una cella sulla topic <span class="slidekp">guiin</span></p></li>
+<li><p>gestisce i comandi inviati dalla GUI
+sulla topic <span class="slidekp">life</span>.</p></li>
+</ul>
+<blockquote>
+<div><p>In particolare:</p>
+</div></blockquote>
+<table class="docutils align-default" style="width: 100%">
+<colgroup>
+<col style="width: 15%" />
+<col style="width: 35%" />
+<col style="width: 50%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>Componente</strong></p></td>
+<td><p><strong>Ruolo e Tipo</strong></p></td>
+<td><p><strong>Note</strong></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference external" href="../../../../conway25JavaMqtt/src/main/java/conwayMqtt/devices/OutInMqtt.java">OutInMqtt</a></p></td>
+<td><p>Dispositivo di I/O in Java</p></td>
+<td><p>Interagisce con le pagine HTML vie MQTT usando <a class="reference internal" href="MQTTConnection.html#mqttconnection25"><span class="std std-ref">MqttConnection25</span></a> perchè l’uso di una <em>receiveMsg</em> bloccante
+è accettabile.</p>
+<p>In alternativa potrebbe usare <a class="reference internal" href="MQTTConnection.html#mqttconnectionbase"><span class="std std-ref">MqttConnectionBase</span></a> ( e <a class="reference internal" href="MQTTConnection.html#mqttconnectioncallbackforreceive"><span class="std std-ref">MqttConnectionCallbackForReceive</span></a>)</p>
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="conwayguialone">
+<h3>conwayguialone<a class="headerlink" href="#conwayguialone" title="Permalink to this heading">¶</a></h3>
+<p><span class="slide3">Progetto conwayguialone</span>.</p>
+<p>La nuova versione della GUI è analoga alla precedente, ma:</p>
+<ul class="simple">
+<li><p>non ha più il servizio applicativo embedded</p></li>
+<li><p>usa la libreria <cite>Paho</cite> per la comunicazione via MQTT</p></li>
+</ul>
+<table class="docutils align-default" style="width: 100%">
+<colgroup>
+<col style="width: 15%" />
+<col style="width: 35%" />
+<col style="width: 50%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>Componente</strong></p></td>
+<td><p><strong>Ruolo e Tipo</strong></p></td>
+<td><p><strong>Note</strong></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference external" href="../../../../conwayguialone/src/main/java/unibo/disi/conwaygui/ws/WSConwayguiLifeMqtt.java">WSConwayguiLifeMqtt</a></p></td>
+<td><p>Gestione in Java di informazioni da/a pagina HTML</p></td>
+<td><p>Estende  <em>AbstractWebSocketHandler</em>  di <em>org.springframework.web.socket.handler</em>.
+Usa <a class="reference internal" href="MQTTConnection.html#mqttconnection25"><span class="std std-ref">MqttConnection25</span></a> per inviare comandi a  <a class="reference external" href="../../../../conwaygui/src/main/java/conway/LifeController.java">LifeController</a> e per fare update delle pagine
+(metodo <em>broadcastToWebSocket</em>)  cone le informazioni ricevute da  <a class="reference external" href="../../../../conwaygui/src/main/java/conway/LifeController.java">LifeController</a>.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="una-ottimizzazione-basata-su-comunicazioni-via-ws">
+<h2>Una ottimizzazione basata su comunicazioni via WS<a class="headerlink" href="#una-ottimizzazione-basata-su-comunicazioni-via-ws" title="Permalink to this heading">¶</a></h2>
+<p>Una ottimizzazione del sistema precedente potrebbe essere realizzata usando le <a class="reference external" href="https://it.wikipedia.org/wiki/WebSocket">WebSocket</a> per la comunicazione.
+In particolare, <code class="docutils literal notranslate"><span class="pre">LifeController</span></code> potrebbe creare una implementazione <a class="reference internal" href="#outws"><span class="std std-ref">OutWs</span></a> di <span class="xref std std-ref">IOutDev</span> che usa le WebSocket per
+inviare informazioni alla GUI:</p>
+<a class="reference internal image-reference" href="_images/conwayguiseqdiagrwithWS.jpg"><img alt="_images/conwayguiseqdiagrwithWS.jpg" class="align-center" src="_images/conwayguiseqdiagrwithWS.jpg" style="width: 100%;" /></a>
+<table class="docutils align-default" style="width: 100%">
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">public</span> <span class="k">class</span> <span class="nc">LifeController</span> <span class="p">{</span>
+  <span class="o">...</span>
+    <span class="n">public</span> <span class="n">LifeController</span><span class="p">(</span><span class="n">Life</span> <span class="n">game</span><span class="p">){</span>
+        <span class="n">this</span><span class="o">.</span><span class="n">life</span> <span class="o">=</span> <span class="n">game</span><span class="p">;</span>
+        <span class="o">//</span><span class="n">configureTheSystem</span>
+        <span class="n">life</span><span class="o">.</span><span class="n">createGrids</span><span class="p">();</span>
+        <span class="o">/*</span><span class="mi">1</span><span class="o">*/</span> <span class="n">new</span> <span class="n">OutInMqtt</span><span class="p">(</span><span class="n">this</span><span class="p">);</span>
+        <span class="o">/*</span><span class="mi">2</span><span class="o">*/</span> <span class="n">outindev</span>  <span class="o">=</span> <span class="n">new</span> <span class="n">OutWS</span><span class="p">(</span><span class="n">this</span><span class="p">);</span>
+    <span class="p">}</span>
+ <span class="o">...</span>
+</pre></div>
+</div>
+</td>
+<td><p><span class="slidekp">/*1*/</span>: attiva <span class="xref std std-ref">OutInMqtt.java</span> per la sola ricezione</p>
+<p><span class="slidekp">/*2*/</span> inizializza la variabile <strong>outindev</strong> con un’istanza di <a class="reference internal" href="#outws"><span class="std std-ref">OutWs</span></a>,
+che usa le WebSocket per inviare informazioni alla GUI.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<section id="outws">
+<h3>OutWs<a class="headerlink" href="#outws" title="Permalink to this heading">¶</a></h3>
+<table class="docutils align-default" style="width: 100%">
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">public</span> <span class="k">class</span> <span class="nc">OutWs</span> <span class="n">implements</span> <span class="n">IOutDev</span><span class="p">{</span>
+<span class="n">private</span> <span class="n">Interaction</span> <span class="n">connwws</span><span class="p">;</span>
+
+  <span class="n">public</span> <span class="n">OutWs</span><span class="p">()</span> <span class="p">{</span>
+<span class="o">/*</span><span class="mi">1</span><span class="o">*/</span> <span class="n">connwws</span> <span class="o">=</span> <span class="n">ConnectionFactory</span><span class="o">.</span><span class="n">createClientSupport</span><span class="p">(</span>
+        <span class="n">ProtocolType</span><span class="o">.</span><span class="n">ws</span><span class="p">,</span> <span class="s2">&quot;localhost:7110&quot;</span><span class="p">,</span> <span class="s2">&quot;wsupdates&quot;</span><span class="p">);</span>
+  <span class="p">}</span>
+  <span class="nd">@Override</span>
+  <span class="n">public</span> <span class="n">void</span> <span class="n">displayCell</span><span class="p">(</span><span class="n">String</span> <span class="n">msg</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">try</span> <span class="p">{</span>
+<span class="o">/*</span><span class="mi">2</span><span class="o">*/</span> <span class="n">connwws</span><span class="o">.</span><span class="n">forward</span><span class="p">(</span><span class="n">msg</span><span class="p">);</span>
+    <span class="p">}</span> <span class="n">catch</span> <span class="p">(</span><span class="ne">Exception</span> <span class="n">e</span><span class="p">)</span> <span class="p">{</span> <span class="o">...</span> <span class="p">}</span>
+  <span class="p">}</span>
+
+<span class="p">}</span>
+</pre></div>
+</div>
+</td>
+<td><p><span class="slidekp">/*1*/</span>: crea una <a class="reference internal" href="unibo.basicomm23.html#unibo-basicomm23-ws-wsconnection"><span class="std std-ref">unibo.basicomm23.ws.WsConnection</span></a></p>
+<p><span class="slidekp">/*2*/</span> invia il messaggio alla GUI in modo <em>fire-and-forget</em>
+(si veda <a class="reference internal" href="unibo.basicomm23.html#unibo-basicomm23-interfaces-interaction"><span class="std std-ref">unibo.basicomm23.interfaces.Interaction</span></a>)</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Va osservato pero che questa ottimizzazione <span class="slide2">crea una dipendenza</span>, in quanto il dispositivo
+deve conoscere l’indirizzo IP della GUI.</p>
+</section>
+</section>
+<section id="una-ottimizzazione-per-mqtt">
+<h2>Una ottimizzazione per MQTT<a class="headerlink" href="#una-ottimizzazione-per-mqtt" title="Permalink to this heading">¶</a></h2>
+<p>Il componente <a class="reference external" href="../../../../conway25JavaMqtt/src/main/java/conwayMqtt/devices/OutInMqtt.java">OutInMqtt</a> viene creato sia per ricevere sia per trasmettere.
+La fase di trasmissione può essere ottimizzata <strong>accumulando</strong> per ogni ‘epoch’  tutti i messaggi
+di update delle celle
+che cambiano di stato e inviando  una sola volta l’insieme di questi messaggi.</p>
+<p>Ovvimente, lato GUI, la funzione <span class="xref std std-ref">commsocket handleWsMessage</span> deve essere modificata per gestire la lista
+di comandi.</p>
 </section>
 </section>
 
@@ -1257,10 +1407,19 @@ della parte logica del servizio che potrà utilizzare e la GUI avvaledosi di una
 <li><a class="reference internal" href="#conwaycallerws-java">ConwayCallerWS.java</a></li>
 <li><a class="reference internal" href="#supporti-custom-per-la-comunicazione">Supporti custom per la comunicazione</a></li>
 <li><a class="reference internal" href="#wsinteraction">WsInteraction</a></li>
+<li><a class="reference internal" href="#id7">ConwayCallerWSInteraction</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#id7">ConwayCallerWSInteraction</a></li>
-<li><a class="reference internal" href="#conwaygui-con-servizio-remoto">ConwayGui con servizio remoto</a></li>
+<li><a class="reference internal" href="#conwaygui-con-servizio-remoto">ConwayGui con servizio remoto</a><ul>
+<li><a class="reference internal" href="#id8">conway25JavaMqtt</a></li>
+<li><a class="reference internal" href="#conwayguialone">conwayguialone</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#una-ottimizzazione-basata-su-comunicazioni-via-ws">Una ottimizzazione basata su comunicazioni via WS</a><ul>
+<li><a class="reference internal" href="#outws">OutWs</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#una-ottimizzazione-per-mqtt">Una ottimizzazione per MQTT</a></li>
 </ul>
 </li>
 </ul>

@@ -1,0 +1,174 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>commdemo &#8212; iss24 1.0 documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinxdoc.css" />
+    <link rel="stylesheet" type="text/css" href="_static/custom.css" />
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="SpringBootWebSocketSTOMP" href="SpringBootWebSocketSTOMP.html" />
+    <link rel="prev" title="unibo.basicomm23" href="unibo.basicomm23.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="SpringBootWebSocketSTOMP.html" title="SpringBootWebSocketSTOMP"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="unibo.basicomm23.html" title="unibo.basicomm23"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">iss24 1.0 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">commdemo</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="commdemo">
+<h1>commdemo<a class="headerlink" href="#commdemo" title="Permalink to this heading">¶</a></h1>
+<p>Il <span class="slide3">progetto commdemo</span>: include esempi di interazione
+via WS e via MQTT.</p>
+<p>Vengono dati esempi di intereazione in cui il codice:</p>
+<ul class="simple">
+<li><p>è dapprima direttamente basato sulle librerie che abilitano l’uso dei protocolli in Java</p></li>
+<li><p>è successivamente basato su oggetti di tipo <a class="reference internal" href="unibo.basicomm23.html#unibo-basicomm23-interfaces-interaction"><span class="std std-ref">unibo.basicomm23.interfaces.Interaction</span></a>, che
+promuovono l’uso del concetto astratto di <a class="reference internal" href="unibo.basicomm23.html#interconnessione"><span class="std std-ref">Interconnessione</span></a>.</p></li>
+</ul>
+<section id="interazioni-via-ws">
+<h2>Interazioni via WS<a class="headerlink" href="#interazioni-via-ws" title="Permalink to this heading">¶</a></h2>
+<section id="id1">
+<h3>LifeCallerWs<a class="headerlink" href="#id1" title="Permalink to this heading">¶</a></h3>
+<p>Il programma <a class="reference external" href="../../../../commdemo/src/main/java/demows/conway/LifeCallerWs.java">LifeCallerWs</a> è un esempio di interazione
+con <a class="reference internal" href="ConwayLife25.html#conwaylife25-un-microservizio-java"><span class="std std-ref">ConwayLife25: un microservizio Java</span></a> realizzato mediante la libreria
+<strong>org.java_websocket</strong></p>
+</section>
+<section id="id2">
+<h3>LifeCallerWSInteraction<a class="headerlink" href="#id2" title="Permalink to this heading">¶</a></h3>
+<p>Il programma <a class="reference external" href="../../../../commdemo/src/main/java/demows/conway/LifeCallerWSInteraction.java">LifeCallerWSInteraction</a>  è un esempio di interazione
+con <a class="reference internal" href="ConwayLife25.html#conwaylife25-un-microservizio-java"><span class="std std-ref">ConwayLife25: un microservizio Java</span></a> realizzato mediante una connessione
+di tipo <a class="reference internal" href="unibo.basicomm23.html#unibo-basicomm23-interfaces-interaction"><span class="std std-ref">unibo.basicomm23.interfaces.Interaction</span></a>, senza alcuna dipendenza da
+javax.websocket (usata nel progetto basato su Spring)</p>
+<p><span class="slide2">Altri esempi usando org.java_websocket</span></p>
+</section>
+<section id="id3">
+<h3>WsServerDemo<a class="headerlink" href="#id3" title="Permalink to this heading">¶</a></h3>
+<p><a class="reference external" href="../../../../commdemo/src/main/java/demows/server/WsServerDemo.java">WsServerDemo</a>: un server WS che elabora messaggi rispondendo a richieste</p>
+</section>
+<section id="id4">
+<h3>WsServerDemoCaller<a class="headerlink" href="#id4" title="Permalink to this heading">¶</a></h3>
+<p><a class="reference external" href="../../../../commdemo/src/main/java/demows/client/WsServerDemoCaller.java">WsServerDemoCaller</a>: un utilizzatore di <a class="reference internal" href="#id3"><span class="std std-ref">WsServerDemo</span></a> che usa
+<em>org.java_websocket.client.WebSocketClient</em></p>
+</section>
+<section id="id5">
+<h3>WsServerDemoCallerConnection<a class="headerlink" href="#id5" title="Permalink to this heading">¶</a></h3>
+<p><a class="reference external" href="../../../../commdemo/src/main/java/demows/client/WsServerDemoCallerConnection.java">WsServerDemoCallerConnection</a>: un utilizzatore di <a class="reference internal" href="#id3"><span class="std std-ref">WsServerDemo</span></a> che usa una connessione WS
+di tipo <a class="reference internal" href="unibo.basicomm23.html#unibo-basicomm23-interfaces-interaction"><span class="std std-ref">unibo.basicomm23.interfaces.Interaction</span></a> a <strong>request</strong> bloccsante.</p>
+</section>
+<section id="id6">
+<h3>WsServerDemoCallerWSInteraction<a class="headerlink" href="#id6" title="Permalink to this heading">¶</a></h3>
+<p><a class="reference external" href="../../../../commdemo/src/main/java/demows/client/WsServerDemoCallerWSInteraction.java">WsServerDemoCallerWSInteraction</a>: un utilizzatore di <a class="reference internal" href="#id3"><span class="std std-ref">WsServerDemo</span></a> che usa una connessione WS
+di tipo <a class="reference internal" href="unibo.basicomm23.html#unibo-basicomm23-interfaces-interaction"><span class="std std-ref">unibo.basicomm23.interfaces.Interaction</span></a>, operando come observer della connessione.</p>
+</section>
+</section>
+<section id="interazioni-via-mqtt">
+<h2>Interazioni via MQTT<a class="headerlink" href="#interazioni-via-mqtt" title="Permalink to this heading">¶</a></h2>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <div>
+    <h3><a href="index.html">Table of Contents</a></h3>
+    <ul>
+<li><a class="reference internal" href="#">commdemo</a><ul>
+<li><a class="reference internal" href="#interazioni-via-ws">Interazioni via WS</a><ul>
+<li><a class="reference internal" href="#id1">LifeCallerWs</a></li>
+<li><a class="reference internal" href="#id2">LifeCallerWSInteraction</a></li>
+<li><a class="reference internal" href="#id3">WsServerDemo</a></li>
+<li><a class="reference internal" href="#id4">WsServerDemoCaller</a></li>
+<li><a class="reference internal" href="#id5">WsServerDemoCallerConnection</a></li>
+<li><a class="reference internal" href="#id6">WsServerDemoCallerWSInteraction</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#interazioni-via-mqtt">Interazioni via MQTT</a></li>
+</ul>
+</li>
+</ul>
+
+  </div>
+  <div>
+    <h4>Previous topic</h4>
+    <p class="topless"><a href="unibo.basicomm23.html"
+                          title="previous chapter">unibo.basicomm23</a></p>
+  </div>
+  <div>
+    <h4>Next topic</h4>
+    <p class="topless"><a href="SpringBootWebSocketSTOMP.html"
+                          title="next chapter">SpringBootWebSocketSTOMP</a></p>
+  </div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/commdemo.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="SpringBootWebSocketSTOMP.html" title="SpringBootWebSocketSTOMP"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="unibo.basicomm23.html" title="unibo.basicomm23"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">iss24 1.0 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">commdemo</a></li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2024, Antonio Natali.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 5.0.2.
+    </div>
+  </body>
+</html>

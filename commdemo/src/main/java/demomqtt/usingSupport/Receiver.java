@@ -7,7 +7,12 @@ import unibo.basicomm23.mqtt.MqttSupport;
 import unibo.basicomm23.utils.CommUtils;
 
 /*
- * Opera come receiver di messaggi
+ * Usa MqttSupport.subscribe implementando MqttCallback
+ * La ricezione di un messaggio sulla topic receiverIn
+ * avviene nel metodo di callback messageArrived
+ * mentre il receiver opera entro un Thread
+ * 
+ * Si noti il problema della richiesta
  */
 public class Receiver implements MqttCallback{
 	private final String MqttBroker = "tcp://localhost:1883";//"tcp://broker.hivemq.com"; //
@@ -44,6 +49,9 @@ public class Receiver implements MqttCallback{
 	@Override
 	public void messageArrived(String topic, MqttMessage message) throws Exception {
 		CommUtils.outmagenta(name + " | messageArrived " + message + " on " + topic);	
+		if( message.toString().contains("request") ) { //Faremo meglio in seguito ...
+			CommUtils.outmagenta(name + " | vorrei rispondere alla richiesta, ma come? "  );
+		}
 		if( message.toString().equals("END") ) goon = false;
 	}
 
