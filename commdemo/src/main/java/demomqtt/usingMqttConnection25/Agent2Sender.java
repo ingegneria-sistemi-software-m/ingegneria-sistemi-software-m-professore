@@ -5,7 +5,7 @@ import unibo.basicomm23.mqtt.MqttConnection25;
 import unibo.basicomm23.utils.CommUtils;
 
 public class Agent2Sender {
-	private final String MqttBroker = "tcp://192.168.1.132:1883";//"tcp://192.168.1.132:1883"; //"tcp://localhost:1883";//"tcp://broker.hivemq.com"; //
+	private final String MqttBroker = "tcp://localhost:1883";//"tcp://192.168.1.132:1883"; //"tcp://localhost:1883";//"tcp://broker.hivemq.com"; //
     private  String name;
 	private MqttConnection25  mqttConn;
 	private boolean receiverStarted = false;
@@ -23,11 +23,11 @@ public class Agent2Sender {
 	 */
 	public void doJob() {
 		activateReceive();  
-		int i = 0;
-		while( !  receiverStarted && i++<5){
-			CommUtils.outcyan("please, activate the receiver ..." + i );
-			CommUtils.delay(1000);
-		}
+//		int i = 0;
+//		while( !  receiverStarted && i++<5){
+//			CommUtils.outcyan("please, activate the receiver ..." + i );
+//			CommUtils.delay(1000);
+//		}
 		//Comincio comunque, sperando che il reciver sia partito prima ...
 		new Thread() {
 			public void run() {
@@ -46,7 +46,7 @@ public class Agent2Sender {
 					CommUtils.outblack(name + " | answer:"  + answer );					
   
 					//AGAIN   		
-					CommUtils.outblue(name + " | SENDS AGAIN request"  ); 							
+					CommUtils.outblue(name + " | SENDS AGAIN the same request"  ); 							
 					answer = mqttConn.request(  msgRequest   );
 					CommUtils.outblack(name + " | answer:"  + answer );	
 // 
@@ -69,9 +69,9 @@ public class Agent2Sender {
 			public void run() {	
 				try {
 					while(  true ) {
-						CommUtils.outgreen(name + "  | RECEIVING ... "  );
+//						CommUtils.outgreen(name + "  | RECEIVING ... "  );
 						IApplMessage message = mqttConn.receive(); //Blocking	!!!!	
-						CommUtils.outmagenta(name + " perceives:" + message.toString());						
+						CommUtils.outcyan(name + " perceives:" + message.toString());						
 						if( message.msgContent().contains("receiverStarted")) receiverStarted=true;
 					}//while
 				} catch (Exception e) {

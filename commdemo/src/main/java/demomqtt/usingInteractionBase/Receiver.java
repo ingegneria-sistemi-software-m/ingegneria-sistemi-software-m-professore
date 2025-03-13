@@ -1,5 +1,6 @@
 package demomqtt.usingInteractionBase;
 
+ 
 import unibo.basicomm23.interfaces.IApplMessage;
 import unibo.basicomm23.mqtt.MqttInteractionBase;
 import unibo.basicomm23.msg.ApplMessage;
@@ -14,16 +15,19 @@ public class Receiver {
     private final String name       = "receiver";
 	private String topic            = "unibo/conn";
 	private boolean goon            = true;
-	private MqttInteractionBase mqttConn;
+ 	private MqttInteractionBase mqttConn;
+//	private MqttConnectionBaseSynch mqttConn;
 
 	public Receiver() {
 		CommUtils.outcyan(name + "  | CREATING"  );
-		mqttConn = new MqttInteractionBase(MqttBroker, name, topic, false);
+		boolean sendonly=false;
+//		mqttConn = new MqttInteractionBase(MqttBroker, name, topic, sendonly); //
+		mqttConn = new MqttInteractionBase(MqttBroker, name, topic ); //
 	}
-	public Receiver(MqttInteractionBase mqttConn) {
-		CommUtils.outcyan(name + "  | CREATING with mqttconn"  );
-		this.mqttConn = mqttConn;
-	}
+//	public Receiver(MqttInteractionBase mqttConn) {
+//		CommUtils.outcyan(name + "  | CREATING with mqttconn"  );
+//		this.mqttConn = mqttConn;
+//	}
 
 	public void doJob() {
 		new Thread() {
@@ -43,26 +47,31 @@ public class Receiver {
  	}
     
 	protected void elabMessage(String message) {
+		CommUtils.outmagenta(name + " | messageArrived " + message + " on " + topic);	
+		if( message.toString().equals("END") ) {
+			goon = false;
+			return;
+		}
 		try {
-			if( message.toString().equals("END") ) goon = false; 
-			CommUtils.outmagenta(name + " | elabMessage " + message); 
-			if( message.toString().contains("request") ) { //Faremo meglio in seguito ...
-				CommUtils.outmagenta(name + " | rispondo alla richiesta usando una topic specificata dal supporto"  );
-				mqttConn.reply("answer_to_"+message);
-			}
-			
-			
-//			IApplMessage msgInput = new ApplMessage(message.toString());
-//			CommUtils.outmagenta(name + " | elabMessage an IApplMessage = " + msgInput); 		
+			IApplMessage msg =  new ApplMessage(  message.toString() ); //potrebbe dare Exception
 //			CommUtils.outgreen(name + " |  msgid   = " + msgInput.msgId() );
 //			CommUtils.outgreen(name + " |  msgtype = " + msgInput.msgType() );
 //			CommUtils.outgreen(name + " |  emitter = " + msgInput.msgSender());
 //			CommUtils.outgreen(name + " |  dest    = " + msgInput.msgReceiver());
 //			CommUtils.outgreen(name + " |  content = " + msgInput.msgContent());
-		}catch(Exception e) {
-			CommUtils.outmagenta(name + " |  elabMessage just a String= " + message); 
-			if( message.equals("END") ) goon = false;
-		}		
+
+			if( msg.isRequest() ) {  	
+				mqttConn.reply("answer_to_"+message);
+				
+				IApplMessage msgDispatch = CommUtils.buildDispatch("receiver", "info", "info(ok)", "sender" );
+				mqttConn.forward(msgDispatch.toString());
+			}		 
+			
+		}catch( Exception e) {
+			CommUtils.outred(name + "  message unknown "  );
+		}
+		
+	
 	}
 
 }

@@ -14,7 +14,7 @@ public class Sender {
 	public Sender(String name) { 
 		this.name = name;
 		CommUtils.outblue(name + "  | CREATING"  );
-		mqttConn = new MqttInteraction( MqttBroker, name, topic, false ); //NON attiva anche la ricezione
+		mqttConn = new MqttInteraction( MqttBroker, name, topic ); //, false NON attiva anche la ricezione
 	}
 	
 	public void doJob() {
@@ -27,6 +27,7 @@ public class Sender {
 					
 					CommUtils.outblue("sender | forward event "  ); 
 					mqttConn.forward(  msgEvent     );
+
 //					CommUtils.delay(500);
 //					CommUtils.outblue("sender | forward dispatch "  ); 
 //					mqttConn.forward(  msgDispatch  );
@@ -35,7 +36,8 @@ public class Sender {
 					CommUtils.outblue(name + " | SENDS request "  ); 							
 					IApplMessage answer = mqttConn.request(  msgRequest );
 					CommUtils.outblack(name + " | answer:"  + answer );					
-                    //AGAIN   		
+
+					//AGAIN   		
 					CommUtils.outblue(name + " | SENDS request again "  ); 							
 					answer = mqttConn.request(  msgRequest   );
 					CommUtils.outblack(name + " | answer:"  + answer );	

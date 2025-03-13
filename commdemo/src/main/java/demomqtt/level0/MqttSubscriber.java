@@ -35,7 +35,7 @@ public class MqttSubscriber {
                 @Override
                 public void messageArrived(String topic, MqttMessage message) throws Exception {
                 	System.out.println(   "messageArrived | Payload: " + message.getPayload()); //byte[]
-                   CommUtils.outmagenta("messageArrived | " + message); //convretd in String
+                   CommUtils.outmagenta("messageArrived | " + message); //converted in String
                 }
 
                 @Override
@@ -52,7 +52,8 @@ public class MqttSubscriber {
             client.subscribe(topic);
             CommUtils.outcyan(clientId + " | Sottoscritto al topic: " + topic);
             
-//            client.publish(topic, new MqttMessage("Hello1".getBytes()));
+            //Riceve ciò che invia ...
+            //client.publish(topic, new MqttMessage("Hello from receiver".getBytes()));
 
         } catch (MqttException e) {
         	CommUtils.outred("ERROR " + e.getMessage() );

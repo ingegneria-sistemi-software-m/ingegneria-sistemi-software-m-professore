@@ -42,13 +42,13 @@ public class LifeCallerWSInteraction implements IObserver{
         	conn.forward("cell-3-2");
 
             
-//            
+/*          
             conn.forward("start");
             
             CommUtils.delay(3000);
             
             conn.forward("stop");
-            
+*/            
             
         } catch (Exception e) {
         	CommUtils.outred("ConwayCallerWsInteraction | ERROR:" +e.getMessage());

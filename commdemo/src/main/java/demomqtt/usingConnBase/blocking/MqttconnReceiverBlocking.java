@@ -1,6 +1,8 @@
-package demomqtt.usingConnBase.blocking;
+			package demomqtt.usingConnBase.blocking;
+import unibo.basicomm23.interfaces.IApplMessage;
 import unibo.basicomm23.mqtt.MqttConnectionBase;
 import unibo.basicomm23.mqtt.MqttConnectionCallbackForReceive;
+import unibo.basicomm23.msg.ApplMessage;
 import unibo.basicomm23.utils.CommUtils;
 
 /*
@@ -32,22 +34,29 @@ public class MqttconnReceiverBlocking {
  	}
     
 	protected void elabMessage(String message) {
+		CommUtils.outmagenta(name + " | messageArrived " + message + " on " + topic);
 		try {
-			if( message.toString().equals("END") ) goon = false; 
-			CommUtils.outmagenta(name + " | elabMessage " + message); 
-			if( message.toString().contains("request") ) { //Faremo meglio in seguito ...
-				CommUtils.outmagenta(name + " | vorrei rispondere alla richiesta, ma come?  "  );
-				//Forse potrei usare una topic per la risposta ..
+			if( message.toString().equals("END") ) {
+				goon = false;
+				return;
 			}
+			try {
+				IApplMessage msg =  new ApplMessage(  message.toString() ); //potrebbe dare Exception
+//				CommUtils.outgreen(name + " |  msgid   = " + msgInput.msgId() );
+//				CommUtils.outgreen(name + " |  msgtype = " + msgInput.msgType() );
+//				CommUtils.outgreen(name + " |  emitter = " + msgInput.msgSender());
+//				CommUtils.outgreen(name + " |  dest    = " + msgInput.msgReceiver());
+//				CommUtils.outgreen(name + " |  content = " + msgInput.msgContent());
+
+				if( msg.isRequest() ) {  	
+					CommUtils.outred(name + " | vorrei rispondere alla richiesta, ma come? "  );
+				}		 
+				
+			}catch( Exception e) {
+				CommUtils.outred(name + "  message unknown "  );
+			}
+
 			
-			
-//			IApplMessage msgInput = new ApplMessage(message.toString());
-//			CommUtils.outmagenta(name + " | elabMessage an IApplMessage = " + msgInput); 		
-//			CommUtils.outgreen(name + " |  msgid   = " + msgInput.msgId() );
-//			CommUtils.outgreen(name + " |  msgtype = " + msgInput.msgType() );
-//			CommUtils.outgreen(name + " |  emitter = " + msgInput.msgSender());
-//			CommUtils.outgreen(name + " |  dest    = " + msgInput.msgReceiver());
-//			CommUtils.outgreen(name + " |  content = " + msgInput.msgContent());
 		}catch(Exception e) {
 			CommUtils.outmagenta(name + " |  elabMessage just a String=" + message); 
 			if( message.equals("END") ) goon = false;

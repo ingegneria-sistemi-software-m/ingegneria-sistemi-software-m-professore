@@ -3,7 +3,10 @@ package demomqtt.usingSupport;
 import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken;
 import org.eclipse.paho.client.mqttv3.MqttCallback;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
+
+import unibo.basicomm23.interfaces.IApplMessage;
 import unibo.basicomm23.mqtt.MqttSupport;
+import unibo.basicomm23.msg.ApplMessage;
 import unibo.basicomm23.utils.CommUtils;
 
 /*
@@ -25,7 +28,7 @@ public class Receiver implements MqttCallback{
 		this.name = name;
 		mqttSupport.connectToBroker(name,MqttBroker );
 		mqttSupport.subscribe ( receiverIn, this );
-		CommUtils.outcyan(name + " | CONSTRUCTED"  );
+		CommUtils.outcyan(name + " | CREATED"  );
 	}
 	
 	public void doJob() {
@@ -49,10 +52,27 @@ public class Receiver implements MqttCallback{
 	@Override
 	public void messageArrived(String topic, MqttMessage message) throws Exception {
 		CommUtils.outmagenta(name + " | messageArrived " + message + " on " + topic);	
-		if( message.toString().contains("request") ) { //Faremo meglio in seguito ...
-			CommUtils.outmagenta(name + " | vorrei rispondere alla richiesta, ma come? "  );
+		if( message.toString().equals("END") ) {
+			goon = false;
+			return;
 		}
-		if( message.toString().equals("END") ) goon = false;
+		try {
+			IApplMessage msg =  new ApplMessage(  message.toString() ); //potrebbe dare Exception
+//			CommUtils.outgreen(name + " |  msgid   = " + msgInput.msgId() );
+//			CommUtils.outgreen(name + " |  msgtype = " + msgInput.msgType() );
+//			CommUtils.outgreen(name + " |  emitter = " + msgInput.msgSender());
+//			CommUtils.outgreen(name + " |  dest    = " + msgInput.msgReceiver());
+//			CommUtils.outgreen(name + " |  content = " + msgInput.msgContent());
+
+			if( msg.isRequest() ) {  	
+				CommUtils.outred(name + " | vorrei rispondere alla richiesta, ma come? "  );
+			}		 
+			
+		}catch( Exception e) {
+			CommUtils.outred(name + "  message unknown "  );
+		}
+
+
 	}
 
 	@Override

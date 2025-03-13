@@ -4,6 +4,7 @@ import org.eclipse.paho.client.mqttv3.MqttCallback;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
 import unibo.basicomm23.interfaces.IApplMessage;
 import unibo.basicomm23.mqtt.MqttConnectionBase;
+import unibo.basicomm23.mqtt.MqttConnectionBaseAsynch;
 import unibo.basicomm23.msg.ApplMessage;
 import unibo.basicomm23.utils.CommUtils;
 
@@ -17,13 +18,12 @@ public class MqttconnReceiverNoBlock implements MqttCallback {
 	private final String MqttBroker = "tcp://localhost:1883";//"tcp://broker.hivemq.com"; //
     private final String name       = "receivernoblock";
 	private String topic            = "unibo/conn";
-	private String answertopic      = "unibo/conn/answer";
 	private boolean goon            = true;
-    private MqttConnectionBase mqttConn;
+    private MqttConnectionBaseAsynch mqttConn;
 
     //usiamo il costruttore che implica la receiver via callback
     public MqttconnReceiverNoBlock() {
-    	mqttConn = new MqttConnectionBase(  MqttBroker, name, topic, this ) ;  //this ha la callback
+    	mqttConn = new MqttConnectionBaseAsynch(  MqttBroker, name, topic,this  ) ;  //this ha la callback
     }
     
     public void doJob() {
@@ -31,7 +31,7 @@ public class MqttconnReceiverNoBlock implements MqttCallback {
     		public void run() {
     	    	while( goon ) {
     		    	CommUtils.outgreen(name + " | doing something ... "   );
-    		    	CommUtils.delay(50);
+    		    	CommUtils.delay(1000);
     	    	}
     	    	System.exit(0);    			
     		}
@@ -39,25 +39,27 @@ public class MqttconnReceiverNoBlock implements MqttCallback {
     }
   
 	protected void elabMessage(String message) {
-		try {
-			if( message.toString().equals("END") ) goon = false;
-			CommUtils.outmagenta(name + " | elabMessage " + message); 
-			if( message.toString().contains("request") ) { //Faremo meglio in seguito ...
-				CommUtils.outmagenta(name + " | vorrei rispondere alla richiesta, ma come? "  );
-				//mqttConn.send("myanswerTo_" + message);
+		CommUtils.outmagenta(name + " | messageArrived " + message + " on " + topic);	
+			if( message.toString().equals("END") ) {
+				goon = false;
+				return;
 			}
-			
-//			IApplMessage msgInput = new ApplMessage(message.toString());
-//			CommUtils.outmagenta(name + " | elabMessage an IApplMessage = " + msgInput); 		
-//			CommUtils.outgreen(name + " |  msgid   = " + msgInput.msgId() );
-//			CommUtils.outgreen(name + " |  msgtype = " + msgInput.msgType() );
-//			CommUtils.outgreen(name + " |  emitter = " + msgInput.msgSender());
-//			CommUtils.outgreen(name + " |  dest    = " + msgInput.msgReceiver());
-//			CommUtils.outgreen(name + " |  content = " + msgInput.msgContent());
-		}catch(Exception e) {
-			CommUtils.outmagenta(name + " | elabMessage just a String= " + message); 
-			if( message.equals("END") ) goon=false;
-		}		
+			try {
+				IApplMessage msg =  new ApplMessage(  message.toString() ); //potrebbe dare Exception
+//				CommUtils.outgreen(name + " |  msgid   = " + msgInput.msgId() );
+//				CommUtils.outgreen(name + " |  msgtype = " + msgInput.msgType() );
+//				CommUtils.outgreen(name + " |  emitter = " + msgInput.msgSender());
+//				CommUtils.outgreen(name + " |  dest    = " + msgInput.msgReceiver());
+//				CommUtils.outgreen(name + " |  content = " + msgInput.msgContent());
+
+				if( msg.isRequest() ) {  	
+					CommUtils.outred(name + " | vorrei rispondere alla richiesta, ma come? "  );
+				}		 
+				
+			}catch( Exception e) {
+				CommUtils.outred(name + "  message unknown "  );
+			}
+	
 	}
 
 

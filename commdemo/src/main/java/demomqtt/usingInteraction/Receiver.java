@@ -14,7 +14,7 @@ public class Receiver {
 
 	public Receiver() {
 		CommUtils.outcyan(name + "  | CREATING"  );
-		mqttConn = new MqttInteraction( MqttBroker, name, topic,true );
+		mqttConn = new MqttInteraction( MqttBroker, name, topic  );
 	}
 	public void doJob() {
 		new Thread() {
@@ -22,15 +22,16 @@ public class Receiver {
 				try {
 					while(  goon ) {
 						IApplMessage message = mqttConn.receive(); //Blocking		
-						//CommUtils.outmagenta(name + " |  Received:" + message );
+						CommUtils.outmagenta(name + " |  Received:" + message );
 						elabMessage( message );
 						
-						if (message.msgType().equals("request")) {
-							CommUtils.outmagenta(name + " |  REPLY TO " + message); 
+						if (message.isRequest()) {
+							//CommUtils.outblack(name + " |  REPLY TO " + message); 
 							//reply id deve essere quello della richiesta 
 							IApplMessage replyMsg = 
 									CommUtils.buildReply(name, message.msgId(), 
 											"answer_to_"+message.msgSender()+"_"+message.msgId(), message.msgSender());
+							CommUtils.outblack(name + " |  REPLY TO " + message + " with " + replyMsg); 
 							mqttConn.reply(replyMsg);
 						}
 						else if( message.msgContent().contains("end") ) {

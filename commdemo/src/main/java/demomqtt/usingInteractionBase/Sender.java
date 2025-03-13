@@ -1,6 +1,5 @@
 package demomqtt.usingInteractionBase;
 
-//import it.unibo.kactor.MsgUtil;
 import unibo.basicomm23.interfaces.IApplMessage;
 import unibo.basicomm23.mqtt.MqttInteractionBase;
 import unibo.basicomm23.utils.CommUtils;
@@ -17,7 +16,9 @@ public class Sender {
 
 	public Sender() {
 		CommUtils.outblue(name + "  | CREATING"  );
-		mqttConn = new MqttInteractionBase(MqttBroker, name, topic, true); //NON attiva anche la ricezione
+		boolean sendonly=true	;
+		//mqttConn = new MqttInteractionBase(MqttBroker, name, topic, sendonly); //NON attiva anche la ricezione
+		mqttConn = new MqttInteractionBase(MqttBroker, name, topic); // attiva anche la ricezione
 	}
 	
 	public Sender(MqttInteractionBase mqttConn ) {
@@ -35,27 +36,24 @@ public class Sender {
 					
 					CommUtils.delay(500);
 					
-//					CommUtils.outblue("sender | SENDS "  ); 
-//					
-//					String requestMsg = "work";
-//					String answer = mqttConn.request(  requestMsg );
-//					CommUtils.outblack("sender | answer:"  + answer );
-					
-					//String reply = mqttConn.receiveMsg();
-					//elabTheAnwer(requestMsg, reply);
-					//CommUtils.outmagenta("sender | reply:"  + reply );
-					
 					CommUtils.outblue("sender | forward event "  ); 
 					mqttConn.forward(  msgEvent.toString()    );
+					
 					CommUtils.delay(500);
 					CommUtils.outblue("sender | forward dispatch "  ); 
 					mqttConn.forward(  msgDispatch.toString() );
-//					CommUtils.delay(500);
- 					
+					
+					/*
+					 * request
+					 */					
 					CommUtils.outblue("sender | doing request "  ); 
 					String answer = mqttConn.request(  msgRequest.toString()  );
 					CommUtils.outblack("sender | answer:"  + answer );	
  
+					CommUtils.outblue("sender | wait for message"  ); 
+					String rrr = mqttConn.receiveMsg();
+					CommUtils.outblue("sender | receives " + rrr  ); 
+					
 					CommUtils.delay(500);
 					CommUtils.outblue("sender | forward ENDS "  );		
 					mqttConn.forward(  "END" );

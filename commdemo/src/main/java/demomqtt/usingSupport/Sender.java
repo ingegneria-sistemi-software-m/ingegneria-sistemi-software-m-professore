@@ -40,9 +40,7 @@ public class Sender {
 					CommUtils.outblue(name + "  | SENDS request"  ); 
 					mqttConn.publish(  receiverIn, msgRequest.toString()  );
 					CommUtils.delay(dt);
-					CommUtils.outblue(name + "  | SENDS work done"  ); 
-					mqttConn.publish(  receiverIn, "work done" );
-					CommUtils.delay(dt);
+
 					CommUtils.outblue(name + "  | SENDS END"  ); 
 					mqttConn.publish(  receiverIn, "END" );				
 					CommUtils.outblue(name + "  | ENDS "  );		

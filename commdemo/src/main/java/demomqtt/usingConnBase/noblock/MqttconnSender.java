@@ -13,7 +13,7 @@ import unibo.basicomm23.utils.CommUtils;
 public class MqttconnSender {
 	private final String MqttBroker = "tcp://localhost:1883";//"tcp://broker.hivemq.com"; //
     private final String name       = "sender";
-	private String topic            = "unibo/conn/answer";  //usata dal reciver per la risposta
+	private String topic            = "unibo/conn";  
     private MqttConnectionBase mqttConn;
 
     public MqttconnSender() {

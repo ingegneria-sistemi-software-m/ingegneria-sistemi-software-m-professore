@@ -26,7 +26,7 @@ public class MqttPublisher {
     		client.connect();
   			CommUtils.outblue(clientName + " | CONNECTED");
   			for( int i=1; i<4; i++) {
-  				String msg = "hello from publisher";
+  				String msg = "hello from publisher " + i ;
 	  			sendMessageMqtt(msg);
   			}
   			System.exit(0);
@@ -39,7 +39,7 @@ public class MqttPublisher {
             throws MqttSecurityException, MqttException {
       System.out.println(clientName+ " | sendMessageMqttd " + m);
 	  MqttMessage mqttmsg = new MqttMessage();
-	  mqttmsg.setQos(2);
+	  mqttmsg.setQos(2);		//QoS LEVEL 2!!! 
 	  mqttmsg.setPayload(m.getBytes());
 	  client.publish(topic, mqttmsg);
 	  //CommUtils.outblue("client HAS published " + mqttmsg);
