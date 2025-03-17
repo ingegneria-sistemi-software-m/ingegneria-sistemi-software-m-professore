@@ -369,12 +369,12 @@ strutturati, con interfaccia
 <li> Interazioni M2M con il servizio:
 	<ul>
 	<li>	 
-	usando <i>org.java_websocket</i>: <a href="html/commdemo.html#lifecallerws" target="web">
+	usando <i>org.java_websocket</i>: <a href="html/commdemo.html#lifecallerws-example" target="web">
 	LifeCallerWs</a> (progetto <b>commdemo</b>)
 	</li>
-	usando interaction: <a href="html/commdemo.html#lifecallerwsinteraction" target="web">
+	<li>usando interaction: <a href="html/commdemo.html#lifecallerwsinteraction-example" target="web">
 	LifeCallerWSInteraction</a> (progetto <b>commdemo</b>)
-	
+	</li>
  
 	</ul>
 
@@ -396,8 +396,9 @@ Sperimentazione di uso del protocollo MQTT con broker Mosquitto:
 </li>
 <li>Introduzione al progetto 
 <a href="html/ConwayLife25.html#conway25javamqtt" target="web">conway25JavaMqtt</a>
-che usa MQTT per inviare e ricevere informazioni s/da 
+che usa MQTT per inviare e ricevere informazioni a/da 
 <a href="html/ConwayLife25.html#conwayguialone" target="web">ConwayGui come micro-servizio a sè stante</a>
+<i><b>(conwayguialone</b></i>)
 
 
 <!-- <a href="../../../conway25JavaMqtt" target="web">conway25JavaMqtt</a> --> 
@@ -413,7 +414,37 @@ che usa MQTT per inviare e ricevere informazioni s/da
 <tr><td><em>Week 5</em></td><td></td><td></td></tr>    
 <tr><td><m>18/03/2025 (9-11:30)</m></td><td>Lab2 </td> 
 <td> 
- 
+<ol>
+<li>
+Impostazione dei progetti <a href="html/ConwayLife25.html#conway25javamqtt" target="web">conway25JavaMqtt</a>
+e  <a href="html/ConwayLife25.html#conwayguialone" target="web">conwayguialone</a>.
+</li>
+<li>Supporti custom per interazioni via MQTT:<a href="html/MqttConnection.html" target="web">MqttConnection</a>
+da <i><b>publish/subscribe</b></i> (<a href="html/MqttConnection.html#uso-diretto-della-libreria-paho" target="web">uso di Paho</a>
+e <a href="html/MqttConnection.html#mqttsupport" target="web">mqttsupport</a> )
+a <i><b>send/recive</b></i> (<a href="html/MqttConnection.html#mqttconnectionbase" target="web">mqttconnectionbase</a> )
+
+</li>
+<li>
+Il problema dei messaggi con semantica request-reply: il supporto 
+<a href="html/MqttConnection.html#mqttinteraction" target="web">mqttinteraction</a>
+che realizza il concetto di 
+<a href="html/unibo.basicomm23.html#interconnessione" target="web">Interconnessione</a> su MQTT
+e le operazioni <i><b>forward/request-reply/emit</b></i>:
+
+</li>
+
+<li>
+Uso di <a href="html/MqttConnection.html#mqttinteraction" target="web">mqttinteraction</a> per realizzare 
+la interazione tra i due micro-servizi <a href="html/ConwayLife25.html#conway25javamqtt" target="web">conway25JavaMqtt</a>
+e <a href="html/ConwayLife25.html#conwayguialone" target="web">conwayguialone</a>
+</li>
+<li>
+Interazioni M2M via MQTT con il servizio <a href="html/ConwayLife25.html#conway25javamqtt" target="web">conway25JavaMqtt</a>:
+ <a href="html/commdemo.html#lifecallermqtt-example" target="web">
+LifeCallerMQTT</a>  (progetto <b>commdemo</b>)
+</li>
+</ol> 
 
 </td>
 </tr>  

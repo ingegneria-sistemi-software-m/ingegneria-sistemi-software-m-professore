@@ -1,0 +1,27 @@
+package demomqtt.usingConnBaseOut;
+import unibo.basicomm23.mqtt.MqttSupport;
+import unibo.basicomm23.utils.CommUtils;
+
+/*
+ * Connessione che permette solo trasmissione di informazione
+ */
+public class MqttConnectionBaseOut  {
+	protected String topic;
+	protected MqttSupport mqttSupport;
+ 	
+	public MqttConnectionBaseOut(String mqttBrokerAddr, String clientid, String topic ) {
+		mqttSupport = new MqttSupport();
+		mqttSupport.connectToBroker(clientid, mqttBrokerAddr);
+        this.topic          = topic;
+       }
+	
+ 	public void send(String msg) throws Exception{
+		//CommUtils.outyellow(clientid + " MqttConnectionBase | send " + msg + " on:" + topic);
+ 		mqttSupport.publish(topic, msg);
+	}
+
+ 	public void disconnect() {
+ 		mqttSupport.disconnect();
+ 	}
+ 
+}

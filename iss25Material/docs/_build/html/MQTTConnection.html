@@ -71,17 +71,7 @@ attraverso il comando:</p>
 <tr class="row-odd"><td><p><a class="reference internal" href="#mqttconnectionbase"><span class="std std-ref">MqttConnectionBase</span></a></p></td>
 <td><p>Estende <a class="reference internal" href="#mqttsupport"><span class="std std-ref">MqttSupport</span></a> per fornire metodi di connessione e di <strong>send/receive</strong> di messaggi.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#mqttinteractionbase"><span class="std std-ref">MqttInteractionBase</span></a></p></td>
-<td><p>Usa un supporto che implementa <a class="reference internal" href="unibo.basicomm23.html#interaction2021"><span class="std std-ref">Interaction2021</span></a>,
-in cui i messaggi sono semplici <strong>String</strong> .  Le operazioni generiche <em>send/receive</em>
-sono eliminate, a favore di <span class="slide2">forward/request/reply/receiveMsg</span>.</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#mqttinteraction"><span class="std std-ref">MqttInteraction</span></a></p></td>
-<td><p>Usa un supporto che implementa <a class="reference internal" href="unibo.basicomm23.html#interaction2023"><span class="std std-ref">Interaction2023</span></a>,
-in cui i messaggi sono di tipo <a class="reference internal" href="unibo.basicomm23.html#unibo-basicomm23-interfaces-iapplmessage"><span class="std std-ref">IApplMessage</span></a>.  Le operazioni generiche <em>send/receive</em>
-sono eliminate, a favore di <strong>forward/request/reply/receiveMsg</strong>.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#mqttconnection25"><span class="std std-ref">MqttConnection25</span></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#mqttinteraction"><span class="std std-ref">MqttInteraction</span></a></p></td>
 <td><p>Usa un supporto che implementa <a class="reference internal" href="unibo.basicomm23.html#unibo-basicomm23-interfaces-interaction"><span class="std std-ref">Interaction</span></a> .</p></td>
 </tr>
 </tbody>
@@ -141,11 +131,11 @@ per effettuare operazioni <em>publish/subscribe</em> sulla topic <code class="do
 </table>
 <table class="docutils align-default" style="width: 100%">
 <colgroup>
-<col style="width: 50.0%" />
-<col style="width: 50.0%" />
+<col style="width: 40.0%" />
+<col style="width: 60.0%" />
 </colgroup>
 <tbody>
-<tr class="row-odd"><td><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">public</span> <span class="k">class</span> <span class="nc">MqttJavaPublisher</span>
+<tr class="row-odd"><td><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">MqttJavaPublisher</span>
 </pre></div>
 </div>
 <p>Si noti il livello <span class="slide3">QoS 2</span> fissato nel messaggio.</p>
@@ -164,11 +154,10 @@ client.publish( &quot;unibo/conn&quot;,  mqttmsg) );
 </div>
 </td>
 </tr>
-<tr class="row-even"><td><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">public</span> <span class="k">class</span> <span class="nc">MqttJavaSubscriber</span>
-
-<span class="n">Il</span> <span class="n">codice</span> <span class="n">ha</span> <span class="n">la</span> <span class="n">tipica</span> <span class="n">forma</span> <span class="n">di</span> <span class="n">connessione</span> <span class="n">con</span> <span class="n">callback</span>
+<tr class="row-even"><td><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">MqttJavaSubscriber</span>
 </pre></div>
 </div>
+<p>Il codice ha la tipica forma di connessione con callback</p>
 </td>
 <td><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">client</span> <span class="o">=</span> <span class="n">new</span> <span class="n">MqttClient</span><span class="p">(</span><span class="s2">&quot;tcp://localhost:1883&quot;</span><span class="p">,</span> <span class="s2">&quot;client2&quot;</span> <span class="p">);</span>
 <span class="n">client</span><span class="o">.</span><span class="n">setCallback</span><span class="p">(</span><span class="n">new</span> <span class="n">MqttCallback</span><span class="p">()</span> <span class="p">{</span>
@@ -222,8 +211,8 @@ nel realizzare operazioni più vicine al livello di astrazione applicativo:</p>
 <col style="width: 80.0%" />
 </colgroup>
 <tbody>
-<tr class="row-odd"><td><p><a class="reference external" href="../../../../commdemo/src/main/java/demomqtt/usingSupport">usingSupport</a></p></td>
-<td><p>Esempio di uso di <a class="reference internal" href="#mqttsupport">MqttSupport</a>.</p>
+<tr class="row-odd"><td><p><a class="reference external" href="../../../../commdemo/src/main/java/demomqtt/usingSupport/MqttSupport.txt">MqttSupport.java</a></p></td>
+<td><p><a class="reference external" href="../../../../commdemo/src/main/java/demomqtt/usingSupport">usingSupport</a> :</p>
 <ul class="simple">
 <li><p>Il <em>sender</em> pubblica una String sulla topic <code class="docutils literal notranslate"><span class="pre">receiverIn</span></code></p></li>
 <li><p>Il <em>receiver</em> implementa <strong>org.eclipse.paho.client.mqttv3.MqttCallback</strong>, gestendo
@@ -241,78 +230,75 @@ ma <span class="slide2">come fa il receiver a rispondere?</span></p>
 </section>
 <section id="mqttconnectionbase">
 <h2>MqttConnectionBase<a class="headerlink" href="#mqttconnectionbase" title="Link to this heading">¶</a></h2>
-<table class="docutils align-default" style="width: 100%">
-<colgroup>
-<col style="width: 2.0%" />
-<col style="width: 98.0%" />
-</colgroup>
-<tbody>
-<tr class="row-odd"><td></td>
-<td><ul class="simple">
-<li><p>Estende <a class="reference internal" href="#mqttsupport"><span class="std std-ref">MqttSupport</span></a>  per fornire
-metodi di connessione e di <span class="slide2">send/receive</span> di messaggi mediante una topic.</p></li>
-</ul>
-</td>
-</tr>
-</tbody>
-</table>
+<p>L’uso diretto della libreria Paho o del supporto <a class="reference internal" href="#mqttsupport"><span class="std std-ref">MqttSupport</span></a> fornisce operazioni
+di tipo <em>publish/subscribe</em> su una topic, senza imporre vincoli.</p>
+<p>Ad esempio, un client può pubblicare messaggi su una topic, e anche registrarsi come subscriber
+sulla stessa topic, con la conseguenza che il messaggio pubblicato viene ricevuto anche dal mittente.
+Ciò può costituire una opportunità, ma anche fonte di complicazione nel codice che voglia evitare
+la gestione dei messaggi inviati dalla sorgente.</p>
+<p>Può essere quindi utile introdurre classi che forniscano un’interfaccia più semplice e coerente
+per la comunicazione tra due agenti, in cui uno fa da sender e l’altro da receiver.</p>
+<p>Diamo il prefisso <strong>MqttConnectionBase</strong> ai nomi di queste classi, per evidenziare che intendono
+fornire supporti di comunicazione ‘logica, più strutturati rispetto a quelli forniti da <strong>MqttSupport</strong>.</p>
+<section id="mqttconnectionbaseout">
+<h3>MqttConnectionBaseOut<a class="headerlink" href="#mqttconnectionbaseout" title="Link to this heading">¶</a></h3>
 <table class="docutils align-default" style="width: 100%">
 <colgroup>
 <col style="width: 30.0%" />
 <col style="width: 70.0%" />
 </colgroup>
 <tbody>
-<tr class="row-odd"><td><p>aaa</p></td>
-<td><p>Esempio di uso di <a class="reference internal" href="#mqttconnectionbase"><span class="std std-ref">MqttConnectionBase</span></a>.</p></td>
-</tr>
-<tr class="row-even"><td><p>bbb</p></td>
-<td><p>Esempio di uso di <a class="reference internal" href="#mqttconnectionbase"><span class="std std-ref">MqttConnectionBase</span></a>.</p></td>
+<tr class="row-odd"><td><p><a class="reference external" href="../../../../commdemo/src/main/java/demomqtt/usingConnBaseOut/MqttConnectionBaseOut.txt">MqttConnectionBaseOut.java</a></p></td>
+<td><p>Estende <a class="reference internal" href="#mqttsupport"><span class="std std-ref">MqttSupport</span></a>  per fornire una operazione
+<span class="slide2">send</span> di messaggi mediante una topic.</p>
+<p>Esempio: <a class="reference external" href="../../../../commdemo/src/main/java/demomqtt/usingConnBaseOut">usingConnBaseOut</a></p>
+</td>
 </tr>
 </tbody>
 </table>
-<p>Anche in questi esempi, le String trasmesse sono ricavate da oggetti
-di tipo <a class="reference internal" href="unibo.basicomm23.html#unibo-basicomm23-interfaces-iapplmessage"><span class="std std-ref">IApplMessage</span></a>.</p>
-<p>Un messaggio è ancora di tipo <a class="reference internal" href="unibo.basicomm23.html#metodi-per-la-comunicazione"><span class="std std-ref">request</span></a>,
-ma <span class="slide2">come fa il receiver a rispondere?</span></p>
 </section>
-<section id="mqttinteractionbase">
-<h2>MqttInteractionBase<a class="headerlink" href="#mqttinteractionbase" title="Link to this heading">¶</a></h2>
+<section id="mqttconnectionbaseinasynch">
+<h3>MqttConnectionBaseInAsynch<a class="headerlink" href="#mqttconnectionbaseinasynch" title="Link to this heading">¶</a></h3>
 <table class="docutils align-default" style="width: 100%">
 <colgroup>
-<col style="width: 2.0%" />
-<col style="width: 98.0%" />
+<col style="width: 30.0%" />
+<col style="width: 70.0%" />
 </colgroup>
 <tbody>
-<tr class="row-odd"><td></td>
-<td><p>Implementa <a class="reference internal" href="unibo.basicomm23.html#interaction2021"><span class="std std-ref">Interaction2021</span></a> per realizzare il concetto astratto di <a class="reference internal" href="unibo.basicomm23.html#interconnessione"><span class="std std-ref">Interconnessione</span></a>
-con riferimento a messaggi di tipo <span class="slide2">String</span></p>
-<p>Le operazioni generiche <strong>send/receive sono eliminate</strong>, a favore di
-<span class="slidekp">forward/request/reply/receiveMsg</span> che
-rappresentano una <span class="slide2">modalità logiche di interazione</span> tramite scambio di informazione,
-come introdotto in <a class="reference internal" href="unibo.basicomm23.html#metodi-per-la-comunicazione"><span class="std std-ref">Metodi per la comunicazione</span></a>.</p>
+<tr class="row-odd"><td><p><a class="reference external" href="../../../../commdemo/src/main/java/demomqtt/usingConnBaseInAsynch/MqttConnectionBaseInAsynch.txt">MqttConnectionBaseInAsynch.java</a></p></td>
+<td><p>USA <a class="reference internal" href="#mqttsupport"><span class="std std-ref">MqttSupport</span></a>  per fornire la possibilità di ricevere messaggi mediante una topic
+in modo asincrono con una callback, <strong>senza offrire alcuna operazione</strong>.</p>
+<p>Esempio: <a class="reference external" href="../../../../commdemo/src/main/java/demomqtt/usingConnBaseInAsynch">usingConnBaseInAsynch</a></p>
 </td>
 </tr>
 </tbody>
 </table>
+</section>
+<section id="mqttconnectionbaseinsynch">
+<h3>MqttConnectionBaseInSynch<a class="headerlink" href="#mqttconnectionbaseinsynch" title="Link to this heading">¶</a></h3>
 <table class="docutils align-default" style="width: 100%">
 <colgroup>
-<col style="width: 20.0%" />
-<col style="width: 80.0%" />
+<col style="width: 30.0%" />
+<col style="width: 70.0%" />
 </colgroup>
 <tbody>
-<tr class="row-odd"><td><p><a class="reference external" href="../../../../commdemo/src/main/java/demomqtt/usingInteractionBase">usingInteractionBase</a></p></td>
-<td><p>Esempio di uso di <a class="reference internal" href="#mqttinteractionbase"><span class="std std-ref">MqttInteractionBase</span></a>.</p>
-<p>Le String trasmesse sono ricavate da oggetti
+<tr class="row-odd"><td><p><a class="reference external" href="../../../../commdemo/src/main/java/demomqtt/usingConnBaseInSynch/MqttConnectionBaseInSynch.txt">MqttConnectionBaseInSynch.java</a></p></td>
+<td><p>USA <a class="reference internal" href="#mqttsupport"><span class="std std-ref">MqttSupport</span></a>  per fornire una operazione
+<span class="slide2">receive</span> (bloccante) di messaggi mediante una topic.</p>
+<p>Il costruttore crea un oggetto <a class="reference internal" href="#mqttconnectioncallbackforreceive"><span class="std std-ref">MqttConnectionCallbackForReceive</span></a>
+che realizza una callback che pone i messaggi ricevuti in una coda <strong>blockingQueue</strong>,
+che viene consumata dalla <span class="blue">receive</span>.</p>
+<p>Esempi: <a class="reference external" href="../../../../commdemo/src/main/java/demomqtt/usingConnBaseInSynch">usingConnBaseInSynch</a>  tra cui <a class="reference external" href="../../../../commdemo/src/main/java/demomqtt/usingConnBaseInSynch/MqttConnBaseSynchIOAutoAgent.java">MqttConnBaseSynchIOAutoAgent</a></p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Anche negli esempi relativi a queste clasi, le String trasmesse sono ricavate da oggetti
 di tipo <a class="reference internal" href="unibo.basicomm23.html#unibo-basicomm23-interfaces-iapplmessage"><span class="std std-ref">IApplMessage</span></a>.</p>
-<p>Un messaggio è ancora di tipo <a class="reference internal" href="unibo.basicomm23.html#metodi-per-la-comunicazione"><span class="std std-ref">request</span></a> e il <em>receiver</em>
-riesce a inviare la risposta usando l’operazione <span class="slide2">reply</span>. Il supporto invia la risposta
-su una nuova topic che ha lo stesso nome della topic su cui fa subscribe seguito
-dal suffisso <span class="slide3">_answ_</span>.</p>
-<p>La request del sender fa una receive bloccante su queta topic di risposta.</p>
-</td>
-</tr>
-</tbody>
-</table>
+<p>Quando un messaggio è  di tipo <a class="reference internal" href="unibo.basicomm23.html#metodi-per-la-comunicazione"><span class="std std-ref">request</span></a>,
+i supporti non offrono alcun meccanismo che possa ricolvere il problema
+<span class="slide2">come fa il receiver a rispondere?</span></p>
+</section>
 </section>
 <section id="mqttinteraction">
 <h2>MqttInteraction<a class="headerlink" href="#mqttinteraction" title="Link to this heading">¶</a></h2>
@@ -322,118 +308,35 @@ dal suffisso <span class="slide3">_answ_</span>.</p>
 <col style="width: 98.0%" />
 </colgroup>
 <tbody>
-<tr class="row-odd"><td></td>
-<td><p>Implementa <a class="reference internal" href="unibo.basicomm23.html#interaction2023"><span class="std std-ref">Interaction2023</span></a> per realizzare il concetto astratto di <a class="reference internal" href="unibo.basicomm23.html#interconnessione"><span class="std std-ref">Interconnessione</span></a>
-con riferimento a messaggi di tipo <a class="reference internal" href="unibo.basicomm23.html#unibo-basicomm23-interfaces-iapplmessage"><span class="std std-ref">IApplMessage</span></a>.</p></td>
-</tr>
-</tbody>
-</table>
-<table class="docutils align-default" style="width: 100%">
-<colgroup>
-<col style="width: 20.0%" />
-<col style="width: 80.0%" />
-</colgroup>
-<tbody>
-<tr class="row-odd"><td><p><a class="reference external" href="../../../../commdemo/src/main/java/demomqtt/usingInteraction">usingInteraction</a></p></td>
-<td><p>Esempio di uso di <a class="reference internal" href="#mqttinteraction"><span class="std std-ref">MqttInteraction</span></a>.</p>
-<ul class="simple">
-<li><p>Come nel caso precedente, i <em>sender</em>  e il <em>receiver</em>
-operano usando un oggetto che realizza la <a class="reference internal" href="unibo.basicomm23.html#interconnessione"><span class="std std-ref">Interconnessione</span></a>
-mediante la topic <code class="docutils literal notranslate"><span class="pre">unibo/conn</span></code>.</p></li>
-<li><p>I messaggi trasmessi e ricevuti sono
-di tipo <a class="reference internal" href="unibo.basicomm23.html#unibo-basicomm23-interfaces-iapplmessage"><span class="std std-ref">IApplMessage</span></a>.</p></li>
-</ul>
-</td>
-</tr>
-</tbody>
-</table>
-</section>
-<section id="mqttconnection25">
-<h2>MqttConnection25<a class="headerlink" href="#mqttconnection25" title="Link to this heading">¶</a></h2>
-<blockquote>
-<div><a class="reference internal image-reference" href="_images/MqtttConnection25.png"><img alt="_images/MqtttConnection25.png" class="align-center" src="_images/MqtttConnection25.png" style="width: 80%;" />
+<tr class="row-odd"><td><p><a class="reference external" href="../../../../commdemo/src/main/java/demomqtt/usingMqttInteraction/MqttInteraction.txt">MqttInteraction.java</a></p></td>
+<td><p>Implementa <a class="reference internal" href="unibo.basicomm23.html#interaction2021"><span class="std std-ref">Interaction2021</span></a> e <a class="reference internal" href="unibo.basicomm23.html#interaction2023"><span class="std std-ref">Interaction2023</span></a> per realizzare il concetto astratto di <a class="reference internal" href="unibo.basicomm23.html#interconnessione"><span class="std std-ref">Interconnessione</span></a>
+con riferimento a messaggi di tipo String e di tipo <a class="reference internal" href="unibo.basicomm23.html#unibo-basicomm23-interfaces-iapplmessage"><span class="std std-ref">IApplMessage</span></a>.</p>
+<a class="reference internal image-reference" href="_images/MqtttConnection251.png"><img alt="_images/MqtttConnection251.png" class="align-center" src="_images/MqtttConnection251.png" style="width: 50%;" />
 </a>
-</div></blockquote>
-<table class="docutils align-default" style="width: 100%">
-<colgroup>
-<col style="width: 2.0%" />
-<col style="width: 98.0%" />
-</colgroup>
-<tbody>
-<tr class="row-odd"><td></td>
-<td><p>Implementa <a class="reference internal" href="unibo.basicomm23.html#unibo-basicomm23-interfaces-interaction"><span class="std std-ref">Interaction</span></a> per realizzare una interconnessione
+<p>Usa <a class="reference internal" href="#mqttconnectionbaseout"><span class="std std-ref">MqttConnectionBaseOut</span></a> e <a class="reference internal" href="#mqttconnectionbaseinsynch"><span class="std std-ref">MqttConnectionBaseInSynch</span></a>
+per implementare <a class="reference internal" href="unibo.basicomm23.html#unibo-basicomm23-interfaces-interaction"><span class="std std-ref">Interaction</span></a> per realizzare una interconnessione
 basata su due topic, ciascuna concepita come ingresso di un agente.</p>
-<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="c1">//Operazioni di Interaction2023</span>
-<span class="n">MqttConnection25</span><span class="p">(</span>
-<span class="w">    </span><span class="n">String</span><span class="w"> </span><span class="n">clientName</span><span class="p">,</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">mqttBrokerAddr</span><span class="p">,</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">topicIn</span><span class="p">,</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">topicOut</span><span class="p">)</span>
-<span class="kt">void</span><span class="w"> </span><span class="nf">forward</span><span class="p">(</span><span class="n">IApplMessage</span><span class="w"> </span><span class="n">msg</span><span class="p">)</span><span class="w"> </span><span class="kd">throws</span><span class="w"> </span><span class="n">Exception</span>
-<span class="n">IApplMessage</span><span class="w"> </span><span class="nf">request</span><span class="p">(</span><span class="w">  </span><span class="n">IApplMessage</span><span class="w"> </span><span class="n">msg</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="kd">throws</span><span class="w"> </span><span class="n">Exception</span><span class="p">;</span>
-<span class="n">IApplMessage</span><span class="w"> </span><span class="nf">request</span><span class="p">(</span><span class="w">  </span><span class="n">IApplMessage</span><span class="w"> </span><span class="n">msg</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">tout</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="kd">throws</span><span class="w"> </span><span class="n">Exception</span><span class="p">;</span><span class="w"> </span><span class="c1">//bloccante</span>
-<span class="kt">void</span><span class="w"> </span><span class="nf">reply</span><span class="p">(</span><span class="w">  </span><span class="n">IApplMessage</span><span class="w"> </span><span class="n">msg</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="kd">throws</span><span class="w"> </span><span class="n">Exception</span><span class="p">;</span>
-<span class="n">IApplMessage</span><span class="w"> </span><span class="nf">receive</span><span class="p">(</span><span class="w">  </span><span class="p">)</span><span class="w"> </span><span class="kd">throws</span><span class="w"> </span><span class="n">Exception</span><span class="w"> </span><span class="p">;</span>
-
-<span class="c1">//Operazioni di Interaction2021</span>
-<span class="kt">void</span><span class="w"> </span><span class="nf">forward</span><span class="p">(</span><span class="n">String</span><span class="w"> </span><span class="n">msg</span><span class="p">)</span><span class="w"> </span><span class="kd">throws</span><span class="w"> </span><span class="n">Exception</span>
-<span class="n">String</span><span class="w"> </span><span class="nf">request</span><span class="p">(</span><span class="n">String</span><span class="w"> </span><span class="n">msg</span><span class="p">)</span><span class="w"> </span><span class="kd">throws</span><span class="w"> </span><span class="n">Exception</span><span class="w">  </span><span class="c1">//bloccante</span>
-<span class="kt">void</span><span class="w"> </span><span class="nf">reply</span><span class="p">(</span><span class="n">String</span><span class="w"> </span><span class="n">msg</span><span class="p">)</span><span class="w"> </span><span class="kd">throws</span><span class="w"> </span><span class="n">Exception</span>
-<span class="n">String</span><span class="w"> </span><span class="nf">receiveMsg</span><span class="p">()</span><span class="w"> </span><span class="kd">throws</span><span class="w"> </span><span class="n">Exception</span>
-
-<span class="c1">//Chiusura</span>
-<span class="kt">void</span><span class="w"> </span><span class="nf">close</span><span class="p">()</span><span class="w"> </span><span class="kd">throws</span><span class="w"> </span><span class="n">Exception</span>
-</pre></div>
-</div>
-<p>Possiede una coda <span class="blue">blockingQueue</span> su cui pone l’handler <a class="reference internal" href="#mqttconnectioncallbackforreceive"><span class="std std-ref">MqttConnectionCallbackForReceive</span></a>
-i messaggi ricevuti sulla topic di ingresso (<code class="docutils literal notranslate"><span class="pre">topicIn</span></code>)</p>
-<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="n">BlockingQueue</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span><span class="w"> </span><span class="n">blockingQueue</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">LinkedBlockingDeque</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
-</pre></div>
-</div>
+<p>Realizza anche la <span class="slide2">operazione reply</span> (risposta a una richiesta):</p>
+<ul class="simple">
+<li><p>per richiesta di tipo String, invia la risposta a tutti i sender</p></li>
+<li><p>per messaggi di tipo <a class="reference internal" href="unibo.basicomm23.html#unibo-basicomm23-interfaces-iapplmessage"><span class="std std-ref">IApplMessage</span></a>
+fa in modo che questa <span class="slide3">giunga al solo agente che ha inviato la richiesta</span>.</p></li>
+</ul>
+<blockquote>
+<div><p>Esempio: <a class="reference external" href="../../../../commdemo/src/main/java/demomqtt/usingMqttInteraction">usingMqttInteraction</a></p>
+</div></blockquote>
+<a class="reference internal image-reference" href="_images/mqttInteraction.jpg"><img alt="_images/mqttInteraction.jpg" class="align-center" src="_images/mqttInteraction.jpg" style="width: 80%;" />
+</a>
 </td>
-</tr>
-</tbody>
-</table>
-<table class="docutils align-default" style="width: 100%">
-<colgroup>
-<col style="width: 20.0%" />
-<col style="width: 80.0%" />
-</colgroup>
-<tbody>
-<tr class="row-odd"><td><p><a class="reference external" href="../../../../commdemo/src/main/java/demomqtt/usingMqttConnection25">usingMqttConnection25</a></p></td>
-<td><p>Esempio di uso di <a class="reference internal" href="#mqttconnection25"><span class="std std-ref">MqttConnection25</span></a>.</p></td>
 </tr>
 </tbody>
 </table>
 </section>
 <section id="classi-di-supporto-per-la-gestione-messaggi">
 <h2>Classi di supporto per la gestione messaggi<a class="headerlink" href="#classi-di-supporto-per-la-gestione-messaggi" title="Link to this heading">¶</a></h2>
-<section id="iapplmsghandlermqtt">
-<h3>IApplMsgHandlerMqtt<a class="headerlink" href="#iapplmsghandlermqtt" title="Link to this heading">¶</a></h3>
-<p>Definita in <span class="slide3">unibo.basicomm23.interfaces</span></p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span> <span class="n">public</span> <span class="n">interface</span> <span class="n">IApplMsgHandler</span>  <span class="p">{</span>
-     <span class="n">public</span> <span class="n">String</span> <span class="n">getName</span><span class="p">();</span>
-     <span class="n">public</span> <span class="n">void</span> <span class="n">elaborate</span><span class="p">(</span> <span class="n">IApplMessage</span> <span class="n">message</span><span class="p">,</span> <span class="n">Interaction</span>  <span class="n">conn</span> <span class="p">);</span>
-
-<span class="n">IApplMsgHandlerMqtt</span> <span class="n">extends</span> <span class="n">IApplMsgHandler</span><span class="p">,</span>
-                            <span class="n">org</span><span class="o">.</span><span class="n">eclipse</span><span class="o">.</span><span class="n">paho</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">mqttv3</span><span class="o">.</span><span class="n">MqttCallback</span><span class="o">.</span><span class="n">MqttCallback</span>
-</pre></div>
-</div>
-</section>
-<section id="mqttanswerhandler">
-<h3>MqttAnswerHandler<a class="headerlink" href="#mqttanswerhandler" title="Link to this heading">¶</a></h3>
-<p>Definita in <span class="slide3">unibo.basicomm23.mqtt</span>.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">MqttAnswerHandler</span> <span class="n">implements</span> <span class="n">IApplMsgHandlerMqtt</span>
-
-<span class="n">MqttAnswerHandler</span><span class="p">(</span> <span class="n">String</span> <span class="n">name</span><span class="p">,</span>
-           <span class="n">MqttConnection</span> <span class="n">conn</span><span class="p">,</span>
-           <span class="n">IApplMsgHandler</span> <span class="n">handler</span><span class="p">,</span>
-           <span class="n">BlockingQueue</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">blockingQueue</span> <span class="p">)</span>
-</pre></div>
-</div>
-<p>Definisce il metodo <strong>messageArrived</strong> che elabora il messaggio ricevuto
-di tipo <span class="xref std std-ref">IApplMessage</span>, ponendo il messaggio stesso nella <strong>blockingQueue</strong>.</p>
-</section>
 <section id="mqttconnectioncallbackforreceive">
 <h3>MqttConnectionCallbackForReceive<a class="headerlink" href="#mqttconnectioncallbackforreceive" title="Link to this heading">¶</a></h3>
-<p>Definita in <span class="slide3">unibo.basicomm23.mqtt</span>.</p>
+<p>Definita in <span class="slide3">unibo.basicomm23.mqtt</span>, viene usata da <a class="reference internal" href="#mqttconnectionbaseinsynch"><span class="std std-ref">MqttConnectionBaseInSynch</span></a></p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">MqttConnectionCallback</span> <span class="n">implements</span> <span class="n">MqttCallback</span>
 
 <span class="n">MqttConnectionCallback</span><span class="p">(</span> <span class="n">BlockingQueue</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">blockingQueue</span> <span class="p">)</span>
@@ -469,13 +372,14 @@ di tipo String,  ponendo il messaggio stesso nella <strong>blockingQueue</strong
 </ul>
 </li>
 <li><a class="reference internal" href="#mqttsupport">MqttSupport</a></li>
-<li><a class="reference internal" href="#mqttconnectionbase">MqttConnectionBase</a></li>
-<li><a class="reference internal" href="#mqttinteractionbase">MqttInteractionBase</a></li>
+<li><a class="reference internal" href="#mqttconnectionbase">MqttConnectionBase</a><ul>
+<li><a class="reference internal" href="#mqttconnectionbaseout">MqttConnectionBaseOut</a></li>
+<li><a class="reference internal" href="#mqttconnectionbaseinasynch">MqttConnectionBaseInAsynch</a></li>
+<li><a class="reference internal" href="#mqttconnectionbaseinsynch">MqttConnectionBaseInSynch</a></li>
+</ul>
+</li>
 <li><a class="reference internal" href="#mqttinteraction">MqttInteraction</a></li>
-<li><a class="reference internal" href="#mqttconnection25">MqttConnection25</a></li>
 <li><a class="reference internal" href="#classi-di-supporto-per-la-gestione-messaggi">Classi di supporto per la gestione messaggi</a><ul>
-<li><a class="reference internal" href="#iapplmsghandlermqtt">IApplMsgHandlerMqtt</a></li>
-<li><a class="reference internal" href="#mqttanswerhandler">MqttAnswerHandler</a></li>
 <li><a class="reference internal" href="#mqttconnectioncallbackforreceive">MqttConnectionCallbackForReceive</a></li>
 </ul>
 </li>
