@@ -5,6 +5,6 @@ Repository del corso Ingegneria dei Sistemi Software a.a. 2024/2025 - DISI - Uni
   * [Articolo sui microservizi](iss25Material/docs/_build/html/_static/msoIEEE.pdf)
   * [conway25Java](conway25Java)
  
- <h2 id="xxx">Test</h2> 
-    * aaaa   <!-- comment: ancora personalizzata -->
-      Accesso da browser: https://github.com/anatali/issLab2025/#xxx
+ <h2 id="xxx">CustomDir test</h2> 
+    * <!-- comment: ancora personalizzata -->
+      Accesso da browser alla voce: https://github.com/anatali/issLab2025/#xxx
