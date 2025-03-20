@@ -8,5 +8,7 @@ Repository del corso Ingegneria dei Sistemi Software a.a. 2024/2025 - DISI - Uni
   * [Articolo sui microservizi](iss25Material/docs/_build/html/_static/msoIEEE.pdf)
   * [conway25Java](conway25Java): Classi Java che realizzano la parte core del game Life di Conway
   * [conwaygui](conwaygui): Sistema SpringBoot che ingloba [conway25Java](conway25Java) offrendo una GUI come dispositivo di I/O
- 
+  * [conway25JavaMqtt](conway25JavaMqtt): GameLife standalone che interagisce via MQTT con il mondo esterno
+  * [conwayguialone](conwayguialone): Servizio SpringBoot che offre la GUI per intergasice via MQTT con [conway25JavaMqtt](conway25JavaMqtt)  
+
 ### Dagli oggetti agli attori 
