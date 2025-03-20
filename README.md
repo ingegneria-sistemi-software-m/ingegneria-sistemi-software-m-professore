@@ -7,4 +7,4 @@ Repository del corso Ingegneria dei Sistemi Software a.a. 2024/2025 - DISI - Uni
  
  <h2 id="xxx">Test</h2> 
     * aaaa   <!-- comment: ancora personalizzata -->
-    * https://github.com/anatali/issLab2025/edit/main/README.md#xxx
+      Accesso da browser: https://github.com/anatali/issLab2025/#xxx
