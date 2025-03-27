@@ -1,0 +1,17 @@
+System conway25qak0
+Context ctxconway0 ip [host="localhost" port=8920 ]
+
+QActor conway0 context ctxconway0 
+      withobj life using "LifeCore.create()" {    
+import "main.java.conway.*"
+ 	State s0 initial{
+		println("$name | starts")
+ 	}
+}
+
+
+/*
+ * Attore che 'ingloba' sia Life sia LifeController (versione MQTT)
+ * ConwayLife opera come parte integrante dell'actor 
+ * che non svolge alcuna funzione, se non quella di inglobare l'appl
+ */

@@ -1,0 +1,333 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>ConwayLifeUsingActors &#8212; iss24 1.0 documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinxdoc.css" />
+    <link rel="stylesheet" type="text/css" href="_static/custom.css" />
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="QakActors25Demo" href="QakActors25Demo.html" />
+    <link rel="prev" title="commdemo" href="commdemo.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="QakActors25Demo.html" title="QakActors25Demo"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="commdemo.html" title="commdemo"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">iss24 1.0 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">ConwayLifeUsingActors</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="conwaylifeusingactors">
+<h1>ConwayLifeUsingActors<a class="headerlink" href="#conwaylifeusingactors" title="Permalink to this heading">¶</a></h1>
+<section id="progetto-conway25qak0">
+<h2><span class="slide3">Progetto conway25qak0</span><a class="headerlink" href="#progetto-conway25qak0" title="Permalink to this heading">¶</a></h2>
+</section>
+<section id="conway25qak0">
+<h2>conway25qak0<a class="headerlink" href="#conway25qak0" title="Permalink to this heading">¶</a></h2>
+<p>Questo progetto illustra come realizzare il gioco della vita di Conway usando attori Qak, attribuendo agli attori
+responsabilità via via crescenti.</p>
+<table class="docutils align-default" style="width: 100%">
+<colgroup>
+<col style="width: 30%" />
+<col style="width: 70%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference external" href="../../../../conway25qak0/src/conway0.qaktt">conway0.qak</a></p>
+<blockquote>
+<div><a class="reference internal image-reference" href="_images/conway0_qakImg.png"><img alt="_images/conway0_qakImg.png" class="align-center" src="_images/conway0_qakImg.png" style="width: 100%;" /></a>
+</div></blockquote>
+</td>
+<td><p>Attore che ingloba <strong>sia Life sia LifeController</strong> (versione MQTT)</p>
+<blockquote>
+<div><a class="reference internal image-reference" href="_images/conway0_qak.png"><img alt="_images/conway0_qak.png" class="align-center" src="_images/conway0_qak.png" style="width: 100%;" /></a>
+</div></blockquote>
+<ul class="simple">
+<li><p>L’attore non svolge alcuna funzione, se non qualla di inglobare l’applicazione distribuita
+nella libreria <span class="remark">conway25JavaMqtt-1.0.jar</span>.</p></li>
+<li><p>L’appliocazione ingloba la gestione delle interazioni via MQTT con la GUI remota.</p></li>
+</ul>
+</td>
+</tr>
+<tr class="row-even"><td><p><a class="reference external" href="../../../../conway25qak0/src/conway1.qaktt">conway1.qak</a></p></td>
+<td><p>Attore che ‘ingloba’ <strong>solo  Life</strong> (e non LifeController) distribuito nella libreria <em>conway25JavaMqtt-1.0.jar</em></p>
+<a class="reference internal image-reference" href="_images/conway1_qak.png"><img alt="_images/conway1_qak.png" class="align-center" src="_images/conway1_qak.png" style="width: 80%;" /></a>
+<ul class="simple">
+<li><p>L’attore funge da controller con azioni cablate del gioco</p></li>
+<li><p>Il sistema non gestisce alcun comando START/STOP/CLEAR</p></li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<section id="conway2-qak-il-controller-come-actor">
+<h3>conway2.qak: il controller come actor<a class="headerlink" href="#conway2-qak-il-controller-come-actor" title="Permalink to this heading">¶</a></h3>
+<p>La versione <a class="reference external" href="../../../../conway25qak0/src/conway2.qaktt">conway2.qak</a> del sistema introduce un attore che ingloba <strong>Life</strong>
+distribuito nella libreria <em>conway25JavaMqtt-1.0.jar</em>, realizzando una versione
+a messaggi del <em>LifeController</em>.</p>
+<p>L’attore funge da controller che reagisce a messaggi START/STOP/CLEAR
+usando il componente <a class="reference external" href="../../../../conway25qak0/src/main/java/conway/devices/OutInMqttForActor.java">OutInMqttForActor</a> per convertire  i comandi ricevuti via MQTT dalla GUI
+in messaggi applicativi <a class="reference internal" href="unibo.basicomm23.html#unibo-basicomm23-interfaces-iapplmessage"><span class="std std-ref">IApplMessage</span></a></p>
+<p>Usa come supporto un POJO <a class="reference external" href="../../../../conway25qak0/src/main/java/conway/LifeUsageHelper.java">LifeUsageHelper</a> che realizza funzioni di gestione di Life e il
+POJO di classe <a class="reference external" href="../../../../conway25qak0/src/main/java/conway/devices/OutInMqttForActor.java">OutInMqttForActor</a>  per inviare alla GUI comandi di visualizzazione delle celle.</p>
+<table class="docutils align-default" style="width: 100%">
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 80%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>Dichiarazioni iniziali</p></td>
+<td><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">System</span> <span class="n">conway25qak0</span>
+
+<span class="n">Dispatch</span> <span class="n">startGame</span> <span class="p">:</span> <span class="n">startGame</span><span class="p">(</span><span class="n">ARG</span><span class="p">)</span>
+<span class="n">Dispatch</span> <span class="n">stopGame</span>  <span class="p">:</span> <span class="n">stopGame</span><span class="p">(</span><span class="n">ARG</span><span class="p">)</span>
+<span class="n">Dispatch</span> <span class="n">clearGame</span> <span class="p">:</span> <span class="n">clearGame</span><span class="p">(</span><span class="n">ARG</span><span class="p">)</span>
+<span class="n">Dispatch</span> <span class="n">exitGame</span>  <span class="p">:</span> <span class="n">exitGame</span><span class="p">(</span><span class="n">ARG</span><span class="p">)</span>
+
+<span class="n">Context</span> <span class="n">ctxconway0</span> <span class="n">ip</span> <span class="p">[</span><span class="n">host</span><span class="o">=</span><span class="s2">&quot;localhost&quot;</span> <span class="n">port</span><span class="o">=</span><span class="mi">8920</span> <span class="p">]</span>
+</pre></div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>Stato iniziale</p></td>
+<td><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">QActor</span> <span class="n">conway0</span> <span class="n">context</span> <span class="n">ctxconway0</span>
+        <span class="n">withobj</span> <span class="n">life</span> <span class="n">using</span> <span class="s2">&quot;conwayMqtt.Life(20,20)&quot;</span> <span class="p">{</span>
+<span class="p">[</span><span class="c1">#</span>
+  <span class="n">val</span> <span class="n">outdev</span> <span class="o">=</span> <span class="n">main</span><span class="o">.</span><span class="n">java</span><span class="o">.</span><span class="n">conway</span><span class="o">.</span><span class="n">devices</span><span class="o">.</span><span class="n">OutInMqttForActor</span><span class="p">(</span><span class="n">myself</span><span class="p">)</span>
+  <span class="n">val</span> <span class="n">helper</span> <span class="o">=</span> <span class="n">main</span><span class="o">.</span><span class="n">java</span><span class="o">.</span><span class="n">conway</span><span class="o">.</span><span class="n">LifeUsageHelper</span><span class="p">(</span> <span class="n">life</span><span class="p">,</span> <span class="n">outdev</span> <span class="p">)</span>
+  <span class="n">var</span> <span class="n">running</span>  <span class="o">=</span> <span class="n">false</span>
+<span class="c1">#]</span>
+  <span class="n">State</span> <span class="n">s0</span> <span class="n">initial</span><span class="p">{</span>
+    <span class="n">println</span><span class="p">(</span><span class="s2">&quot;$name | starts&quot;</span><span class="p">)</span> <span class="n">color</span> <span class="n">magenta</span>
+    <span class="p">[</span><span class="c1">#</span>
+      <span class="n">helper</span><span class="o">.</span><span class="n">swithCellState</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+      <span class="n">helper</span><span class="o">.</span><span class="n">swithCellState</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
+      <span class="n">helper</span><span class="o">.</span><span class="n">swithCellState</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span>
+    <span class="c1">#]</span>
+  <span class="p">}</span>
+  <span class="n">Goto</span> <span class="n">work</span>
+</pre></div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>Gestione dei messaggi</p></td>
+<td><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">State</span> <span class="n">work</span><span class="p">{}</span>
+<span class="n">Transition</span> <span class="n">t0</span>
+  <span class="n">whenMsg</span> <span class="n">startGame</span>  <span class="o">-&gt;</span> <span class="n">handleStartGame</span>
+  <span class="n">whenMsg</span> <span class="n">stopGame</span>   <span class="o">-&gt;</span> <span class="n">handleStopGame</span>
+  <span class="n">whenMsg</span> <span class="n">clearGame</span>  <span class="o">-&gt;</span> <span class="n">handleClearGame</span>
+  <span class="n">whenMsg</span> <span class="n">exitGame</span>   <span class="o">-&gt;</span> <span class="n">handleExit</span>
+
+<span class="n">State</span> <span class="n">handleStartGame</span><span class="p">{</span>
+  <span class="n">println</span><span class="p">(</span><span class="s2">&quot;$name | starts the game&quot;</span><span class="p">)</span> <span class="n">color</span> <span class="n">magenta</span>
+  <span class="p">[</span><span class="c1">#</span>
+    <span class="n">val</span> <span class="n">goon</span> <span class="o">=</span> <span class="n">helper</span><span class="o">.</span><span class="n">fireEpoch</span><span class="p">()</span>
+    <span class="o">//</span><span class="n">goon</span> <span class="n">false</span> <span class="n">se</span> <span class="n">empty</span> <span class="n">o</span> <span class="n">stable</span>
+  <span class="c1">#]</span>
+  <span class="k">if</span> <span class="p">[</span><span class="c1"># !goon #]{</span>
+    <span class="n">autodispatch</span> <span class="n">stopGame</span><span class="p">:</span><span class="n">stopGame</span><span class="p">(</span><span class="n">play</span><span class="p">)</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+<span class="n">Transition</span> <span class="n">t0</span>
+    <span class="n">whenTime</span> <span class="mi">1000</span>     <span class="o">-&gt;</span> <span class="n">handleStartGame</span>
+    <span class="n">whenMsg</span> <span class="n">stopGame</span>  <span class="o">-&gt;</span> <span class="n">handleStopGame</span>
+  <span class="o">//</span><span class="n">non</span> <span class="n">gestisco</span> <span class="n">clear</span>
+
+<span class="n">State</span> <span class="n">handleStopGame</span><span class="p">{</span>
+  <span class="n">println</span><span class="p">(</span><span class="s2">&quot;$name | stop the game&quot;</span><span class="p">)</span> <span class="n">color</span> <span class="n">magenta</span>
+  <span class="p">[</span><span class="c1"># running = false #]</span>
+<span class="p">}</span>
+<span class="n">Goto</span> <span class="n">work</span>
+
+<span class="n">State</span> <span class="n">handleClearGame</span><span class="p">{</span>
+  <span class="n">println</span><span class="p">(</span><span class="s2">&quot;$name | clear the game&quot;</span><span class="p">)</span> <span class="n">color</span> <span class="n">magenta</span>
+  <span class="p">[</span><span class="c1"># helper.resetAndDisplayGrids()</span>
+  <span class="c1">#]</span>
+<span class="p">}</span>
+<span class="n">Goto</span> <span class="n">work</span>
+
+<span class="n">State</span> <span class="n">handleExit</span><span class="p">{</span>
+  <span class="n">println</span><span class="p">(</span><span class="s2">&quot;$name | EXIT from the game&quot;</span><span class="p">)</span> <span class="n">color</span> <span class="n">magenta</span>
+  <span class="p">[</span><span class="c1"># System.exit(0) #]</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Oltre al <em>Lifecontroller</em>, anche ciascuna cella può essere realizzata come un attore: tratteremo questo caso
+in seguito (si veda <a class="reference internal" href="ConwayLifeActorsQak.html#conwaylifeactorsqak"><span class="std std-ref">ConwayLifeActorsQak</span></a>).</p>
+<p>Prima coneviene approfondire i meccansimi resi disponibili dal <a class="reference internal" href="QakActors25.html#linguaggio-qak"><span class="std std-ref">Linguaggio qak</span></a> e il
+funzionamento degli <a class="reference internal" href="QakActors25.html#qakactors25-the-actor"><span class="std std-ref">ActorQak</span></a>.</p>
+<p><span class="slide3">Progetto qakms025</span></p>
+<section id="ms0">
+<h4>ms0<a class="headerlink" href="#ms0" title="Permalink to this heading">¶</a></h4>
+<p>Struttura di un <a class="reference internal" href="QakActors25.html#qakactors25-the-actor"><span class="std std-ref">ActorQak</span></a> che:</p>
+<ul class="simple">
+<li><p>Descrive il mdodello <a class="reference external" href="../../../../qakms025/src/qakms025.qak">qakms025.qak</a> di un (micro)servizio di nome <strong>ms0</strong> che risponde a richieste di identificatore <strong>req0</strong></p></li>
+<li><p>Il funzionamento è espresso nel <a class="reference internal" href="QakActors25.html#linguaggio-qak"><span class="std std-ref">Linguaggio qak</span></a>,  che consente “innesti” di codice Kotlin</p></li>
+<li><p>Le richieste possono esssre inviate al servizio usando i seguenti protocolli:</p>
+<ul>
+<li><p>TCP</p></li>
+<li><p>CoAP</p></li>
+<li><p>MQTT</p></li>
+</ul>
+</li>
+<li><p>Il servizio dichiara di usare un broker MQTT</p></li>
+<li><p>Il servizio ha come <em>topic di input</em> la topic di nome <span class="slide2">unibo/qak/ms0</span></p></li>
+<li><p>L’azione <span class="slidekp">emit</span> del servizio invia informazioni <span class="remark">anche con MQTT</span> usando la topic <span class="slide2">newsletter</span></p></li>
+<li><p>Eliminando la dichiarazione del broker, l’operazione <span class="slidekp">publish</span> fallisce</p></li>
+<li><p>L’azione <span class="slidekp">updateResource</span> del servizio invia informazioni usando CoAP.</p></li>
+<li><p>Queste informazioni sono osservabili da un CoAP client</p></li>
+</ul>
+<a class="reference internal image-reference" href="_images/ms0Commented.jpg"><img alt="_images/ms0Commented.jpg" class="align-center" src="_images/ms0Commented.jpg" style="width: 100%;" /></a>
+</section>
+</section>
+<section id="ms0-callers">
+<h3>ms0 callers<a class="headerlink" href="#ms0-callers" title="Permalink to this heading">¶</a></h3>
+<table class="docutils align-default" style="width: 100%">
+<colgroup>
+<col style="width: 30%" />
+<col style="width: 70%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference external" href="../../../../qakms025/src/main/java/CallerTcp.java">CallerTcp</a></p></td>
+<td><p>Interagisce con il servizio <strong>ms0</strong> usando il protocollo TCP</p>
+<ul class="simple">
+<li><p>Usa la connessione TCP per inviare richieste al servizio <strong>ms0</strong> e ricevere risposte.</p></li>
+<li><p>Non riceve altre informazioni dal servizio.</p></li>
+</ul>
+</td>
+</tr>
+<tr class="row-even"><td><p><a class="reference external" href="../../../../qakms025/src/main/java/CallerCoap.java">CallerCoap</a></p></td>
+<td><p>Interagisce con il servizio <strong>ms0</strong> usando il protocollo CoAP</p>
+<ul class="simple">
+<li><p>Usa il protocollo CoAP per inviare richieste al servizio <strong>ms0</strong> e ricevere risposte.</p></li>
+<li><p>Riceve informazioni emesse dal servizio con l’operazione <span class="remark">updateResource</span>.</p></li>
+</ul>
+</td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference external" href="../../../../qakms025/src/main/java/CallerMqtt.java">CallerMqtt</a></p></td>
+<td><p>Interagisce con il servizio <strong>ms0</strong> usando il protocollo MQTT</p>
+<ul class="simple">
+<li><p>Usa il protocollo MQTT per inviare richieste al servizio <strong>ms0</strong> e ricevere risposte.</p></li>
+<li><p>Riceve informazioni emesse dal servizio con le operazioni <span class="remark">publish</span> ed  <span class="remark">emit</span>.</p></li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Su queste premesse realizziamo <a class="reference internal" href="ConwayLife25AdAttori.html#conwaylife25-il-controller-come-actor"><span class="std std-ref">ConwayLife25 il controller come actor</span></a></p>
+<section id="altri-primi-esempi">
+<h4>Altri primi esempi<a class="headerlink" href="#altri-primi-esempi" title="Permalink to this heading">¶</a></h4>
+</section>
+</section>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <div>
+    <h3><a href="index.html">Table of Contents</a></h3>
+    <ul>
+<li><a class="reference internal" href="#">ConwayLifeUsingActors</a><ul>
+<li><a class="reference internal" href="#progetto-conway25qak0"><span class="slide3">Progetto conway25qak0</span></a></li>
+<li><a class="reference internal" href="#conway25qak0">conway25qak0</a><ul>
+<li><a class="reference internal" href="#conway2-qak-il-controller-come-actor">conway2.qak: il controller come actor</a><ul>
+<li><a class="reference internal" href="#ms0">ms0</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#ms0-callers">ms0 callers</a><ul>
+<li><a class="reference internal" href="#altri-primi-esempi">Altri primi esempi</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  </div>
+  <div>
+    <h4>Previous topic</h4>
+    <p class="topless"><a href="commdemo.html"
+                          title="previous chapter">commdemo</a></p>
+  </div>
+  <div>
+    <h4>Next topic</h4>
+    <p class="topless"><a href="QakActors25Demo.html"
+                          title="next chapter">QakActors25Demo</a></p>
+  </div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/ConwayLifeUsingActors.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="QakActors25Demo.html" title="QakActors25Demo"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="commdemo.html" title="commdemo"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">iss24 1.0 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">ConwayLifeUsingActors</a></li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2024, Antonio Natali.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 5.0.2.
+    </div>
+  </body>
+</html>
