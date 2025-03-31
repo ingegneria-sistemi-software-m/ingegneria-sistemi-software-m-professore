@@ -1,0 +1,76 @@
+/*
+ * (Micro)servizio che risponde a richieste req0
+ * Le richieste possono esssre inviate usando i seguenti protocolli:
+ * - TCP
+ * - CoAP
+ * - MQTT
+ * 
+ * L'azione 'updateResource' del servizio invia informazioni usando CoAP.
+ * Queste informazioni sono osservabili da un CoAP client
+ * 
+ * Il servizio dichiara di usare un broker MQTT
+ * Il servizio ha come topic di input la topic di nome 'unibo/qak/ms0'
+ * L'azione 'emit' del servizio invia informazioni ANCHE con MQTT usando la topic 'newsletter'
+ * 
+ * Eliminando la dichiarazione del broker, l'operazione publish fallisce
+ */
+System /*-trace*/ qakms025
+mqttBroker "localhost" : 1883 eventTopic "newsletter" 
+Request req0    : req0(ARG)
+Reply req0reply : req0reply(ARG) for req0
+Event ms0info   : ms0info(ARG)
+
+Context ctxqakms025 ip [ host="localhost" port=8919]
+
+QActor ms0 context ctxqakms025{
+[# var Sendertopic="" #] 
+	State s0 initial{
+		println("$name | START") color blue
+	}
+	Goto work 
+	
+	State work{
+		println("$name | waiting for msgs ... ") color cyan
+	}
+	Transition t0 whenRequest req0 -> handleReq0
+	
+	State handleReq0{
+		printCurrentMessage color blue		
+		[# val Sender = currentMsg.msgSender() #]
+		println("$name | received request from $Sender ") color cyan		
+		
+		onMsg( req0 : req0( ARG ) ){
+			[# Sendertopic = payloadArg(0) #]
+			println("$name | request Sendertopic=$Sendertopic") color blue
+			replyTo req0 with req0reply : req0reply( answerTo($Sendertopic) )
+		}	 		
+		//invia informazioi percepibili da un Coap client
+		println("$name | update resource ---  ") color magenta
+		updateResource [# "$name | handleReq0 done" #]
+		delay 1000 
+		updateResource [# "$name | BYE" #]		 
+		//Invia informazioni percepibili da un  MQTT client
+		println("$name | publish on  $Sendertopic ms0info ---  ") color black
+		if [# mqttConnected #]{  //defensive
+ 			publish "$Sendertopic" -m ms0info : ms0info( info(1) )  		
+ 		}
+		//se sendertopic è newsletter arriva anche a localcallerfortest
+ 		println("$name | emit event ms0info ---  ") color black
+		emit ms0info : ms0info( alarm )
+	}
+	Goto work
+}
+
+QActor localcallerfortest context ctxqakms025{
+	State s0 initial{ 
+		println("	$name | START") color green
+		request ms0 -m req0 : req0( arg(0) )
+	} 
+	Transition t0 whenReply req0reply -> s1
+	
+	State s1{
+		//printCurrentMessage color green
+		println("	$name | $currentMsg") color green
+	}
+	Transition t0 whenEvent ms0info -> s1
+}

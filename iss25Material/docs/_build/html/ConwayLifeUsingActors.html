@@ -18,7 +18,7 @@
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="QakActors25Demo" href="QakActors25Demo.html" />
-    <link rel="prev" title="commdemo" href="commdemo.html" /> 
+    <link rel="prev" title="KotlinNotes" href="KotlinNotes.html" /> 
   </head><body>
     <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
@@ -30,7 +30,7 @@
           <a href="QakActors25Demo.html" title="QakActors25Demo"
              accesskey="N">next</a> |</li>
         <li class="right" >
-          <a href="commdemo.html" title="commdemo"
+          <a href="KotlinNotes.html" title="KotlinNotes"
              accesskey="P">previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="index.html">iss24 1.0 documentation</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">ConwayLifeUsingActors</a></li> 
@@ -49,7 +49,8 @@
 </section>
 <section id="conway25qak0">
 <h2>conway25qak0<a class="headerlink" href="#conway25qak0" title="Permalink to this heading">¶</a></h2>
-<p>Questo progetto illustra come realizzare il gioco della vita di Conway usando attori Qak, attribuendo agli attori
+<p>Questo progetto illustra come realizzare il gioco della vita di Conway usando
+<a class="reference internal" href="QakActors25Intro.html#qakactors25intro"><span class="std std-ref">attori Qak</span></a>, attribuendo agli attori
 responsabilità via via crescenti.</p>
 <table class="docutils align-default" style="width: 100%">
 <colgroup>
@@ -62,7 +63,7 @@ responsabilità via via crescenti.</p>
 <div><a class="reference internal image-reference" href="_images/conway0_qakImg.png"><img alt="_images/conway0_qakImg.png" class="align-center" src="_images/conway0_qakImg.png" style="width: 100%;" /></a>
 </div></blockquote>
 </td>
-<td><p>Attore che ingloba <strong>sia Life sia LifeController</strong> (versione MQTT)</p>
+<td><p><a class="reference internal" href="QakActors25Linguaggio.html#attori-normali"><span class="std std-ref">Attore</span></a> che ingloba <strong>sia Life sia LifeController</strong> (versione MQTT)</p>
 <blockquote>
 <div><a class="reference internal image-reference" href="_images/conway0_qak.png"><img alt="_images/conway0_qak.png" class="align-center" src="_images/conway0_qak.png" style="width: 100%;" /></a>
 </div></blockquote>
@@ -71,9 +72,16 @@ responsabilità via via crescenti.</p>
 nella libreria <span class="remark">conway25JavaMqtt-1.0.jar</span>.</p></li>
 <li><p>L’appliocazione ingloba la gestione delle interazioni via MQTT con la GUI remota.</p></li>
 </ul>
+<p>Questo esempio mostra l’idea che gli attori possano incapsulare oggetti convenzionali possa semplificare
+il codice (la creazione degli oggetti) ed evidenziare l’incapsulamento nella immagine della architettura.</p>
 </td>
 </tr>
-<tr class="row-even"><td><p><a class="reference external" href="../../../../conway25qak0/src/conway1.qaktt">conway1.qak</a></p></td>
+<tr class="row-even"><td><p><a class="reference external" href="../../../../conway25qak0/src/conway1.qaktt">conway1.qak</a></p>
+<p>Il codice che realizza il comportamento deell’<a class="reference internal" href="QakActors25Linguaggio.html#attori-normali"><span class="std std-ref">Attore</span></a> è impostato nel modo tipico
+degli <a class="reference internal" href="ConcettiFondamentali.html#automi-a-stati-finiti"><span class="std std-ref">Automi a stati finiti</span></a>.</p>
+<p>Le azioni sono espresse in <a class="reference internal" href="KotlinNotes.html#kotlinnotes"><span class="std std-ref">Kotlin</span></a></p>
+<p>L’attore non gestisce messaggi</p>
+</td>
 <td><p>Attore che ‘ingloba’ <strong>solo  Life</strong> (e non LifeController) distribuito nella libreria <em>conway25JavaMqtt-1.0.jar</em></p>
 <a class="reference internal image-reference" href="_images/conway1_qak.png"><img alt="_images/conway1_qak.png" class="align-center" src="_images/conway1_qak.png" style="width: 80%;" /></a>
 <ul class="simple">
@@ -92,8 +100,11 @@ a messaggi del <em>LifeController</em>.</p>
 <p>L’attore funge da controller che reagisce a messaggi START/STOP/CLEAR
 usando il componente <a class="reference external" href="../../../../conway25qak0/src/main/java/conway/devices/OutInMqttForActor.java">OutInMqttForActor</a> per convertire  i comandi ricevuti via MQTT dalla GUI
 in messaggi applicativi <a class="reference internal" href="unibo.basicomm23.html#unibo-basicomm23-interfaces-iapplmessage"><span class="std std-ref">IApplMessage</span></a></p>
-<p>Usa come supporto un POJO <a class="reference external" href="../../../../conway25qak0/src/main/java/conway/LifeUsageHelper.java">LifeUsageHelper</a> che realizza funzioni di gestione di Life e il
-POJO di classe <a class="reference external" href="../../../../conway25qak0/src/main/java/conway/devices/OutInMqttForActor.java">OutInMqttForActor</a>  per inviare alla GUI comandi di visualizzazione delle celle.</p>
+<p>Usa come supporto</p>
+<ul class="simple">
+<li><p>un POJO <a class="reference external" href="../../../../conway25qak0/src/main/java/conway/LifeUsageHelper.java">LifeUsageHelper</a> che realizza funzioni di gestione di Life</p></li>
+<li><p>un POJO di classe <a class="reference external" href="../../../../conway25qak0/src/main/java/conway/devices/OutInMqttForActor.java">OutInMqttForActor</a>  per inviare alla GUI comandi di visualizzazione delle celle.</p></li>
+</ul>
 <table class="docutils align-default" style="width: 100%">
 <colgroup>
 <col style="width: 20%" />
@@ -182,7 +193,7 @@ POJO di classe <a class="reference external" href="../../../../conway25qak0/src/
 </table>
 <p>Oltre al <em>Lifecontroller</em>, anche ciascuna cella può essere realizzata come un attore: tratteremo questo caso
 in seguito (si veda <a class="reference internal" href="ConwayLifeActorsQak.html#conwaylifeactorsqak"><span class="std std-ref">ConwayLifeActorsQak</span></a>).</p>
-<p>Prima coneviene approfondire i meccansimi resi disponibili dal <a class="reference internal" href="QakActors25.html#linguaggio-qak"><span class="std std-ref">Linguaggio qak</span></a> e il
+<p>Prima coneviene approfondire i meccansimi resi disponibili dal <a class="reference internal" href="QakActors25Linguaggio.html#linguaggio-qak"><span class="std std-ref">Linguaggio qak</span></a> e il
 funzionamento degli <a class="reference internal" href="QakActors25.html#qakactors25-the-actor"><span class="std std-ref">ActorQak</span></a>.</p>
 <p><span class="slide3">Progetto qakms025</span></p>
 <section id="ms0">
@@ -190,7 +201,7 @@ funzionamento degli <a class="reference internal" href="QakActors25.html#qakacto
 <p>Struttura di un <a class="reference internal" href="QakActors25.html#qakactors25-the-actor"><span class="std std-ref">ActorQak</span></a> che:</p>
 <ul class="simple">
 <li><p>Descrive il mdodello <a class="reference external" href="../../../../qakms025/src/qakms025.qak">qakms025.qak</a> di un (micro)servizio di nome <strong>ms0</strong> che risponde a richieste di identificatore <strong>req0</strong></p></li>
-<li><p>Il funzionamento è espresso nel <a class="reference internal" href="QakActors25.html#linguaggio-qak"><span class="std std-ref">Linguaggio qak</span></a>,  che consente “innesti” di codice Kotlin</p></li>
+<li><p>Il funzionamento è espresso nel <a class="reference internal" href="QakActors25Linguaggio.html#linguaggio-qak"><span class="std std-ref">Linguaggio qak</span></a>,  che consente “innesti” di codice Kotlin</p></li>
 <li><p>Le richieste possono esssre inviate al servizio usando i seguenti protocolli:</p>
 <ul>
 <li><p>TCP</p></li>
@@ -243,9 +254,6 @@ funzionamento degli <a class="reference internal" href="QakActors25.html#qakacto
 </tbody>
 </table>
 <p>Su queste premesse realizziamo <a class="reference internal" href="ConwayLife25AdAttori.html#conwaylife25-il-controller-come-actor"><span class="std std-ref">ConwayLife25 il controller come actor</span></a></p>
-<section id="altri-primi-esempi">
-<h4>Altri primi esempi<a class="headerlink" href="#altri-primi-esempi" title="Permalink to this heading">¶</a></h4>
-</section>
 </section>
 </section>
 </section>
@@ -267,10 +275,7 @@ funzionamento degli <a class="reference internal" href="QakActors25.html#qakacto
 <li><a class="reference internal" href="#ms0">ms0</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#ms0-callers">ms0 callers</a><ul>
-<li><a class="reference internal" href="#altri-primi-esempi">Altri primi esempi</a></li>
-</ul>
-</li>
+<li><a class="reference internal" href="#ms0-callers">ms0 callers</a></li>
 </ul>
 </li>
 </ul>
@@ -280,8 +285,8 @@ funzionamento degli <a class="reference internal" href="QakActors25.html#qakacto
   </div>
   <div>
     <h4>Previous topic</h4>
-    <p class="topless"><a href="commdemo.html"
-                          title="previous chapter">commdemo</a></p>
+    <p class="topless"><a href="KotlinNotes.html"
+                          title="previous chapter">KotlinNotes</a></p>
   </div>
   <div>
     <h4>Next topic</h4>
@@ -319,7 +324,7 @@ funzionamento degli <a class="reference internal" href="QakActors25.html#qakacto
           <a href="QakActors25Demo.html" title="QakActors25Demo"
              >next</a> |</li>
         <li class="right" >
-          <a href="commdemo.html" title="commdemo"
+          <a href="KotlinNotes.html" title="KotlinNotes"
              >previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="index.html">iss24 1.0 documentation</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">ConwayLifeUsingActors</a></li> 
