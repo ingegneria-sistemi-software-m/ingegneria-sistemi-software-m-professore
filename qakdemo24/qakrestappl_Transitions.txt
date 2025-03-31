@@ -1,0 +1,2 @@
+{"actor":"a1", "msgType":"dispatch", "curstate":"s1", "nextstate":"handleCmd", "msgId":"cmd"}
+{"actor":"a1", "msgType":"dispatch", "curstate":"s1", "nextstate":"checkCmd", "msgId":"cmd"}
