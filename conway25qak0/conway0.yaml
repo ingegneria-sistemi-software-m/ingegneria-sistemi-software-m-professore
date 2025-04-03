@@ -1,0 +1,13 @@
+services:
+  conway:
+    image: docker.io/natbodocker/conway0:1.0
+#    image: conway0:1.0
+    ports:
+      - "8920:8920"
+    environment:
+      - MQTTBROKER_URL=tcp://192.168.1.68:1883		
+      - HOST_IP=192.168.1.68
+
+ 
+
+## docker-compose -f conway0.yaml -p conway0 up   

@@ -20,7 +20,7 @@ CMD ["bash", "conwayguialone"]
 ## docker run -it --rm --name conwayguialone -p7110:7110 --env "HOST_IP=192.168.1.34" conwayguialone:2.0  
 
 ## Register the image on DockerHub
-## docker tag conwayguialonelocal:2.0 natbodocker/conwayguialone:2.0
+## docker tag conwayguialone:2.0 natbodocker/conwayguialone:2.0
 ## type docker_password.txt | docker login --username natbodocker --password-stdin
 ## docker login --username natbodocker
 ## docker push natbodocker/conwayguialone:2.0

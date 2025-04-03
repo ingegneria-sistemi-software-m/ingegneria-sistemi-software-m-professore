@@ -46,7 +46,13 @@ public class WSConwayguiLifeMqtt extends AbstractWebSocketHandler{
 	protected void useMqttInteraction() {
 		CommUtils.outblue(name + " | useMqttInteraction  "  );
 		String broker = System.getenv("MQTTBROKER_URL");
-		if( broker == null ) broker = "tcp://localhost:1883";
+		if( broker == null ) {
+			String lcoalAddr = CommUtils.getServerLocalIp();
+			//broker = "tcp://localhost:1883";   //in locale outof docker
+			broker = "tcp://"+lcoalAddr+":1883"; //se GUI attivata in docker
+			CommUtils.outgreen( name + " |  outside docker " + broker + " lcoalAddr=" + lcoalAddr);			
+		}
+			//broker = "tcp://localhost:1883";
 		else {
 			//CommUtils.outgreen( "WSConwaygui | useMqttInteraction in docker to " + broker ); 	
 		}					
@@ -116,6 +122,10 @@ public class WSConwayguiLifeMqtt extends AbstractWebSocketHandler{
 			broadcastToWebSocket(cmd);
 			return;
 	    }		
+		if( cmd.startsWith("lfctrl") ){ //IL comando arriva dalla applicazione remota
+			broadcastToWebSocket(cmd);
+			return;
+	    }		
 		if( cmd.startsWith("GAME") ){ //IL comando arriva dalla applicazione remota
 			broadcastToWebSocket(cmd);
 			return;
@@ -134,19 +144,19 @@ public class WSConwayguiLifeMqtt extends AbstractWebSocketHandler{
 			broadcastToWebSocket(cmd);
 			return;
 	    }		
-		if( cmd.startsWith("GAME") ){ //IL comnado arriva dalla applicazione remota
+		else if( cmd.startsWith("GAME") ){ //IL comnado arriva dalla applicazione remota
 			broadcastToWebSocket(cmd);
 			return;
 	    }		
-		if( cmd.startsWith("clear") ){ //IL comnado arriva dalla GUI ma ottimizzo
+		else if( cmd.startsWith("clear") ){ //IL comado arriva dalla GUI ma ottimizzo
 //			CommUtils.outmagenta(name + " | receives: " + cmd   );	
 			broadcastToWebSocket(cmd);
 			mqttConn.forward(cmd);
 			return;
 	    }		
-		if( cmd.contains("owneroff")) ownerOn = false;
-		if( cmd.contains("owneron"))  ownerOn = true;
-		if( session != null && ! session.equals(owner) && ownerOn) {
+		else if( cmd.contains("owneroff")) ownerOn = false;
+		else if( cmd.contains("owneron"))  ownerOn = true;
+		else if( session != null && ! session.equals(owner) && ownerOn) {
 			CommUtils.outmagenta(name + " | received from a non-owner "   );
 			return;
 		} 	

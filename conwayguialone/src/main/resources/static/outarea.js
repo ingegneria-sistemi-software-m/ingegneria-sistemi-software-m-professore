@@ -10,6 +10,7 @@ outarea.js
     }
 	
 	function clearOutArea(){
+		//alert("clearOutArea")
 		const lista = document.getElementById('msgslist');  
 		lista.innerHTML = ''; // Rimuovi tutti i nodi figli
 	}

@@ -22,9 +22,10 @@ public class OutInMqttForActor implements IOutDev{
  		this.gameControl = gameControl;
 		String broker = System.getenv("MQTTBROKER_URL");
 		if( broker == null ) {
-			broker = "tcp://localhost:1883";   //in locale outof docker
-			//broker = "tcp://192.168.1.132:1883";
-			CommUtils.outgreen( name + " |  outside docker " + broker );
+			String lcoalAddr = CommUtils.getServerLocalIp();
+			//broker = "tcp://localhost:1883";   //in locale outof docker
+			broker = "tcp://"+lcoalAddr+":1883"; //se GUI attivata in docker
+			CommUtils.outgreen( name + " |  outside docker " + broker + " lcoalAddr=" + lcoalAddr);
 		}
 		else {
 			CommUtils.outgreen( name + " |  in docker to " + broker ); 	
@@ -58,6 +59,7 @@ public class OutInMqttForActor implements IOutDev{
 	
 	
 	public void activateReceive() {
+		//Tronco encefalico ....
 		CommUtils.outcyan(name + " | OutInMqtt activateReceive   "  );
 		new Thread() {
 			public void run() {
@@ -82,6 +84,7 @@ public class OutInMqttForActor implements IOutDev{
 			String[] parts = msg.split("-");  //cell-3-2
 			int x = Integer.parseInt(parts[1]);
 			int y = Integer.parseInt(parts[2]);
+			//WARNING: si esclude l'intervento di gameControl!!!!!!!!!!!
 			LifeUsageHelper.getInstance().swithCellState(x-1, y-1);  //La GUI comincia da (1,1)
  			//gameControl.swithCellState(x-1, y-1);  //La GUI comincia da (1,1)
 			return;

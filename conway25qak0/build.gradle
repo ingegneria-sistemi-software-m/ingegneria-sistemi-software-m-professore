@@ -204,11 +204,11 @@ distributions {
     }
 } 
 
-task run0(type: JavaExec) {
+task runCallerTcp(type: JavaExec) {
     group = "Execution"
     description = "Run the main class with JavaExecTask"
     classpath = sourceSets.main.runtimeClasspath
-    main = 'it.unibo.ctxconway0.MainCtxconway0Kt'
+    main = 'main.java.CallerLifeActorTcp'
 }
 
 /*

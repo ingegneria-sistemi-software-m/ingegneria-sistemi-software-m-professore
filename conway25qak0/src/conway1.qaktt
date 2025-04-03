@@ -1,15 +1,15 @@
 System conway25qak0
 
 Context ctxconway0 ip [host="localhost" port=8920 ]
-
+ 
 /*
  * Attore che 'ingloba' solo  Life (e non LifeController)
  * e funge da controller con azioni cablate
  * La funzione displayCell visualizza lo stato di una cella sulla console
  * 
  * IL GIOCO NON 'SENTE' alcun comando start/stop/clear
- */
- 
+ */ 
+  
 QActor conway0 context ctxconway0 withobj life using "conwayMqtt.Life(20,20)" {   // withobj life using "LifeCore.create()" 
 import "main.java.conway.*"
 [# 
@@ -22,7 +22,7 @@ import "main.java.conway.*"
 	fun displayCell(x:Int, y:Int){
 		val value = life.getCell(x, y).getState()
 		val msg = "cell(" + y + "," + x + ","+ value + ")";
-		CommUtils.outblue("$msg")
+		CommUtils.outblue("$msg")		
 	}
 #]
 	State s0 initial{
@@ -30,10 +30,14 @@ import "main.java.conway.*"
 		[# 
 			 swithCellState(0,0)
 			 displayCell(0,0)
+		#]
+		delay 2000
+		[# 
 			 swithCellState(0,0)
 			 displayCell(0,0)
 		#]
 		
+//		delay 5000
 		[# System.exit(0) #]
 	}
 }

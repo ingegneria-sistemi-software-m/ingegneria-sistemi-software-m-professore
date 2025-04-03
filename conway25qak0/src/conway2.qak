@@ -3,10 +3,11 @@ System conway25qak0
 Dispatch startGame : startGame(ARG)
 Dispatch stopGame  : stopGame(ARG)
 Dispatch clearGame : clearGame(ARG)
-Dispatch exitGame  : exitGame(ARG)
+Dispatch exitGame  : exitGame(ARG) 
+Dispatch cellstate : cellstate(ARG)
 
 Context ctxconway0 ip [host="localhost" port=8920 ]
-
+ 
 QActor conway0 context ctxconway0 
 	withobj life using "conwayMqtt.Life(20,20)" { 
 //import "conwayMqtt.*"
