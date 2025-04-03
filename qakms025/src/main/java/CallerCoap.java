@@ -27,7 +27,7 @@ public class CallerCoap  {
         try {
         	CommUtils.outblue("callerCoap REQUEST:" + req0);
         	IApplMessage answer = conn.request(req0);
-        	CommUtils.outblue("callerCoap ANSWER:" + answer);
+        	CommUtils.outmagenta("callerCoap ANSWER:" + answer);
 
 		} catch (Exception e) {
  			CommUtils.outred("callerCoap ERROR:" + e.getMessage() );
@@ -48,7 +48,7 @@ public class CallerCoap  {
 				new CoapHandler() {
 					@Override public void onLoad(CoapResponse response) {
 						String content = response.getResponseText();
-						CommUtils.outblue("ActorObserver | value=" + content );
+						CommUtils.outgreen("ActorObserver | value=" + content );
 					}					
 					@Override public void onError() {
 						CommUtils.outred("OBSERVING FAILED  ");

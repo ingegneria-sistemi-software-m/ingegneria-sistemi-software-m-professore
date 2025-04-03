@@ -20,7 +20,7 @@ public class CallerTcp {
         try {
         	CommUtils.outblue("callertcp REQUEST:" + req0);
         	IApplMessage answer = conn.request(req0);
-        	CommUtils.outblue("callertcp ANSWER:" + answer);
+        	CommUtils.outmagenta("callertcp ANSWER:" + answer);
 
 //          Tenta di ricevere informazioni dal servizio      
         	/*

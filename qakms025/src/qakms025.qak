@@ -50,7 +50,7 @@ QActor ms0 context ctxqakms025{
 		delay 1000 
 		updateResource [# "$name | BYE" #]		 
 		//Invia informazioni percepibili da un  MQTT client
-		println("$name | publish on  $Sendertopic ms0info ---  ") color black
+		println("$name | publish on  Sendertopic=$Sendertopic ms0info ---  ") color black
 		if [# mqttConnected #]{  //defensive
  			publish "$Sendertopic" -m ms0info : ms0info( info(1) )  		
  		}
@@ -61,6 +61,7 @@ QActor ms0 context ctxqakms025{
 	Goto work
 }
 
+/* 
 QActor localcallerfortest context ctxqakms025{
 	State s0 initial{ 
 		println("	$name | START") color green
@@ -74,3 +75,5 @@ QActor localcallerfortest context ctxqakms025{
 	}
 	Transition t0 whenEvent ms0info -> s1
 }
+
+*/

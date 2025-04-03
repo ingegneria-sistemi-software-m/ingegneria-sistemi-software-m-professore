@@ -68,7 +68,7 @@ class Ms0 ( name: String, scope: CoroutineScope, isconfined: Boolean=false  ) : 
 						delay(1000) 
 						updateResourceRep( "$name | BYE"  
 						)
-						CommUtils.outblack("$name | publish on  $Sendertopic ms0info ---  ")
+						CommUtils.outblack("$name | publish on  Sendertopic=$Sendertopic ms0info ---  ")
 						if(  mqttConnected  
 						 ){//val m = MsgUtil.buildEvent(name, "ms0info", "ms0info(info(1))" ) 
 						publish(MsgUtil.buildEvent(name,"ms0info","ms0info(info(1))").toString(), "$Sendertopic" )   

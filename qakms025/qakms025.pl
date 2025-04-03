@@ -9,5 +9,3 @@ event( ms0info, ms0info(ARG) ).
 context(ctxqakms025, "localhost",  "TCP", "8919").
  qactor( ms0, ctxqakms025, "it.unibo.ms0.Ms0").
  static(ms0).
-  qactor( localcallerfortest, ctxqakms025, "it.unibo.localcallerfortest.Localcallerfortest").
- static(localcallerfortest).
