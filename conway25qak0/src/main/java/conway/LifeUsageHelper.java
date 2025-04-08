@@ -4,6 +4,7 @@ package main.java.conway;
 
 import conwayMqtt.Cell;
 import conwayMqtt.Grid;
+import conwayMqtt.IOutDev;
 import conwayMqtt.Life;
 import main.java.conway.devices.OutInMqttForActor;
 import unibo.basicomm23.utils.CommUtils;
@@ -11,7 +12,7 @@ import unibo.basicomm23.utils.CommUtils;
 public class LifeUsageHelper {
 	private static LifeUsageHelper helperObj;
 	private Life life;
-	private OutInMqttForActor outdev;
+	private IOutDev outdev;
 	
 	private int epoch = 0;
 	
@@ -19,7 +20,7 @@ public class LifeUsageHelper {
 		return helperObj;
  	}
 	
-	public LifeUsageHelper( Life life, OutInMqttForActor outdev ) {
+	public LifeUsageHelper( Life life, IOutDev outdev ) {
 		this.life   = life;
 		this.outdev = outdev;
 		helperObj   = this;

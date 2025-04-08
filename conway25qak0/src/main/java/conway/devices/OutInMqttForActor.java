@@ -1,7 +1,6 @@
 package main.java.conway.devices;
 import conwayMqtt.Cell;
 import conwayMqtt.IOutDev;
-import conwayMqtt.LifeController;
 import it.unibo.kactor.ActorBasic;
 import main.java.conway.LifeUsageHelper;
 import unibo.basicomm23.interfaces.IApplMessage;
@@ -13,13 +12,17 @@ import unibo.basicomm23.utils.CommUtils;
 
 public class OutInMqttForActor implements IOutDev{
 
-	private Interaction mqttConn;  	
-	//private LifeController lifeontroller;
-	private final String name = "outinmqttlife";
-	private ActorBasic gameControl;
+	protected Interaction mqttConn;  	
+	protected final String name = "outinmqttlife";
+	protected ActorBasic gameControl;
 
  	public OutInMqttForActor( ActorBasic gameControl) {
  		this.gameControl = gameControl;
+ 		connectToBrokerMqtt();
+  		activateReceive();
+	}
+ 	
+ 	protected void connectToBrokerMqtt() {
 		String broker = System.getenv("MQTTBROKER_URL");
 		if( broker == null ) {
 			String lcoalAddr = CommUtils.getServerLocalIp();
@@ -32,9 +35,8 @@ public class OutInMqttForActor implements IOutDev{
 		}					
 
   		mqttConn = new MqttInteraction( name , broker, "lifein", "guiin" );
-  		CommUtils.outcyan(name + " | mqtt connection done " + mqttConn);
-  		activateReceive();
-	}
+  		CommUtils.outcyan(name + " | mqtt connection done " + mqttConn); 		
+ 	}
  	
 	@Override
 	public void display(String msg) {
@@ -78,17 +80,23 @@ public class OutInMqttForActor implements IOutDev{
 		}.start();		
 	}
 
-	protected void cvtToApplMessage( String msg ) {
+	public void cvtToApplMessage( String msg ) {
 		IApplMessage applMsg = null;
 		if( msg.startsWith("cell") ) {
 			String[] parts = msg.split("-");  //cell-3-2
 			int x = Integer.parseInt(parts[1]);
 			int y = Integer.parseInt(parts[2]);
-			//WARNING: si esclude l'intervento di gameControl!!!!!!!!!!!
-			LifeUsageHelper.getInstance().swithCellState(x-1, y-1);  //La GUI comincia da (1,1)
+			//La GUI comincia da (1,1)
+			String cellCoords = "("+(x-1)+","+(+y-1)+")";
+			applMsg = CommUtils.buildDispatch(
+					gameControl.getName(), "cellstate", "cellstate"+cellCoords, gameControl.getName());
+			
+			//WARNING: si esclude l'intervento di gameControl (tronco encefalico ...)
+			//LifeUsageHelper.getInstance().swithCellState(x-1, y-1);  
  			//gameControl.swithCellState(x-1, y-1);  //La GUI comincia da (1,1)
-			return;
+			//return;
 		}
+		//Invio messaggi in forma di autodispatch
 		if( msg.equals("start")) {
 			applMsg = CommUtils.buildDispatch(
 				gameControl.getName(), "startGame", "startGame(fromgui)", gameControl.getName());

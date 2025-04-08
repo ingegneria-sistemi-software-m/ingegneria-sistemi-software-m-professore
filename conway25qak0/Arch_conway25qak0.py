@@ -27,4 +27,7 @@ with Diagram('conway25qak0Arch', show=False, outformat='png', graph_attr=graphat
 ### see https://renenyffenegger.ch/notes/tools/Graphviz/attributes/label/HTML-like/index
      with Cluster('ctxconway0', graph_attr=nodeattr):
           conway0=Custom('conway0','./qakicons/symActorWithobjSmall.png')
+          guicmdpereceiver=Custom('guicmdpereceiver','./qakicons/symActorWithobjSmall.png')
+     sys >> Edge( label='kernel_rawmsg', **evattr, decorate='true', fontcolor='darkgreen') >> conway0
+     sys >> Edge( label='kernel_rawmsg', **evattr, decorate='true', fontcolor='darkgreen') >> guicmdpereceiver
 diag

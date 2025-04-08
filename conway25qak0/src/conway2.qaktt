@@ -1,48 +1,53 @@
 System conway25qak0
 
-Dispatch startGame : startGame(ARG)
+Dispatch startGame : startGame(ARG)    
 Dispatch stopGame  : stopGame(ARG)
 Dispatch clearGame : clearGame(ARG)
-Dispatch exitGame  : exitGame(ARG)
+Dispatch exitGame  : exitGame(ARG) 
+Dispatch cellstate : cellstate(X,Y)
 
 Context ctxconway0 ip [host="localhost" port=8920 ]
-
-/*
- * Attore che 'ingloba' solo  Life  
- * e funge da controller che risponde a messaggi
- * inviati (anche) da OutInMqttForActor
- * La funzione displayCell invia
- * 
- */
  
-QActor conway0 context ctxconway0 withobj life using "conwayMqtt.Life(20,20)" {   // withobj life using "LifeCore.create()" 
+QActor conway0 context ctxconway0 
+	withobj life using "conwayMqtt.Life(20,20)"   //dalla library in applibs
+	{ 
 //import "conwayMqtt.*"
-[# 
-	 
+[#  
+	//val life     = conwayMqtt.Life(20,20)
 	val outdev   = main.java.conway.devices.OutInMqttForActor( myself  )	
 	val helper   =  main.java.conway.LifeUsageHelper( life, outdev )
-	var running  = false
-	
+	//var running  = false
 #]
 	State s0 initial{
 		println("$name | starts") color magenta
-		[# 
-			 
+		[# 			 
 			 helper.swithCellState(1,1)
  			 helper.swithCellState(1,2)
  			 helper.swithCellState(1,3)
-
-		#]
-		
+		#]		
 	}
 	Goto work
 	
 	State work{}
 	Transition t0 
-		whenMsg startGame  -> handleStartGame
+  		whenMsg cellstate  -> changeCellState
+  		whenMsg startGame  -> handleStartGame
 		whenMsg stopGame   -> handleStopGame
 		whenMsg clearGame  -> handleClearGame
 		whenMsg exitGame   -> handleExit
+	
+	
+	State changeCellState{
+		printCurrentMessage
+		onMsg( cellstate : cellstate(X,Y) ){
+			[#
+				val X = payloadArg(0).toInt()
+				val Y = payloadArg(1).toInt()
+				helper.swithCellState(X,Y)
+			#]
+		}
+	}
+	Goto work
 	
 	State handleStartGame{
 		println("$name | starts the game") color magenta
@@ -54,11 +59,11 @@ QActor conway0 context ctxconway0 withobj life using "conwayMqtt.Life(20,20)" { 
 	Transition t0 
   		whenTime 1000     -> handleStartGame
   		whenMsg stopGame  -> handleStopGame
- 		//non gestisco clear
+
 
 	State handleStopGame{
 		println("$name | stop the game") color magenta
-		[# running = false #]
+		//[# running = false #] //Non serve, in quanto torna a work
 	}
 	Goto work
 
@@ -73,7 +78,12 @@ QActor conway0 context ctxconway0 withobj life using "conwayMqtt.Life(20,20)" { 
 		println("$name | EXIT from the game") color magenta
 		[# System.exit(0) #]
 	}
-
-
 }
-    
+
+/*
+ * Attore che 'ingloba' solo  Life  
+ * e funge da controller che risponde a messaggi
+ * inviati (anche) da OutInMqttForActor
+ * La funzione displayCell invia
+ * 
+ */    

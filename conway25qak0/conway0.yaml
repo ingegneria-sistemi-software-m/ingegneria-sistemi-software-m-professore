@@ -5,8 +5,8 @@ services:
     ports:
       - "8920:8920"
     environment:
-      - MQTTBROKER_URL=tcp://192.168.1.68:1883		
-      - HOST_IP=192.168.1.68
+      - MQTTBROKER_URL=tcp://192.168.1.132:1883		
+      - HOST_IP=192.168.1.132
 
  
 

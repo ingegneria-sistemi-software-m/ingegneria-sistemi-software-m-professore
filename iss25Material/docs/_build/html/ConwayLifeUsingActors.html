@@ -1,23 +1,26 @@
+
 <!DOCTYPE html>
 
-<html lang="en" data-content_root="./">
+<html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
     <title>ConwayLifeUsingActors &#8212; iss24 1.0 documentation</title>
-    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=649a27d8" />
-    <link rel="stylesheet" type="text/css" href="_static/sphinxdoc.css?v=34905f61" />
-    <link rel="stylesheet" type="text/css" href="_static/custom.css?v=87712ff3" />
-    <script src="_static/documentation_options.js?v=f2a433a1"></script>
-    <script src="_static/doctools.js?v=9bcbadda"></script>
-    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinxdoc.css" />
+    <link rel="stylesheet" type="text/css" href="_static/custom.css" />
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="_static/doctools.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="QakActors25Demo" href="QakActors25Demo.html" />
     <link rel="prev" title="KotlinNotes" href="KotlinNotes.html" /> 
   </head><body>
-    <div class="related" role="navigation" aria-label="Related">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -40,30 +43,28 @@
           <div class="body" role="main">
             
   <section id="conwaylifeusingactors">
-<h1>ConwayLifeUsingActors<a class="headerlink" href="#conwaylifeusingactors" title="Link to this heading">¶</a></h1>
+<h1>ConwayLifeUsingActors<a class="headerlink" href="#conwaylifeusingactors" title="Permalink to this heading">¶</a></h1>
 <p><a class="reference external" href="../../../../conway25qak0">Progetto conway25qak0</a></p>
 <section id="conway25qak0">
-<h2>conway25qak0<a class="headerlink" href="#conway25qak0" title="Link to this heading">¶</a></h2>
+<h2>conway25qak0<a class="headerlink" href="#conway25qak0" title="Permalink to this heading">¶</a></h2>
 <p>Questo progetto illustra come realizzare il gioco della vita di Conway usando attori Qak, attribuendo agli attori
 responsabilità via via crescenti.</p>
 <table class="docutils align-default" style="width: 100%">
 <colgroup>
-<col style="width: 30.0%" />
-<col style="width: 70.0%" />
+<col style="width: 30%" />
+<col style="width: 70%" />
 </colgroup>
 <tbody>
 <tr class="row-odd"><td><p><a class="reference external" href="../../../../conway25qak0/src/conway0.qaktt">conway0.qak</a></p>
 <blockquote>
-<div><a class="reference internal image-reference" href="_images/conway0_qakImg.png"><img alt="_images/conway0_qakImg.png" class="align-center" src="_images/conway0_qakImg.png" style="width: 70%;" />
-</a>
+<div><a class="reference internal image-reference" href="_images/conway0_qakImg.png"><img alt="_images/conway0_qakImg.png" class="align-center" src="_images/conway0_qakImg.png" style="width: 70%;" /></a>
 </div></blockquote>
 <p><a class="reference external" href="../../../../conway25qak0/src/main/java/conway/LifeCore.java">LifeCore</a> è un POJO che  realizza il gioco della vita di Conway in Java avvalndosi delle classi
 <cite>Life</cite> e <cite>LifeController</cite> della libreria <em>conway25JavaMqtt-1.0.jar</em>, inserita nella directory <em>applibs</em>.</p>
 </td>
 <td><p>Attore che ingloba <strong>sia Life sia LifeController</strong> (versione MQTT)</p>
 <blockquote>
-<div><a class="reference internal image-reference" href="_images/conway0_qak.png"><img alt="_images/conway0_qak.png" class="align-center" src="_images/conway0_qak.png" style="width: 100%;" />
-</a>
+<div><a class="reference internal image-reference" href="_images/conway0_qak.png"><img alt="_images/conway0_qak.png" class="align-center" src="_images/conway0_qak.png" style="width: 100%;" /></a>
 </div></blockquote>
 <ul class="simple">
 <li><p>L’attore non svolge alcuna funzione, se non qualla di inglobare l’applicazione distribuita
@@ -74,8 +75,7 @@ nella libreria <span class="remark">conway25JavaMqtt-1.0.jar</span>.</p></li>
 </tr>
 <tr class="row-even"><td><p><a class="reference external" href="../../../../conway25qak0/src/conway1.qaktt">conway1.qak</a></p></td>
 <td><p>Attore che ‘ingloba’ <strong>solo  Life</strong> (e non LifeController) distribuito nella libreria <em>conway25JavaMqtt-1.0.jar</em></p>
-<a class="reference internal image-reference" href="_images/conway1_qak.png"><img alt="_images/conway1_qak.png" class="align-center" src="_images/conway1_qak.png" style="width: 80%;" />
-</a>
+<a class="reference internal image-reference" href="_images/conway1_qak.png"><img alt="_images/conway1_qak.png" class="align-center" src="_images/conway1_qak.png" style="width: 80%;" /></a>
 <ul class="simple">
 <li><p>L’attore funge da controller con azioni cablate del gioco</p></li>
 <li><p>Il sistema non gestisce alcun comando START/STOP/CLEAR</p></li>
@@ -85,7 +85,7 @@ nella libreria <span class="remark">conway25JavaMqtt-1.0.jar</span>.</p></li>
 </tbody>
 </table>
 <section id="conway2-qak-il-controller-come-actor">
-<h3>conway2.qak: il controller come actor<a class="headerlink" href="#conway2-qak-il-controller-come-actor" title="Link to this heading">¶</a></h3>
+<h3>conway2.qak: il controller come actor<a class="headerlink" href="#conway2-qak-il-controller-come-actor" title="Permalink to this heading">¶</a></h3>
 <p>La versione <a class="reference external" href="../../../../conway25qak0/src/conway2.qaktt">conway2.qak</a> del sistema introduce un attore che ingloba <strong>Life</strong>
 distribuito nella libreria <em>conway25JavaMqtt-1.0.jar</em>, realizzando una versione
 a messaggi del <em>LifeController</em>.</p>
@@ -96,7 +96,7 @@ in messaggi applicativi <a class="reference internal" href="unibo.basicomm23.htm
 POJO di classe <a class="reference external" href="../../../../conway25qak0/src/main/java/conway/devices/OutInMqttForActor.java">OutInMqttForActor</a>  per inviare alla GUI comandi di visualizzazione delle celle.</p>
 </section>
 <section id="conway2-qak-lifeusagehelper">
-<h3>conway2.qak:LifeUsageHelper<a class="headerlink" href="#conway2-qak-lifeusagehelper" title="Link to this heading">¶</a></h3>
+<h3>conway2.qak:LifeUsageHelper<a class="headerlink" href="#conway2-qak-lifeusagehelper" title="Permalink to this heading">¶</a></h3>
 <p>Il POJO <a class="reference external" href="../../../../conway25qak0/src/main/java/conway/LifeUsageHelper.java">LifeUsageHelper</a> ricevce nel costruttore un riferimento a Life e a <a class="reference external" href="../../../../conway25qak0/src/main/java/conway/devices/OutInMqttForActor.java">OutInMqttForActor</a>
 e definisce metodi</p>
 <ul class="simple">
@@ -107,7 +107,7 @@ e definisce metodi</p>
 </ul>
 </section>
 <section id="conway2-qak-outinmqttforactor">
-<h3>conway2.qak:OutInMqttForActor<a class="headerlink" href="#conway2-qak-outinmqttforactor" title="Link to this heading">¶</a></h3>
+<h3>conway2.qak:OutInMqttForActor<a class="headerlink" href="#conway2-qak-outinmqttforactor" title="Permalink to this heading">¶</a></h3>
 <p>Il POJO <a class="reference external" href="../../../../conway25qak0/src/main/java/conway/devices/OutInMqttForActor.java">OutInMqttForActor</a> riceve nel costruttore un riferimento all’attore che lo usa (<em>gameControl</em>)</p>
 <ul class="simple">
 <li><p>si <span class="remark">collega al broker MQTT</span></p></li>
@@ -118,8 +118,8 @@ e definisce metodi</p>
 </ul>
 <table class="docutils align-default" style="width: 100%">
 <colgroup>
-<col style="width: 50.0%" />
-<col style="width: 50.0%" />
+<col style="width: 50%" />
+<col style="width: 50%" />
 </colgroup>
 <tbody>
 <tr class="row-odd"><td><p><em>conway2.qak | Dichiarazioni iniziali</em></p>
@@ -226,7 +226,7 @@ si auto-invia un dispatch <cite>stopGame</cite></p></li>
 </table>
 </section>
 <section id="conway2-qak-esecuzione">
-<h3>conway2.qak: esecuzione<a class="headerlink" href="#conway2-qak-esecuzione" title="Link to this heading">¶</a></h3>
+<h3>conway2.qak: esecuzione<a class="headerlink" href="#conway2-qak-esecuzione" title="Permalink to this heading">¶</a></h3>
 <ol class="arabic">
 <li><p>Attivare la GUI standalone (microservizio) usando docker:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">docker</span><span class="o">-</span><span class="n">compose</span> <span class="o">-</span><span class="n">f</span> <span class="n">conwayguialone</span><span class="o">.</span><span class="n">yaml</span> <span class="o">-</span><span class="n">p</span> <span class="n">conwayguialone</span> <span class="n">up</span>
@@ -245,13 +245,13 @@ si auto-invia un dispatch <cite>stopGame</cite></p></li>
 <p>Oltre al <em>Lifecontroller</em>, anche ciascuna cella può essere realizzata come un attore: tratteremo questo caso
 in seguito (si veda <a class="reference internal" href="ConwayLifeActorsQak.html#conwaylifeactorsqak"><span class="std std-ref">ConwayLifeActorsQak</span></a>).</p>
 <p>Prima coneviene approfondire i meccansimi resi disponibili dal <a class="reference internal" href="QakActors25Linguaggio.html#linguaggio-qak"><span class="std std-ref">Linguaggio qak</span></a> e il
-funzionamento degli <a class="reference internal" href="QakActors25.html#qakactors25-the-actor"><span class="std std-ref">ActorQak</span></a>.</p>
+funzionamento degli <span class="xref std std-ref">ActorQak</span>.</p>
 <p><span class="slide3">Progetto qakms025</span></p>
 </section>
 </section>
 <section id="ms0">
-<h2>ms0<a class="headerlink" href="#ms0" title="Link to this heading">¶</a></h2>
-<p>Struttura di un <a class="reference internal" href="QakActors25.html#qakactors25-the-actor"><span class="std std-ref">ActorQak</span></a> che:</p>
+<h2>ms0<a class="headerlink" href="#ms0" title="Permalink to this heading">¶</a></h2>
+<p>Struttura di un <span class="xref std std-ref">ActorQak</span> che:</p>
 <ul class="simple">
 <li><p>Descrive il mdodello <a class="reference external" href="../../../../qakms025/src/qakms025.qak">qakms025.qak</a> di un (micro)servizio di nome <strong>ms0</strong> che risponde a richieste di identificatore <strong>req0</strong></p></li>
 <li><p>Il funzionamento è espresso nel <a class="reference internal" href="QakActors25Linguaggio.html#linguaggio-qak"><span class="std std-ref">Linguaggio qak</span></a>,  che consente “innesti” di codice Kotlin</p></li>
@@ -269,14 +269,13 @@ funzionamento degli <a class="reference internal" href="QakActors25.html#qakacto
 <li><p>L’azione <span class="slidekp">updateResource</span> del servizio invia informazioni usando CoAP.</p></li>
 <li><p>Queste informazioni sono osservabili da un CoAP client</p></li>
 </ul>
-<a class="reference internal image-reference" href="_images/ms0Commented.jpg"><img alt="_images/ms0Commented.jpg" class="align-center" src="_images/ms0Commented.jpg" style="width: 100%;" />
-</a>
+<a class="reference internal image-reference" href="_images/ms0Commented.jpg"><img alt="_images/ms0Commented.jpg" class="align-center" src="_images/ms0Commented.jpg" style="width: 100%;" /></a>
 <section id="ms0-callers">
-<h3>ms0 callers<a class="headerlink" href="#ms0-callers" title="Link to this heading">¶</a></h3>
+<h3>ms0 callers<a class="headerlink" href="#ms0-callers" title="Permalink to this heading">¶</a></h3>
 <table class="docutils align-default" style="width: 100%">
 <colgroup>
-<col style="width: 30.0%" />
-<col style="width: 70.0%" />
+<col style="width: 30%" />
+<col style="width: 70%" />
 </colgroup>
 <tbody>
 <tr class="row-odd"><td><p><a class="reference external" href="../../../../qakms025/src/main/java/CallerTcp.java">CallerTcp</a></p></td>
@@ -305,6 +304,79 @@ funzionamento degli <a class="reference internal" href="QakActors25.html#qakacto
 </tr>
 </tbody>
 </table>
+<p><span class="slide1">Estensione del progetto conway25qak0</span></p>
+</section>
+</section>
+<section id="id1">
+<h2>conway2Mqtt.qak<a class="headerlink" href="#id1" title="Permalink to this heading">¶</a></h2>
+<p><a class="reference external" href="../../../../conway25qak0/src/conway2Mqtt.qaktt">conway2Mqtt.qak</a> contiene una nuova versione del sistema che ha come controllore del gioco
+un <a class="reference internal" href="QakActors25Intro.html#qakactors25-l-attore"><span class="std std-ref">ActorQak</span></a>.</p>
+<p>Nella versione iniziale, il supporto <a class="reference internal" href="#conway2-qak-outinmqttforactor"><span class="std std-ref">conway2.qak:OutInMqttForActor</span></a> stabiliva una connessione MQTT con la GUI,
+per convertirne i comandi della GUI in <strong>Dispatch</strong> applicativi.</p>
+<p>La nuova versione dichiara in modo esplicito, nel modello, la volonta di usare un broker MQTT:</p>
+<p><span class="slide2">mqttBroker</span></p>
+<section id="la-dichiarazione-mqttbroker">
+<h3>La dichiarazione mqttBroker<a class="headerlink" href="#la-dichiarazione-mqttbroker" title="Permalink to this heading">¶</a></h3>
+<p>Quesata nuova versione introduce una dichiarazione di <span class="slide3">mqttBroker</span>, che
+implica quanto riportato in <a class="reference internal" href="QakActors25Intro.html#la-specifica-mqttbroker"><span class="std std-ref">La specifica mqttBroker</span></a></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">System</span> <span class="n">conway25qak0</span>
+<span class="n">mqttBroker</span> <span class="s2">&quot;192.168.1.132&quot;</span> <span class="p">:</span> <span class="mi">1883</span> <span class="n">eventTopic</span> <span class="s2">&quot;conway0events&quot;</span>
+</pre></div>
+</div>
+<p>Con questa specifica, ogni attore del contesto:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>fa una subscribe alla <code class="docutils literal notranslate"><span class="pre">eventTopic</span> <span class="pre">conway0events</span></code></p></li>
+<li><p>fa una subscribe alla topic <code class="docutils literal notranslate"><span class="pre">unibo/qak/$name</span></code> ove name è il nome dell’attore</p></li>
+</ul>
+</div></blockquote>
+<p>In questa nuova versione:</p>
+<ul class="simple">
+<li><p>non si usa più il supporto <a class="reference external" href="../../../../conway25qak0/src/main/java/conway/devices/OutInMqttForActor.java">OutInMqttForActor</a> per la conversione dei comandi della GUI in messaggi applicativi</p></li>
+<li><p>si introduce un supporto <a class="reference external" href="../../../../conway25qak0/src/main/java/conway/devices/OutDevForActor.java">OutDevForActor</a> che usa la connessione MQTT stabilita a livello di sistema</p></li>
+<li><p>i comandi della GUI vengono convertiti dalla QakInfrastructure in eventi <span class="slide3">kernel_rawmsg</span> che possono
+essere gestiti a livello applicativo nell’attore</p></li>
+<li><p>l’attore gestisce gli evebti <strong>kernel_rawmsg</strong> avvalendosi del supporto <a class="reference external" href="../../../../conway25qak0/src/main/java/conway/GuiCmdTranslator.java">GuiCmdTranslator</a>  che
+traduce i comandi della GUI in messaggi applicativi</p></li>
+</ul>
+</section>
+<section id="conway2mqtt-qak-updateresource">
+<h3>conway2Mqtt.qak updateResource<a class="headerlink" href="#conway2mqtt-qak-updateresource" title="Permalink to this heading">¶</a></h3>
+<p>Questa nuova versione utiliza anche la funzione <a class="reference internal" href="QakActors25Actors.html#operazioni-relative-alla-osservabilita"><span class="std std-ref">updateResource</span></a>
+connessa al fatto che ogni attore Qak è una risorsa CoAP.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">State</span> <span class="n">handleStopGame</span><span class="p">{</span>
+        <span class="n">println</span><span class="p">(</span><span class="s2">&quot;$name | stop the game&quot;</span><span class="p">)</span> <span class="n">color</span> <span class="n">magenta</span>
+        <span class="n">updateResource</span> <span class="p">[</span><span class="c1"># &quot;game stopped&quot; #]</span>
+<span class="p">}</span>
+<span class="n">Goto</span> <span class="n">work</span>
+</pre></div>
+</div>
+</section>
+<section id="conway2-qak-m2m">
+<h3>conway2.qak: M2M<a class="headerlink" href="#conway2-qak-m2m" title="Permalink to this heading">¶</a></h3>
+<p>Con rifriemnto alla nuova versione del gioco <a class="reference internal" href="#id1"><span class="std std-ref">conway2Mqtt.qak</span></a>, introduciamo
+programmi Java che inviano comandi al gioco via TCP, CoAP e MQTT.</p>
+<p>La GUI in questo caso è un puro dispositivo di visualizzazione e non invia comandi al gioco.</p>
+<table class="docutils align-default" style="width: 100%">
+<colgroup>
+<col style="width: 30%" />
+<col style="width: 70%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference external" href="../../../../conway25qak0/main/java/CallerLifeActorTcp.java">CallerLifeActorTcp</a></p></td>
+<td><p>Invia messaggi di alto livello al servizio <strong>conway0</strong> usando il protocollo TCP</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference external" href="../../../../conway25qak0/main/java/CallerLifeActorCoap.java">CallerLifeActorCoap</a></p></td>
+<td><p>Invia messaggi di alto livello al servizio <strong>conway0</strong> usando il protocollo CoAP</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference external" href="../../../../conway25qak0/main/java/CallerLifeActorMqttLowlevel.java">CallerLifeActorMqttLowlevel</a></p></td>
+<td><p>Invia messaggi di alto livello al servizio <strong>conway0</strong> usando il protocollo CoAP</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference external" href="../../../../conway25qak0/main/java/CallerLifeActorMqttHighlevel.java">CallerLifeActorMqttHighlevel</a></p></td>
+<td><p>Invia messaggi di alto livello al servizio <strong>conway0</strong> usando il protocollo CoAP</p></td>
+</tr>
+</tbody>
+</table>
 </section>
 </section>
 </section>
@@ -314,7 +386,7 @@ funzionamento degli <a class="reference internal" href="QakActors25.html#qakacto
           </div>
         </div>
       </div>
-      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
   <div>
     <h3><a href="index.html">Table of Contents</a></h3>
@@ -329,6 +401,12 @@ funzionamento degli <a class="reference internal" href="QakActors25.html#qakacto
 </li>
 <li><a class="reference internal" href="#ms0">ms0</a><ul>
 <li><a class="reference internal" href="#ms0-callers">ms0 callers</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id1">conway2Mqtt.qak</a><ul>
+<li><a class="reference internal" href="#la-dichiarazione-mqttbroker">La dichiarazione mqttBroker</a></li>
+<li><a class="reference internal" href="#conway2mqtt-qak-updateresource">conway2Mqtt.qak updateResource</a></li>
+<li><a class="reference internal" href="#conway2-qak-m2m">conway2.qak: M2M</a></li>
 </ul>
 </li>
 </ul>
@@ -353,7 +431,7 @@ funzionamento degli <a class="reference internal" href="QakActors25.html#qakacto
             rel="nofollow">Show Source</a></li>
     </ul>
    </div>
-<search id="searchbox" style="display: none" role="search">
+<div id="searchbox" style="display: none" role="search">
   <h3 id="searchlabel">Quick search</h3>
     <div class="searchformwrapper">
     <form class="search" action="search.html" method="get">
@@ -361,13 +439,13 @@ funzionamento degli <a class="reference internal" href="QakActors25.html#qakacto
       <input type="submit" value="Go" />
     </form>
     </div>
-</search>
+</div>
 <script>document.getElementById('searchbox').style.display = "block"</script>
         </div>
       </div>
       <div class="clearer"></div>
     </div>
-    <div class="related" role="navigation" aria-label="Related">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -384,8 +462,8 @@ funzionamento degli <a class="reference internal" href="QakActors25.html#qakacto
       </ul>
     </div>
     <div class="footer" role="contentinfo">
-    &#169; Copyright 2024, Antonio Natali.
-      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.1.3.
+        &#169; Copyright 2024, Antonio Natali.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 5.0.2.
     </div>
   </body>
 </html>

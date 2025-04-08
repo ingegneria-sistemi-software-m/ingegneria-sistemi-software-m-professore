@@ -19,8 +19,10 @@ import org.json.simple.JSONObject
 
 
 //User imports JAN2024
+import conwayMqtt.*
 
-class Conway0 ( name: String, scope: CoroutineScope, isconfined: Boolean=false  ) : ActorBasicFsm( name, scope, confined=isconfined ){
+class Conway0 ( name: String, scope: CoroutineScope, isconfined: Boolean=false, isdynamic: Boolean=false ) : 
+          ActorBasicFsm( name, scope, confined=isconfined, dynamically=isdynamic ){
 
 	override fun getInitialState() : String{
 		return "s0"
@@ -28,11 +30,12 @@ class Conway0 ( name: String, scope: CoroutineScope, isconfined: Boolean=false  
 	override fun getBody() : (ActorBasicFsm.() -> Unit){
 		//val interruptedStateTransitions = mutableListOf<Transition>()
 		//IF actor.withobj !== null val actor.withobj.name» = actor.withobj.method»ENDIF
-		val life = conwayMqtt.Life(20,20)
+		val life = Life(20,20)
 		  
-			val outdev   = main.java.conway.devices.OutInMqttForActor( myself  )	
-			val helper   =  main.java.conway.LifeUsageHelper( life, outdev )
-			var running  = false
+			//lateinit var outdev : IOutDev   	//CHANGED
+			val outdev = main.java.conway.devices.OutDevForActor( myself )
+			val helper = main.java.conway.LifeUsageHelper( life, outdev )
+			val guiinterpreter = main.java.conway.GuiCmdTranslator( myself )  //ADDED
 		return { //this:ActionBasciFsm
 				state("s0") { //this:State
 					action { //it:State
@@ -41,6 +44,7 @@ class Conway0 ( name: String, scope: CoroutineScope, isconfined: Boolean=false  
 									 helper.swithCellState(1,1)
 						 			 helper.swithCellState(1,2)
 						 			 helper.swithCellState(1,3)
+						 mqtt.subscribe(myself,"lifein")  
 						//genTimer( actor, state )
 					}
 					//After Lenzi Aug2002
@@ -55,14 +59,36 @@ class Conway0 ( name: String, scope: CoroutineScope, isconfined: Boolean=false  
 					//After Lenzi Aug2002
 					sysaction { //it:State
 					}	 	 
-					 transition(edgeName="t00",targetState="handleStartGame",cond=whenDispatch("startGame"))
-					transition(edgeName="t01",targetState="handleStopGame",cond=whenDispatch("stopGame"))
-					transition(edgeName="t02",targetState="handleClearGame",cond=whenDispatch("clearGame"))
-					transition(edgeName="t03",targetState="handleExit",cond=whenDispatch("exitGame"))
+					 transition(edgeName="t00",targetState="changeCellState",cond=whenDispatch("cellstate"))
+					transition(edgeName="t01",targetState="handleStartGame",cond=whenDispatch("startGame"))
+					transition(edgeName="t02",targetState="handleStopGame",cond=whenDispatch("stopGame"))
+					transition(edgeName="t03",targetState="handleClearGame",cond=whenDispatch("clearGame"))
+					transition(edgeName="t04",targetState="handleExit",cond=whenDispatch("exitGame"))
+					transition(edgeName="t05",targetState="handleGuiMsg",cond=whenEvent("kernel_rawmsg"))
+				}	 
+				state("changeCellState") { //this:State
+					action { //it:State
+						CommUtils.outcyan("$name in ${currentState.stateName} | $currentMsg | ${Thread.currentThread().getName()} n=${Thread.activeCount()}")
+						 	   
+						if( checkMsgContent( Term.createTerm("cellstate(X,Y)"), Term.createTerm("cellstate(X,Y)"), 
+						                        currentMsg.msgContent()) ) { //set msgArgList
+								
+												val X = payloadArg(0).toInt()
+												val Y = payloadArg(1).toInt()
+												helper.swithCellState(X,Y)
+						}
+						//genTimer( actor, state )
+					}
+					//After Lenzi Aug2002
+					sysaction { //it:State
+					}	 	 
+					 transition( edgeName="goto",targetState="work", cond=doswitch() )
 				}	 
 				state("handleStartGame") { //this:State
 					action { //it:State
 						CommUtils.outmagenta("$name | starts the game")
+						updateResourceRep( "new epoch started"  
+						)
 						 
 								   val goon = helper.fireEpoch()  //goon false se empty o stable
 						if(  !goon  
@@ -73,15 +99,17 @@ class Conway0 ( name: String, scope: CoroutineScope, isconfined: Boolean=false  
 					//After Lenzi Aug2002
 					sysaction { //it:State
 				 	 		stateTimer = TimerActor("timer_handleStartGame", 
-				 	 					  scope, context!!, "local_tout_"+name+"_handleStartGame", 1000.toLong() )  //OCT2023
+				 	 					  scope, context!!, "local_tout_"+name+"_handleStartGame", 500.toLong() )  //OCT2023
 					}	 	 
-					 transition(edgeName="t04",targetState="handleStartGame",cond=whenTimeout("local_tout_"+name+"_handleStartGame"))   
-					transition(edgeName="t05",targetState="handleStopGame",cond=whenDispatch("stopGame"))
+					 transition(edgeName="t06",targetState="handleStartGame",cond=whenTimeout("local_tout_"+name+"_handleStartGame"))   
+					transition(edgeName="t07",targetState="handleStopGame",cond=whenDispatch("stopGame"))
+					transition(edgeName="t08",targetState="checkGuiStopMsg",cond=whenEvent("kernel_rawmsg"))
 				}	 
 				state("handleStopGame") { //this:State
 					action { //it:State
 						CommUtils.outmagenta("$name | stop the game")
-						 running = false  
+						updateResourceRep( "game stopped"  
+						)
 						//genTimer( actor, state )
 					}
 					//After Lenzi Aug2002
@@ -93,6 +121,8 @@ class Conway0 ( name: String, scope: CoroutineScope, isconfined: Boolean=false  
 					action { //it:State
 						CommUtils.outmagenta("$name | clear the game")
 						 helper.resetAndDisplayGrids() 
+						updateResourceRep( "grid cleared"  
+						)
 						//genTimer( actor, state )
 					}
 					//After Lenzi Aug2002
@@ -109,6 +139,36 @@ class Conway0 ( name: String, scope: CoroutineScope, isconfined: Boolean=false  
 					//After Lenzi Aug2002
 					sysaction { //it:State
 					}	 	 
+				}	 
+				state("handleGuiMsg") { //this:State
+					action { //it:State
+						CommUtils.outblack("$name in ${currentState.stateName} | $currentMsg | ${Thread.currentThread().getName()} n=${Thread.activeCount()}")
+						 	   
+						if( checkMsgContent( Term.createTerm("kernel_rawmsg(ARG)"), Term.createTerm("kernel_rawmsg(ARG)"), 
+						                        currentMsg.msgContent()) ) { //set msgArgList
+								 guiinterpreter.cvtToApplMessage( payloadArg(0) )  
+						}
+						//genTimer( actor, state )
+					}
+					//After Lenzi Aug2002
+					sysaction { //it:State
+					}	 	 
+					 transition( edgeName="goto",targetState="work", cond=doswitch() )
+				}	 
+				state("checkGuiStopMsg") { //this:State
+					action { //it:State
+						CommUtils.outblack("$name in ${currentState.stateName} | $currentMsg | ${Thread.currentThread().getName()} n=${Thread.activeCount()}")
+						 	   
+						if( checkMsgContent( Term.createTerm("kernel_rawmsg(ARG)"), Term.createTerm("kernel_rawmsg(stop)"), 
+						                        currentMsg.msgContent()) ) { //set msgArgList
+								 guiinterpreter.cvtToApplMessage( payloadArg(0) )  
+						}
+						//genTimer( actor, state )
+					}
+					//After Lenzi Aug2002
+					sysaction { //it:State
+					}	 	 
+					 transition( edgeName="goto",targetState="work", cond=doswitch() )
 				}	 
 			}
 		}

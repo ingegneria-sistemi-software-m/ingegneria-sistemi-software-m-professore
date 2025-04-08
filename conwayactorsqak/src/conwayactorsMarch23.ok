@@ -1,0 +1,494 @@
+System  conwayactorsqak 
+mqttBroker "localhost" : 1883 eventTopic "gamemaster"   
+/*
+ * In gridConfig.json : griglia 5x5
+ */
+//Dispatch guicmd        : guicmd(X) //X=startthegame | stopthegame
+//Dispatch fromdisplay   : fromdisplay(CMD)
+//Dispatch todisplay     : todisplay(CELL,STATE)
+ 
+Event startthegame     : startthegame(X)
+Event    stopthecell   : stopthecell(X) 
+Event    synch         : synch(X)
+Event    clearCell     : clearCell(X)      
+Event curstate         : curstate(NB,STATE)
+
+Dispatch epochDone     : epochDone(N)
+Dispatch start         : start(V)
+Dispatch stop          : stop(V)
+Dispatch clear         : clear(V)
+
+
+//Dispatch gameended     : gameended(X)  //serve per andare in resumegame
+//Dispatch gamestopped   : gamestopped(X) 
+//Dispatch gamesuspend   : gamesuspend(X)
+
+Dispatch cellcreated   : cellcreated(CELL,STATE)
+Dispatch allcellcreated: allcellcreated(N)
+
+//Dispatch cellends      : cellends(CELL)
+Dispatch changeCellState   : changeCellState(X,Y)
+
+//Dispatch nbconfig      : nbconfig(N)
+Dispatch allnbreceived : allnbreceived(N)
+Dispatch cellready     : cellready(CELL,STATE)
+Dispatch allcellready  : allcellready(X)
+
+Request addtogame      : addtogame( NAME )
+Reply   addedtogame    : addedtogame( CELLNAME, NROWS, NCOLS ) for addtogame
+
+
+
+Context ctxcells ip [ host="localhost" port=8360] 
+
+ /*
+  * Simula un palyer che opera su un proprio nodo computazionale 
+  */ 
+ 
+QActor player context ctxcells dynamicOnly{
+import "unibo.basicomm23.mqtt.*"
+	[# //lateinit var mqttApplConn : MqttInteraction
+		//var answer = ""
+ 		var RowsN = -1
+		var ColsN = -1
+ 		var X  = 0
+		var Y  = 0
+		var XD = 0
+		var YD = 0
+		
+     fun setCellCoords( cellname : String )  {
+     	 //CommUtils.outred("setCellCoords $cellname")
+	     val coords = cellname.replace("cell_","").split("_")
+	     X = coords[0].toInt()
+	     XD = X+1
+	     Y  = coords[1].toInt()        
+	     YD = Y+1
+  	}
+
+	#]
+	State s0 initial{
+		println("$name | START ") color blue
+		delay 1000 //La connessione MQTT richiede tempo		   
+		[#
+  		   val req = CommUtils.buildRequest(name,"addtogame","addtogame( $MyName )","gamemaster")
+ 		   //CommUtils.outblue("$name | req=$req mqttConnected=$mqttConnected")
+ 		   publish(  req.toString(), "unibo/qak/gamemaster" )
+		#]   
+		//CHANGE
+		//request gamemaster -m  addtogame : addtogame( $MyName )
+	}
+	Transition t0 whenReply addedtogame -> handleAddedtogame
+	
+	State handleAddedtogame{
+		//printCurrentMessage color blue
+		onMsg( addedtogame : addedtogame( CELLNAME, NROWS, NCOLS ) ){
+			[# val CellName = payloadArg(0)
+			   RowsN = payloadArg(1).toInt()
+			   ColsN = payloadArg(2).toInt()
+			#]
+			println("$name | $CellName RowsN=$RowsN ColsN=$ColsN") color magenta
+			[# setCellCoords( CellName ) #]
+			[# val Cellname = createActorDynamically( "cell", "_${X}_$Y", false) #]
+			println("$name |  CREATED CELL X=$X Y=$Y") color magenta
+		}
+	}
+}
+
+QActor gamemaster context ctxcells{
+import "unibo.basicomm23.mqtt.*"
+ [# 
+ 	var RowsN = 0
+ 	var ColsN = 0
+ 
+    var NAllCells      =  0  //set in s0
+    var NCellsCreated  =  0  //set in handlecellecreated 		
+    var NCellended     =  0  //set in terminatethegame
+ 	var NCellReady     =  0
+ 	
+ 	var LastI = 0
+	var LastJ = 0
+ 	
+ 	var Stopped  = false
+ 	var EpochNum = 0
+ 	
+	//lateinit var  mqttApplConn : MqttInteraction
+	
+	lateinit  var outinmasterdev : main.java.OutInMasterGui
+	
+	var altLeastOneCellOn = false
+  #]
+	 
+  State s0 initial{
+	[# 
+		val res = conway.GridSupport25.readGridConfig("gridConfig.json")
+		RowsN     = res.get(0)
+		ColsN     = res.get(1)
+		NAllCells = RowsN * ColsN    
+	#]
+    println("$name | RowsN=$RowsN ColsN=$ColsN") color blue
+	//CREAZIONE DAI PLAYER
+    [# conway.GridSupport25.createPlayers( myself,RowsN,ColsN ) #]
+	println("$name | WORK DONE ... ")	color magenta
+  }
+  Transition t0
+  	whenRequest addtogame -> handleAddtogane
+
+  State handleAddtogane{
+  	printCurrentMessage
+  	println("$name | LastI=$LastI LastJ=$LastJ RowsN=$RowsN ColsN=$ColsN")
+  	if [# LastJ == ColsN #]{ //riga finita
+  		if [# LastI == RowsN #] { //Righe finite
+  		    [# val CelName = "rejected_0_0" #]
+  			replyTo addtogame with addedtogame : addedtogame($CelName,0,0)
+  		}else{ //cambio riga
+	  		[# LastI++; LastJ = 0 #]
+	  		[# val CelName = "cell_${LastI}_$LastJ" #] 
+	  		replyTo addtogame with addedtogame : addedtogame($CelName, $RowsN, $ColsN)
+	  		[#  LastJ++ #]
+  		}
+  	}else{ //caso normale
+  		[# val CelName = "cell_${LastI}_$LastJ" #] 
+  		replyTo addtogame with addedtogame : addedtogame($CelName, $RowsN, $ColsN)
+  		[#  LastJ++ #]
+  	}//  
+  }
+  Transition t0
+  	whenRequest addtogame -> handleAddtogane
+  	whenMsg cellcreated   -> handleCellcreated
+   
+   
+  State handleCellcreated{
+  	[# NCellsCreated++ #]
+  	if [# NCellsCreated ==  NAllCells #]{
+  		println("$name | ALL CELL $NAllCells CREATED !!!! ") color magenta
+  		autodispatch allcellready : allcellready(ok)
+  	}
+  }
+  Transition t0
+  	whenRequest addtogame -> handleAddtogane
+  	whenMsg cellcreated   -> handleCellcreated
+  	whenMsg allcellready  -> orchestrateTheGame 
+  	
+  	
+  State orchestrateTheGame{
+  	printCurrentMessage color red
+  	
+  	[# outinmasterdev  = main.java.OutInMasterGui(myself, "guiin") #]
+  }
+  Transition t0 
+    whenMsg start      -> startTheGame
+    whenInterrupt stop -> stopTheGame
+    whenMsg clear     -> clearTheGame
+  
+  
+  State startTheGame{
+  	[# Stopped = false #]
+  	//Invio un evento
+  	println("emit event startthegame") color red
+  	emit startthegame : startthegame(ok)
+  }
+  Transition t0 
+   	whenMsg cellready -> handleCellReady
+//    whenMsg stop and [# ! Stopped #]     -> stopTheGame
+//    whenMsg clear     -> clearTheGame
+	whenInterrupt start -> ignoreCmd
+	whenInterrupt stop  -> ignoreCmd
+	whenInterrupt clear -> ignoreCmd
+	
+   State ignoreCmd{
+   	 [# val cmd = currentMsg.msgId() #]
+   	 println("$cmd ignored") color red
+   	 returnFromInterrupt 
+   }
+
+  
+  State handleCellReady{
+  	onMsg( cellready:cellready(CELL,STATE) ){
+  		println("$name | handleCellReady ${payloadArg(0)} val=${payloadArg(1)}")
+  		if [# payloadArg(1)  == "true" #] {
+  			[# altLeastOneCellOn = true #]
+  		}
+  	}
+  	//printCurrentMessage color cyan
+  	[# NCellReady++ #]
+  	if [# NCellReady == NAllCells #]{
+  		delay 1000
+  		//println("$name | emit synch .......... ") color blue
+  		//if [# ! Stopped #]{ emit synch : synch(ok) }
+  		[# NCellReady=0 #]
+  		[# EpochNum++ #]
+  		autodispatch epochDone : epochDone(EpochNum)  		
+  	}
+  }
+  Transition t0 
+  	whenMsg cellready  -> handleCellReady
+    whenInterrupt stop -> stopTheGame
+  	whenMsg epochDone and [# ! Stopped #] -> continueTheGame
+  	whenMsg epochDone and [# Stopped #]   -> waittoRestart
+//    whenMsg start and [# Stopped #]       -> resumeTheGame
+	whenInterrupt start -> ignoreCmd
+//	whenInterrupt stop  -> ignoreCmd
+	whenInterrupt clear -> ignoreCmd
+  	  	
+ State continueTheGame{
+ 	 println("$name | continueTheGame($MyName) epoch = $EpochNum stopped=$Stopped nonempty=$altLeastOneCellOn") color black
+ 	 if [# altLeastOneCellOn #]{  
+ 	 	emit synch : synch(ok)
+ 	 	[# altLeastOneCellOn = false #]
+ 	 }
+ 	 else{ //grid empty	 	
+ 	 	println("$name | GRID EMPTY !!! ") color red
+ 	 	[# outinmasterdev.display( "lfctrl: gridempty" ) #]
+ 	 	emit stopthecell : stopthecell(gridempty)
+ 	 }
+ }
+  Transition t0     
+  	whenMsg cellready   -> handleCellReady
+  	whenMsg start and [# ! altLeastOneCellOn #] -> startTheGame
+  	whenInterrupt start  -> ignoreCmd
+  	whenInterrupt stop  -> ignoreCmd
+  	whenInterrupt clear -> ignoreCmd
+ 
+   State stopTheGame{
+  	println("$name | GAME STOPPED - interrupt") color red
+  	[# Stopped = true #]
+  	emit stopthecell   : stopthecell(stopbutton)
+  	returnFromInterrupt 
+  }    
+  
+//  Transition t0 
+//   	whenMsg cellready -> handleCellReady
+//    whenMsg start and [# Stopped #] -> resumeTheGame
+//  	whenMsg epochDone  -> waittoRestart
+//  	whenMsg clear      -> clearTheGame //Aspetto sia Stopped
+  
+  State clearTheGame{
+  	println("$name | GAME CELARING") color blue
+  	emit clearCell : clearCell(ok)
+  }
+  Transition t0 
+    whenMsg start     -> startTheGame
+    //whenMsg stop  and [# ! Stopped #]    -> stopTheGame
+    whenInterrupt clear     -> ignoreCmd
+    whenInterrupt stop      -> ignoreCmd
+ 
+//  State doclearTheGame{
+//  	println("$name | GAME DO CLEARING") color blue
+//  	emit clearCell : clearCell(ok)
+//  	returnFromInterrupt
+//  }
+ 
+ 
+ State waittoRestart{
+ 	println("$name | waittoRestart")
+ }
+ Transition t0 
+ 	whenMsg start -> startTheGame //resumeTheGame
+// 	whenMsg stop  -> waittoRestart
+	whenInterrupt stop  -> ignoreCmd
+// 	whenInterrupt clear -> doclearTheGame
+    whenMsg clear -> clearTheGame
+
+// State resumeTheGame{
+// 	[# Stopped = false #]
+// 	//emit synch : synch(resumed)
+// 	emit startthegame : startthegame(resume)
+//  }
+////  Goto continueTheGame
+//  Transition t0
+//   	whenMsg cellready -> handleCellReady
+//	whenInterrupt start -> ignoreCmd
+//	whenInterrupt stop  -> ignoreCmd
+//	whenInterrupt clear -> ignoreCmd
+
+}
+
+
+
+/*
+ * cell  
+ */
+QActor cell context ctxcells dynamicOnly{
+import "main.java.*"
+	[#
+	   var MyState     = false
+	   var Countnb     = 0  //numero dei vicini
+	   var Countnbon   = 0  //numero degli stati on dei vicini
+	   var Countnbmsgs = 0  //numero dei msg ricevuti dai vicini	  
+	   var  X          = 0
+	   var  Y          = 0
+	   var XD          = 0
+	   var YD          = 0
+	   
+	   lateinit  var outindev  : OutInCellGui
+
+		
+ fun setCellCoords( )  {
+     val coords = name.replace("cell_","").split("_")  //Before cellc
+     X = coords[0].toInt()
+     XD = X+1
+     Y  = coords[1].toInt()        
+     YD =Y+1
+  }
+  
+  fun displayOnGui(){ 
+	val V   = if (MyState) 1 else 0
+	val msg = "cell($XD,$YD,$V)" 
+	outindev.display(msg)   	
+  }
+        
+	#]
+	State s0 initial{
+		println("$name | STARTS") color blue
+		delay 1000 //attende connessione MQTT
+		println("$name | STARTSSSSSSSSSSSSSS") color blue
+		[# setCellCoords( )
+			Countnb = conway.GridSupport25.subscribeToNeighborsMqtt(myself, X,Y)
+		#]      
+		println("$name | STARTS Countnb= $Countnb")
+		
+		//
+		[# outindev = OutInCellGui(myself, "guiin") #]
+		
+		
+		[#
+ 		   //val topic = sysUtil.getMqttEventTopic()
+ 		   val cmd   = CommUtils.buildDispatch(name,"cellcreated","cellcreated( $MyName,false )","gamemaster")
+ 		   //CommUtils.outred("$name | cmd=$cmd mqttConnected=$mqttConnected")
+ 		   //mqtt.publish(  "unibo/qak/gamemaster", cmd.toString() )
+ 		   publish( cmd.toString(), "unibo/qak/gamemaster" )
+		#]   
+		
+		
+		//forward gamemaster -m cellcreated : cellcreated(MyName,false)
+    } 
+	Transition t0  
+		whenEvent clearCell       -> clearThecell
+		whenMsg changeCellState   -> changeCellState
+		whenEvent startthegame    -> emitinfophase
+		
+
+	State changeCellState{
+//		printCurrentMessage color magenta
+		onMsg( changeCellState : changeCellState(X,Y) ){
+			if [# X == payloadArg(0).toInt() && Y == payloadArg(1).toInt() #]{ //RIGUARDA LA CELLA
+				[#  MyState = ! MyState;
+					displayOnGui()
+				#]
+//				println("$name | STATE=$MyState ") color yellow
+			 }
+		}   
+	}
+	Transition t0  
+	    whenEvent startthegame  -> emitinfophase
+		whenMsg changeCellState -> changeCellState
+		whenEvent clearCell     -> clearThecell
+
+ 	
+	State emitinfophase{
+		//printCurrentMessage 
+ 		[# var MyInfo = "$name,$MyState" #]
+		//println("$name | emitinfophase") color green
+	    delay 10 //cede il controllo  
+	    //println("$name | emitinfophase $MyInfo") color green
+        //[# conway.GLMSupport.sendToNeighbors(myself, MyInfo, "mqtt") #]
+        [# emitstreammqtt(name, "curstate","curstate($MyInfo)") #]
+        //Al vicino: [# emitstreammqtt(a.name, "curstate","curstate($MyInfo)") #]
+	}
+	Transition t0   
+		whenEvent curstate    -> elabinfophase
+				  
+    State elabinfophase{
+    	//printCurrentMessage color red
+		[# Countnbmsgs=Countnbmsgs+1 #]
+
+		onMsg ( curstate : curstate(NB,true) ){
+			[# Countnbon = Countnbon + 1 
+			#]
+		} 
+		if [# Countnbmsgs == Countnb #] {  		 
+		[#  
+			//CommUtils.outcyan("$name | elabinfophase $Countnbmsgs/$Countnb ")  
+			forward("allnbreceived","allnbreceived(ok)",name)	//automsg					 
+		#]	 
+		}		 
+    } 
+	Transition t0 //whenEvent stopthegame -> endthecell //SE ARRIVATO, lo perdo?
+				  whenEvent curstate    -> elabinfophase
+				  whenMsg allnbreceived -> elabstatephase
+	
+	State elabstatephase{
+		//println("$name | elabstatephase $MyState $Countnbon") color green
+		if [# MyState  #]{ //soprevvice o muore
+			[# MyState = Countnbon==2 || Countnbon==3 #]
+		}
+		if [# ! MyState  #]{ //rinasce o rimane morta
+			[# MyState = (Countnbon==3) #]
+		}
+		//Aggiorno il display in emitinfophase		 		
+		[# Countnbmsgs = 0
+		   Countnbon   = 0 
+		#]
+ 		[# displayOnGui() #]
+        //println("$name | elabstatephase $MyState WAIT synch") color green
+ 
+ 		[#
+   		   val cmd   = CommUtils.buildDispatch(name,"cellready","cellready($MyName,$MyState)","gamemaster")
+   		   publish( cmd.toString(), "unibo/qak/gamemaster" )
+		#]   
+ 		
+ 		//forward gamemaster -m cellready : cellready(MyName)   //SE TOLGO => uso START button
+	}
+	Transition t0 
+		whenEvent synch         -> emitinfophase
+	    whenEvent stopthecell   -> stopthecell
+	              //whenMsg start         -> emitinfophase   //TRICK
+	 //potrebbe arrivare curstate da altre celle, 
+	 //ma lo si recupera in elabinfophase
+
+//	/*
+//	 * Fase di teminazione  
+//	 */ 
+//	State endthecell{
+//		println("$name | endthecell $Countnbmsgs ")
+////		forward gamelife -m cellends : cellends($MyName)
+//	}
+////	Goto waittoresume  
+//    Transition t0  whenMsg changeCellState -> changeCellState
+//                   whenEvent startthegame  -> emitinfophase 
+//                   whenEvent clearCell     -> clearThecell 
+
+	State stopthecell{
+		println("$name | stopthecell ")
+	}
+//	Goto waittoresume  
+    Transition t0  whenMsg changeCellState -> changeCellState
+                   //whenEvent synch         -> emitinfophase
+                   whenEvent startthegame  -> emitinfophase 
+                   whenEvent clearCell     -> clearThecell 
+
+
+    State clearThecell{
+    	println("$name | clearThecell ")
+     	[# MyState = false #]
+     	[# displayOnGui() #]
+//		forward griddisplay -m todisplay : todisplay($MyName,$MyState)
+    }
+//    Goto waittoresume
+    Transition t0  whenMsg changeCellState -> changeCellState
+                   whenEvent startthegame  -> emitinfophase 
+                   whenEvent clearCell     -> clearThecell 
+
+	/*
+	 * Fase di  ripristino
+	 */ 
+//    State waittoresume{
+//    }
+//    Transition t0  whenMsg changeCellState -> changeCellState
+//                   whenEvent startthegame  -> emitinfophase 
+//                   whenEvent clearCell     -> clearThecell 
+ 
+}//cell 
+
+ 
+ 

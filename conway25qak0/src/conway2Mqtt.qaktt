@@ -1,0 +1,139 @@
+System /*-trace*/ conway25qak0
+mqttBroker "192.168.1.132" : 1883 eventTopic "conway0events"
+
+/*
+ * ------------------------------------------------------------
+ * NUOVA VERSIONE che introduce mqttBroker e updateResource
+ * Usa OutInMqttForActor che riusa
+ * la connessione al broker stabilita 
+ * in seguito alla specifica mqttBroker
+ * ------------------------------------------------------------
+ */
+
+Dispatch startGame : startGame(ARG)
+Dispatch stopGame  : stopGame(ARG)
+Dispatch clearGame : clearGame(ARG)
+Dispatch exitGame  : exitGame(ARG) 
+Dispatch cellstate : cellstate(X,Y) 
+
+Event kernel_rawmsg : kernel_rawmsg(ARG)
+
+Context ctxconway0 ip [host="localhost" port=8920 ]
+ 
+QActor conway0 context ctxconway0 
+	withobj life using "Life(20,20)"   //dalla library in applibs
+	{ 
+import "conwayMqtt.*"
+[#  
+	//lateinit var outdev : IOutDev   	//CHANGED
+	val outdev = main.java.conway.devices.OutDevForActor( myself )
+	val helper = main.java.conway.LifeUsageHelper( life, outdev )
+	val guiinterpreter = main.java.conway.GuiCmdTranslator( myself )  //ADDED
+#] 
+	State s0 initial{
+		//WARINING: MQTT connection requires time ...
+		println("$name | starts") color magenta
+		[# 			 
+			 helper.swithCellState(1,1)
+ 			 helper.swithCellState(1,2)
+ 			 helper.swithCellState(1,3)
+		#]	
+		//Qui la connessione con il Broker MQTT è stata fatta e testata da swithCellState
+		[# mqtt.subscribe(myself,"lifein") #]
+	}
+	Goto work
+	
+	State work{}
+	Transition t0 
+  		whenMsg cellstate  -> changeCellState
+  		whenMsg startGame  -> handleStartGame
+		whenMsg stopGame   -> handleStopGame
+		whenMsg clearGame  -> handleClearGame
+		whenMsg exitGame   -> handleExit
+		whenEvent kernel_rawmsg -> handleGuiMsg
+	
+	
+	State changeCellState{
+		printCurrentMessage
+		onMsg( cellstate : cellstate(X,Y) ){
+			[#
+				val X = payloadArg(0).toInt()
+				val Y = payloadArg(1).toInt()
+				helper.swithCellState(X,Y)
+			#]
+		}
+	}
+	Goto work
+	
+	State handleStartGame{
+		println("$name | starts the game") color magenta
+		updateResource [# "new epoch started" #]
+		[# 
+		   val goon = helper.fireEpoch()  //goon false se empty o stable
+		#]
+		if [# !goon #]{ autodispatch stopGame : stopGame(play) }
+	}
+	Transition t0 
+  		whenTime 500     -> handleStartGame
+  		whenMsg stopGame  -> handleStopGame
+        whenEvent kernel_rawmsg -> checkGuiStopMsg
+
+	State handleStopGame{
+		println("$name | stop the game") color magenta
+		updateResource [# "game stopped" #]
+	}
+	Goto work
+
+	State handleClearGame{
+		println("$name | clear the game") color magenta
+		[# helper.resetAndDisplayGrids() 
+		#]
+		updateResource [# "grid cleared" #]
+	}
+	Goto work
+	
+	State handleExit{
+		println("$name | EXIT from the game") color magenta
+		[# System.exit(0) #]
+	}
+	
+	State handleGuiMsg{
+		printCurrentMessage color black
+		onMsg( kernel_rawmsg : kernel_rawmsg(ARG)){
+			[# guiinterpreter.cvtToApplMessage( payloadArg(0) ) #]
+		}
+	}
+	Goto work
+	
+	State checkGuiStopMsg{
+		printCurrentMessage color black
+		onMsg( kernel_rawmsg : kernel_rawmsg(stop)){
+			[# guiinterpreter.cvtToApplMessage( payloadArg(0) ) #]
+		}
+	}
+	Goto work
+}
+
+/*
+ * Attore che percepisce i comandi emessi dalla GUI
+ * e trasformati in eventi dalla QakInfrastructure
+ */
+QActor guicmdpereceiver context ctxconway0 {
+	State s0 initial{
+		delay 2000 //MQTT conncetion requires time...
+		println("	$name | starts ") color green
+		[# mqtt.subscribe(myself,"lifein") #]
+	}
+	Goto work
+	
+	State work{
+		println("	$name | waiting ... ") color green
+	}
+	Transition t0 
+		whenEvent kernel_rawmsg -> showGuiCmd
+		
+	State showGuiCmd{
+		println("	$name | $currentMsg") color green
+	}
+	Goto work
+}
