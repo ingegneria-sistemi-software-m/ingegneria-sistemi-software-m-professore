@@ -1,7 +1,7 @@
 %====================================================================================
 % conwaycellsnqakaive description   
 %====================================================================================
-mqttBroker("192.168.1.68", "1883", "lifeevents").
+mqttBroker("192.168.1.132", "1883", "lifeevents").
 event( startthegame, startthegame(X) ).
 event( stopthecell, stopthecell(X) ).
 event( synch, synch(X) ).

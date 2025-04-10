@@ -2,7 +2,7 @@ System conwaycellsnqakaive
 mqttBroker "192.168.1.132" : 1883 eventTopic "lifeevents" 
 
 Event startthegame     : startthegame(X)
-Event    stopthecell   : stopthecell(X)  
+Event    stopthecell   : stopthecell(X) 
 Event    synch         : synch(X)
 Event    clearCell     : clearCell(X)      
 Event curstate         : curstate(NB,STATE)
@@ -17,7 +17,7 @@ Context ctxcells ip [ host="localhost" port=8360]
 
 QActor cellbuilder context ctxcells{
 import "unibo.basicomm23.mqtt.*"
- 
+
  State s0 initial{
  	println("$name | STARTS")
  }
@@ -81,19 +81,13 @@ import "main.java.*"
 		println("$name | STARTS Countnb= $Countnb") color black
 		
  		[# outindev = OutInCellGui(myself, "guiin") #]
-		
-		//println("$name | dispatch cellcreated to gamebuilder ") color black
-//		[#
-//  		   val cmd   = CommUtils.buildDispatch(
-// 		   		name,"cellcreated","cellcreated( $MyName,false )","gamebuilder" )
-// 		   publish( cmd.toString(), "unibo/qak/gamebuilder" )
-//		#]   
-    } 
+
+    }  
 	Transition t0  
 		whenEvent clearCell       -> clearThecell
 		whenMsg changeCellState   -> changeCellState
-		whenEvent startthegame    -> emitinfophase
-		whenInterruptEvent kernel_rawmsg   -> handleGuiMsg
+ 		whenEvent startthegame    -> emitinfophase
+
 
 	State changeCellState{
 		onMsg( changeCellState : changeCellState(X,Y) ){
@@ -101,30 +95,15 @@ import "main.java.*"
 				[#  MyState = ! MyState;
 					displayOnGui()
 				#]
-//				println("$name | STATE=$MyState ") color yellow
+				println("$name | changeCellState=$MyState ") color yellow
 			 }
 		}   
-	} 
+	}
 	Transition t0  
-		whenEvent clearCell       -> clearThecell
+  		whenEvent clearCell       -> clearThecell
 		whenMsg changeCellState   -> changeCellState
 		whenEvent startthegame    -> emitinfophase
-		whenInterruptEvent kernel_rawmsg   -> handleGuiMsg
-	  
-	State handleGuiMsg{
-		printCurrentMessage color black
-		onMsg( kernel_rawmsg : kernel_rawmsg(ARG)){
-			[# guiinterpreter.cvtToApplMessage( payloadArg(0) ) #]
-		}
-		returnFromInterrupt
-	}
-	//Goto work 
-	Transition t0  
-	    whenEvent startthegame  -> emitinfophase
-		whenMsg changeCellState -> changeCellState
-		whenEvent clearCell     -> clearThecell
-		whenInterruptEvent kernel_rawmsg   -> handleGuiMsg
- 	 
+  	 
 	State emitinfophase{
  		[# var MyInfo = "$name,$MyState" #]
  		println("$name | emitinfophase") color green
@@ -133,6 +112,7 @@ import "main.java.*"
  	}
 	Transition t0   
 		whenEvent curstate    -> elabinfophase
+ 	    whenEvent stopthecell   -> stopthecell
 				  
     State elabinfophase{
   		[# Countnbmsgs=Countnbmsgs+1 #]
@@ -141,13 +121,13 @@ import "main.java.*"
 			[# Countnbon = Countnbon + 1  #]
 		} 
 		if [# Countnbmsgs == Countnb #] {  		 
-//			delay 200   
 			autodispatch allnbreceived : allnbreceived(ok)
 		}		  
     } 
 	Transition t0 
 		  whenEvent curstate    -> elabinfophase
 		  whenMsg allnbreceived -> elabstatephase
+ 	      whenEvent stopthecell   -> stopthecell
 	
 	State elabstatephase{
  		println("$name | elabstatephase $MyState $Countnbon") color yellow
@@ -162,35 +142,31 @@ import "main.java.*"
 		   Countnbon   = 0 
            displayOnGui() 
         #]
-        //Informo il gamemaster sulla sua topic di input
-// 		[#
-//   		   val cmd   = CommUtils.buildDispatch(
-//   		   	 name,"cellready","cellready($MyName,$MyState)","gamemaster")
-//   		   publish( cmd.toString(), "unibo/qak/gamemaster" )
-//		#]   
- 		
- 	}
+  	}
 	Transition t0 
-		whenEvent synch         -> emitinfophase
-	    whenEvent stopthecell   -> stopthecell
+		whenTime 1000           -> emitinfophase  //(no synch)
+ 	    whenEvent stopthecell   -> stopthecell
+        whenEvent clearCell     -> clearThecell 
  
 	State stopthecell{
 		println("$name | stopthecell ") color magenta 
 	}
-    Transition t0  whenMsg changeCellState -> changeCellState
-                   whenEvent startthegame  -> emitinfophase 
-                   whenEvent clearCell     -> clearThecell 
-				   whenInterruptEvent kernel_rawmsg -> handleGuiMsg
-
+    Transition t0  
+    	whenMsg changeCellState -> changeCellState
+        whenEvent startthegame  -> emitinfophase 
+        whenEvent clearCell     -> clearThecell 
+ 
     State clearThecell{
     	//println("$name | clearThecell ")
      	[# MyState = false #]
-     	[# displayOnGui() #]
+     	[# displayOnGui() #] 
      }
-    Transition t0  whenMsg changeCellState -> changeCellState
-                   whenEvent startthegame  -> emitinfophase 
-                   whenEvent clearCell     -> clearThecell 
-                   whenInterruptEvent kernel_rawmsg -> handleGuiMsg
+    Transition t0  
+    	whenMsg changeCellState -> changeCellState
+        whenEvent startthegame  -> emitinfophase 
+        whenEvent clearCell     -> clearThecell 
+  	    whenEvent stopthecell   -> stopthecell
+ 
  
  
 }//cell 

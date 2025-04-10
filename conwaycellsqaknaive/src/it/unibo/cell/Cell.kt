@@ -98,6 +98,8 @@ class Cell ( name: String, scope: CoroutineScope, isconfined: Boolean=false, isd
 				}	 
 				state("handleGuiMsg") { //this:State
 					action { //it:State
+						CommUtils.outblack("$name in ${currentState.stateName} | $currentMsg | ${Thread.currentThread().getName()} n=${Thread.activeCount()}")
+						 	   
 						if( checkMsgContent( Term.createTerm("kernel_rawmsg(ARG)"), Term.createTerm("kernel_rawmsg(ARG)"), 
 						                        currentMsg.msgContent()) ) { //set msgArgList
 								 guiinterpreter.cvtToApplMessage( payloadArg(0) )  

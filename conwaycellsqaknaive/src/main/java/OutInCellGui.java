@@ -13,7 +13,6 @@ public class OutInCellGui  {
 //    private static OutInCellGui mysingleton;
     private final String name = "OutInCellGui";
  	protected MqttConnection  mqttConn;
-//    protected MqttConnectionBaseOut mqttConnOut;
   	protected ActorBasic owner; 
   	protected String topicout;
  	
@@ -49,7 +48,7 @@ public class OutInCellGui  {
 	  			CommUtils.outcyan(name + " | waiting for mqttConn ... "  );
 	  			CommUtils.delay(200);
 	  	}
-	  	//CommUtils.outcyan(name + " | mqtt connection done " + mqttConn); 
+	  	CommUtils.outcyan(name + " | mqtt connection done " + owner.getName()); 
 	  	return true;
 	}
 	

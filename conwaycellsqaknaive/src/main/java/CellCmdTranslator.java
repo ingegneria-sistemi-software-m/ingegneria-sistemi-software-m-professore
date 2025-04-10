@@ -24,6 +24,8 @@ public class CellCmdTranslator {
 					owner.getName(), "changeCellState", "changeCellState"+cellCoords, owner.getName());
 			owner.sendMsgToMyself(applMsg);
 		}
+		
+		// NON RISPONDE ALLA GUI MA a CallerLifeActorTcp
 		/*
 		//Invio messaggi in forma di autodispatch
 		if( msg.equals("start")) {
