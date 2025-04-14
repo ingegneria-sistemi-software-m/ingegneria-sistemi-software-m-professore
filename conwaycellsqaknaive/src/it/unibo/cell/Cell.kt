@@ -72,29 +72,11 @@ class Cell ( name: String, scope: CoroutineScope, isconfined: Boolean=false, isd
 					//After Lenzi Aug2002
 					sysaction { //it:State
 					}	 	 
-					 transition(edgeName="t00",targetState="clearThecell",cond=whenEvent("clearCell"))
-					transition(edgeName="t01",targetState="changeCellState",cond=whenDispatch("changeCellState"))
-					transition(edgeName="t02",targetState="emitinfophase",cond=whenEvent("startthegame"))
-					interrupthandle(edgeName="t03",targetState="handleGuiMsg",cond=whenEvent("kernel_rawmsg"),interruptedStateTransitions)
-				}	 
-				state("changeCellState") { //this:State
-					action { //it:State
-						if( checkMsgContent( Term.createTerm("changeCellState(X,Y)"), Term.createTerm("changeCellState(X,Y)"), 
-						                        currentMsg.msgContent()) ) { //set msgArgList
-								if(  X == payloadArg(0).toInt() && Y == payloadArg(1).toInt()  
-								 ){  MyState = ! MyState;
-													displayOnGui()
-								}
-						}
-						//genTimer( actor, state )
-					}
-					//After Lenzi Aug2002
-					sysaction { //it:State
-					}	 	 
-					 transition(edgeName="t04",targetState="clearThecell",cond=whenEvent("clearCell"))
-					transition(edgeName="t05",targetState="changeCellState",cond=whenDispatch("changeCellState"))
-					transition(edgeName="t06",targetState="emitinfophase",cond=whenEvent("startthegame"))
-					interrupthandle(edgeName="t07",targetState="handleGuiMsg",cond=whenEvent("kernel_rawmsg"),interruptedStateTransitions)
+					 transition(edgeName="t00",targetState="stopthecell",cond=whenEvent("stopthecell"))
+					transition(edgeName="t01",targetState="clearThecell",cond=whenEvent("clearCell"))
+					transition(edgeName="t02",targetState="changeCellState",cond=whenDispatch("changeCellState"))
+					transition(edgeName="t03",targetState="emitinfophase",cond=whenEvent("startthegame"))
+					interrupthandle(edgeName="t04",targetState="handleGuiMsg",cond=whenEvent("kernel_rawmsg"),interruptedStateTransitions)
 				}	 
 				state("handleGuiMsg") { //this:State
 					action { //it:State
@@ -110,10 +92,27 @@ class Cell ( name: String, scope: CoroutineScope, isconfined: Boolean=false, isd
 					//After Lenzi Aug2002
 					sysaction { //it:State
 					}	 	 
-					 transition(edgeName="t08",targetState="emitinfophase",cond=whenEvent("startthegame"))
-					transition(edgeName="t09",targetState="changeCellState",cond=whenDispatch("changeCellState"))
-					transition(edgeName="t010",targetState="clearThecell",cond=whenEvent("clearCell"))
-					interrupthandle(edgeName="t011",targetState="handleGuiMsg",cond=whenEvent("kernel_rawmsg"),interruptedStateTransitions)
+				}	 
+				state("changeCellState") { //this:State
+					action { //it:State
+						if( checkMsgContent( Term.createTerm("changeCellState(X,Y)"), Term.createTerm("changeCellState(X,Y)"), 
+						                        currentMsg.msgContent()) ) { //set msgArgList
+								if(  X == payloadArg(0).toInt() && Y == payloadArg(1).toInt()  
+								 ){  MyState = ! MyState;
+													displayOnGui()
+								CommUtils.outyellow("$name | changeCellState=$MyState ")
+								}
+						}
+						//genTimer( actor, state )
+					}
+					//After Lenzi Aug2002
+					sysaction { //it:State
+					}	 	 
+					 transition(edgeName="t05",targetState="stopthecell",cond=whenEvent("stopthecell"))
+					transition(edgeName="t06",targetState="clearThecell",cond=whenEvent("clearCell"))
+					transition(edgeName="t07",targetState="changeCellState",cond=whenDispatch("changeCellState"))
+					transition(edgeName="t08",targetState="emitinfophase",cond=whenEvent("startthegame"))
+					interrupthandle(edgeName="t09",targetState="handleGuiMsg",cond=whenEvent("kernel_rawmsg"),interruptedStateTransitions)
 				}	 
 				state("emitinfophase") { //this:State
 					action { //it:State
@@ -125,7 +124,9 @@ class Cell ( name: String, scope: CoroutineScope, isconfined: Boolean=false, isd
 					//After Lenzi Aug2002
 					sysaction { //it:State
 					}	 	 
-					 transition(edgeName="t012",targetState="elabinfophase",cond=whenEvent("curstate"))
+					 transition(edgeName="t010",targetState="stopthecell",cond=whenEvent("stopthecell"))
+					transition(edgeName="t011",targetState="elabinfophase",cond=whenEvent("curstate"))
+					interrupthandle(edgeName="t012",targetState="handleGuiMsg",cond=whenEvent("kernel_rawmsg"),interruptedStateTransitions)
 				}	 
 				state("elabinfophase") { //this:State
 					action { //it:State
@@ -143,8 +144,10 @@ class Cell ( name: String, scope: CoroutineScope, isconfined: Boolean=false, isd
 					//After Lenzi Aug2002
 					sysaction { //it:State
 					}	 	 
-					 transition(edgeName="t013",targetState="elabinfophase",cond=whenEvent("curstate"))
-					transition(edgeName="t014",targetState="elabstatephase",cond=whenDispatch("allnbreceived"))
+					 transition(edgeName="t013",targetState="stopthecell",cond=whenEvent("stopthecell"))
+					transition(edgeName="t014",targetState="elabinfophase",cond=whenEvent("curstate"))
+					transition(edgeName="t015",targetState="elabstatephase",cond=whenDispatch("allnbreceived"))
+					interrupthandle(edgeName="t016",targetState="handleGuiMsg",cond=whenEvent("kernel_rawmsg"),interruptedStateTransitions)
 				}	 
 				state("elabstatephase") { //this:State
 					action { //it:State
@@ -152,9 +155,11 @@ class Cell ( name: String, scope: CoroutineScope, isconfined: Boolean=false, isd
 						if(  MyState   
 						 ){ MyState = Countnbon==2 || Countnbon==3  
 						}
-						if(  ! MyState   
-						 ){ MyState = (Countnbon==3)  
-						}
+						else
+						 {if(  ! MyState   
+						  ){ MyState = (Countnbon==3)  
+						 }
+						 }
 						 Countnbmsgs = 0
 								   Countnbon   = 0 
 						           displayOnGui() 
@@ -162,9 +167,14 @@ class Cell ( name: String, scope: CoroutineScope, isconfined: Boolean=false, isd
 					}
 					//After Lenzi Aug2002
 					sysaction { //it:State
+				 	 		stateTimer = TimerActor("timer_elabstatephase", 
+				 	 					  scope, context!!, "local_tout_"+name+"_elabstatephase", 1000.toLong() )  //OCT2023
 					}	 	 
-					 transition(edgeName="t015",targetState="emitinfophase",cond=whenEvent("synch"))
-					transition(edgeName="t016",targetState="stopthecell",cond=whenEvent("stopthecell"))
+					 transition(edgeName="t017",targetState="emitinfophase",cond=whenTimeout("local_tout_"+name+"_elabstatephase"))   
+					transition(edgeName="t018",targetState="stopthecell",cond=whenEvent("stopthecell"))
+					transition(edgeName="t019",targetState="clearThecell",cond=whenEvent("clearCell"))
+					transition(edgeName="t020",targetState="changeCellState",cond=whenDispatch("changeCellState"))
+					interrupthandle(edgeName="t021",targetState="handleGuiMsg",cond=whenEvent("kernel_rawmsg"),interruptedStateTransitions)
 				}	 
 				state("stopthecell") { //this:State
 					action { //it:State
@@ -174,10 +184,10 @@ class Cell ( name: String, scope: CoroutineScope, isconfined: Boolean=false, isd
 					//After Lenzi Aug2002
 					sysaction { //it:State
 					}	 	 
-					 transition(edgeName="t017",targetState="changeCellState",cond=whenDispatch("changeCellState"))
-					transition(edgeName="t018",targetState="emitinfophase",cond=whenEvent("startthegame"))
-					transition(edgeName="t019",targetState="clearThecell",cond=whenEvent("clearCell"))
-					interrupthandle(edgeName="t020",targetState="handleGuiMsg",cond=whenEvent("kernel_rawmsg"),interruptedStateTransitions)
+					 transition(edgeName="t022",targetState="changeCellState",cond=whenDispatch("changeCellState"))
+					transition(edgeName="t023",targetState="emitinfophase",cond=whenEvent("startthegame"))
+					transition(edgeName="t024",targetState="clearThecell",cond=whenEvent("clearCell"))
+					interrupthandle(edgeName="t025",targetState="handleGuiMsg",cond=whenEvent("kernel_rawmsg"),interruptedStateTransitions)
 				}	 
 				state("clearThecell") { //this:State
 					action { //it:State
@@ -188,10 +198,11 @@ class Cell ( name: String, scope: CoroutineScope, isconfined: Boolean=false, isd
 					//After Lenzi Aug2002
 					sysaction { //it:State
 					}	 	 
-					 transition(edgeName="t021",targetState="changeCellState",cond=whenDispatch("changeCellState"))
-					transition(edgeName="t022",targetState="emitinfophase",cond=whenEvent("startthegame"))
-					transition(edgeName="t023",targetState="clearThecell",cond=whenEvent("clearCell"))
-					interrupthandle(edgeName="t024",targetState="handleGuiMsg",cond=whenEvent("kernel_rawmsg"),interruptedStateTransitions)
+					 transition(edgeName="t026",targetState="changeCellState",cond=whenDispatch("changeCellState"))
+					transition(edgeName="t027",targetState="emitinfophase",cond=whenEvent("startthegame"))
+					transition(edgeName="t028",targetState="clearThecell",cond=whenEvent("clearCell"))
+					transition(edgeName="t029",targetState="stopthecell",cond=whenEvent("stopthecell"))
+					interrupthandle(edgeName="t030",targetState="handleGuiMsg",cond=whenEvent("kernel_rawmsg"),interruptedStateTransitions)
 				}	 
 			}
 		}

@@ -1,0 +1,132 @@
+System rasp2025
+mqttBroker "192.168.1.132" :  1883 eventTopic "ledalone/events"
+ 
+Dispatch turnOn  : turnOn(X)       
+Dispatch turnOff : turnOff(X)    
+
+Event ledchangedevent    : ledchangedevent( V ) 
+Event ledstatelocalevent : ledstatelocalevent( V )
+Event ledvaluestream     : ledvaluestream( V )
+Event ledinfoevent       : ledinfoevent( V ) 
+
+Context ctxrasp  ip [host="localhost" port=8080] 	 	 
+
+/*
+ * Il nome raspactor viene mantenuto costante al variare degli esempi
+ * In tal modo il nome del main non cambia
+ */
+QActor raspactor context ctxrasp {     
+[#   
+   var state   = false  
+#]    
+	State s0 initial {  		
+  		println("led started")
+        [# machineExec("python ledPython25On.py")#]
+  		delay 1000
+        [# machineExec("python ledPython25Off.py")#]
+ 	} 
+ 	Goto waitCmd        
+	 
+	State waitCmd{  
+		println("led waits ...") 
+	}   
+	Transition t0     
+ 		whenMsg turnOn  -> turnLedOn
+		whenMsg turnOff -> turnLedOff
+   	  
+	State  turnLedOn{  
+		printCurrentMessage   
+		[# Runtime.getRuntime().exec("python ledPython25On.py") #]
+ 		[# state = true 	#]
+		emit ledchangedevent : ledchangedevent(on)				    //A TUTTI gli actor del sistema
+    	emitlocal ledstatelocalevent : ledstatelocalevent(on)      //SOLO agli attori del contesto
+		emitlocalstream ledvaluestream : ledvaluestream(on)		//SOLO agli attori del contesto registrati
+		[# emitstreammqtt("ledout", "ledvaluestream","ledvaluestream(on)") #] //SOLO agli attori registrati su topic
+		updateResource [# "ledreosurce($state)" #]                  //SOLO CoAP client
+		publish "ledout" -m ledinfoevent : ledinfoevent(on)   //SOLO MQTT subscribers su ledout
+ 	}	  
+	Goto waitCmd  
+	      
+	State  turnLedOff{  
+ 		printCurrentMessage   
+        [# Runtime.getRuntime().exec("python ledPython25Off.py") #]
+		[# state = false 		#]		 
+		emit ledchangedevent : ledchangedevent(off)
+		emitlocal ledstatelocalevent : ledstatelocalevent(off)
+		emitlocalstream ledvaluestream : ledvaluestream(off)
+		[# emitstreammqtt("ledout", "ledvaluestream","ledvaluestream(off)") #]
+		updateResource [# "ledreosurce($state)"	#]
+ 		publish "ledout" -m ledinfoevent : ledinfoevent(off)
+ 	}	
+	Goto waitCmd          
+}
+
+
+QActor ledobserver context ctxrasp{
+	State s0 initial {  		
+  		println("$name started")
+	}	
+	Goto work
+	
+	State work{
+		
+	}
+	Transition t0
+		whenEvent ledchangedevent     -> handleEvent
+		whenEvent ledstatelocalevent  -> handleEvent
+		whenEvent ledvaluestream      -> handleEvent
+		whenEvent ledinfoevent        -> handleEvent
+		
+	State handleEvent{
+		printCurrentMessage color blue
+	}
+	Goto work
+}
+
+QActor ledperceiver context ctxrasp{
+	State s0 initial {  		
+  		println("$name started")
+	}	
+	Goto work
+	
+	State work{
+		
+	}
+	Transition t0
+		whenEvent ledchangedevent     -> handleEvent
+		whenEvent ledstatelocalevent  -> handleEvent
+		whenEvent ledvaluestream      -> handleEvent
+		whenEvent ledinfoevent        -> handleEvent
+		
+	State handleEvent{
+		printCurrentMessage color green
+	}
+	Goto work
+ }
+ 
+QActor ledreactor context ctxrasp{
+	State s0 initial {  		
+  		println("$name started")
+  		subscribeTo raspactor for ledvaluestream
+	}	
+	Goto work
+	
+	State work{
+		
+	}
+	Transition t0
+		whenEvent ledchangedevent     -> handleEvent
+		whenEvent ledstatelocalevent  -> handleEvent
+		whenEvent ledvaluestream      -> handleEvent
+		whenEvent ledinfoevent        -> handleEvent
+		
+	State handleEvent{
+		printCurrentMessage color magenta
+	}
+	Goto work
+ }
+
+ 
+ /*
+ 
+  */

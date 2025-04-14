@@ -1,0 +1,204 @@
+System cellonrasp 
+
+/* Da usare insieme a  
+ * conwaycellsnqakcoreog.qak in conwaycellsqaknaive
+ */
+//mqttBroker "192.168.1.132" : 1883 eventTopic "cellonraspevents" 
+mqttBroker "test.mosquitto.org" : 1883 eventTopic "cellonraspevents" 
+
+Event startthegame     : startthegame(X)
+Event    stopthecell   : stopthecell(X)  
+Event    synch         : synch(X)
+Event    clearCell     : clearCell(X)      
+Event curstate         : curstate(NB,STATE)
+
+Event kernel_rawmsg    : kernel_rawmsg(ARG)
+
+Dispatch changeCellState   : changeCellState(X,Y)
+Dispatch allnbreceived     : allnbreceived(N)
+
+Context ctxcellonrasp  ip [host="localhost" port=8075]
+  
+  
+/*
+ * ------------------------------------------
+ * cellonrasp
+ * ------------------------------------------
+ */
+QActor cell_1_1 context ctxcellonrasp{
+import "main.java.*"
+	[#
+	   var MyState     = false
+	   var Countnb     = 0  //numero dei vicini
+	   var Countnbon   = 0  //numero degli stati on dei vicini
+	   var Countnbmsgs = 0  //numero dei msg ricevuti dai vicini	  
+	   var  X          = 1  //SET A-PRIORI
+	   var  Y          = 1  //SET A-PRIORI
+ 	   var XD          = 2  //SET A-PRIORI
+ 	   var YD          = 2  //SET A-PRIORI
+	   
+	   lateinit  var outindev  : OutInCellOnRasp
+	   val guiinterpreter = main.java.CellCmdTranslator( myself )  //ADDED
+ 		 
+   
+  
+  fun displayOnGui(){ 
+	val V   = if (MyState) 1 else 0
+	val msg = "cell($XD,$YD,$V)" 
+	outindev.display(msg)   	    
+  }
+  
+  fun diplayLed( V : Boolean){
+  	if( V ) Runtime.getRuntime().exec("python ledPython25On.py"); 
+  	else Runtime.getRuntime().exec("python ledPython25Off.py");
+  }
+
+  fun displayLedState(){
+  	displayOnGui();
+  	diplayLed( MyState );
+  }
+  
+  CommUtils.outyellow("STARTSSSSSSSSSSSSSS")
+        
+	#]
+	State s0 initial{
+		//IMPOSRTANTE!!
+		//[# name = "cell_1_1"#]   
+		
+		println("$name | START X=$X Y=$Y ") color green
+		delay 3000 // connessione MQTT ....
+//		[# setCellCoords( ) #]   //REMOVED
+		//println("$name | START X=$X Y=$Y ") color green
+		println("$name | STARTSSSSSSSSSSSSSS") color blue
+		[#  //setCellCoords( )
+			Countnb = conway.GridSupport25.subscribeToNeighborsMqtt(myself, X,Y)
+		#]       	
+		println("$name | STARTS Countnb= $Countnb") color green
+		
+ 		[# outindev = OutInCellOnRasp(myself, "guiin") #]
+ 		 
+ 		//PROVA LED
+ 		[# diplayLed( true ) #]
+ 		delay 2000
+ 		[# diplayLed( false ) #]
+ 		//FINE PROVA LED
+		
+		//println("$name | dispatch cellcreated to gamebuilder ") color green
+//		[#
+//  		   val cmd   = CommUtils.buildDispatch(
+// 		   		name,"cellcreated","cellcreated( $MyName,false )","gamebuilder" )
+// 		   publish( cmd.toString(), "unibo/qak/gamebuilder" )
+//		#]   
+    } 
+	Transition t0  
+		whenEvent clearCell       -> clearThecell
+		whenMsg changeCellState   -> changeCellState
+		whenEvent startthegame    -> emitinfophase
+		whenInterruptEvent kernel_rawmsg   -> handleGuiMsg
+
+	State handleGuiMsg{
+		printCurrentMessage color green
+		onMsg( kernel_rawmsg : kernel_rawmsg(ARG)){
+			[# guiinterpreter.cvtToApplMessage( payloadArg(0) ) #]
+		}
+		returnFromInterrupt
+	}
+	
+	State changeCellState{
+		printCurrentMessage color green
+		onMsg( changeCellState : changeCellState(X,Y) ){
+			if [# X == payloadArg(0).toInt() && Y == payloadArg(1).toInt() #]{ //RIGUARDA LA CELLA
+				[#  MyState = ! MyState;
+					displayLedState()
+				#]
+ 				println("$name | STATE=$MyState ") color yellow
+			 }
+		}   
+	} 
+	Transition t0  
+		whenEvent clearCell       -> clearThecell
+		whenMsg changeCellState   -> changeCellState
+		whenEvent startthegame    -> emitinfophase
+		whenInterruptEvent kernel_rawmsg   -> handleGuiMsg
+	  
+
+  	 
+	State emitinfophase{
+ 		[# var MyInfo = "$name,$MyState" #]
+ 		println("$name | emitinfophase") color green
+        [# emitstreammqtt(name, "curstate","curstate($MyInfo)") #]
+ 	}
+	Transition t0   
+	    whenEvent stopthecell  -> stopthecell
+		whenEvent curstate    -> elabinfophase
+		whenInterruptEvent kernel_rawmsg   -> handleGuiMsg
+				  
+    State elabinfophase{
+  		[# Countnbmsgs=Countnbmsgs+1 #]
+ 		println("$name | elabinfophase $Countnbmsgs") color green
+		onMsg ( curstate : curstate(NB,true) ){
+			[# Countnbon = Countnbon + 1  #]
+		} 
+		if [# Countnbmsgs == Countnb #] {  		 
+			autodispatch allnbreceived : allnbreceived(ok)
+		}		  
+    } 
+	Transition t0 
+	      whenEvent stopthecell   -> stopthecell
+		  whenEvent curstate    -> elabinfophase
+		  whenMsg allnbreceived -> elabstatephase
+		  whenInterruptEvent kernel_rawmsg   -> handleGuiMsg
+	
+	State elabstatephase{
+ 		println("$name | elabstatephase $MyState $Countnbon") color magenta
+		if [# MyState  #]{ //soprevvice o muore
+			[# MyState = Countnbon==2 || Countnbon==3 #]
+		}
+		else{ 
+			if [# ! MyState  #]{ //rinasce o rimane morta
+				[# MyState = (Countnbon==3) #]
+			}
+		}
+		//Aggiorno il display 	 		
+		[# Countnbmsgs = 0
+		   Countnbon   = 0 
+           displayLedState() 
+        #]
+        //Informo il gamemaster sulla sua topic di input
+// 		[#
+//   		   val cmd   = CommUtils.buildDispatch(
+//   		   	 name,"cellready","cellready($MyName,$MyState)","gamemaster")
+//   		   publish( cmd.toString(), "unibo/qak/gamemaster" )
+//		#]   
+ 		
+ 	}
+	Transition t0 
+		whenTime 1000           -> emitinfophase  //(no synch COREOGRAPHY)
+ 	    whenEvent stopthecell   -> stopthecell
+        whenEvent clearCell     -> clearThecell 
+      	whenMsg changeCellState -> changeCellState
+		whenInterruptEvent kernel_rawmsg   -> handleGuiMsg
+        
+        
+	State stopthecell{
+		println("$name | stopthecell ") color magenta 
+	}
+    Transition t0  whenMsg changeCellState -> changeCellState
+                   whenEvent startthegame  -> emitinfophase 
+                   whenEvent clearCell     -> clearThecell 
+				   whenInterruptEvent kernel_rawmsg -> handleGuiMsg
+
+    State clearThecell{
+    	//println("$name | clearThecell ")
+     	[# MyState = false #]
+     	[# displayLedState() #]
+     }
+    Transition t0  
+     	whenMsg changeCellState -> changeCellState
+        whenEvent startthegame  -> emitinfophase 
+        whenEvent clearCell     -> clearThecell 
+  	    whenEvent stopthecell   -> stopthecell
+        whenInterruptEvent kernel_rawmsg -> handleGuiMsg
+ 
+ 
+}//cell 

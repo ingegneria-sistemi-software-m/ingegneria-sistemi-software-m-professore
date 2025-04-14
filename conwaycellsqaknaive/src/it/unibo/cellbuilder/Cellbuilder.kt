@@ -33,7 +33,7 @@ class Cellbuilder ( name: String, scope: CoroutineScope, isconfined: Boolean=fal
 		return { //this:ActionBasciFsm
 				state("s0") { //this:State
 					action { //it:State
-						CommUtils.outblack("$name | STARTS")
+						CommUtils.outblack("$name | STARTS 3 only")
 						//genTimer( actor, state )
 					}
 					//After Lenzi Aug2002
@@ -47,7 +47,7 @@ class Cellbuilder ( name: String, scope: CoroutineScope, isconfined: Boolean=fal
 						 createActorDynamically( "cell", "_0_0", false) 
 						 	   createActorDynamically( "cell", "_0_1", false)
 						 	   createActorDynamically( "cell", "_1_0", false)	
-						 	   createActorDynamically( "cell", "_1_1", false)	
+						 	   //createActorDynamically( "cell", "_1_1", false)	
 						//genTimer( actor, state )
 					}
 					//After Lenzi Aug2002

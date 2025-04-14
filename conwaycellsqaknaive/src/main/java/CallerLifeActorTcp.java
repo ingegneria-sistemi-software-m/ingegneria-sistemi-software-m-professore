@@ -30,8 +30,8 @@ public class CallerLifeActorTcp {
 	    	CommUtils.delay(500);
 	    	conn.forward(change01);
 
-	    	CommUtils.delay(500);
-	    	conn.forward(change10);
+//	    	CommUtils.delay(500);
+//	    	conn.forward(change10);
 	    	
 	    	CommUtils.delay(500);
 	    	conn.forward(change11);
@@ -40,7 +40,7 @@ public class CallerLifeActorTcp {
 		}	
 	}
 	
-	protected void controlTheGame() {
+	protected void controlTheGame() { //Emit synch USEED FOR conwaycellsnqakaive
         try {
           	CommUtils.outblue("callertcp  :" + cmdstart);
         	 conn.forward(cmdstart);
@@ -59,6 +59,20 @@ public class CallerLifeActorTcp {
 		}
 		
 	}
+	
+	protected void startStopGame() { //No synch USEED FOR conwaycellsnqakcoreog
+        try {
+          	CommUtils.outblue("callertcp  :" + cmdstart);
+        	 conn.forward(cmdstart);
+         	 CommUtils.delay(5000);  
+         	 CommUtils.outblue("callertcp  :" + cmdstop);
+       	     conn.forward(cmdstop);
+		} catch (Exception e) {
+ 			CommUtils.outred("callertcp ERROR:" + e.getMessage() );
+		}
+		
+	}
+	
 	public void doJob() {
         String hostAddr       = "localhost";
         int port              = 8360;
@@ -67,10 +81,12 @@ public class CallerLifeActorTcp {
         conn = ConnectionFactory.createClientSupport(protocol, hostAddr, ""+port);
         
         //FASE INIT PER conwaycellsnqakcoreog.qaktt
-//         initSomeCell();
-//         CommUtils.delay(2000);
+         initSomeCell();
+         CommUtils.delay(2000);
         
          controlTheGame();
+         
+//         startStopGame();
   	     CommUtils.delay(3000);
   	     CommUtils.outblue("callertcp BYE"  );
         

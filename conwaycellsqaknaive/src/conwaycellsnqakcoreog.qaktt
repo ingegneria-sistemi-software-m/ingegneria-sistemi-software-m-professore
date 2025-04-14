@@ -1,5 +1,6 @@
 System conwaycellsnqakaive
-mqttBroker "192.168.1.132" : 1883 eventTopic "lifeevents" 
+//mqttBroker "192.168.1.132" : 1883 eventTopic "lifeevents" 
+mqttBroker "test.mosquitto.org" : 1883 eventTopic "lifeevents" 
 
 Event startthegame     : startthegame(X)
 Event    stopthecell   : stopthecell(X) 
@@ -21,7 +22,7 @@ import "unibo.basicomm23.mqtt.*"
  State s0 initial{
  	println("$name | STARTS")
  }
- Goto work
+ Goto work 
  
  
  State work{
@@ -32,7 +33,7 @@ import "unibo.basicomm23.mqtt.*"
  	   createActorDynamically( "cell", "_1_1", false)	
  	#]
  }
-}
+} 
 
  
 /*
@@ -74,7 +75,6 @@ import "main.java.*"
 		delay 3000 // connessione MQTT ....
 		[# setCellCoords( ) #] 
 		println("$name | START X=$X Y=$Y ") color green
-		//println("$name | STARTSSSSSSSSSSSSSS") color blue
 		[#  //setCellCoords( )
 			Countnb = conway.GridSupport25.subscribeToNeighborsMqtt(myself, X,Y)
 		#]       	
@@ -84,11 +84,20 @@ import "main.java.*"
 
     }  
 	Transition t0  
+ 	    whenEvent stopthecell     -> stopthecell
 		whenEvent clearCell       -> clearThecell
 		whenMsg changeCellState   -> changeCellState
  		whenEvent startthegame    -> emitinfophase
+		whenInterruptEvent kernel_rawmsg   -> handleGuiMsg
 
-
+	State handleGuiMsg{
+		printCurrentMessage color black
+		onMsg( kernel_rawmsg : kernel_rawmsg(ARG)){
+			[# guiinterpreter.cvtToApplMessage( payloadArg(0) ) #]
+		}
+		returnFromInterrupt
+	}
+	
 	State changeCellState{
 		onMsg( changeCellState : changeCellState(X,Y) ){
 			if [# X == payloadArg(0).toInt() && Y == payloadArg(1).toInt() #]{ //RIGUARDA LA CELLA
@@ -100,9 +109,11 @@ import "main.java.*"
 		}   
 	}
 	Transition t0  
+ 	    whenEvent stopthecell     -> stopthecell
   		whenEvent clearCell       -> clearThecell
 		whenMsg changeCellState   -> changeCellState
 		whenEvent startthegame    -> emitinfophase
+		whenInterruptEvent kernel_rawmsg   -> handleGuiMsg
   	 
 	State emitinfophase{
  		[# var MyInfo = "$name,$MyState" #]
@@ -111,9 +122,10 @@ import "main.java.*"
         [# emitstreammqtt(name, "curstate","curstate($MyInfo)") #]
  	}
 	Transition t0   
+	    whenEvent stopthecell  -> stopthecell
 		whenEvent curstate    -> elabinfophase
- 	    whenEvent stopthecell   -> stopthecell
-				  
+		whenInterruptEvent kernel_rawmsg   -> handleGuiMsg
+ 				  
     State elabinfophase{
   		[# Countnbmsgs=Countnbmsgs+1 #]
  		println("$name | elabinfophase $Countnbmsgs") color blue
@@ -125,17 +137,20 @@ import "main.java.*"
 		}		  
     } 
 	Transition t0 
+	      whenEvent stopthecell   -> stopthecell
 		  whenEvent curstate    -> elabinfophase
 		  whenMsg allnbreceived -> elabstatephase
- 	      whenEvent stopthecell   -> stopthecell
-	
+		  whenInterruptEvent kernel_rawmsg   -> handleGuiMsg
+ 	
 	State elabstatephase{
  		println("$name | elabstatephase $MyState $Countnbon") color yellow
 		if [# MyState  #]{ //soprevvice o muore
 			[# MyState = Countnbon==2 || Countnbon==3 #]
 		}
-		if [# ! MyState  #]{ //rinasce o rimane morta
+		else{ 
+		  if [# ! MyState  #]{ //rinasce o rimane morta
 			[# MyState = (Countnbon==3) #]
+		  }
 		}
 		//Aggiorno il display 	 		
 		[# Countnbmsgs = 0
@@ -144,9 +159,11 @@ import "main.java.*"
         #]
   	}
 	Transition t0 
-		whenTime 1000           -> emitinfophase  //(no synch)
+		whenTime 1000           -> emitinfophase  //(no synch COREOGRAPHY)
  	    whenEvent stopthecell   -> stopthecell
         whenEvent clearCell     -> clearThecell 
+      	whenMsg changeCellState -> changeCellState
+		whenInterruptEvent kernel_rawmsg   -> handleGuiMsg
  
 	State stopthecell{
 		println("$name | stopthecell ") color magenta 
@@ -155,17 +172,19 @@ import "main.java.*"
     	whenMsg changeCellState -> changeCellState
         whenEvent startthegame  -> emitinfophase 
         whenEvent clearCell     -> clearThecell 
+ 	    whenInterruptEvent kernel_rawmsg -> handleGuiMsg
  
     State clearThecell{
     	//println("$name | clearThecell ")
      	[# MyState = false #]
      	[# displayOnGui() #] 
-     }
+     } 
     Transition t0  
     	whenMsg changeCellState -> changeCellState
         whenEvent startthegame  -> emitinfophase 
         whenEvent clearCell     -> clearThecell 
   	    whenEvent stopthecell   -> stopthecell
+        whenInterruptEvent kernel_rawmsg -> handleGuiMsg
  
  
  

@@ -1,0 +1,222 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>RaspberryCode2025 &#8212; iss25 1.0 documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinxdoc.css" />
+    <link rel="stylesheet" type="text/css" href="_static/custom.css" />
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="SituatedActors" href="SituatedActors.html" />
+    <link rel="prev" title="RaspApplCode24" href="RaspApplCode24.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="SituatedActors.html" title="SituatedActors"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="RaspApplCode24.html" title="RaspApplCode24"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">iss25 1.0 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">RaspberryCode2025</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="raspberrycode2025">
+<h1>RaspberryCode2025<a class="headerlink" href="#raspberrycode2025" title="Permalink to this heading">¶</a></h1>
+<p><span class="slide3">Progetto rasp2025</span></p>
+<section id="rasp2025">
+<h2>rasp2025<a class="headerlink" href="#rasp2025" title="Permalink to this heading">¶</a></h2>
+<section id="rasp2025ledalone">
+<h3>rasp2025ledalone<a class="headerlink" href="#rasp2025ledalone" title="Permalink to this heading">¶</a></h3>
+<table class="docutils align-default" style="width: 100%">
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 75%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference external" href="../../../../rasp2025/src/rasp2025ledalone.qaktt">rasp2025ledalone.qak</a></p></td>
+<td><p>Un actor che gestisce i Dispatch <code class="docutils literal notranslate"><span class="pre">turnOn</span></code> e <code class="docutils literal notranslate"><span class="pre">turnOff</span></code> per accendere/spegnere il Led usando Python
+ed emettendo  <span class="remark">tutti i diversi tipi di eventi</span> esprimibili nel <a class="reference internal" href="QakActors25Linguaggio.html#linguaggio-qak"><span class="std std-ref">Linguaggio qak</span></a>.</p>
+<ul class="simple">
+<li><p><a class="reference external" href="../../../../rasp2025/src/main/java/CallerRaspactorTcp.java">CallerRaspactorTcp.java</a>: programma chiamaante via TCP</p></li>
+<li><p><a class="reference external" href="../../../../rasp2025/src/main/java/CallerRaspactorMqtt.java">CallerRaspactorMqtt.java</a>: programma chiamaante via MQTT, con osservazione di eventi</p></li>
+<li><p><a class="reference external" href="../../../../rasp2025/src/main/java/CallerRaspactorCoap.java">CallerRaspactorCoap.java</a>: programma chiamaante via CoAP, con osservazione di eventi</p></li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="installazioni-2025">
+<h2>Installazioni 2025<a class="headerlink" href="#installazioni-2025" title="Permalink to this heading">¶</a></h2>
+<ol class="arabic simple">
+<li><p>Installazione Java 17 con OS=bookworm</p></li>
+</ol>
+<blockquote>
+<div><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">apt</span> <span class="n">update</span>
+<span class="n">sudo</span> <span class="n">apt</span> <span class="n">full</span><span class="o">-</span><span class="n">upgrade</span>
+
+<span class="n">sudo</span> <span class="n">apt</span> <span class="n">install</span> <span class="n">temurin</span><span class="o">-</span><span class="mi">17</span><span class="o">-</span><span class="n">jre</span>   <span class="o">//</span><span class="n">no</span> <span class="n">jadk</span>
+</pre></div>
+</div>
+</div></blockquote>
+<ol class="arabic">
+<li><p>Controllo apertura porta <code class="docutils literal notranslate"><span class="pre">1883</span></code> su Windows</p>
+<blockquote>
+<div><a class="reference internal image-reference" href="_images/mosquitoPortIn.png"><img alt="_images/mosquitoPortIn.png" class="align-center" src="_images/mosquitoPortIn.png" style="width: 50%;" /></a>
+</div></blockquote>
+</li>
+</ol>
+<blockquote>
+<div><p>Guardare in properites</p>
+<blockquote>
+<div><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">netstat</span> <span class="o">-</span><span class="n">ano</span> <span class="o">|</span> <span class="n">findstr</span> <span class="p">:</span><span class="mi">1883</span>
+</pre></div>
+</div>
+</div></blockquote>
+</div></blockquote>
+<ol class="arabic">
+<li><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">nano</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">dhcpcd</span><span class="o">.</span><span class="n">conf</span>
+
+  <span class="n">static</span> <span class="n">domain_name_servers</span><span class="o">=</span><span class="mf">8.8.8.8</span> <span class="mf">8.8.4.4</span>
+
+<span class="n">sudo</span> <span class="n">systemctl</span> <span class="n">restart</span> <span class="n">dhcpcd</span>
+</pre></div>
+</div>
+</li>
+<li><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">gradlew</span> <span class="n">disZip</span>
+<span class="n">unzip</span> <span class="n">su</span> <span class="n">Raspberry</span>
+<span class="n">copia</span> <span class="n">di</span> <span class="n">python</span> <span class="ow">in</span> <span class="nb">bin</span>
+<span class="n">esecuzione</span> <span class="ow">in</span> <span class="nb">bin</span> <span class="n">di</span> <span class="o">./</span><span class="n">rasp2025</span>
+</pre></div>
+</div>
+</li>
+<li><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">nano</span> <span class="n">rasp2025</span><span class="o">.</span><span class="n">pl</span>
+
+<span class="o">//</span><span class="n">modifico</span> <span class="n">il</span> <span class="n">sistema</span> <span class="n">su</span> <span class="n">Raspberry</span>
+</pre></div>
+</div>
+</li>
+</ol>
+<p><span class="slide3">Progetto cellOnRasp</span></p>
+</section>
+<section id="cellonrasp">
+<h2>cellOnRasp<a class="headerlink" href="#cellonrasp" title="Permalink to this heading">¶</a></h2>
+<table class="docutils align-default" style="width: 100%">
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 75%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference external" href="../../../../cellOnRasp/src/cellonrasp.qak">cellonrasp.qak</a></p></td>
+<td><p>Attore che realizza la cella di nome <code class="docutils literal notranslate"><span class="pre">cell_1_1</span></code> avvalendosi dei seguenti supporti:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="../../../../cellOnRasp/src/main/java/OutInCellOnRasp.java">OutInCellOnRasp.java</a>:</p></li>
+<li><p><a class="reference external" href="../../../../cellOnRasp/src/main/java/CellCmdTranslator.java">CellCmdTranslator</a>:</p></li>
+</ul>
+<p>L’actor <code class="docutils literal notranslate"><span class="pre">cell_1_1</span></code> completa il (sotto)sistema definito in <a class="reference external" href="../../../../conwaycellsqaknaive/src/conwaycellsncoreog3only.qaktt">conwaycellsncoreog3only.qak</a>
+che definisce su PC le altre celle <code class="docutils literal notranslate"><span class="pre">cell_0_0</span></code>, <code class="docutils literal notranslate"><span class="pre">cell_0_1</span></code>, <code class="docutils literal notranslate"><span class="pre">cell_1_0</span></code>.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <div>
+    <h3><a href="index.html">Table of Contents</a></h3>
+    <ul>
+<li><a class="reference internal" href="#">RaspberryCode2025</a><ul>
+<li><a class="reference internal" href="#rasp2025">rasp2025</a><ul>
+<li><a class="reference internal" href="#rasp2025ledalone">rasp2025ledalone</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#installazioni-2025">Installazioni 2025</a></li>
+<li><a class="reference internal" href="#cellonrasp">cellOnRasp</a></li>
+</ul>
+</li>
+</ul>
+
+  </div>
+  <div>
+    <h4>Previous topic</h4>
+    <p class="topless"><a href="RaspApplCode24.html"
+                          title="previous chapter">RaspApplCode24</a></p>
+  </div>
+  <div>
+    <h4>Next topic</h4>
+    <p class="topless"><a href="SituatedActors.html"
+                          title="next chapter">SituatedActors</a></p>
+  </div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/RaspberryCode2025.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="SituatedActors.html" title="SituatedActors"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="RaspApplCode24.html" title="RaspApplCode24"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">iss25 1.0 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">RaspberryCode2025</a></li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2025, Antonio Natali.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 5.0.2.
+    </div>
+  </body>
+</html>
