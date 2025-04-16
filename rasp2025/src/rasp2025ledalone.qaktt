@@ -86,6 +86,7 @@ QActor ledobserver context ctxrasp{
 QActor ledperceiver context ctxrasp{
 	State s0 initial {  		
   		println("$name started")
+  		observeResource raspactor
 	}	
 	Goto work
 	
