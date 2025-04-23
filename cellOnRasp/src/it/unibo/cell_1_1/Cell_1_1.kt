@@ -40,17 +40,15 @@ class Cell_1_1 ( name: String, scope: CoroutineScope, isconfined: Boolean=false,
 		 	   var XD          = 2  //SET A-PRIORI
 		 	   var YD          = 2  //SET A-PRIORI
 			   
-			   lateinit  var outindev  : OutInCellOnRasp
+			   lateinit  var outindev  : OutInCellOnRasp 
 			   val guiinterpreter = main.java.CellCmdTranslator( myself )  //ADDED
 		 		 
-		   
-		  
+		 
 		  fun displayOnGui(){ 
-			val V   = if (MyState) 1 else 0
+			val V   = if (MyState) 1 else 0  
 			val msg = "cell($XD,$YD,$V)" 
 			outindev.display(msg)   	    
-		  }
-		  
+		  } 
 		  fun diplayLed( V : Boolean){
 		  	if( V ) Runtime.getRuntime().exec("python ledPython25On.py"); 
 		  	else Runtime.getRuntime().exec("python ledPython25Off.py");
@@ -84,22 +82,7 @@ class Cell_1_1 ( name: String, scope: CoroutineScope, isconfined: Boolean=false,
 					 transition(edgeName="t00",targetState="clearThecell",cond=whenEvent("clearCell"))
 					transition(edgeName="t01",targetState="changeCellState",cond=whenDispatch("changeCellState"))
 					transition(edgeName="t02",targetState="emitinfophase",cond=whenEvent("startthegame"))
-					interrupthandle(edgeName="t03",targetState="handleGuiMsg",cond=whenEvent("kernel_rawmsg"),interruptedStateTransitions)
-				}	 
-				state("handleGuiMsg") { //this:State
-					action { //it:State
-						CommUtils.outgreen("$name in ${currentState.stateName} | $currentMsg | ${Thread.currentThread().getName()} n=${Thread.activeCount()}")
-						 	   
-						if( checkMsgContent( Term.createTerm("kernel_rawmsg(ARG)"), Term.createTerm("kernel_rawmsg(ARG)"), 
-						                        currentMsg.msgContent()) ) { //set msgArgList
-								 guiinterpreter.cvtToApplMessage( payloadArg(0) )  
-						}
-						returnFromInterrupt(interruptedStateTransitions)
-						//genTimer( actor, state )
-					}
-					//After Lenzi Aug2002
-					sysaction { //it:State
-					}	 	 
+					interrupthandle(edgeName="t03",targetState="handleAlarmInterrupt",cond=whenEvent("alarm"),interruptedStateTransitions)
 				}	 
 				state("changeCellState") { //this:State
 					action { //it:State
@@ -121,12 +104,12 @@ class Cell_1_1 ( name: String, scope: CoroutineScope, isconfined: Boolean=false,
 					 transition(edgeName="t04",targetState="clearThecell",cond=whenEvent("clearCell"))
 					transition(edgeName="t05",targetState="changeCellState",cond=whenDispatch("changeCellState"))
 					transition(edgeName="t06",targetState="emitinfophase",cond=whenEvent("startthegame"))
-					interrupthandle(edgeName="t07",targetState="handleGuiMsg",cond=whenEvent("kernel_rawmsg"),interruptedStateTransitions)
+					interrupthandle(edgeName="t07",targetState="handleAlarmInterrupt",cond=whenEvent("alarm"),interruptedStateTransitions)
 				}	 
 				state("emitinfophase") { //this:State
 					action { //it:State
 						 var MyInfo = "$name,$MyState"  
-						CommUtils.outgreen("$name | emitinfophase")
+						CommUtils.outgreen("$name | emitinfophase $name")
 						 emitstreammqtt(name, "curstate","curstate($MyInfo)")  
 						//genTimer( actor, state )
 					}
@@ -135,12 +118,12 @@ class Cell_1_1 ( name: String, scope: CoroutineScope, isconfined: Boolean=false,
 					}	 	 
 					 transition(edgeName="t08",targetState="stopthecell",cond=whenEvent("stopthecell"))
 					transition(edgeName="t09",targetState="elabinfophase",cond=whenEvent("curstate"))
-					interrupthandle(edgeName="t010",targetState="handleGuiMsg",cond=whenEvent("kernel_rawmsg"),interruptedStateTransitions)
+					interrupthandle(edgeName="t010",targetState="handleAlarmInterrupt",cond=whenEvent("alarm"),interruptedStateTransitions)
 				}	 
 				state("elabinfophase") { //this:State
 					action { //it:State
 						 Countnbmsgs=Countnbmsgs+1  
-						CommUtils.outgreen("$name | elabinfophase $Countnbmsgs")
+						CommUtils.outgreen("$name | elabinfophase NmsgDaivicini=$Countnbmsgs")
 						if( checkMsgContent( Term.createTerm("curstate(NB,STATE)"), Term.createTerm("curstate(NB,true)"), 
 						                        currentMsg.msgContent()) ) { //set msgArgList
 								 Countnbon = Countnbon + 1   
@@ -156,7 +139,7 @@ class Cell_1_1 ( name: String, scope: CoroutineScope, isconfined: Boolean=false,
 					 transition(edgeName="t011",targetState="stopthecell",cond=whenEvent("stopthecell"))
 					transition(edgeName="t012",targetState="elabinfophase",cond=whenEvent("curstate"))
 					transition(edgeName="t013",targetState="elabstatephase",cond=whenDispatch("allnbreceived"))
-					interrupthandle(edgeName="t014",targetState="handleGuiMsg",cond=whenEvent("kernel_rawmsg"),interruptedStateTransitions)
+					interrupthandle(edgeName="t014",targetState="handleAlarmInterrupt",cond=whenEvent("alarm"),interruptedStateTransitions)
 				}	 
 				state("elabstatephase") { //this:State
 					action { //it:State
@@ -183,7 +166,7 @@ class Cell_1_1 ( name: String, scope: CoroutineScope, isconfined: Boolean=false,
 					transition(edgeName="t016",targetState="stopthecell",cond=whenEvent("stopthecell"))
 					transition(edgeName="t017",targetState="clearThecell",cond=whenEvent("clearCell"))
 					transition(edgeName="t018",targetState="changeCellState",cond=whenDispatch("changeCellState"))
-					interrupthandle(edgeName="t019",targetState="handleGuiMsg",cond=whenEvent("kernel_rawmsg"),interruptedStateTransitions)
+					interrupthandle(edgeName="t019",targetState="handleAlarmInterrupt",cond=whenEvent("alarm"),interruptedStateTransitions)
 				}	 
 				state("stopthecell") { //this:State
 					action { //it:State
@@ -196,12 +179,13 @@ class Cell_1_1 ( name: String, scope: CoroutineScope, isconfined: Boolean=false,
 					 transition(edgeName="t020",targetState="changeCellState",cond=whenDispatch("changeCellState"))
 					transition(edgeName="t021",targetState="emitinfophase",cond=whenEvent("startthegame"))
 					transition(edgeName="t022",targetState="clearThecell",cond=whenEvent("clearCell"))
-					interrupthandle(edgeName="t023",targetState="handleGuiMsg",cond=whenEvent("kernel_rawmsg"),interruptedStateTransitions)
+					interrupthandle(edgeName="t023",targetState="handleAlarmInterrupt",cond=whenEvent("alarm"),interruptedStateTransitions)
 				}	 
 				state("clearThecell") { //this:State
 					action { //it:State
-						 MyState = false  
-						 displayLedState()  
+						CommUtils.outblack("$name | clearThecell ")
+						 MyState = false     
+						 displayLedState()   
 						//genTimer( actor, state )
 					}
 					//After Lenzi Aug2002
@@ -211,7 +195,18 @@ class Cell_1_1 ( name: String, scope: CoroutineScope, isconfined: Boolean=false,
 					transition(edgeName="t025",targetState="emitinfophase",cond=whenEvent("startthegame"))
 					transition(edgeName="t026",targetState="clearThecell",cond=whenEvent("clearCell"))
 					transition(edgeName="t027",targetState="stopthecell",cond=whenEvent("stopthecell"))
-					interrupthandle(edgeName="t028",targetState="handleGuiMsg",cond=whenEvent("kernel_rawmsg"),interruptedStateTransitions)
+					interrupthandle(edgeName="t028",targetState="handleAlarmInterrupt",cond=whenEvent("alarm"),interruptedStateTransitions)
+				}	 
+				state("handleAlarmInterrupt") { //this:State
+					action { //it:State
+						CommUtils.outred("$name in ${currentState.stateName} | $currentMsg | ${Thread.currentThread().getName()} n=${Thread.activeCount()}")
+						 	   
+						returnFromInterrupt(interruptedStateTransitions)
+						//genTimer( actor, state )
+					}
+					//After Lenzi Aug2002
+					sysaction { //it:State
+					}	 	 
 				}	 
 			}
 		}

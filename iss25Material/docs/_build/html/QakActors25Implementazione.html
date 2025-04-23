@@ -5,7 +5,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>QakActors25Implementazione &#8212; iss24 1.0 documentation</title>
+    <title>QakActors25Implementazione &#8212; iss25 1.0 documentation</title>
     <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=649a27d8" />
     <link rel="stylesheet" type="text/css" href="_static/sphinxdoc.css?v=34905f61" />
     <link rel="stylesheet" type="text/css" href="_static/custom.css?v=87712ff3" />
@@ -29,7 +29,7 @@
         <li class="right" >
           <a href="QakActors25Actors.html" title="QakActors25Actors"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">iss24 1.0 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="index.html">iss25 1.0 documentation</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">QakActors25Implementazione</a></li> 
       </ul>
     </div>  
@@ -108,7 +108,18 @@ ricevuti dall’attore.</p>
 <h4>Implementa MqttCallback<a class="headerlink" href="#implementa-mqttcallback" title="Link to this heading">¶</a></h4>
 <p>Ogni attore implementa anche l’interfaccia
 <code class="docutils literal notranslate"><span class="pre">org.eclipse.paho.client.mqttv3.MqttCallback</span></code>. Pertanto
-ogni attore può gestire notifiche emesse da un MQTT client, attraverso il metodo <code class="docutils literal notranslate"><span class="pre">messageArrived</span></code>. (TODO REF)</p>
+ogni attore può gestire notifiche emesse da un MQTT client, attraverso il metodo
+<a class="reference internal" href="MQTTConnection.html#mqttconnectioncallbackforreceive"><span class="std std-ref">messageArrived</span></a>.</p>
+</section>
+<section id="evento-kernel-rawmsg">
+<h4>evento kernel_rawmsg<a class="headerlink" href="#evento-kernel-rawmsg" title="Link to this heading">¶</a></h4>
+<p>Nel caso in cui il metodo
+<a class="reference internal" href="MQTTConnection.html#mqttconnectioncallbackforreceive"><span class="std std-ref">messageArrived</span></a>
+riceva una stringa <code class="docutils literal notranslate"><span class="pre">S</span></code> che non corrisponde a un messaggio di tipo
+<a class="reference internal" href="unibo.basicomm23.html#unibo-basicomm23-interfaces-iapplmessage"><span class="std std-ref">IApplMessage</span></a>,
+l’attore emette un evento di tipo <code class="docutils literal notranslate"><span class="pre">kernel_rawmsg</span> <span class="pre">:</span> <span class="pre">kernel_rawmsg(</span> <span class="pre">S</span> <span class="pre">)</span></code>.</p>
+<p>Il componente applicativo che percepisce questo evento può convertire la stringa <code class="docutils literal notranslate"><span class="pre">S</span></code> in un messaggio qak.
+Per un esempio si veda <a class="reference internal" href="RaspberryCode2025.html#cellonrasp-punti-salienti"><span class="std std-ref">cellOnRasp Punti salienti</span></a>.</p>
 </section>
 <section id="actor-channel">
 <h4>actor channel<a class="headerlink" href="#actor-channel" title="Link to this heading">¶</a></h4>
@@ -306,6 +317,7 @@ alle specifiche sulle transizioni associate allo stato corrrente dell’automa.<
 <li><a class="reference internal" href="#it-unibo-kactor-actorbasic-kt">it.unibo.kactor.ActorBasic.kt</a><ul>
 <li><a class="reference internal" href="#estende-coapresource">Estende CoapResource</a></li>
 <li><a class="reference internal" href="#implementa-mqttcallback">Implementa MqttCallback</a></li>
+<li><a class="reference internal" href="#evento-kernel-rawmsg">evento kernel_rawmsg</a></li>
 <li><a class="reference internal" href="#actor-channel">actor channel</a></li>
 <li><a class="reference internal" href="#sendmessagetoactor">sendMessageToActor</a></li>
 </ul>
@@ -368,12 +380,12 @@ alle specifiche sulle transizioni associate allo stato corrrente dell’automa.<
         <li class="right" >
           <a href="QakActors25Actors.html" title="QakActors25Actors"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">iss24 1.0 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="index.html">iss25 1.0 documentation</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">QakActors25Implementazione</a></li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
-    &#169; Copyright 2024, Antonio Natali.
+    &#169; Copyright 2025, Antonio Natali.
       Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.1.3.
     </div>
   </body>

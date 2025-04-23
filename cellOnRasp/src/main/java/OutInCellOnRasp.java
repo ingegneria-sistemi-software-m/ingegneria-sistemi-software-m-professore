@@ -8,13 +8,12 @@ import unibo.basicomm23.utils.CommUtils;
  */
 public class OutInCellOnRasp  {
 
-//    private static OutInCellGui mysingleton;
-    private final String name = "OutInCellGui";
+    private final String name = "OutInCellOnRasp";
  	protected MqttConnection  mqttConn;
   	protected ActorBasic owner; 
   	protected String topicout;
  	
-/*
+/* 
  
  */
  	
@@ -27,13 +26,10 @@ public class OutInCellOnRasp  {
  
 	protected void connectMqttInOut() {  
 		try {
-			//UNA CONESSIONE di owner.getName() ESISTE GIA per via di mqttBroker "localhost" : 1883 eventTopic "..."
-			//mqttConn SI AGGIUNGE E BISOGNA ELIMNARE eventTopic "lifein"
-//			mqttConn = new MqttInteraction( owner.getName()+"_outin", "tcp://192.168.1.132:1883", "lifein", topicout );
 			
-			mqttConn = owner.getMqtt().getMqttConn();			
- 		    if(chcekBrokerConnection()) mqttConn.subscribe("lifein",owner); //genera kernel_rawmsg
-//			if(chcekBrokerConnection())  CommUtils.outgreen(name + " " +  owner.getName() + " | mqtt connection done " + mqttConn); 
+			mqttConn = owner.getMqtt().getMqttConn();		
+			chcekBrokerConnection();
+// 		    if(chcekBrokerConnection()) mqttConn.subscribe("lifein",owner); //genera kernel_rawmsg
 			
 	
 		} catch (Exception e) {
@@ -52,7 +48,7 @@ public class OutInCellOnRasp  {
 	
 	public void display(String msg) {		    
 		try {
-			CommUtils.outcyan(name + " | display to GUI " + msg + " topic=" +  topicout);
+//			CommUtils.outcyan(name + " | display to GUI " + msg + " topic=" +  topicout);
 			if( mqttConn != null ) {
 				//CommUtils.outcyan(name + " | display to GUI " + msg + " topic=" +  topicout);
 				//mqttConn.forward(msg);

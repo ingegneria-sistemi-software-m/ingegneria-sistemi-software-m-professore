@@ -64,7 +64,7 @@ class Cell ( name: String, scope: CoroutineScope, isconfined: Boolean=false, isd
 						 setCellCoords( )  
 						CommUtils.outgreen("$name | START X=$X Y=$Y ")
 						  //setCellCoords( )
-									Countnb = conway.GridSupport25.subscribeToNeighborsMqtt(myself, X,Y)
+									Countnb = conway.GridSupport25.subscribeToNeighborsMqtt(myself, X,Y) 
 						CommUtils.outblack("$name | STARTS Countnb= $Countnb")
 						 outindev = OutInCellGui(myself, "guiin")  
 						//genTimer( actor, state )
@@ -163,6 +163,10 @@ class Cell ( name: String, scope: CoroutineScope, isconfined: Boolean=false, isd
 						 Countnbmsgs = 0
 								   Countnbon   = 0 
 						           displayOnGui() 
+						CommUtils.outmagenta("$name | elabstatephase emit event alarm JUST TO TEST")
+						emit("alarm", "alarm($MyName)" ) 
+						CommUtils.outmagenta("$name | emitstreammqtt JUST TO TEST")
+						 emitstreammqtt("unibo/qak/cell_1_1", "alarm","alarm(${MyName}qak)")  
 						//genTimer( actor, state )
 					}
 					//After Lenzi Aug2002

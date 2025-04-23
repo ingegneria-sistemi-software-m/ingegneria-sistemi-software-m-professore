@@ -28,10 +28,11 @@ with Diagram('conwaycellsnqakaiveArch', show=False, outformat='png', graph_attr=
      with Cluster('ctxcells', graph_attr=nodeattr):
           cellbuilder=Custom('cellbuilder','./qakicons/symActorWithobjSmall.png')
           cell=Custom('cell','./qakicons/symActorDynamicWithobj.png')
-     with Cluster('ctxcellonrasp', graph_attr=nodeattr):
-          cellonrasp=Custom('cellonrasp(ext)','./qakicons/externalQActor.png')
+          perceiveronpc=Custom('perceiveronpc','./qakicons/symActorWithobjSmall.png')
      sys >> Edge( label='stopthecell', **evattr, decorate='true', fontcolor='darkgreen') >> cell
      sys >> Edge( label='clearCell', **evattr, decorate='true', fontcolor='darkgreen') >> cell
      sys >> Edge( label='startthegame', **evattr, decorate='true', fontcolor='darkgreen') >> cell
      sys >> Edge( label='curstate', **evattr, decorate='true', fontcolor='darkgreen') >> cell
+     cell >> Edge( label='alarm', **eventedgeattr, decorate='true', fontcolor='red') >> sys
+     sys >> Edge( label='alarm', **evattr, decorate='true', fontcolor='darkgreen') >> perceiveronpc
 diag

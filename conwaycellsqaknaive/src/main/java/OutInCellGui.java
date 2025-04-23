@@ -33,9 +33,9 @@ public class OutInCellGui  {
 			//mqttConn SI AGGIUNGE E BISOGNA ELIMNARE eventTopic "lifein"
 //			mqttConn = new MqttInteraction( owner.getName()+"_outin", "tcp://192.168.1.132:1883", "lifein", topicout );
 			
-			mqttConn = owner.getMqtt().getMqttConn();			
- 		    if(chcekBrokerConnection()) mqttConn.subscribe("lifein",owner); //genera kernel_rawmsg
-//			if(chcekBrokerConnection())  CommUtils.outgreen(name + " " +  owner.getName() + " | mqtt connection done " + mqttConn); 
+			mqttConn = owner.getMqtt().getMqttConn();		
+			chcekBrokerConnection();
+// 		    if(chcekBrokerConnection()) mqttConn.subscribe("lifein",owner); //genera kernel_rawmsg
 			
 	
 		} catch (Exception e) {

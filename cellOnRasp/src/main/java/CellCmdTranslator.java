@@ -17,6 +17,11 @@ public class CellCmdTranslator {
 	}
 
 	public void cvtToApplMessage( String msg ) {
+		IApplMessage applMsg = cvtToApplicMessage( msg );
+		if( applMsg != null ) owner.sendMsgToMyself(applMsg);
+	}
+	
+	public IApplMessage cvtToApplicMessage( String msg ) {
 		CommUtils.outyellow("cvtToApplMessage " +  owner.getName() + " " + msg);
 		IApplMessage applMsg = null;
 		if( msg.startsWith("cell") ) {
@@ -45,9 +50,7 @@ public class CellCmdTranslator {
 //			applMsg = CommUtils.buildDispatch(
 //				owner.getName(), "exitcmd", "exitcmd(fromgui)", owner.getName());
 //		}
-		if( applMsg != null ) owner.sendMsgToMyself(applMsg);
-		
-		
-	}
+		return applMsg;
+		}
 
 }

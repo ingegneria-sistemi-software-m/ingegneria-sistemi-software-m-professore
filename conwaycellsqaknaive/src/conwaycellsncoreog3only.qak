@@ -1,7 +1,7 @@
 System conwaycellsnqakaive
-//mqttBroker "192.168.1.132" : 1883 eventTopic "lifeevents" 
-mqttBroker "test.mosquitto.org" : 1883 eventTopic "lifeevents" 
-     
+mqttBroker "192.168.1.132" : 1883 eventTopic "lifein" 
+//mqttBroker "test.mosquitto.org" : 1883 eventTopic "lifeevents" 
+       
 Event startthegame     : startthegame(X)
 Event    stopthecell   : stopthecell(X) 
 Event    synch         : synch(X)   
@@ -10,16 +10,17 @@ Event curstate         : curstate(NB,STATE)
 
 Event kernel_rawmsg    : kernel_rawmsg(ARG)
 
+Event alarm            : alarm(ARG)  //just to test ...
+
 Dispatch changeCellState   : changeCellState(X,Y)
 Dispatch allnbreceived     : allnbreceived(N)
 
 Context ctxcells ip [ host="localhost" port=8360] 
-//Context ctxcellonrasp ip [ host="192.168.1.68" port=8075] 
-Context ctxcellonrasp ip [ host="192.168.137.2" port=8075] 
+//Context ctxcellonrasp ip [ host="192.168.1.132" port=8075] 
+//
+//ExternalQActor cell_1_1 context ctxcellonrasp
 
-ExternalQActor cellonrasp context ctxcellonrasp
-
-
+  
 QActor cellbuilder context ctxcells{
 import "unibo.basicomm23.mqtt.*"
 
@@ -80,7 +81,7 @@ import "main.java.*"
 		[# setCellCoords( ) #] 
 		println("$name | START X=$X Y=$Y ") color green
 		[#  //setCellCoords( )
-			Countnb = conway.GridSupport25.subscribeToNeighborsMqtt(myself, X,Y)
+			Countnb = conway.GridSupport25.subscribeToNeighborsMqtt(myself, X,Y) 
 		#]       	
 		println("$name | STARTS Countnb= $Countnb") color black
 		
@@ -122,8 +123,10 @@ import "main.java.*"
 	State emitinfophase{
  		[# var MyInfo = "$name,$MyState" #]
  		println("$name | emitinfophase") color green
-//	    delay 10 //cede il controllo  per rescheduling ....
+
         [# emitstreammqtt(name, "curstate","curstate($MyInfo)") #]
+         
+         
  	}
 	Transition t0   
 	    whenEvent stopthecell  -> stopthecell
@@ -160,7 +163,12 @@ import "main.java.*"
 		[# Countnbmsgs = 0
 		   Countnbon   = 0 
            displayOnGui() 
-        #]
+        #]  
+        
+        println("$name | elabstatephase emit event alarm JUST TO TEST") color magenta
+        emit alarm : alarm($MyName)  //just to test ... Va a lifein Arriva anche a perceiveronpc
+        println("$name | emitstreammqtt JUST TO TEST") color magenta
+        [# emitstreammqtt("unibo/qak/cell_1_1", "alarm","alarm(${MyName}qak)") #]
   	}
 	Transition t0 
 		whenTime 1000           -> emitinfophase  //(no synch COREOGRAPHY)
@@ -193,3 +201,29 @@ import "main.java.*"
  
  
 }//cell 
+
+/*
+ * ------------------------------------------
+ * perceiver
+ * ------------------------------------------
+ */
+ 
+ QActor perceiveronpc context ctxcells{
+ 	State s0 initial{
+ 		println("$name | STARTS ") color blue
+ 		
+ 	}
+ 	Goto work
+ 	
+ 	State work{
+ 	}
+ 	Transition t0
+ 		whenEvent alarm -> handleEvent
+ 		
+ 	State handleEvent{
+ 		printCurrentMessage color blue
+ 	}
+// 	Transition t0
+// 		whenEvent alarm -> handleEvent
+ 	Goto work
+ }
