@@ -1,0 +1,89 @@
+##version: '2.1'
+services:
+  cell1:
+    image: conwaycellsqak:1.0
+    environment:
+      - MQTTBROKER_URL=tcp://mosquitto:1883
+    ports:
+      - "8361:8360"
+#    restart: always
+    networks:
+      - cargo-network
+  cell2:
+    image: conwaycellsqak:1.0
+    environment:
+      - MQTTBROKER_URL=tcp://mosquitto:1883
+    ports:
+      - "8362:8360"
+#    restart: always
+    networks:
+      - cargo-network
+  cell3:
+    image: conwaycellsqak:1.0
+    environment:
+      - MQTTBROKER_URL=tcp://mosquitto:1883
+    ports:
+      - "8363:8360"
+#    restart: always
+    networks:
+      - cargo-network
+  cell4: 
+    image: conwaycellsqak:1.0
+    environment:
+      - MQTTBROKER_URL=tcp://mosquitto:1883 
+    ports:
+      - "8364:8360"
+#    restart: always
+    networks:
+      - cargo-network
+  cell5:
+    image: conwaycellsqak:1.0
+    environment:
+      - MQTTBROKER_URL=tcp://mosquitto:1883
+    ports:
+      - "8365:8360"
+#    restart: always
+    networks:
+      - cargo-network
+  cell6:
+    image: conwaycellsqak:1.0
+    environment:
+      - MQTTBROKER_URL=tcp://mosquitto:1883
+    ports:
+      - "8366:8360"
+#    restart: always
+    networks:
+      - cargo-network
+  cell7:
+    image: conwaycellsqak:1.0
+    environment:
+      - MQTTBROKER_URL=tcp://mosquitto:1883
+    ports:
+      - "8367:8360"
+#    restart: always
+    networks:
+      - cargo-network
+  cell8: 
+    image: conwaycellsqak:1.0
+    environment:
+      - MQTTBROKER_URL=tcp://mosquitto:1883 
+    ports:
+      - "8368:8360"
+#    restart: always
+    networks:
+      - cargo-network
+  cell9: 
+    image: conwaycellsqak:1.0
+    environment:
+      - MQTTBROKER_URL=tcp://mosquitto:1883 
+    ports:
+      - "8369:8360"
+#    restart: always
+    networks:
+      - cargo-network
+ 
+networks:
+   cargo-network:
+     external: true
+    
+ ## docker-compose -f docker-compose-cells9.yml -p conwayscells9 up   

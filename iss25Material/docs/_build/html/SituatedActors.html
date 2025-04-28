@@ -44,6 +44,52 @@
             
   <section id="situatedactors">
 <h1>SituatedActors<a class="headerlink" href="#situatedactors" title="Permalink to this heading">¶</a></h1>
+<p>La introduzione del concetto di <span class="xref std std-ref">actor</span> e dei relativi supporti
+(a run-time:<a class="reference internal" href="QakActors25Intro.html#qak-infrastructure"><span class="std std-ref">Qak infrastructure</span></a> e a design-time:ref:<cite>Qak software factory</cite>)
+fornisce strumenti più adeguati per la progettazione e lo sviluppo di sistemi
+basati su architetture a <span class="xref std std-ref">Microservizi`(e a :ref:`Nanoservizi</span>).</p>
+<p>A questo proposito vediamo la ‘opinione’ della AI:</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="RiassuntoAI.html#riassuntoai"><span class="std std-ref">RiassuntoAI</span></a></p></li>
+<li><p><a class="reference internal" href="MicroserviziEQak%28AI%29.html#microservizieqak-ai"><span class="std std-ref">MicroserviziEQak(AI)</span></a></p></li>
+</ul>
+<p>Oltre alla ‘classiche’  applicazioni di cloud-computing, i <a class="reference internal" href="Microservizi.html#microservizi"><span class="std std-ref">Microservizi</span></a> sono oggi
+un possibile punto di riferimento per la realizzazione di <a class="reference internal" href="#agenti-software-situati"><span class="std std-ref">Agenti Software Situati</span></a>.</p>
+<p>Nel contesto del <strong>cloud computing</strong>, i microservizi offrono numerosi vantaggi:</p>
+<ul class="simple">
+<li><p><strong>Scalabilità</strong>: ogni microservizio può essere scalato indipendentemente, consentendo un uso più efficiente delle risorse cloud.</p></li>
+<li><p><strong>Elasticità</strong>: grazie alla natura modulare, è possibile aggiungere o rimuovere dinamicamente servizi in base alla domanda.</p></li>
+<li><p><strong>Manutenibilità</strong>: i microservizi permettono aggiornamenti, deployment e rollback rapidi senza interrompere l’intera applicazione.</p></li>
+<li><p><strong>Resilienza</strong>: eventuali guasti di un microservizio possono essere isolati, migliorando l’affidabilità complessiva dell’applicazione.</p></li>
+<li><p><strong>Adozione di tecnologie eterogenee</strong>: ogni microservizio può essere sviluppato con linguaggi e tecnologie diverse, ottimizzando l’efficienza.</p></li>
+</ul>
+<p>Ad esempio: Un’applicazione di e-commerce su cloud può essere suddivisa in microservizi distinti:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Gestione utenti</p></li>
+<li><p>Catalogo prodotti</p></li>
+<li><p>Carrello</p></li>
+<li><p>Pagamenti</p></li>
+<li><p>Raccomandazioni personalizzate</p></li>
+</ul>
+</div></blockquote>
+<p>Per quanto riguarda le <strong>applicazioni basate su agenti situati</strong> (ovvero agenti che operano
+in ambienti fisici o digitali specifici, percependo e agendo nel contesto), l’approccio a microservizi può essere vantaggioso:</p>
+<ul class="simple">
+<li><p><strong>Modularità</strong>: ogni agente o componente del sistema può essere modellato come un microservizio indipendente.</p></li>
+<li><p><strong>Distribuzione geografica</strong>: microservizi possono essere dislocati vicino agli agenti fisici per ridurre latenza e migliorare l’efficienza.</p></li>
+<li><p><strong>Autonomia</strong>: ogni agente può avere microservizi autonomi per la percezione, la decisione e l’azione.</p></li>
+<li><p><strong>Interoperabilità</strong>: i microservizi, grazie all’uso di API standardizzate, facilitano la comunicazione tra agenti eterogenei.</p></li>
+<li><p><strong>Manutenzione e aggiornamento</strong>: è possibile aggiornare singoli agenti/microservizi senza interrompere l’intero sistema.</p></li>
+</ul>
+<p>Ad esempio: In una rete di robot autonomi per la logistica:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Un microservizio si occupa della navigazione locale (evitare ostacoli).</p></li>
+<li><p>Un altro microservizio gestisce la comunicazione con la centrale.</p></li>
+<li><p>Un terzo microservizio pianifica percorsi ottimali.</p></li>
+</ul>
+</div></blockquote>
 <section id="agenti-software-situati">
 <h2>Agenti Software Situati<a class="headerlink" href="#agenti-software-situati" title="Permalink to this heading">¶</a></h2>
 <p>Gli agenti software situati sono entità computazionali che:</p>
@@ -73,6 +119,22 @@
 e l’azione significativa in contesti complessi del mondo reale.</p>
 <p>Ha implicazioni significative per la progettazione di sistemi software più efficaci e adattivi
 e per la comprensione del comportamento umano nei sistemi socio-tecnici.</p>
+<section id="un-meta-modello-di-riferimento-per-agenti-situati">
+<h3>Un (meta)modello di riferimento per agenti situati<a class="headerlink" href="#un-meta-modello-di-riferimento-per-agenti-situati" title="Permalink to this heading">¶</a></h3>
+<ul class="simple">
+<li><p>Sensori (input)</p></li>
+<li><p>Modello (Controllo)</p></li>
+<li><p>Attuatori (output)</p></li>
+</ul>
+<a class="reference internal image-reference" href="_images/SituatedAgentMetamodel.PNG"><img alt="_images/SituatedAgentMetamodel.PNG" class="align-center" src="_images/SituatedAgentMetamodel.PNG" style="width: 85%;" /></a>
+<ul class="simple">
+<li><p><strong>Agente</strong>: Entità autonoma che percepisce, decide e agisce in un ambiente.</p></li>
+<li><p><strong>Ambiente</strong>: Contesto esterno in cui l’agente è situato; dinamico e parzialmente osservabile.</p></li>
+<li><p><strong>Percezione</strong>: Processo di acquisizione di dati sensoriali dall’ambiente.</p></li>
+<li><p><strong>Azione</strong>: Comportamento che altera lo stato dell’ambiente o l’agente stesso.</p></li>
+<li><p><strong>Comunicazione</strong>: Scambio di informazioni tra agenti per coordinamento o cooperazione.</p></li>
+</ul>
+</section>
 <section id="progetti-da-realizzare">
 <h3>Progetti da realizzare<a class="headerlink" href="#progetti-da-realizzare" title="Permalink to this heading">¶</a></h3>
 <table class="docutils align-default" style="width: 100%">
@@ -174,6 +236,7 @@ in modo indipendente dalla tecnologia con cui è realizzato il robot (virtuale o
     <ul>
 <li><a class="reference internal" href="#">SituatedActors</a><ul>
 <li><a class="reference internal" href="#agenti-software-situati">Agenti Software Situati</a><ul>
+<li><a class="reference internal" href="#un-meta-modello-di-riferimento-per-agenti-situati">Un (meta)modello di riferimento per agenti situati</a></li>
 <li><a class="reference internal" href="#progetti-da-realizzare">Progetti da realizzare</a></li>
 <li><a class="reference internal" href="#robot-reali-e-virtuali">Robot reali e virtuali</a></li>
 </ul>

@@ -1,0 +1,68 @@
+System eurekaexample  
+
+Dispatch m1 : m1(X)
+Request r1 : r1(X)
+Reply r1reply : r1rely(X) for r1
+Event alarm : alarm(X)
+
+Context ctxeurekademousage ip [host="localhost" port=8445]
+Context ctxeureka ip [host="discoverable" port=0]
+
+ExternalQActor aservice context ctxeureka
+
+QActor aserviceusage context ctxeurekademousage{ 
+[#  
+	fun discover(){
+		val res = CommUtils.ckeckEureka( )
+		CommUtils.outblue("discover $res ")
+		if( CommUtils.ckeckEureka( ) ){
+			//EurekaClient eurekaClient = CommUtils.createEurekaClient();  
+			val hostPort = CommUtils.discoverService( "ctxeureka" )
+			CommUtils.outblue("discover host=${hostPort[0]} port=${hostPort[1]}")
+			//CommUtils.outblue("discover $hostPort ")
+		}
+	}
+#]	
+	State s0 initial{
+		[#
+			CommUtils.ckeckEureka();
+			val hostPort = CommUtils.discoverService( "ctxeureka",  )
+			//CommUtils.outblue("discover host=${hostPort[0]} port=${hostPort[1]}")	
+			CommUtils.outblue("discover $hostPort")		
+		#]
+		
+		
+		println("$name | STARTS") color magenta
+		//[# discover() #]
+		//forward aservice -m m1 : m1(usage)
+		//emit alarm : alarm(caller)
+		delay 1000
+		request aservice -m r1:r1(0)  //qui fa discover implicito
+		//emit alarm : alarm(caller)
+	}
+	Goto work
+	
+	State work{
+		println("$name | waiting ... ") color cyan
+	}
+	Transition t0 
+		whenReply r1reply -> handlereply
+		whenEvent alarm   -> handleAlarm
+		//whenMsg m1 -> handlem1
+	
+	State handlereply{
+		printCurrentMessage color blue
+		println("$name | emit alarm(caller)") color black
+		emit alarm : alarm(caller) 
+		//[# System.exit(0) #]
+	}
+	Transition t0  
+ 		whenEvent alarm   -> handleAlarm
+	
+	State handleAlarm{
+		printCurrentMessage color red
+	}
+	Goto work
+	
+	
+}

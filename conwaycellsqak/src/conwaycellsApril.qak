@@ -1,0 +1,359 @@
+System   conwaycellsqak 
+mqttBroker "192.168.1.68" : 1883 eventTopic "lifein" 
+//mqttBroker "test.mosquitto.org" : 1883 eventTopic "cellonraspevents" 
+
+/*
+ * ==========================================================================
+ * Codice di una cella
+ * 
+ *  WARNING: mqttBroker "...."
+ * 
+ * - nasce con nome random 
+ * - richiede al gamemaster (discovered) di partecipare
+ * - riceve il nome di gioco ( cell-x-y ) e lo rende noto al perceiver
+ * - cambia il suo nome
+ * - dice al  gamemaster di essere pronta (dispatch cellcreateed)
+ * - attende l'evento allcellready (emesso dal gamemaster)
+ * - si sottoscrive alle topic che corrispondeono ai nome delle celle vicine
+ * - attende il dispatch changeCellState (fase di inizializzazione) 
+ *   o l'evento startthegame (emesso da un controller NON dal gamemaster)
+ * - quando riceve startthegame entra negli STATI DEL GIOCO (Epoch)
+ * - attende l'evento synch (emsso dal gamemaster che orchestra)
+ * - gestisce in modo opportuno gli eventi clearcell, stopthecell
+ * 
+ * Notiamo che
+ * - la eventTopic 'lifein' è comune a tutte le celle
+ * - ogni cella fa in modo automatico una subscribe su 'lifein'
+ * ==========================================================================
+ */ 
+
+
+Event startthegame     : startthegame(X)
+Event    stopthecell   : stopthecell(X)   
+Event    synch         : synch(X)    
+Event    clearCell     : clearCell(X)      
+Event curstate         : curstate(NB,STATE)
+
+Event kernel_rawmsg    : kernel_rawmsg(ARG)
+Event cellLifeName     : cellLifeName(NAME)
+Event exitCmd          : exitCmd(ARG)  
+
+Dispatch nbconfig      : nbconfig(N)
+Dispatch allnbreceived : allnbreceived(N)
+Dispatch cellready     : cellready(CELL)
+Dispatch allcellready  : allcellready(X)
+
+Event    synch         : synch(X)
+Request addtogame      : addtogame( NAME )
+Reply   addedtogame    : addedtogame( CELLNAME, NROWS, NCOLS ) for addtogame
+
+Dispatch cellcreated   : cellcreated(CELL,STATE)
+Dispatch allcellcreated: allcellcreated(N)
+Dispatch gameready     : gameready(CELLNUM)
+Dispatch cellends      : cellends(CELL)
+Event    allcellready  : allcellready(X)
+
+Dispatch changeCellState   : changeCellState(X,Y)
+Dispatch allnbreceived     : allnbreceived(N)
+
+Context ctxcells  ip [host="localhost"    port=8360]
+Context ctxmaster ip [host="discoverable" port=8260]  
+
+ExternalQActor gamemaster context ctxmaster
+/*
+ * ------------------------------------------
+ * cell
+ * ------------------------------------------
+ */
+QActor cell context ctxcells{
+import "main.java.*"
+	[#
+	   var MyState     = false
+	   var Countnb     = 0  //numero dei vicini
+	   var Countnbon   = 0  //numero degli stati on dei vicini
+	   var Countnbmsgs = 0  //numero dei msg ricevuti dai vicini	  
+	   var  X          = 1  //SET A-PRIORI
+	   var  Y          = 1  //SET A-PRIORI
+ 	   var XD          = 2  //SET A-PRIORI
+ 	   var YD          = 2  //SET A-PRIORI
+	   
+	   lateinit  var outindev  : OutInCellGui  
+	   val guiinterpreter = main.java.CellCmdTranslator( myself )  //ADDED
+ 		
+ 	//CAMBIO SUBITO IL NOME
+ 	   name = name+kotlin.random.Random.nextInt(0, 501)
+ 	   MyName=name
+ 		 
+  fun setCellCoords( )  {
+     val coords = name.replace("cell_","").split("_")  //Before cellc
+     X = coords[0].toInt()
+     XD = X+1
+     Y  = coords[1].toInt()        
+     YD =Y+1
+  }
+  
+  fun displayOnGui(){ 
+	val V   = if (MyState) 1 else 0  
+	val msg = "cell($XD,$YD,$V)" 
+	outindev.display(msg)   	    
+  } 
+  fun diplayLed( V : Boolean){
+  	if( V ) Runtime.getRuntime().exec("python ledPython25On.py"); 
+  	else Runtime.getRuntime().exec("python ledPython25Off.py");
+  }
+
+  fun displayLedState(){
+  	displayOnGui();
+  	diplayLed( MyState );
+  }
+  
+  CommUtils.outyellow("STARTS-init")
+        
+	#] 
+	State s0 initial{
+ 		[# name = name+kotlin.random.Random.nextInt(0, 501); MyName=name #]
+        println("$name | INIT ")
+//		delay 3000  //NO MORE (Zoccardelli)
+
+        //gamemaster is AUOMATICALLY DISCOVERED when needed
+        //since  Context ctxmaster ip [host="discoverable" port=8260] 
+//		[#
+//			val hostPort = CommUtils.discoverService( "ctxmaster",  )
+//			//CommUtils.outblue("discover host=${hostPort[0]} port=${hostPort[1]}")	
+//			CommUtils.outblue("discover $hostPort")		
+//		#]		
+ 		request gamemaster -m addtogame : addtogame( $MyName )
+	}
+	
+	Transition t0 
+		whenReply addedtogame -> handleAddedtogame
+
+
+	State handleAddedtogame {
+		printCurrentMessage color blue
+		onMsg( addedtogame : addedtogame( CELLNAME, NROWS, NCOLS ) ){
+			[# val newname = payloadArg(0)
+			   //===========================================================
+			   //LA CELLA ASSUME IL NOME LOGICO ENTRO IL GIOCO 
+			   //===========================================================
+			   sysUtil.changeActorName( myself,newname ) 
+			   conway.GridSupport25.RowsNum = payloadArg(1).toInt()
+			   conway.GridSupport25.ColsNum = payloadArg(2).toInt()
+			#]
+			
+			emitlocal cellLifeName : cellLifeName( $MyName )  //for the perceiver
+		}
+		println("$name | STARTSSSSSSSSSSSSSS") color blue
+ 		[# setCellCoords( ) #]
+		println("$name | STARTS $X,$Y Countnb= $Countnb") color blue
+		
+
+		[# 
+			outindev = OutInCellGui(myself, "guiin") 
+		#] 
+		
+		forward gamemaster -m cellcreated : cellcreated($MyName,false)
+
+		
+		println("$name | published cellcreated to gamemaster  ")
+		
+		
+    } 
+	Transition t0  
+		whenEvent allcellready  ->  handleAllcellready
+		whenMsg changeCellState -> changeCellState
+	
+	State handleAllcellready{
+		printCurrentMessage color red
+		[#  
+			updateCellNameInContext(name)
+		   Countnb = conway.GridSupport25.subscribeToNeighborsMqtt(myself, X,Y)
+		#]      
+		println("$name | Countnb=$Countnb") color blue		
+	} 
+	Transition t0 
+		whenMsg changeCellState -> changeCellState
+		whenEvent exitCmd       -> exit
+		whenEvent startthegame  -> emitinfophase
+        whenEvent clearCell     -> clearThecell 	
+	
+/* 
+ * =====================================================
+ * Inizializzazione
+ * =====================================================
+ */
+	
+	State changeCellState{
+		printCurrentMessage color green
+		onMsg( changeCellState : changeCellState(X,Y) ){
+			if [# X == payloadArg(0).toInt() && Y == payloadArg(1).toInt() #]{ //RIGUARDA LA CELLA
+				[#  MyState = ! MyState;
+					displayLedState()
+				#]
+ 				println("$name | STATE=$MyState ") color yellow
+			 }
+		}   
+	} 
+	Transition t0  
+		whenEvent clearCell       -> clearThecell
+		whenEvent exitCmd         -> exit
+		whenMsg changeCellState   -> changeCellState
+		whenEvent startthegame    -> emitinfophase 
+
+    State clearThecell{
+    	println("$name | clearThecell ")
+     	[# MyState = false    #]
+     	[# displayLedState()  #]
+     }
+    Transition t0  
+     	whenMsg changeCellState -> changeCellState
+        whenEvent startthegame  -> emitinfophase 
+        whenEvent clearCell     -> clearThecell 
+  	    whenEvent stopthecell   -> stopthecell
+  	    whenEvent exitCmd       -> exit
+
+/* 
+ * =====================================================
+ * STATI DEL GIOCO
+ * =====================================================
+ */
+  	  
+	State emitinfophase{
+ 		[# var MyInfo = "$name,$MyState" #]
+ 		println("$name | emitinfophase $name") color green
+ 		
+ 		//Pubblica l'evento sulla topic 'name'
+        [# emitstreammqtt(name, "curstate","curstate($MyInfo)") #]
+  	}
+	Transition t0   
+	    whenEvent stopthecell  -> stopthecell
+	    whenEvent exitCmd      -> exit
+		whenEvent curstate    -> elabinfophase
+ 				  
+    State elabinfophase{
+  		[# Countnbmsgs=Countnbmsgs+1 #]
+ 		println("$name | elabinfophase NmsgDaivicini=$Countnbmsgs") color green
+		onMsg ( curstate : curstate(NB,true) ){
+			[# Countnbon = Countnbon + 1  #]
+		} 
+		if [# Countnbmsgs == Countnb #] {  		 
+			autodispatch allnbreceived : allnbreceived(ok)
+		}		  
+    } 
+	Transition t0 
+	    whenEvent stopthecell   -> stopthecell
+	    whenEvent exitCmd       -> exit
+		whenEvent curstate      -> elabinfophase
+		whenMsg allnbreceived   -> elabstatephase
+ 	
+	State elabstatephase{
+ 		println("$name | elabstatephase $MyState $Countnbon") color magenta
+		if [# MyState  #]{ //soprevvice o muore
+			[# MyState = Countnbon==2 || Countnbon==3 #]
+		}
+		else{ 
+			if [# ! MyState  #]{ //rinasce o rimane morta
+				[# MyState = (Countnbon==3) #]
+			}
+		}
+		//Aggiorno il display 	 		
+		[# Countnbmsgs = 0
+		   Countnbon   = 0 
+           displayLedState() 
+        #]        
+        
+        forward gamemaster -m cellready : cellready($MyName)
+ 	}
+	Transition t0 
+		whenEvent synch         -> emitinfophase  //(ORCHESTRATION)
+ 	    whenEvent stopthecell   -> stopthecell
+        whenEvent clearCell     -> clearThecell 
+      	whenMsg changeCellState -> changeCellState
+      	whenEvent exitCmd       -> exit
+        
+
+/* 
+ * =====================================================
+ * SOSPENSIONE DEL GIOCO
+ * =====================================================
+ */
+         
+	State stopthecell{
+		println("$name | stopthecell ") color magenta 
+	}
+    Transition t0  whenMsg changeCellState -> changeCellState
+                   whenEvent startthegame  -> emitinfophase 
+                   whenEvent clearCell     -> clearThecell 
+                   whenEvent exitCmd       -> exit
+
+
+
+
+
+//   State handleAlarmInterrupt{
+//  		printCurrentMessage color red
+// 		returnFromInterrupt  	
+//   }
+   
+   State exit{
+   	 [# System.exit(0) #]
+   }
+   
+}//cell 
+ 
+
+/*
+ * ------------------------------------------
+ * perceiver
+ * ------------------------------------------
+ */
+ 
+ /*
+ * ==========================================================================
+ * ATTORE AUSILIARIO
+ * Gestisce i messaggi del controller (alieno)
+ * e li trsaforma in messaggi/eventi per la cella
+ * ==========================================================================
+ */
+ 
+ QActor perceiver context ctxcells{
+ 	[# val guiinterpreter = main.java.CellCmdTranslator( myself )  
+ 		
+ 		//CAMBIO NOME PER EVITARE rigetti di connessione MQTT
+ 		name = name+kotlin.random.Random.nextInt(0, 501)
+ 		
+ 		var CellLifeName = "unknown"
+ 	#]
+ 	State s0 initial{
+ 		println("$name | STARTS ") color blue
+ 	}
+ 	Transition t0  
+ 		whenEvent cellLifeName -> setCellLifeName
+ 	
+ 	State setCellLifeName{
+ 		onMsg( cellLifeName : cellLifeName( NAME )){
+ 			[# CellLifeName = payloadArg(0) #]
+ 		} 
+ 		println("$name | CellLifeName=$CellLifeName ") color blue
+ 	}
+ 	Goto work
+ 	
+ 	State work{
+ 	}
+ 	Transition t0  
+ 		whenEvent kernel_rawmsg   -> handleCtrlMsg 
+
+ 	State handleCtrlMsg{
+ 		printCurrentMessage color blue
+ 		
+		onMsg( kernel_rawmsg : kernel_rawmsg(ARG)){
+			[# val ApplMsg = guiinterpreter.cvtToApplicMessage( payloadArg(0) ) 
+               if( ApplMsg != null ) sendMessageToActor(ApplMsg,CellLifeName)
+  			#]    			
+  			println("$name | sent $ApplMsg")
+		}
+ 	} 
+ 	Goto work 	
+ 	
+ 
+ }

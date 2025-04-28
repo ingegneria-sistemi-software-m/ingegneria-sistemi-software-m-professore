@@ -1,35 +1,38 @@
+
 <!DOCTYPE html>
 
-<html lang="en" data-content_root="./">
+<html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
-    <title>unibo.basicomm23 &#8212; iss24 1.0 documentation</title>
-    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=649a27d8" />
-    <link rel="stylesheet" type="text/css" href="_static/sphinxdoc.css?v=34905f61" />
-    <link rel="stylesheet" type="text/css" href="_static/custom.css?v=87712ff3" />
-    <script src="_static/documentation_options.js?v=f2a433a1"></script>
-    <script src="_static/doctools.js?v=9bcbadda"></script>
-    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <title>unibo.basicomm23 &#8212; iss25 1.0 documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinxdoc.css" />
+    <link rel="stylesheet" type="text/css" href="_static/custom.css" />
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="_static/doctools.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="SpringBootWebSocketSTOMP" href="SpringBootWebSocketSTOMP.html" />
-    <link rel="prev" title="ConwayLife25" href="ConwayLife25.html" /> 
+    <link rel="next" title="commdemo" href="commdemo.html" />
+    <link rel="prev" title="ChiediAdAI" href="ChiediAdAI.html" /> 
   </head><body>
-    <div class="related" role="navigation" aria-label="Related">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
           <a href="genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="SpringBootWebSocketSTOMP.html" title="SpringBootWebSocketSTOMP"
+          <a href="commdemo.html" title="commdemo"
              accesskey="N">next</a> |</li>
         <li class="right" >
-          <a href="ConwayLife25.html" title="ConwayLife25"
+          <a href="ChiediAdAI.html" title="ChiediAdAI"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">iss24 1.0 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="index.html">iss25 1.0 documentation</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">unibo.basicomm23</a></li> 
       </ul>
     </div>  
@@ -40,7 +43,7 @@
           <div class="body" role="main">
             
   <section id="unibo-basicomm23">
-<h1>unibo.basicomm23<a class="headerlink" href="#unibo-basicomm23" title="Link to this heading">¶</a></h1>
+<h1>unibo.basicomm23<a class="headerlink" href="#unibo-basicomm23" title="Permalink to this heading">¶</a></h1>
 <p><span class="slide3">Progetto unibo.basicomm23</span></p>
 <p>Il progetto intende  realizzare il concetto di <a class="reference internal" href="#interconnessione"><span class="std std-ref">Interconnessione</span></a>,
 fornendo supporti di tipo generale per le comunicazioni via rete mediante un insieme di
@@ -50,15 +53,15 @@ sono in grado di stabilire una <span class="blue">connessione</span> stabile sul
 Il protocollo <code class="docutils literal notranslate"><span class="pre">UDP</span></code> non stabilisce una connessione, ma può comunque essere usato per inviare messaggi
 e ricevere risposte.</p>
 <section id="interconnessione">
-<h2>Interconnessione<a class="headerlink" href="#interconnessione" title="Link to this heading">¶</a></h2>
+<h2>Interconnessione<a class="headerlink" href="#interconnessione" title="Permalink to this heading">¶</a></h2>
 <p>Nel seguito, useremo il termine <span class="blue">Interconnessione</span> nel senso <strong>astratto</strong> di
 <em>canale di comunicazione bidirezionale</em>
 tra due end-points.</p>
 <p>A partire da questo concetto, introdurremmo un insieme di interfacce e classi:</p>
 <table class="docutils align-default" style="width: 100%">
 <colgroup>
-<col style="width: 60.0%" />
-<col style="width: 40.0%" />
+<col style="width: 60%" />
+<col style="width: 40%" />
 </colgroup>
 <tbody>
 <tr class="row-odd"><td><p>Metodi comuni a ogni <a class="reference internal" href="#interconnessione"><span class="std std-ref">Interconnessione</span></a></p></td>
@@ -83,11 +86,11 @@ tra due end-points.</p>
 </table>
 <p><span class="slide1">Interfaccia Interaction</span></p>
 <section id="unibo-basicomm23-interfaces-interaction">
-<h3>unibo.basicomm23.interfaces.Interaction<a class="headerlink" href="#unibo-basicomm23-interfaces-interaction" title="Link to this heading">¶</a></h3>
+<h3>unibo.basicomm23.interfaces.Interaction<a class="headerlink" href="#unibo-basicomm23-interfaces-interaction" title="Permalink to this heading">¶</a></h3>
 <table class="docutils align-default" style="width: 100%">
 <colgroup>
-<col style="width: 60.0%" />
-<col style="width: 40.0%" />
+<col style="width: 60%" />
+<col style="width: 40%" />
 </colgroup>
 <tbody>
 <tr class="row-odd"><td><p>Un oggetto che implementa l’interfaccia <em>Interaction</em> realizza in modo concreto
@@ -112,7 +115,7 @@ di informazione dal punto di vista applicativo.</p>
 </tbody>
 </table>
 <section id="interaction2021">
-<h4>Interaction2021<a class="headerlink" href="#interaction2021" title="Link to this heading">¶</a></h4>
+<h4>Interaction2021<a class="headerlink" href="#interaction2021" title="Permalink to this heading">¶</a></h4>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">public</span> <span class="n">interface</span> <span class="n">Interaction2021</span>  <span class="p">{</span>
   <span class="n">public</span> <span class="n">void</span> <span class="n">forward</span><span class="p">(</span>  <span class="n">String</span> <span class="n">msg</span> <span class="p">)</span> <span class="n">throws</span> <span class="ne">Exception</span><span class="p">;</span>
   <span class="n">public</span> <span class="n">String</span> <span class="n">request</span><span class="p">(</span>  <span class="n">String</span> <span class="n">msg</span> <span class="p">)</span> <span class="n">throws</span> <span class="ne">Exception</span><span class="p">;</span>
@@ -124,7 +127,7 @@ di informazione dal punto di vista applicativo.</p>
 </div>
 </section>
 <section id="interaction2023">
-<h4>Interaction2023<a class="headerlink" href="#interaction2023" title="Link to this heading">¶</a></h4>
+<h4>Interaction2023<a class="headerlink" href="#interaction2023" title="Permalink to this heading">¶</a></h4>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">public</span> <span class="n">interface</span> <span class="n">Interaction2023</span> <span class="p">{</span>
   <span class="n">public</span> <span class="n">void</span> <span class="n">forward</span><span class="p">(</span>  <span class="n">IApplMessage</span> <span class="n">msg</span> <span class="p">)</span> <span class="n">throws</span> <span class="ne">Exception</span><span class="p">;</span>
   <span class="n">public</span> <span class="n">IApplMessage</span> <span class="n">request</span><span class="p">(</span>  <span class="n">IApplMessage</span> <span class="n">msg</span> <span class="p">)</span> <span class="n">throws</span> <span class="ne">Exception</span><span class="p">;</span>
@@ -146,7 +149,9 @@ uno <span class="blue">standard interno</span> sulla struttura delle informazion
 I metodi che usano <code class="docutils literal notranslate"><span class="pre">IApplMessage</span></code> verranno implementati da supporti
 che invieranno e riceveranno <code class="docutils literal notranslate"><span class="pre">String</span></code>  della forma descritta in <a class="reference internal" href="#struttura-dei-messaggi"><span class="std std-ref">Struttura dei messaggi</span></a>.</p></li>
 </ul>
-<p><span class="slide2">Metodi per la comunicazione</span></p>
+</section>
+<section id="metodi-per-la-comunicazione">
+<h4>Metodi per la comunicazione<a class="headerlink" href="#metodi-per-la-comunicazione" title="Permalink to this heading">¶</a></h4>
 <ul class="simple">
 <li><p>Il metodo <code class="docutils literal notranslate"><span class="pre">forward</span></code> è un metodo di trasmissione <span class="blue">‘fire-and-forget’</span>, mentre il metodo <code class="docutils literal notranslate"><span class="pre">request</span></code> denota
 l’invio di informazione cui deve corrispondere una <em>ack</em> o una <span class="blue">response</span> da parte del ricevente.</p></li>
@@ -160,7 +165,7 @@ la risposta a un messaggio inviato in precedenza con <code class="docutils liter
 </section>
 </section>
 <section id="natura-e-struttura-dei-messaggi-applicativi">
-<h2>Natura e struttura dei messaggi applicativi<a class="headerlink" href="#natura-e-struttura-dei-messaggi-applicativi" title="Link to this heading">¶</a></h2>
+<h2>Natura e struttura dei messaggi applicativi<a class="headerlink" href="#natura-e-struttura-dei-messaggi-applicativi" title="Permalink to this heading">¶</a></h2>
 <p>I messaggi  sono logicamente suddivisi in diverse categorie:</p>
 <blockquote>
 <div><div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="kd">enum</span><span class="w"> </span><span class="n">ApplMessageType</span><span class="p">{</span>
@@ -170,11 +175,11 @@ la risposta a un messaggio inviato in precedenza con <code class="docutils liter
 </div>
 </div></blockquote>
 <section id="tipi-di-messaggi">
-<h3>Tipi di messaggi<a class="headerlink" href="#tipi-di-messaggi" title="Link to this heading">¶</a></h3>
+<h3>Tipi di messaggi<a class="headerlink" href="#tipi-di-messaggi" title="Permalink to this heading">¶</a></h3>
 <table class="docutils align-default" style="width: 100%">
 <colgroup>
-<col style="width: 70.0%" />
-<col style="width: 30.0%" />
+<col style="width: 70%" />
+<col style="width: 30%" />
 </colgroup>
 <tbody>
 <tr class="row-odd"><td><ul class="simple">
@@ -186,15 +191,14 @@ la risposta a un messaggio inviato in precedenza con <code class="docutils liter
 <li><p><span class="blue">event</span>: un messaggio inviato a chiunque sia in grado di elaborarlo.</p></li>
 </ul>
 </td>
-<td><a class="reference internal image-reference" href="_images/legendMessages.PNG"><img alt="_images/legendMessages.PNG" class="align-center" src="_images/legendMessages.PNG" style="width: 60%;" />
-</a>
+<td><a class="reference internal image-reference" href="_images/legendMessages.PNG"><img alt="_images/legendMessages.PNG" class="align-center" src="_images/legendMessages.PNG" style="width: 60%;" /></a>
 </td>
 </tr>
 </tbody>
 </table>
 </section>
 <section id="struttura-dei-messaggi">
-<h3>Struttura dei messaggi<a class="headerlink" href="#struttura-dei-messaggi" title="Link to this heading">¶</a></h3>
+<h3>Struttura dei messaggi<a class="headerlink" href="#struttura-dei-messaggi" title="Permalink to this heading">¶</a></h3>
 <p>Le stringhe che denotano  messaggi <a class="reference internal" href="#unibo-basicomm23-interfaces-iapplmessage"><span class="std std-ref">IApplMessage</span></a> hanno la forma:</p>
 <blockquote>
 <div><div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="n">msg</span><span class="p">(</span><span class="w"> </span><span class="n">MSGID</span><span class="p">,</span><span class="w"> </span><span class="n">MSGTYPE</span><span class="p">,</span><span class="w"> </span><span class="n">SENDER</span><span class="p">,</span><span class="w"> </span><span class="n">RECEIVER</span><span class="p">,</span><span class="w"> </span><span class="n">CONTENT</span><span class="p">,</span><span class="w"> </span><span class="n">SEQNUM</span><span class="w"> </span><span class="p">)</span>
@@ -215,7 +219,7 @@ la risposta a un messaggio inviato in precedenza con <code class="docutils liter
 <p>Questa struttura  costituisce uno <span class="blue">standard interno</span> sulla struttura delle stringhe-messaggio
 scambiate via rete.</p>
 <section id="sintassi-delle-stringhe-messaggio">
-<h4>Sintassi delle stringhe-messaggio<a class="headerlink" href="#sintassi-delle-stringhe-messaggio" title="Link to this heading">¶</a></h4>
+<h4>Sintassi delle stringhe-messaggio<a class="headerlink" href="#sintassi-delle-stringhe-messaggio" title="Permalink to this heading">¶</a></h4>
 <p>La rappresentazione in forma di <code class="docutils literal notranslate"><span class="pre">String</span></code> dei messaggi segue (per motivi ‘storici’) le regole della sintassi <a class="reference external" href="https://it.wikipedia.org/wiki/Prolog">Prolog</a>.
 In particolare:</p>
 <ul class="simple">
@@ -228,11 +232,11 @@ In particolare:</p>
 </section>
 </section>
 <section id="unibo-basicomm23-interfaces-iapplmessage">
-<h3>unibo.basicomm23.interfaces.IApplMessage<a class="headerlink" href="#unibo-basicomm23-interfaces-iapplmessage" title="Link to this heading">¶</a></h3>
+<h3>unibo.basicomm23.interfaces.IApplMessage<a class="headerlink" href="#unibo-basicomm23-interfaces-iapplmessage" title="Permalink to this heading">¶</a></h3>
 <table class="docutils align-default" style="width: 100%">
 <colgroup>
-<col style="width: 60.0%" />
-<col style="width: 40.0%" />
+<col style="width: 60%" />
+<col style="width: 40%" />
 </colgroup>
 <tbody>
 <tr class="row-odd"><td><p>Un oggetto che implementa l’interfaccia <em>IApplMessage</em>  rappresenta  un messaggio che segue
@@ -258,11 +262,11 @@ uno <span class="blue">standard interno</span> sulla struttura delle informazion
 <p><span class="slide1">ApplMessage</span></p>
 </section>
 <section id="unibo-interaction-msg-applmessage">
-<h3>unibo.interaction.msg.ApplMessage<a class="headerlink" href="#unibo-interaction-msg-applmessage" title="Link to this heading">¶</a></h3>
+<h3>unibo.interaction.msg.ApplMessage<a class="headerlink" href="#unibo-interaction-msg-applmessage" title="Permalink to this heading">¶</a></h3>
 <table class="docutils align-default" style="width: 100%">
 <colgroup>
-<col style="width: 60.0%" />
-<col style="width: 40.0%" />
+<col style="width: 60%" />
+<col style="width: 40%" />
 </colgroup>
 <tbody>
 <tr class="row-odd"><td><p>La classe che implementa <a class="reference internal" href="#unibo-basicomm23-interfaces-iapplmessage"><span class="std std-ref">IApplMessage</span></a>
@@ -294,16 +298,15 @@ segue la <a class="reference internal" href="#sintassi-delle-stringhe-messaggio"
 </section>
 </section>
 <section id="unibo-basicomm23-msg-protocoltype">
-<h2>unibo.basicomm23.msg.ProtocolType<a class="headerlink" href="#unibo-basicomm23-msg-protocoltype" title="Link to this heading">¶</a></h2>
+<h2>unibo.basicomm23.msg.ProtocolType<a class="headerlink" href="#unibo-basicomm23-msg-protocoltype" title="Permalink to this heading">¶</a></h2>
 <p>Per ogni protocollo viene definito un package che ne contiene i supporti low-level.</p>
 <table class="docutils align-default" style="width: 100%">
 <colgroup>
-<col style="width: 25.0%" />
-<col style="width: 75.0%" />
+<col style="width: 25%" />
+<col style="width: 75%" />
 </colgroup>
 <tbody>
-<tr class="row-odd"><td><a class="reference internal image-reference" href="_images/basicComm23.png"><img alt="_images/basicComm23.png" src="_images/basicComm23.png" style="width: 100%;" />
-</a>
+<tr class="row-odd"><td><a class="reference internal image-reference" href="_images/basicComm23.png"><img alt="_images/basicComm23.png" src="_images/basicComm23.png" style="width: 100%;" /></a>
 </td>
 <td><div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="kd">public</span><span class="w"> </span><span class="kd">enum</span><span class="w"> </span><span class="n">ProtocolType</span><span class="w"> </span><span class="p">{</span>
 <span class="w">    </span><span class="n">http</span><span class="p">,</span><span class="w"> </span><span class="n">ws</span><span class="p">,</span><span class="w"> </span><span class="n">tcp</span><span class="p">,</span><span class="w"> </span><span class="n">udp</span><span class="p">,</span><span class="w"> </span><span class="n">coap</span><span class="p">,</span><span class="w"> </span><span class="n">mqtt</span><span class="p">,</span><span class="w"> </span><span class="n">bluetooth</span><span class="p">,</span><span class="w"> </span><span class="n">serial</span>
@@ -322,14 +325,14 @@ come specializzazione della classe <a class="reference internal" href="#unibo-ba
 si può usare una Factory.</p>
 </section>
 <section id="unibo-basicomm23-utils-connectionfactory">
-<h2>unibo.basicomm23.utils.ConnectionFactory<a class="headerlink" href="#unibo-basicomm23-utils-connectionfactory" title="Link to this heading">¶</a></h2>
+<h2>unibo.basicomm23.utils.ConnectionFactory<a class="headerlink" href="#unibo-basicomm23-utils-connectionfactory" title="Permalink to this heading">¶</a></h2>
 <p>Un Factory che restituisce un supporto per realizzare connessioni punto-a-punto secondo diversi protocolli.</p>
 <section id="connectionfactory-createclientsupport">
-<h3>ConnectionFactory.createClientSupport<a class="headerlink" href="#connectionfactory-createclientsupport" title="Link to this heading">¶</a></h3>
+<h3>ConnectionFactory.createClientSupport<a class="headerlink" href="#connectionfactory-createclientsupport" title="Permalink to this heading">¶</a></h3>
 <table class="docutils align-default" style="width: 100%">
 <colgroup>
-<col style="width: 50.0%" />
-<col style="width: 50.0%" />
+<col style="width: 50%" />
+<col style="width: 50%" />
 </colgroup>
 <tbody>
 <tr class="row-odd"><td><ol class="arabic simple">
@@ -386,11 +389,11 @@ realizzando i metodi che trattano messaggi di tipo <code class="docutils literal
 </section>
 </section>
 <section id="unibo-basicomm23-utils-connection">
-<h2>unibo.basicomm23.utils.Connection<a class="headerlink" href="#unibo-basicomm23-utils-connection" title="Link to this heading">¶</a></h2>
+<h2>unibo.basicomm23.utils.Connection<a class="headerlink" href="#unibo-basicomm23-utils-connection" title="Permalink to this heading">¶</a></h2>
 <table class="docutils align-default" style="width: 100%">
 <colgroup>
-<col style="width: 60.0%" />
-<col style="width: 40.0%" />
+<col style="width: 60%" />
+<col style="width: 40%" />
 </colgroup>
 <tbody>
 <tr class="row-odd"><td><p>E’ una classe astratta che rappresenta
@@ -459,11 +462,11 @@ utili a meglio comprendere il funzionamento run-time del sistema.</p>
 </table>
 <p><span class="slide1">TcpConnection</span></p>
 <section id="unibo-basicomm23-tcp-tcpconnection">
-<h3>unibo.basicomm23.tcp.TcpConnection<a class="headerlink" href="#unibo-basicomm23-tcp-tcpconnection" title="Link to this heading">¶</a></h3>
+<h3>unibo.basicomm23.tcp.TcpConnection<a class="headerlink" href="#unibo-basicomm23-tcp-tcpconnection" title="Permalink to this heading">¶</a></h3>
 <table class="docutils align-default" style="width: 100%">
 <colgroup>
-<col style="width: 60.0%" />
-<col style="width: 40.0%" />
+<col style="width: 60%" />
+<col style="width: 40%" />
 </colgroup>
 <tbody>
 <tr class="row-odd"><td><p><strong>TcpConnection: impostazione</strong></p>
@@ -513,8 +516,8 @@ utili a meglio comprendere il funzionamento run-time del sistema.</p>
 </table>
 <table class="docutils align-default" style="width: 100%">
 <colgroup>
-<col style="width: 60.0%" />
-<col style="width: 40.0%" />
+<col style="width: 60%" />
+<col style="width: 40%" />
 </colgroup>
 <tbody>
 <tr class="row-odd"><td><p><strong>TcpConnection come Connection</strong></p>
@@ -570,11 +573,11 @@ utili a meglio comprendere il funzionamento run-time del sistema.</p>
 <p><span class="slide1">UDPConnection</span></p>
 </section>
 <section id="unibo-basicomm23-udp-udpconnection">
-<h3>unibo.basicomm23.udp.UdpConnection<a class="headerlink" href="#unibo-basicomm23-udp-udpconnection" title="Link to this heading">¶</a></h3>
+<h3>unibo.basicomm23.udp.UdpConnection<a class="headerlink" href="#unibo-basicomm23-udp-udpconnection" title="Permalink to this heading">¶</a></h3>
 <table class="docutils align-default" style="width: 100%">
 <colgroup>
-<col style="width: 60.0%" />
-<col style="width: 40.0%" />
+<col style="width: 60%" />
+<col style="width: 40%" />
 </colgroup>
 <tbody>
 <tr class="row-odd"><td><p><strong>UdpConnection: impostazione</strong></p>
@@ -613,8 +616,8 @@ utili a meglio comprendere il funzionamento run-time del sistema.</p>
 </table>
 <table class="docutils align-default" style="width: 100%">
 <colgroup>
-<col style="width: 60.0%" />
-<col style="width: 40.0%" />
+<col style="width: 60%" />
+<col style="width: 40%" />
 </colgroup>
 <tbody>
 <tr class="row-odd"><td><p><strong>UdpConnection come Connection</strong></p>
@@ -693,14 +696,14 @@ utili a meglio comprendere il funzionamento run-time del sistema.</p>
 <p><span class="slide1">HttpConnection</span></p>
 </section>
 <section id="unibo-basicomm23-http-httpconnection">
-<h3>unibo.basicomm23.http.HttpConnection<a class="headerlink" href="#unibo-basicomm23-http-httpconnection" title="Link to this heading">¶</a></h3>
+<h3>unibo.basicomm23.http.HttpConnection<a class="headerlink" href="#unibo-basicomm23-http-httpconnection" title="Permalink to this heading">¶</a></h3>
 <p>La implementazione di <a class="reference internal" href="#unibo-basicomm23-interfaces-interaction"><span class="std std-ref">Interaction</span></a> per HTTP non pone particolari problemi:
 si tratta di utilizzare una libreria che fornisce un <em>HTTP-client</em>.
 Qui usiamo la libreria <em>org.apache.http</em>.</p>
 <table class="docutils align-default" style="width: 100%">
 <colgroup>
-<col style="width: 60.0%" />
-<col style="width: 40.0%" />
+<col style="width: 60%" />
+<col style="width: 40%" />
 </colgroup>
 <tbody>
 <tr class="row-odd"><td><p><strong>HttpConnection: impostazione</strong></p>
@@ -799,7 +802,7 @@ convertibile in un oggetto JSON.</p>
 <p><span class="slide1">Ws e WsConnection</span></p>
 </section>
 <section id="id1">
-<h3>Websocket<a class="headerlink" href="#id1" title="Link to this heading">¶</a></h3>
+<h3>Websocket<a class="headerlink" href="#id1" title="Permalink to this heading">¶</a></h3>
 <p><a class="reference external" href="https://it.wikipedia.org/wiki/WebSocket">WebSocket</a> è un protocollo che consente a due o più computer di comunicare tra loro
 in modo full-duplex su una singola connessione TCP.
 È uno strato molto sottile su TCP che trasforma un flusso di byte in un flusso di messaggi
@@ -826,7 +829,7 @@ in qualsiasi momento, anziché costringere il client al polling.</p>
 che definisce un <em>handshake</em> di connessione e un <em>frame</em> di messaggio.</p>
 </section>
 <section id="unibo-basicomm23-ws-wsconnection">
-<h3>unibo.basicomm23.ws.WsConnection<a class="headerlink" href="#unibo-basicomm23-ws-wsconnection" title="Link to this heading">¶</a></h3>
+<h3>unibo.basicomm23.ws.WsConnection<a class="headerlink" href="#unibo-basicomm23-ws-wsconnection" title="Permalink to this heading">¶</a></h3>
 <p>La implementazione di <a class="reference internal" href="#unibo-basicomm23-interfaces-interaction"><span class="std std-ref">Interaction</span></a>
 per <a class="reference internal" href="#id1"><span class="std std-ref">Websocket</span></a> (<code class="docutils literal notranslate"><span class="pre">WS</span></code>) comporta modifiche rilevanti nella struttura del codice applicativo,
 in quanto le interazioni sono <span class="blue">asincrone</span>.</p>
@@ -844,8 +847,8 @@ che implementano <a class="reference internal" href="#unibo-basicomm23-interface
 su <code class="docutils literal notranslate"><span class="pre">WebSocket</span></code>, utilizzando la libreria <code class="docutils literal notranslate"><span class="pre">javax.websocket</span></code>.</p>
 <table class="docutils align-default" style="width: 100%">
 <colgroup>
-<col style="width: 50.0%" />
-<col style="width: 50.0%" />
+<col style="width: 50%" />
+<col style="width: 50%" />
 </colgroup>
 <tbody>
 <tr class="row-odd"><td><p><strong>WsConnection Impostazione</strong></p>
@@ -894,8 +897,8 @@ osservabile da parte di altri componenti (oggetti) che implementano
 </table>
 <table class="docutils align-default" style="width: 100%">
 <colgroup>
-<col style="width: 50.0%" />
-<col style="width: 50.0%" />
+<col style="width: 50%" />
+<col style="width: 50%" />
 </colgroup>
 <tbody>
 <tr class="row-odd"><td><p><strong>WsConnection Costruzione</strong></p>
@@ -937,11 +940,11 @@ osservabile da parte di altri componenti (oggetti) che implementano
 </tbody>
 </table>
 <section id="wsconnection-come-clientendpoint">
-<h4>WsConnection come ClientEndpoint<a class="headerlink" href="#wsconnection-come-clientendpoint" title="Link to this heading">¶</a></h4>
+<h4>WsConnection come ClientEndpoint<a class="headerlink" href="#wsconnection-come-clientendpoint" title="Permalink to this heading">¶</a></h4>
 <table class="docutils align-default" style="width: 100%">
 <colgroup>
-<col style="width: 50.0%" />
-<col style="width: 50.0%" />
+<col style="width: 50%" />
+<col style="width: 50%" />
 </colgroup>
 <tbody>
 <tr class="row-odd"><td><p><strong>WsConnection come ClientEndpoint</strong></p>
@@ -981,11 +984,11 @@ per evitare di dare questa responsabilità alla connessione.</p>
 </table>
 </section>
 <section id="wsconnection-as-connection">
-<h4>WsConnection as Connection<a class="headerlink" href="#wsconnection-as-connection" title="Link to this heading">¶</a></h4>
+<h4>WsConnection as Connection<a class="headerlink" href="#wsconnection-as-connection" title="Permalink to this heading">¶</a></h4>
 <table class="docutils align-default" style="width: 100%">
 <colgroup>
-<col style="width: 50.0%" />
-<col style="width: 50.0%" />
+<col style="width: 50%" />
+<col style="width: 50%" />
 </colgroup>
 <tbody>
 <tr class="row-odd"><td><p><strong>WsConnection come Connection</strong></p>
@@ -1053,11 +1056,11 @@ dopo attenta riflessione.</p>
 </table>
 </section>
 <section id="wsconnection-come-iobservable">
-<h4>WsConnection come IObservable<a class="headerlink" href="#wsconnection-come-iobservable" title="Link to this heading">¶</a></h4>
+<h4>WsConnection come IObservable<a class="headerlink" href="#wsconnection-come-iobservable" title="Permalink to this heading">¶</a></h4>
 <table class="docutils align-default" style="width: 100%">
 <colgroup>
-<col style="width: 50.0%" />
-<col style="width: 50.0%" />
+<col style="width: 50%" />
+<col style="width: 50%" />
 </colgroup>
 <tbody>
 <tr class="row-odd"><td><p><strong>WsConnection come IObservable</strong></p>
@@ -1084,11 +1087,11 @@ dopo attenta riflessione.</p>
 </section>
 </section>
 <section id="unibo-basicomm23-coap-coapconnection">
-<h3>unibo.basicomm23.coap.CoapConnection<a class="headerlink" href="#unibo-basicomm23-coap-coapconnection" title="Link to this heading">¶</a></h3>
+<h3>unibo.basicomm23.coap.CoapConnection<a class="headerlink" href="#unibo-basicomm23-coap-coapconnection" title="Permalink to this heading">¶</a></h3>
 <table class="docutils align-default" style="width: 100%">
 <colgroup>
-<col style="width: 50.0%" />
-<col style="width: 50.0%" />
+<col style="width: 50%" />
+<col style="width: 50%" />
 </colgroup>
 <tbody>
 <tr class="row-odd"><td><p><strong>CoapConnection impostazione</strong></p>
@@ -1126,11 +1129,11 @@ dopo attenta riflessione.</p>
 </tbody>
 </table>
 <section id="coapconnection-come-connection">
-<h4>CoapConnection come Connection<a class="headerlink" href="#coapconnection-come-connection" title="Link to this heading">¶</a></h4>
+<h4>CoapConnection come Connection<a class="headerlink" href="#coapconnection-come-connection" title="Permalink to this heading">¶</a></h4>
 <table class="docutils align-default" style="width: 100%">
 <colgroup>
-<col style="width: 50.0%" />
-<col style="width: 50.0%" />
+<col style="width: 50%" />
+<col style="width: 50%" />
 </colgroup>
 <tbody>
 <tr class="row-odd"><td><p><strong>CoapConnection come Connection</strong></p>
@@ -1194,11 +1197,11 @@ dopo attenta riflessione.</p>
 </table>
 </section>
 <section id="coapconnection-come">
-<h4>CoapConnection come<a class="headerlink" href="#coapconnection-come" title="Link to this heading">¶</a></h4>
+<h4>CoapConnection come<a class="headerlink" href="#coapconnection-come" title="Permalink to this heading">¶</a></h4>
 <table class="docutils align-default" style="width: 100%">
 <colgroup>
-<col style="width: 50.0%" />
-<col style="width: 50.0%" />
+<col style="width: 50%" />
+<col style="width: 50%" />
 </colgroup>
 <tbody>
 <tr class="row-odd"><td><p><strong>CoapConnection impostazione</strong></p>
@@ -1229,7 +1232,7 @@ dopo attenta riflessione.</p>
 </section>
 </section>
 <section id="unibo-basicomm23-mqtt-mqttconnection">
-<h3>unibo.basicomm23.mqtt.MqttConnection<a class="headerlink" href="#unibo-basicomm23-mqtt-mqttconnection" title="Link to this heading">¶</a></h3>
+<h3>unibo.basicomm23.mqtt.MqttConnection<a class="headerlink" href="#unibo-basicomm23-mqtt-mqttconnection" title="Permalink to this heading">¶</a></h3>
 <p>Si veda la sezione dedicata a <a class="reference internal" href="MQTTConnection.html#mqttconnection"><span class="std std-ref">MQTTConnection</span></a>.</p>
 <p><span class="slide">Abilitatori</span></p>
 <p>I componenti di un sistema distribuito devono, di norma, essere capaci di</p>
@@ -1243,7 +1246,7 @@ una sorta di ‘enti abilitatori’ alle comunicazioni.</p>
 </section>
 </section>
 <section id="abilitatori-di-comunicazione">
-<h2>Abilitatori di comunicazione<a class="headerlink" href="#abilitatori-di-comunicazione" title="Link to this heading">¶</a></h2>
+<h2>Abilitatori di comunicazione<a class="headerlink" href="#abilitatori-di-comunicazione" title="Permalink to this heading">¶</a></h2>
 <p>Parliamo di classi che abilitano alle comunicazioni per enfatizzare il fatto che queste classi
 <span class="remark">non includono logica applicativa</span>.</p>
 <ul class="simple">
@@ -1252,15 +1255,15 @@ una sorta di ‘enti abilitatori’ alle comunicazioni.</p>
 </ul>
 <p><span class="slide1">Abilitatori per la ricezione</span></p>
 <section id="serverfactory">
-<h3>ServerFactory<a class="headerlink" href="#serverfactory" title="Link to this heading">¶</a></h3>
+<h3>ServerFactory<a class="headerlink" href="#serverfactory" title="Permalink to this heading">¶</a></h3>
 <p>Costruisce server  che danno la capacità di ricevere messaggi usando uno dei protocolli definiti
 in <a class="reference internal" href="#unibo-basicomm23-msg-protocoltype"><span class="std std-ref">ProtocolType</span></a>.</p>
 <section id="unibo-basicomm23-enablers-serverfactory">
-<h4>unibo.basicomm23.enablers.ServerFactory<a class="headerlink" href="#unibo-basicomm23-enablers-serverfactory" title="Link to this heading">¶</a></h4>
+<h4>unibo.basicomm23.enablers.ServerFactory<a class="headerlink" href="#unibo-basicomm23-enablers-serverfactory" title="Permalink to this heading">¶</a></h4>
 <table class="docutils align-default" style="width: 100%">
 <colgroup>
-<col style="width: 60.0%" />
-<col style="width: 40.0%" />
+<col style="width: 60%" />
+<col style="width: 40%" />
 </colgroup>
 <tbody>
 <tr class="row-odd"><td><p>Realizza un server che riceve messaggi, delegandone la gestione a un oggetto che
@@ -1297,7 +1300,7 @@ implementa <a class="reference internal" href="#unibo-basicomm23-interfaces-iapp
 </table>
 </section>
 <section id="unibo-basicomm23-interfaces-iserver">
-<h4>unibo.basicomm23.interfaces.IServer<a class="headerlink" href="#unibo-basicomm23-interfaces-iserver" title="Link to this heading">¶</a></h4>
+<h4>unibo.basicomm23.interfaces.IServer<a class="headerlink" href="#unibo-basicomm23-interfaces-iserver" title="Permalink to this heading">¶</a></h4>
 <div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="kd">public</span><span class="w"> </span><span class="kd">interface</span> <span class="nc">IServer</span><span class="w"> </span><span class="p">{</span>
 <span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="nf">getName</span><span class="p">();</span>
 <span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">boolean</span><span class="w"> </span><span class="nf">isActive</span><span class="p">();</span>
@@ -1328,15 +1331,14 @@ ad esempio <a class="reference external" href="https://spring.io/projects/spring
 (si veda <a class="reference internal" href="#unibo-interaction-msg-applmsghandler"><span class="std std-ref">ApplMsgHandler</span></a>,
 che implementa l’interfaccia <a class="reference internal" href="#unibo-basicomm23-interfaces-iapplmsghandler"><span class="std std-ref">IApplMsgHandler</span></a>
 secondo il seguente schema architetturale:</p>
-<a class="reference internal image-reference" href="_images/AbilitatoreServer.PNG"><img alt="_images/AbilitatoreServer.PNG" class="align-center" src="_images/AbilitatoreServer.PNG" style="width: 70%;" />
-</a>
+<a class="reference internal image-reference" href="_images/AbilitatoreServer.PNG"><img alt="_images/AbilitatoreServer.PNG" class="align-center" src="_images/AbilitatoreServer.PNG" style="width: 70%;" /></a>
 </section>
 <section id="unibo-basicomm23-enablers-connectionhandler">
-<h4>unibo.basicomm23.enablers.ConnectionHandler<a class="headerlink" href="#unibo-basicomm23-enablers-connectionhandler" title="Link to this heading">¶</a></h4>
+<h4>unibo.basicomm23.enablers.ConnectionHandler<a class="headerlink" href="#unibo-basicomm23-enablers-connectionhandler" title="Permalink to this heading">¶</a></h4>
 <table class="docutils align-default" style="width: 100%">
 <colgroup>
-<col style="width: 40.0%" />
-<col style="width: 60.0%" />
+<col style="width: 40%" />
+<col style="width: 60%" />
 </colgroup>
 <tbody>
 <tr class="row-odd"><td><p>Gestisce i messaggi in arrivo su una connessione lato server e li ridirige all’handler applicativo dato.</p>
@@ -1389,7 +1391,7 @@ secondo il seguente schema architetturale:</p>
 </section>
 </section>
 <section id="unibo-basicomm23-interfaces-iapplmsghandler">
-<h3>unibo.basicomm23.interfaces.IApplMsgHandler<a class="headerlink" href="#unibo-basicomm23-interfaces-iapplmsghandler" title="Link to this heading">¶</a></h3>
+<h3>unibo.basicomm23.interfaces.IApplMsgHandler<a class="headerlink" href="#unibo-basicomm23-interfaces-iapplmsghandler" title="Permalink to this heading">¶</a></h3>
 <div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="kd">public</span><span class="w"> </span><span class="kd">interface</span> <span class="nc">IApplMsgHandler</span><span class="w">  </span><span class="p">{</span>
 <span class="w">  </span><span class="kd">public</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="nf">getName</span><span class="p">();</span>
 <span class="w">  </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">elaborate</span><span class="p">(</span><span class="w"> </span><span class="n">IApplMessage</span><span class="w"> </span><span class="n">message</span><span class="p">,</span><span class="w"> </span><span class="n">Interaction</span><span class="w">  </span><span class="n">conn</span><span class="w"> </span><span class="p">);</span>
@@ -1404,7 +1406,7 @@ e come inviare repliche o risposte al chiamante su <code class="docutils literal
 <a class="reference internal" href="#unibo-basicomm23-enablers-serverfactory"><span class="std std-ref">ServerFactory</span></a>.</p>
 </section>
 <section id="unibo-interaction-msg-applmsghandler">
-<h3>unibo.interaction.msg.ApplMsgHandler<a class="headerlink" href="#unibo-interaction-msg-applmsghandler" title="Link to this heading">¶</a></h3>
+<h3>unibo.interaction.msg.ApplMsgHandler<a class="headerlink" href="#unibo-interaction-msg-applmsghandler" title="Permalink to this heading">¶</a></h3>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">public</span> <span class="n">abstract</span> <span class="k">class</span> <span class="nc">ApplMsgHandler</span> <span class="n">implements</span> <span class="n">IApplMsgHandler</span> <span class="p">{</span>
 <span class="n">protected</span> <span class="n">String</span> <span class="n">name</span><span class="p">;</span>
   <span class="n">public</span> <span class="n">ApplMsgHandler</span><span class="p">(</span> <span class="n">String</span> <span class="n">name</span>  <span class="p">)</span> <span class="p">{</span>  <span class="n">this</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span><span class="p">;</span> <span class="p">}</span>
@@ -1416,31 +1418,30 @@ e come inviare repliche o risposte al chiamante su <code class="docutils literal
 <p><span class="slide1">Abilitatori per la trasmissione</span></p>
 </section>
 <section id="actornaivecaller">
-<h3>ActorNaiveCaller<a class="headerlink" href="#actornaivecaller" title="Link to this heading">¶</a></h3>
+<h3>ActorNaiveCaller<a class="headerlink" href="#actornaivecaller" title="Permalink to this heading">¶</a></h3>
 <table class="docutils align-default" style="width: 100%">
 <colgroup>
-<col style="width: 50.0%" />
-<col style="width: 50.0%" />
+<col style="width: 50%" />
+<col style="width: 50%" />
 </colgroup>
 <tbody>
 <tr class="row-odd"><td><p>Permette a un oggetto applicativo di
 inviare messaggi usando uno dei protocolli definiti in <a class="reference internal" href="#unibo-basicomm23-msg-protocoltype"><span class="std std-ref">ProtocolType</span></a>.</p></td>
-<td><a class="reference internal image-reference" href="_images/AbilitatoreCaller.PNG"><img alt="_images/AbilitatoreCaller.PNG" class="align-center" src="_images/AbilitatoreCaller.PNG" style="width: 60%;" />
-</a>
+<td><a class="reference internal image-reference" href="_images/AbilitatoreCaller.PNG"><img alt="_images/AbilitatoreCaller.PNG" class="align-center" src="_images/AbilitatoreCaller.PNG" style="width: 60%;" /></a>
 </td>
 </tr>
 </tbody>
 </table>
 <section id="unibo-basicomm23-enablers-actornaivecaller">
-<h4>unibo.basicomm23.enablers.ActorNaiveCaller<a class="headerlink" href="#unibo-basicomm23-enablers-actornaivecaller" title="Link to this heading">¶</a></h4>
+<h4>unibo.basicomm23.enablers.ActorNaiveCaller<a class="headerlink" href="#unibo-basicomm23-enablers-actornaivecaller" title="Permalink to this heading">¶</a></h4>
 <p>Realizza una prima versione di un attore capace di stabilire una <a class="reference internal" href="#interconnessione"><span class="std std-ref">Interconnessione</span></a> con un server remoto
 che opera su un nodo con  <code class="docutils literal notranslate"><span class="pre">hostAddr</span></code> dato.
 E’ definito cme una classe astratta che delega alle sue specializzazioni la definizione di un metodo
 (<span class="blue">body</span>) che dovrà contenere il funzionamento logico di livello applicativo.</p>
 <table class="docutils align-default" style="width: 100%">
 <colgroup>
-<col style="width: 50.0%" />
-<col style="width: 50.0%" />
+<col style="width: 50%" />
+<col style="width: 50%" />
 </colgroup>
 <tbody>
 <tr class="row-odd"><td><p>Il <em>body</em> verrà eseguito all’interno di un Thread creato dopo una esplicita attivazione
@@ -1494,9 +1495,9 @@ con il server, avvalendosi di <a class="reference internal" href="#unibo-basicom
 </section>
 </section>
 <section id="osservabili-e-osservatori">
-<h2>Osservabili e osservatori<a class="headerlink" href="#osservabili-e-osservatori" title="Link to this heading">¶</a></h2>
+<h2>Osservabili e osservatori<a class="headerlink" href="#osservabili-e-osservatori" title="Permalink to this heading">¶</a></h2>
 <section id="unibo-basicomm23-interfaces-iobserver">
-<h3>unibo.basicomm23.interfaces.IObserver<a class="headerlink" href="#unibo-basicomm23-interfaces-iobserver" title="Link to this heading">¶</a></h3>
+<h3>unibo.basicomm23.interfaces.IObserver<a class="headerlink" href="#unibo-basicomm23-interfaces-iobserver" title="Permalink to this heading">¶</a></h3>
 <div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="kd">public</span><span class="w"> </span><span class="kd">interface</span> <span class="nc">IObserver</span><span class="w"> </span><span class="kd">extends</span><span class="w"> </span><span class="n">java</span><span class="p">.</span><span class="na">util</span><span class="p">.</span><span class="na">Observer</span><span class="p">{</span>
 <span class="w">  </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">update</span><span class="p">(</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">value</span><span class="w"> </span><span class="p">);</span>
 <span class="w">  </span><span class="c1">//public void update(Observable o, Object news) //From Observer</span>
@@ -1508,7 +1509,7 @@ ma al momento osserviamo che non viene messa in discussione l’idea di osservab
 in cui viene realizzata nel mondo della <em>oop classica</em>.</p>
 </section>
 <section id="unibo-basicomm23-interfaces-iobservable">
-<h3>unibo.basicomm23.interfaces.IObservable<a class="headerlink" href="#unibo-basicomm23-interfaces-iobservable" title="Link to this heading">¶</a></h3>
+<h3>unibo.basicomm23.interfaces.IObservable<a class="headerlink" href="#unibo-basicomm23-interfaces-iobservable" title="Permalink to this heading">¶</a></h3>
 <div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="kd">public</span><span class="w"> </span><span class="kd">interface</span> <span class="nc">IObservable</span><span class="w">  </span><span class="p">{</span>
 <span class="w">  </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">addObserver</span><span class="p">(</span><span class="n">IObserver</span><span class="w"> </span><span class="n">obs</span><span class="w"> </span><span class="p">);</span>
 <span class="w">  </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">deleteObserver</span><span class="p">(</span><span class="n">IObserver</span><span class="w"> </span><span class="n">obs</span><span class="w"> </span><span class="p">);</span>
@@ -1519,7 +1520,7 @@ in cui viene realizzata nel mondo della <em>oop classica</em>.</p>
 <a class="reference internal" href="#unibo-basicomm23-interfaces-iobserver"><span class="std std-ref">IObserver</span></a> estende <code class="docutils literal notranslate"><span class="pre">java.util.Observer</span></code>.</p>
 </section>
 <section id="unibo-basicomm23-utilsapplabstractobserver">
-<h3>unibo.basicomm23.utilsApplAbstractObserver<a class="headerlink" href="#unibo-basicomm23-utilsapplabstractobserver" title="Link to this heading">¶</a></h3>
+<h3>unibo.basicomm23.utilsApplAbstractObserver<a class="headerlink" href="#unibo-basicomm23-utilsapplabstractobserver" title="Permalink to this heading">¶</a></h3>
 <p>La classe astratta <code class="docutils literal notranslate"><span class="pre">unibo.basicomm23.utils.ApplAbstractObserver</span></code> fornisce lo scheletro di un observer
 che implementa <a class="reference internal" href="#unibo-basicomm23-interfaces-iobserver"><span class="std std-ref">IObserver</span></a>, lasciando non specificato
 il metodo <code class="docutils literal notranslate"><span class="pre">public</span> <span class="pre">void</span> <span class="pre">update(String</span> <span class="pre">msg)</span></code>.</p>
@@ -1537,11 +1538,11 @@ il metodo <code class="docutils literal notranslate"><span class="pre">public</s
 </section>
 </section>
 <section id="unibo-basicomm23-utils-commutils">
-<h2>unibo.basicomm23.utils.CommUtils<a class="headerlink" href="#unibo-basicomm23-utils-commutils" title="Link to this heading">¶</a></h2>
+<h2>unibo.basicomm23.utils.CommUtils<a class="headerlink" href="#unibo-basicomm23-utils-commutils" title="Permalink to this heading">¶</a></h2>
 <p>Nel package <code class="docutils literal notranslate"><span class="pre">utils</span></code> del progetto, viene definita la classe <em>CommUtils</em>  che definisce
 vari metodi <em>static</em> di utilità.</p>
 <section id="metodi-di-uso-comune">
-<h3>Metodi di uso comune<a class="headerlink" href="#metodi-di-uso-comune" title="Link to this heading">¶</a></h3>
+<h3>Metodi di uso comune<a class="headerlink" href="#metodi-di-uso-comune" title="Permalink to this heading">¶</a></h3>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">void</span> <span class="pre">delay(Int)</span></code>: per sospendere l’esecuzione del Thred corrente</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">void</span> <span class="pre">outxxx(String)</span></code>, con <code class="docutils literal notranslate"><span class="pre">xxx=blue,red,grenn,yellow,</span> <span class="pre">...</span></code> per visualizzare messaggi colorati su <code class="docutils literal notranslate"><span class="pre">System.out</span></code>,
@@ -1549,7 +1550,7 @@ una feature che risultà utile per differenzare le informazioni emesse dai diver
 </ul>
 </section>
 <section id="metodi-per-la-costruzione-di-messaggi">
-<h3>Metodi per la costruzione di messaggi<a class="headerlink" href="#metodi-per-la-costruzione-di-messaggi" title="Link to this heading">¶</a></h3>
+<h3>Metodi per la costruzione di messaggi<a class="headerlink" href="#metodi-per-la-costruzione-di-messaggi" title="Permalink to this heading">¶</a></h3>
 <p>La classe definisce anche metodi statici che agevolano la costruzione e l’invio di
 <a class="reference internal" href="#natura-e-struttura-dei-messaggi-applicativi"><span class="std std-ref">messaggi applicativi</span></a></p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">JSONObject</span> <span class="n">parseForJson</span><span class="p">(</span><span class="n">String</span> <span class="n">message</span><span class="p">)</span>
@@ -1563,7 +1564,7 @@ una feature che risultà utile per differenzare le informazioni emesse dai diver
 determina il nome del chiamante.</p>
 </section>
 <section id="metodi-per-modificare-stringhe-messaggio">
-<h3>Metodi per modificare stringhe-messaggio<a class="headerlink" href="#metodi-per-modificare-stringhe-messaggio" title="Link to this heading">¶</a></h3>
+<h3>Metodi per modificare stringhe-messaggio<a class="headerlink" href="#metodi-per-modificare-stringhe-messaggio" title="Permalink to this heading">¶</a></h3>
 <p>La trasmissione/ricezione di stringhe che contengono <code class="docutils literal notranslate"><span class="pre">\n</span></code> può spesso portare a malfunzionamenti.
 Conviene dunque sostituire il carattere in trasmissione, per poi ripristinarlo in ricezione.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">public</span> <span class="n">static</span> <span class="n">String</span> <span class="n">convertToSend</span><span class="p">(</span><span class="n">String</span> <span class="n">s</span><span class="p">){</span>
@@ -1575,6 +1576,10 @@ Conviene dunque sostituire il carattere in trasmissione, per poi ripristinarlo i
 </pre></div>
 </div>
 </section>
+<section id="metodi-per-eureka">
+<h3>Metodi per Eureka<a class="headerlink" href="#metodi-per-eureka" title="Permalink to this heading">¶</a></h3>
+<p>Si veda <a class="reference internal" href="UsingEureka.html#commutils-per-l-uso-di-eureka"><span class="std std-ref">CommUtils per l’uso di Eureka</span></a></p>
+</section>
 </section>
 </section>
 
@@ -1583,7 +1588,7 @@ Conviene dunque sostituire il carattere in trasmissione, per poi ripristinarlo i
           </div>
         </div>
       </div>
-      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
   <div>
     <h3><a href="index.html">Table of Contents</a></h3>
@@ -1593,6 +1598,7 @@ Conviene dunque sostituire il carattere in trasmissione, per poi ripristinarlo i
 <li><a class="reference internal" href="#unibo-basicomm23-interfaces-interaction">unibo.basicomm23.interfaces.Interaction</a><ul>
 <li><a class="reference internal" href="#interaction2021">Interaction2021</a></li>
 <li><a class="reference internal" href="#interaction2023">Interaction2023</a></li>
+<li><a class="reference internal" href="#metodi-per-la-comunicazione">Metodi per la comunicazione</a></li>
 </ul>
 </li>
 </ul>
@@ -1656,6 +1662,7 @@ Conviene dunque sostituire il carattere in trasmissione, per poi ripristinarlo i
 <li><a class="reference internal" href="#metodi-di-uso-comune">Metodi di uso comune</a></li>
 <li><a class="reference internal" href="#metodi-per-la-costruzione-di-messaggi">Metodi per la costruzione di messaggi</a></li>
 <li><a class="reference internal" href="#metodi-per-modificare-stringhe-messaggio">Metodi per modificare stringhe-messaggio</a></li>
+<li><a class="reference internal" href="#metodi-per-eureka">Metodi per Eureka</a></li>
 </ul>
 </li>
 </ul>
@@ -1665,13 +1672,13 @@ Conviene dunque sostituire il carattere in trasmissione, per poi ripristinarlo i
   </div>
   <div>
     <h4>Previous topic</h4>
-    <p class="topless"><a href="ConwayLife25.html"
-                          title="previous chapter">ConwayLife25</a></p>
+    <p class="topless"><a href="ChiediAdAI.html"
+                          title="previous chapter">ChiediAdAI</a></p>
   </div>
   <div>
     <h4>Next topic</h4>
-    <p class="topless"><a href="SpringBootWebSocketSTOMP.html"
-                          title="next chapter">SpringBootWebSocketSTOMP</a></p>
+    <p class="topless"><a href="commdemo.html"
+                          title="next chapter">commdemo</a></p>
   </div>
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
@@ -1680,7 +1687,7 @@ Conviene dunque sostituire il carattere in trasmissione, per poi ripristinarlo i
             rel="nofollow">Show Source</a></li>
     </ul>
    </div>
-<search id="searchbox" style="display: none" role="search">
+<div id="searchbox" style="display: none" role="search">
   <h3 id="searchlabel">Quick search</h3>
     <div class="searchformwrapper">
     <form class="search" action="search.html" method="get">
@@ -1688,31 +1695,31 @@ Conviene dunque sostituire il carattere in trasmissione, per poi ripristinarlo i
       <input type="submit" value="Go" />
     </form>
     </div>
-</search>
+</div>
 <script>document.getElementById('searchbox').style.display = "block"</script>
         </div>
       </div>
       <div class="clearer"></div>
     </div>
-    <div class="related" role="navigation" aria-label="Related">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
           <a href="genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="SpringBootWebSocketSTOMP.html" title="SpringBootWebSocketSTOMP"
+          <a href="commdemo.html" title="commdemo"
              >next</a> |</li>
         <li class="right" >
-          <a href="ConwayLife25.html" title="ConwayLife25"
+          <a href="ChiediAdAI.html" title="ChiediAdAI"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">iss24 1.0 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="index.html">iss25 1.0 documentation</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">unibo.basicomm23</a></li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
-    &#169; Copyright 2024, Antonio Natali.
-      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.1.3.
+        &#169; Copyright 2025, Antonio Natali.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 5.0.2.
     </div>
   </body>
 </html>

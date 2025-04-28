@@ -1,0 +1,188 @@
+System   conwaymasterqak 
+mqttBroker "192.168.1.68" : 1883 eventTopic "lifein"   
+/*
+ * ==========================================================================
+ * gamemaster
+ * 
+ * WARNING: mqttBroker "...."
+ * 
+ * ORCHESTRATORE (non controllore del gioco)
+ * 
+ * - si registra il EUREKA con nome ctxmaster
+ *   usando al classe di configurazione EurekaServiceConfig
+ * - legge il numero (NR,NC) delle celle dal file gridconfig.json
+ * - attende NALLCells=NR*NC richieste addtogame e quando sono arrivate
+ * - attende NALLCells dispatch cellcreated e quando sono arrivati
+ * - entra nella FASE DI ORCHESTRAZIONE
+ *   - emit allcellready
+ *   - attende NALLCells dispatch cellready (fine EPOCH di cella) 
+ *   - quando arrivati emit synch (segnale di orchestrazione)
+ * 
+ * Notiamo che  
+ * - gli eventi vengono pubblicati sulla topic 'lifein'
+ * - il gamemaster NON PERCEPISCE messaggi di controllo
+ * ==========================================================================
+ * 
+ */
+Dispatch guicmd        : guicmd(X) //X=startthegame | stopthegame
+Dispatch fromdisplay   : fromdisplay(CMD)
+Dispatch todisplay     : todisplay(CELL,STATE)
+ 
+Event startthegame     : startthegame(X)
+Dispatch epochDone     : epochDone(N)
+Dispatch start         : start(V)
+Dispatch stop          : stop(V)
+
+Dispatch stopthecell   : stopthecell(X)
+Dispatch gameended     : gameended(X)  //serve per andare in resumegame
+Dispatch gamestopped   : gamestopped(X) 
+Dispatch gamesuspend   : gamesuspend(X)
+
+Dispatch cellcreated   : cellcreated(CELL,STATE)
+Dispatch allcellcreated: allcellcreated(N)
+
+Dispatch cellends      : cellends(CELL)
+Dispatch changeCellState   : changeCellState(X,Y)
+
+Dispatch nbconfig      : nbconfig(N)
+Dispatch allnbreceived : allnbreceived(N)
+Dispatch cellready     : cellready(CELL)
+Dispatch allcellready  : allcellready(X)
+
+Event    synch         : synch(X)
+Event    clearCell     : clearThecell(X)     //Forse meglio non qui ....
+Event    allcellready  : allcellready(X)
+Event    curstate      : curstate(NB,STATE)
+Request addtogame      : addtogame( NAME )
+Reply   addedtogame    : addedtogame( CELLNAME, NROWS, NCOLS ) for addtogame
+
+
+Context ctxmaster ip [ host="localhost" port=8260] 
+
+QActor gamemaster context ctxmaster{
+import "unibo.basicomm23.mqtt.*"
+ [# 
+ 	var RowsN = 0
+ 	var ColsN = 0
+ 
+    var NAllCells      =  0  //set in s0
+    var NCellsCreated  =  0  //set in handlecellecreated 		
+    var NCellended     =  0  //set in terminatethegame
+ 	var NCellReady     =  0
+ 	
+ 	var LastI = 0
+	var LastJ = 0
+ 	
+ 	var stopped  = false
+ 	var EpochNum = 0
+	
+
+	fun register(){
+		
+		if( CommUtils.ckeckEureka( ) ){
+			val discoveryclient = CommUtils.registerService( main.java.EurekaServiceConfig() )
+			CommUtils.outblue("discoveryclient=$discoveryclient ")
+		}
+	}
+  #]
+	 
+  State s0 initial{ 
+  	//delay 2000  //NOMORE (Zoccardelli)
+  	println("$name | REGISTER ... ") color blue
+	[# 		  
+		register()
+		
+		val res = conway.GridSupport25.readCellNum("gridConfig.json")
+		RowsN     = res.get(0)
+		ColsN     = res.get(1)
+		NAllCells = RowsN * ColsN      
+	#]
+    println("$name | RowsN=$RowsN ColsN=$ColsN") color blue
+	println("$name | READY TO ACCEPT CELLS ... ")	color magenta
+  }
+  Transition t0
+  	whenRequest addtogame -> handleAddtogame
+
+  State handleAddtogame{
+  	printCurrentMessage
+  	println("$name | LastI=$LastI LastJ=$LastJ RowsN=$RowsN ColsN=$ColsN")
+  	if [# LastJ == ColsN #]{ //riga finita
+  		if [# LastI == RowsN #] { //Righe finite
+  		    [# val CelName = "rejected_0_0" #]
+  			replyTo addtogame with addedtogame : addedtogame($CelName,0,0)
+  		}else{ //cambio riga
+	  		[# LastI++; LastJ = 0 #]
+	  		[# val CelName = "cell_${LastI}_$LastJ" #] 
+	  		replyTo addtogame with addedtogame : addedtogame($CelName, $RowsN, $ColsN)
+	  		[#  LastJ++ #]
+  		}
+  	}else{ //caso normale
+  		[# val CelName = "cell_${LastI}_$LastJ" #] 
+  		replyTo addtogame with addedtogame : addedtogame($CelName, $RowsN, $ColsN)
+  		[#  LastJ++ #]
+  	}//  
+  }
+  Transition t0
+  	whenRequest addtogame -> handleAddtogame
+  	whenMsg cellcreated   -> handleCellcreated
+   
+   
+  State handleCellcreated{
+  	[# NCellsCreated++ #]
+  	println("$name |  CREATED $NCellsCreated cells ") color magenta
+  	if [# NCellsCreated ==  NAllCells #]{
+  		println("$name | ALL CELL $NAllCells CREATED !!!! ") color magenta
+  		autodispatch allcellready : allcellready(ok)
+  	}
+  }
+  Transition t0
+  	whenRequest addtogame -> handleAddtogame
+  	whenMsg cellcreated   -> handleCellcreated
+  	whenMsg allcellready  -> orchestrateTheGame 
+  	
+  	
+  State orchestrateTheGame{
+  	println("$name | orchestrateTheGame") color blue
+  	emit allcellready : allcellready(ok)
+  	[# main.java.OutInMasterGui(myself, "guiin") #]
+  }
+  Transition t0 
+   	whenMsg cellready -> handleCellReady
+  
+  State handleCellReady{
+  	//printCurrentMessage color cyan
+  	[# NCellReady++ #]
+  	if [# NCellReady == NAllCells #]{
+  		[# NCellReady=0 #]
+  		[# EpochNum++ #]
+  		autodispatch epochDone : epochDone(EpochNum)  		
+  	}
+  }
+  Transition t0 
+  	whenMsg cellready  -> handleCellReady
+  	whenMsg epochDone  -> continueTheGame
+//  	whenMsg epochDone and [# ! stopped #] -> continueTheGame
+//  	whenMsg epochDone and [# stopped #]   -> waittoRestart
+  	  	
+ State continueTheGame{
+ 	 println("$name | continueTheGame($MyName) epoch = EpochNum $EpochNum stopped=$stopped") color black
+ 	 delay 500 
+ 	 emit synch : synch(ok)    
+ } 
+  Transition t0 
+  	whenMsg cellready -> handleCellReady
+ 
+ 
+// State waittoRestart{
+// 	println("$name | waittoRestart ") color magenta
+// }
+// Transition t0 
+// 	whenMsg start -> resumeTheGame
+//
+// State resumeTheGame{
+// 	[# stopped = false #]
+//  }
+//  Goto continueTheGame
+
+}
+ 
