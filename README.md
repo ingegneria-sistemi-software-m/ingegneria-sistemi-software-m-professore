@@ -16,5 +16,5 @@ Repository del corso Ingegneria dei Sistemi Software a.a. 2024/2025 - DISI - Uni
  * [qakdemo24](qakdemo24): Esempi di uso dei QakActors
  * [qakms025](qakms025): Un attore qak che realizza un servizio osservabile
  * [conwaycellsqaknaive](conwaycellsqaknaive): un sistema di 4 celle-actor create dinamenicamente
- * [conwaycellsqak](conwaycellsqak: celle per un sistema ConwayLife distribuito con gamemaster (orchestratore)
+ * [conwaycellsqak](conwaycellsqak): celle per un sistema ConwayLife distribuito con gamemaster (orchestratore)
  * [conwaymasterqak](conwaymasterqak): gamematser per le celle  ConwayLife distribuite
