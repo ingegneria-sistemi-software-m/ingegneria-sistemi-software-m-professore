@@ -73,6 +73,7 @@ dependencies {
     //javax.websocket api is only the specification
     implementation group: 'org.glassfish.tyrus.bundles', name: 'tyrus-standalone-client', version: '1.9'
 
+
 	//HTTP
     implementation 'org.apache.httpcomponents:httpclient:4.5'
 
@@ -100,6 +101,11 @@ dependencies {
 
     /* LOG4J ***************************************************************************** */    
    implementation 'ch.qos.logback:logback-classic:1.2.11'  //vs.1.5.7     1.2.11 (app1.log ok)     1.4.11
+
+  
+   /* Elasticsearch   */
+    // https://mvnrepository.com/artifact/net.logstash.logback/logstash-logback-encoder
+	implementation("net.logstash.logback:logstash-logback-encoder:7.3")  //7.3 permette di usare 1.2.11
 
     /* HTTP ******************************************************************************** */
     // https://mvnrepository.com/artifact/org.apache.httpcomponents/httpclient

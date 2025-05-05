@@ -19,7 +19,7 @@ import org.json.simple.JSONObject
 
 
 //User imports JAN2024
-import unibo.basicomm23.mqtt.*
+import main.java.*
 
 class Gamemaster ( name: String, scope: CoroutineScope, isconfined: Boolean=false, isdynamic: Boolean=false ) : 
           ActorBasicFsm( name, scope, confined=isconfined, dynamically=isdynamic ){
@@ -36,7 +36,7 @@ class Gamemaster ( name: String, scope: CoroutineScope, isconfined: Boolean=fals
 		 
 		    var NAllCells      =  0  //set in s0
 		    var NCellsCreated  =  0  //set in handlecellecreated 		
-		    var NCellended     =  0  //set in terminatethegame
+		//    var NCellended     =  0  //set in terminatethegame
 		 	var NCellReady     =  0
 		 	
 		 	var LastI = 0
@@ -45,6 +45,7 @@ class Gamemaster ( name: String, scope: CoroutineScope, isconfined: Boolean=fals
 		 	var stopped  = false
 		 	var EpochNum = 0
 			
+			lateinit var outIndev :  OutInMasterGui
 		
 			fun register(){
 				
@@ -53,6 +54,22 @@ class Gamemaster ( name: String, scope: CoroutineScope, isconfined: Boolean=fals
 					CommUtils.outblue("discoveryclient=$discoveryclient ")
 				}
 			}
+		
+		  /*
+		   *---------------------------------------------------------
+		  	CREAZIONE DI UN logger con il nome passato come argomento
+		  	USIAMO conway come NOME DI logger per
+		    facilitare la lettura/analisi dei logs
+		   *---------------------------------------------------------
+		  */	
+			val logger = LoggerFactory.getLogger("conway") 
+			CommUtils.outcyan("logger = $logger")
+		
+		  /*
+		   * Pulizia del log file locale definito in logback.xml
+		   */
+		  clearlog("./logs/app_conwaymaster.log")   
+		
 		return { //this:ActionBasciFsm
 				state("s0") { //this:State
 					action { //it:State
@@ -64,6 +81,9 @@ class Gamemaster ( name: String, scope: CoroutineScope, isconfined: Boolean=fals
 								RowsN     = res.get(0)
 								ColsN     = res.get(1)
 								NAllCells = RowsN * ColsN      
+						 val log = sysUtil.logStr(name,"numofcells($NAllCells)","cell") //returnn jsoobjct
+										CommUtils.outmagenta("fisrtlog: $log")
+									   logger.info( log ) 
 						CommUtils.outblue("$name | RowsN=$RowsN ColsN=$ColsN")
 						CommUtils.outmagenta("$name | READY TO ACCEPT CELLS ... ")
 						//genTimer( actor, state )
@@ -94,6 +114,14 @@ class Gamemaster ( name: String, scope: CoroutineScope, isconfined: Boolean=fals
 						 { val CelName = "cell_${LastI}_$LastJ"  
 						 answer("addtogame", "addedtogame", "addedtogame($CelName,$RowsN,$ColsN)"   )  
 						   LastJ++  
+						  
+						  			//-------------------------------------------------------------
+						 			// Emissione di un log INFO addedCellToGame di category 'cell' 
+						 			// su index cell- (vedi logastash.conf)
+						 			//-------------------------------------------------------------  			
+						   			val log = sysUtil.logStr(name,"addedCellToGame $CelName","cell") //returnn jsoobjct
+						 			CommUtils.outmagenta("$log")
+						 			logger.info( log ) 
 						 }
 						//genTimer( actor, state )
 					}
@@ -124,7 +152,7 @@ class Gamemaster ( name: String, scope: CoroutineScope, isconfined: Boolean=fals
 					action { //it:State
 						CommUtils.outblue("$name | orchestrateTheGame")
 						emit("allcellready", "allcellready(ok)" ) 
-						 main.java.OutInMasterGui(myself, "guiin")  
+						 outIndev = main.java.OutInMasterGui(myself, "guiin")  
 						//genTimer( actor, state )
 					}
 					//After Lenzi Aug2002
@@ -153,6 +181,7 @@ class Gamemaster ( name: String, scope: CoroutineScope, isconfined: Boolean=fals
 						CommUtils.outblack("$name | continueTheGame($MyName) epoch = EpochNum $EpochNum stopped=$stopped")
 						delay(500) 
 						emit("synch", "synch(ok)" ) 
+						 outIndev.display("lfctrl-newEpoch")  
 						//genTimer( actor, state )
 					}
 					//After Lenzi Aug2002

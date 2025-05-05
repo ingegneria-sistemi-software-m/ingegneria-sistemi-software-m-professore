@@ -1,7 +1,7 @@
 %====================================================================================
 % conwaycellsqak description   
 %====================================================================================
-mqttBroker("192.168.1.68", "1883", "lifein").
+mqttBroker("localhost", "1883", "lifein").
 event( startthegame, startthegame(X) ).
 event( stopthecell, stopthecell(X) ).
 event( synch, synch(X) ).

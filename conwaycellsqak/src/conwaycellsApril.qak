@@ -1,7 +1,7 @@
 System   conwaycellsqak 
-mqttBroker "192.168.1.68" : 1883 eventTopic "lifein" 
+mqttBroker "localhost" : 1883 eventTopic "lifein" 
 //mqttBroker "test.mosquitto.org" : 1883 eventTopic "cellonraspevents" 
-
+    
 /*
  * ==========================================================================
  * Codice di una cella

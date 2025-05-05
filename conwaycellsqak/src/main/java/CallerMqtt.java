@@ -1,5 +1,6 @@
 package main.java;
 
+import unibo.basicomm23.mqtt.MqttConnection;
 import unibo.basicomm23.mqtt.MqttInteraction;
 import unibo.basicomm23.utils.CommUtils;
 
@@ -64,6 +65,19 @@ public class CallerMqtt {
 		}
 		
 	}
+	public void doTestGui() {
+		 
+		try {
+			CommUtils.outgreen("caller publishing"   );
+			MqttConnection mqttConn = new MqttConnection();
+			//mqttConn.connect("caller", "tcp://localhost:1883");
+			mqttConn.connect("caller", "tcp://192.168.1.132:1883");   //se gui attivata con docker
+			mqttConn.publish("guiin","lfctrl-newEpoch");
+		} catch (Exception e) {
+ 			e.printStackTrace();
+		}
+      	//System.exit(0);
+	} 
 	public void doJob() {
 		connect();
         initSomeCell();
@@ -73,6 +87,7 @@ public class CallerMqtt {
 	}
 
 	 public static void main( String[] args ){
-		 new CallerMqtt().doJob();
+		 //new CallerMqtt().doJob();
+		 new CallerMqtt().doTestGui();
 	 }
 } 

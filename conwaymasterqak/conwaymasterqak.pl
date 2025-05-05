@@ -1,7 +1,7 @@
 %====================================================================================
 % conwaymasterqak description   
 %====================================================================================
-mqttBroker("192.168.1.68", "1883", "lifein").
+mqttBroker("localhost", "1883", "lifein").
 dispatch( guicmd, guicmd(X) ).
 dispatch( fromdisplay, fromdisplay(CMD) ).
 dispatch( todisplay, todisplay(CELL,STATE) ).

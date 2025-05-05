@@ -34,7 +34,7 @@ public class EurekaServiceConfig extends MyDataCenterInstanceConfig{
 //				+ " IN " + Thread.currentThread()); 
 		//return super.getHostName(refresh); //restituisce nat480s  
 		//return "localhost";
-		return "localhost";
+		return "192.168.1.68";
 	}
 
 /*

@@ -1,9 +1,9 @@
 System   conwaymasterqak 
-mqttBroker "192.168.1.68" : 1883 eventTopic "lifein"   
-/*
+mqttBroker "localhost" : 1883 eventTopic "lifein"   
+/*  
  * ==========================================================================
  * gamemaster
- * 
+ *  
  * WARNING: mqttBroker "...."
  * 
  * ORCHESTRATORE (non controllore del gioco)
@@ -56,18 +56,18 @@ Event    curstate      : curstate(NB,STATE)
 Request addtogame      : addtogame( NAME )
 Reply   addedtogame    : addedtogame( CELLNAME, NROWS, NCOLS ) for addtogame
 
-
+  
 Context ctxmaster ip [ host="localhost" port=8260] 
 
 QActor gamemaster context ctxmaster{
-import "unibo.basicomm23.mqtt.*"
+import "main.java.*"
  [# 
  	var RowsN = 0
  	var ColsN = 0
  
     var NAllCells      =  0  //set in s0
     var NCellsCreated  =  0  //set in handlecellecreated 		
-    var NCellended     =  0  //set in terminatethegame
+//    var NCellended     =  0  //set in terminatethegame
  	var NCellReady     =  0
  	
  	var LastI = 0
@@ -76,6 +76,7 @@ import "unibo.basicomm23.mqtt.*"
  	var stopped  = false
  	var EpochNum = 0
 	
+	lateinit var outIndev :  OutInMasterGui
 
 	fun register(){
 		
@@ -84,6 +85,22 @@ import "unibo.basicomm23.mqtt.*"
 			CommUtils.outblue("discoveryclient=$discoveryclient ")
 		}
 	}
+
+  /*
+   *---------------------------------------------------------
+  	CREAZIONE DI UN logger con il nome passato come argomento
+  	USIAMO conway come NOME DI logger per
+    facilitare la lettura/analisi dei logs
+   *---------------------------------------------------------
+  */	
+	val logger = LoggerFactory.getLogger("conway") 
+	CommUtils.outcyan("logger = $logger")
+
+  /*
+   * Pulizia del log file locale definito in logback.xml
+   */
+  clearlog("./logs/app_conwaymaster.log")   
+
   #]
 	 
   State s0 initial{ 
@@ -97,6 +114,11 @@ import "unibo.basicomm23.mqtt.*"
 		ColsN     = res.get(1)
 		NAllCells = RowsN * ColsN      
 	#]
+
+  		[# val log = sysUtil.logStr(name,"numofcells($NAllCells)","cell") //returnn jsoobjct
+				CommUtils.outmagenta("fisrtlog: $log")
+			   logger.info( log ) 
+		#]  
     println("$name | RowsN=$RowsN ColsN=$ColsN") color blue
 	println("$name | READY TO ACCEPT CELLS ... ")	color magenta
   }
@@ -120,6 +142,16 @@ import "unibo.basicomm23.mqtt.*"
   		[# val CelName = "cell_${LastI}_$LastJ" #] 
   		replyTo addtogame with addedtogame : addedtogame($CelName, $RowsN, $ColsN)
   		[#  LastJ++ #]
+  		
+  		[# 
+ 			//-------------------------------------------------------------
+			// Emissione di un log INFO addedCellToGame di category 'cell' 
+			// su index cell- (vedi logastash.conf)
+			//-------------------------------------------------------------  			
+  			val log = sysUtil.logStr(name,"addedCellToGame $CelName","cell") //returnn jsoobjct
+			CommUtils.outmagenta("$log")
+			logger.info( log ) 
+		#]  
   	}//  
   }
   Transition t0
@@ -144,7 +176,8 @@ import "unibo.basicomm23.mqtt.*"
   State orchestrateTheGame{
   	println("$name | orchestrateTheGame") color blue
   	emit allcellready : allcellready(ok)
-  	[# main.java.OutInMasterGui(myself, "guiin") #]
+  	[# outIndev = main.java.OutInMasterGui(myself, "guiin") #]   
+    // serve per gestire il comando exit e per display
   }
   Transition t0 
    	whenMsg cellready -> handleCellReady
@@ -161,28 +194,19 @@ import "unibo.basicomm23.mqtt.*"
   Transition t0 
   	whenMsg cellready  -> handleCellReady
   	whenMsg epochDone  -> continueTheGame
-//  	whenMsg epochDone and [# ! stopped #] -> continueTheGame
-//  	whenMsg epochDone and [# stopped #]   -> waittoRestart
   	  	
  State continueTheGame{
  	 println("$name | continueTheGame($MyName) epoch = EpochNum $EpochNum stopped=$stopped") color black
  	 delay 500 
- 	 emit synch : synch(ok)    
+ 	 emit synch : synch(ok)   
+ 	 //[# mqtt.publish("guiin" , "lfctrl-newEpoch") #]
+ 	 [# outIndev.display("lfctrl-newEpoch") #] 
  } 
   Transition t0 
   	whenMsg cellready -> handleCellReady
  
  
-// State waittoRestart{
-// 	println("$name | waittoRestart ") color magenta
-// }
-// Transition t0 
-// 	whenMsg start -> resumeTheGame
-//
-// State resumeTheGame{
-// 	[# stopped = false #]
-//  }
-//  Goto continueTheGame
 
 }
+ 
  
