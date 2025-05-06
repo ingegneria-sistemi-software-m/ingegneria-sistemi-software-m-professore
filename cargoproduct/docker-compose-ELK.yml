@@ -1,0 +1,41 @@
+##version: '2.1'
+
+services:
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.17.10     ## 8.9.0 8.10.2  
+    container_name: elasticsearch
+    environment:
+      - discovery.type=single-node
+      - xpack.security.enabled=false
+      - xpack.security.transport.ssl.enabled=false
+      - ES_JAVA_OPTS=-Xms512m -Xmx512m
+    ports:
+      - "9200:9200"
+ 
+  logstash:
+    image: docker.elastic.co/logstash/logstash:7.17.10   
+    container_name: logstash
+    volumes:
+      - ./src/main/resources/logstash.conf:/usr/share/logstash/pipeline/logstash.conf
+    ports:
+      - "5044:5044" 		# Porta TCP per l'input TCP o Beats.
+    depends_on:
+      - elasticsearch
+ 
+ 
+  kibana:
+    image: docker.elastic.co/kibana/kibana:7.17.10   
+    container_name: kibana
+    environment:
+      - ELASTICSEARCH_HOSTS=http://elasticsearch:9200
+    ports:
+      - "5601:5601"
+    depends_on:
+      - elasticsearch
+
+ 
+
+
+## docker-compose -f docker-compose-EFKOnly.yml -p elk up
+
+ 

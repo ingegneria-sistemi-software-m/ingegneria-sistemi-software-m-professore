@@ -1,0 +1,15 @@
+##version: '2.1'
+
+ 
+
+
+
+
+
+##  java_app:
+##    build: ./ 
+##    environment:
+##      - APP_INDOCKER=true
+##    depends_on:
+##      - logstash
+ 
