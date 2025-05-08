@@ -2,7 +2,7 @@
 services:
   wenv:
     container_name: wenv
-    #image: docker.io/natbodocker/virtualrobotdisi23:1.0
+    #image: docker.io/natbodocker/virtualrobotdisi25:1.0
     image: virtualrobotdisi25:1.0
     ports:
       - 8090:8090 

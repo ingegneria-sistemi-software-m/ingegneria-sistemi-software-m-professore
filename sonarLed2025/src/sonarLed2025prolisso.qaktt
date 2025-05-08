@@ -1,0 +1,307 @@
+System sonarled2025
+//mqttBroker "localhost" : 1883 eventTopic "sonardeviceata"
+   
+/*
+Costruire un sistema basato su un sonar e un led
+Quando il sonar rileva una distanza 
+ - maggiore di D1cm, il led deve essere spento
+ - minore di D1cm, il led blinks
+ . minore di D2cm (D2<D1) il led rimane acceso
+              
+ */
+Event sonardata : distance(D)   //emitted  by sonardevice or (better) by datacleaner
+
+Event turnOn  : tornOn(X)
+Event turnOff : tornOff(X) 
+
+Event far     : far(X)
+Event near    : near(X)
+Event close   : close(X)
+ 
+Context ctxsonarled2025 ip [ host= "localhost" port= 8128 ]
+
+
+QActor mind context ctxsonarled2025{
+	 	[#
+	 		val logger = LoggerFactory.getLogger("mind_actor") 
+ 		#]		
+	State s0 initial{
+		delay 1500 //Give time to sonarsensor to start  in order to subscribe
+		println("$name |  start") 
+		subscribeTo sonarsensor for far
+		subscribeTo sonarsensor for near
+		subscribeTo sonarsensor for close
+	}
+	Goto work
+	
+	State work{
+		
+	}
+	Transition t0
+		whenEvent far   -> handleFar
+		whenEvent near  -> handleNear
+        whenEvent close -> handleClose		
+        
+	State handleFar{
+		println("$name |  handleFar")  color cyan
+		emit turnOff : turnOff(far)
+	}
+	Goto work
+
+	State handleNear{
+		println("$name |  handleNear: blinking")  color cyan
+		emit turnOn : turnOn(near)
+		delay 30
+		emit turnOff : turnOff(near)
+		delay 30
+	}	
+	Transition t0
+		whenTime 30     -> handleNear
+		whenEvent near  -> handleNear
+		whenEvent far   -> handleFar
+		whenEvent close -> handleClose		
+	
+	State handleClose{
+		println("$name |  handleClose")  color cyan
+		emit turnOn : turnOn(close)
+		[# logger.info(  sysUtil.logStr(name,"close","sonarled")  ) #]
+	}	
+	Goto work
+}
+
+
+QActor ledactuator context ctxsonarled2025{
+	[# lateinit var p : Process #]
+	State s0 initial{
+		println("$name |  start") 
+		[# p  = Runtime.getRuntime().exec("python ledPython25Off.py") #]
+	}
+	Transition t0
+		whenEvent turnOn  -> handleTurnOn
+		whenEvent turnOff -> handleTurnOff
+		
+    State handleTurnOn{
+    	[# p  = Runtime.getRuntime().exec("python ledPython25On.py") #]
+    	println("$name | ON") color magenta
+    }
+	Transition t0
+		whenEvent turnOn  -> handleTurnOn
+		whenEvent turnOff -> handleTurnOff
+ 
+    State handleTurnOff{
+       [# p  = Runtime.getRuntime().exec("python ledPython25Off.py") #]
+       println("$name | OFF") color magenta
+    }
+	Transition t0
+		whenEvent turnOn  -> handleTurnOn 
+		whenEvent turnOff -> handleTurnOff 
+ 
+ 
+}
+
+
+/* 
+QActor ledactuatoroptimized context ctxsonarled2025{
+	[# lateinit var p : Process #]
+	State s0 initial{
+		println("$name |  start") 
+		[# p  = Runtime.getRuntime().exec("python ledPython25Off.py") #]
+	}
+	Transition t0
+		whenEvent turnOn -> handleFirstTurnOn
+		
+    State handleFirstTurnOn{
+    	[# p  = Runtime.getRuntime().exec("python ledPython25On.py") #]
+    	println("$name | ON") color magenta
+    }
+	Transition t0
+		whenEvent turnOn  -> alreadyOn
+		whenEvent turnOff -> handleFirstTurnOff
+ 
+    State handleFirstTurnOff{
+       [# p  = Runtime.getRuntime().exec("python ledPython25Off.py") #]
+       println("$name | OFF") color magenta
+    }
+	Transition t0
+		whenEvent turnOn  -> handleFirstTurnOn 
+		whenEvent turnOff -> alreadyOff 
+ 
+    State alreadyOn{
+    	 println("$name | already ON") color yellow
+    }
+	Transition t0
+		whenEvent turnOn -> alreadyOn
+		whenEvent turnOff -> handleFirstTurnOff 
+
+    State alreadyOff{
+    	 println("$name | already OFF") color yellow
+    }
+	Transition t0
+		whenEvent turnOn -> handleFirstTurnOn
+		whenEvent turnOff -> alreadyOff 
+
+}
+*/
+
+/*
+ * Converte i dati del sonardevice in eventi per mind
+ */
+QActor sonarsensor context ctxsonarled2025{
+	
+	[# 
+		val D1 = 10
+		val D2 = 6
+		val logger = LoggerFactory.getLogger("sonarsensor_actor") 
+	#]
+	State s0 initial{
+		delay 1500 //Give time to sonardevice to start  in order to subscribe
+		println("$name |  start") color green
+		subscribeTo sonardevice for sonardata
+	}
+	Goto work
+	
+	State work{
+		//printCurrentMessage color green
+	}
+	Transition t0 
+		whenEvent sonardata -> handleSonardata
+	
+	State handleSonardata{
+ 		printCurrentMessage color green
+		onMsg( sonardata : distance(X) ){
+			[# val D = payloadArg(0).toInt() #]
+			if [# D >= D1  #] { emit far : far(D) }
+			if [# D < D1 && D >= D2 #] { emit near : near(D) }
+			if [#  D < D2 #] { emit close : close(D) }
+			[# logger.info(  sysUtil.logStr(name,"distance($D)","sonarled")  ) #]
+		}
+		delay 300 //avoid too fast
+	}
+	Transition t0 
+		whenEvent sonardata -> handleSonardata
+}
+
+/*
+ * SIUMULATORE
+ */
+ /*
+QActor sonardevice context ctxsonarled2025{
+[# 
+     var Distance = 0
+#]	
+	State s0 initial{
+		
+		delay 1000
+		println("$name | SIMULATION start")  color black
+//	 	[#
+//	 		val logger = LoggerFactory.getLogger("sonardevice_actor") 
+// 		#]		
+	}
+	Goto simulateDataIncoming
+	
+	State simulateDataIncoming{
+		emit sonardata : distance(50)
+		delay 500
+		emit sonardata : distance(40)
+		delay 500
+		emit sonardata : distance(30)
+		delay 500
+		emit sonardata : distance(20)
+		delay 500
+		emit sonardata : distance(10)
+		delay 500
+		emit sonardata : distance(5)
+	}
+	Goto simulateDataOutcoming
+	
+	State simulateDataOutcoming{
+		emit sonardata : distance(5)
+		delay 500
+		emit sonardata : distance(10)
+		delay 500
+		emit sonardata : distance(20)
+		delay 500
+		emit sonardata : distance(30)
+		delay 500
+		emit sonardata : distance(40)
+		delay 500
+		emit sonardata : distance(50)
+		
+		delay 1000
+		[# System.exit(0) #]
+	}
+	
+}
+*/
+
+/* 
+ * Emette uno stream di dati 
+*/
+ 
+QActor sonardevice context ctxsonarled2025{
+[# 
+	lateinit var reader : java.io.BufferedReader
+    lateinit var p : Process	
+    var Distance = 0
+#]	
+	State s0 initial{
+		println("$name | start") 
+	 	[#
+			p       = Runtime.getRuntime().exec("python sonar.py")
+			reader  = java.io.BufferedReader(  java.io.InputStreamReader(p.getInputStream() ))	
+		#]		
+	}
+	Goto readSonarData
+	
+	State readSonarData{
+	[# 
+		var data = reader.readLine()
+		//CommUtils.outyellow("$name with python: data = $data"   ) 
+		if( data != null ){
+		try{ 
+			val vd = data.toFloat()
+			val v  = vd.toInt()
+			if( v <= 100 ){	//A first filter ...
+				Distance = v				
+			}else Distance = 0
+		}catch(e: Exception){
+			CommUtils.outred("$name readSonarDataERROR: $e "   )
+		}
+		}//if
+		
+	#]	
+		if [# Distance > 0 #] { 
+		    //println("$name with python: data = $data"   ) color yellow
+			emitlocalstream sonardata : distance($Distance)			 
+		}
+	}
+	Goto readSonarData
+
+
+}//sonardevice
+ 
+
+/* 
+QActor datacleaner context ctxsonarled2025 {
+	[# var D = 0; #]
+	State s0 initial {
+		delay 1000
+		subscribeTo sonardevice for sonardata		
+		println("$name subscribed to sonardevice") color blue
+	}
+	Transition t0 whenEvent sonardata -> filter
+	
+	State filter {
+		 println("$name D=$D") color black	
+		 onMsg(sonardata : distance(D)) {
+	      	[#  D = payloadArg(0).toInt() #]	      	
+	      	println("$name D=$D") color black	
+//	      	if [# D < 12 #] {
+//	      		println("$name emit obstacle") color magenta	
+//	 			emit wolf : wolf($D)
+//	     	}
+     	}
+	}	 
+	Transition t0 whenEvent sonardata -> filter
+}
+ */ 

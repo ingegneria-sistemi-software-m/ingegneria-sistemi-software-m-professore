@@ -1,0 +1,105 @@
+System unibologger
+mqttBroker "192.168.1.132" : 1883 eventTopic "logkb"  
+
+
+Event unibolog       : unibolog(X)
+Event unibologprolog : unibologprolog(SOURCE,CATEG,CONTENT)
+
+Context ctxunibologger ip [ host="localhost" port=8260] 
+
+QActor unibologkb context ctxunibologger{
+   [#
+	 fun register(){		
+		if( CommUtils.ckeckEureka( ) ){
+			val discoveryclient = CommUtils.registerService( main.java.EurekaServiceConfig() )
+			CommUtils.outblue("discoveryclient=$discoveryclient ")
+		}
+	  }			
+		
+ 	  fun getCurrentDateTimeString(): String {
+		    val currentDateTime = java.time.LocalDateTime.now()
+		    val formatter = java.time.format.DateTimeFormatter.ofPattern("EEEE HH:mm:ss")
+		    return currentDateTime.format(formatter)
+	  }
+
+	#]
+	
+  State s0 initial{ 
+	solve( consult("unibologger.pl") )
+	solve( consult("sysRules.pl") )
+	solve( consult("unibologRules.pl") )
+  	//println("$name | REGISTER ... ") color blue
+	[# 		  
+		//CommUtils.ckeckEureka( )	
+		val T = getCurrentDateTimeString()	
+	#]
+	println("$name | register ctxunibologger $T") color blue
+	[#  register() #]
+	
+	//solve( showSystemConfiguration )
+  }	
+  Goto work
+  
+  State work{
+  	println("$name | waiting...") color cyan
+  }
+  Transition t0 
+  	whenEvent unibolog       -> handlelogsimple
+  	whenEvent unibologprolog -> handlelogprolog
+  	
+  State handlelogsimple{
+  	//printCurrentMessage color cyan
+  	onMsg( unibolog : unibolog(X) ){
+  		[# val logvalue = payloadArg(0) #]
+  		println("$name | perceives $logvalue") color cyan
+  		//solve( assert(  logitem("$logvalue") ) )
+  		solve( addRule(  logitem("$logvalue") ) )
+  	}
+  	println("$name | current logs:")
+  	solve( showAllLogs )
+  }
+  Goto work
+  
+  
+    State handlelogprolog{
+  	//printCurrentMessage color cyan
+  	onMsg( unibologprolog : unibologprolog(SOURCE,CATEG,CONTENT) ){
+  		[# val logsource = payloadArg(0) 
+  		   val logcateg  = payloadArg(1)
+  		   val logval    = payloadArg(2)
+  		#]
+  		println("$name | perceives $logsource, $logcateg, $logval ") color magenta
+   		solve( assert(  logitem("$logsource", "$logcateg", "$logval") ) )
+  	}
+  	println("$name | current prolog logs:") color magenta
+  	solve( showAllPrologLogs )
+  }
+  Goto work
+}
+
+/* 
+QActor tester context ctxunibologger{
+  State s0 initial{ 
+  	delay 1000 //avoid to emit too early
+  	println("$name | STARTS") color green
+  }
+  Goto work
+	
+  State work{
+  	[# val Log1 = "'"+sysUtil.logStr(name,"tester1","logtest")+"'" #]
+  	println("$name | emits unibolog($Log1)") color green
+  	emit unibolog : unibolog( $Log1 )
+  	delay 1000
+  	
+  	[# val Log2 = "'$name,logtest,tester2'" #]
+  	println("$name | emits unibolog($Log2)") color green
+  	emit unibolog : unibolog( $Log2 )
+  	delay 1000 
+  	
+  	[# val Log3 = "$name,logtest,tester3" #]
+  	println("$name | emits $Log3") color green
+  	emit unibologprolog : unibologprolog( $Log3 )
+  }
+}
+ 
+*/
