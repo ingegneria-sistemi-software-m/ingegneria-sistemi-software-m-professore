@@ -20,7 +20,7 @@
 	-->
     
     <appender name="LOGSTASH" class="net.logstash.logback.appender.LogstashTcpSocketAppender">
-        <destination>192.168.1.132:5044</destination> 
+        <destination>192.168.1.214:5044</destination> 
         <encoder class="net.logstash.logback.encoder.LogstashEncoder" />
      </appender>   
      
@@ -47,8 +47,9 @@
     
     <root level="info">      
         <appender-ref ref="FILE" />
-        <appender-ref ref="LOGSTASH" /> 
+       
          <!-- 
+          <appender-ref ref="LOGSTASH" /> 
        	 <appender-ref ref="STDOUT" />         
         -->
     </root>

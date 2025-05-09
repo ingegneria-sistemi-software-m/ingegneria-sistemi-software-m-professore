@@ -1,7 +1,16 @@
 System unibologger
-mqttBroker "192.168.1.132" : 1883 eventTopic "logkb"  
-
-
+mqttBroker "192.168.1.214" : 1883 eventTopic "logkb"  
+/*
+ * ----------------------------------------------------------------
+ * ATTENZIONE:MODIFICARE GLI IP (anche in EurekaServiceConfig.java)
+ * CONTROOLARE ANCHE eureka-client.properties
+ * 
+ * IL (MICRO)SERVIZIO SI REGISTRA su Eureka CON NOME ctxunibologger
+ * (si veda EurekaServiceConfig.java)
+ * 
+ * ANALIZZARE LA KB custom: unibologRules.pl
+ * ----------------------------------------------------------------
+*/
 Event unibolog       : unibolog(X)
 Event unibologprolog : unibologprolog(SOURCE,CATEG,CONTENT)
 
@@ -36,7 +45,7 @@ QActor unibologkb context ctxunibologger{
 	println("$name | register ctxunibologger $T") color blue
 	[#  register() #]
 	
-	//solve( showSystemConfiguration )
+	solve( showSystemConfiguration )
   }	
   Goto work
   

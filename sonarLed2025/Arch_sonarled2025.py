@@ -28,6 +28,7 @@ with Diagram('sonarled2025Arch', show=False, outformat='png', graph_attr=graphat
      with Cluster('ctxsonarled2025', graph_attr=nodeattr):
           mind=Custom('mind','./qakicons/symActorWithobjSmall.png')
           sonardevice=Custom('sonardevice','./qakicons/symActorWithobjSmall.png')
-     sonardevice >> Edge( label='sonardata', **eventedgeattr, decorate='true', fontcolor='red') >> mind
+          sonarsimul=Custom('sonarsimul','./qakicons/symActorWithobjSmall.png')
+     sonarsimul >> Edge( label='sonardata', **eventedgeattr, decorate='true', fontcolor='red') >> mind
      mind >> Edge( label='unibologprolog', **eventedgeattr, decorate='true', fontcolor='red') >> sys
 diag

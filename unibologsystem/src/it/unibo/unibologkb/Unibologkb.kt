@@ -54,6 +54,7 @@ class Unibologkb ( name: String, scope: CoroutineScope, isconfined: Boolean=fals
 								val T = getCurrentDateTimeString()	
 						CommUtils.outblue("$name | register ctxunibologger $T")
 						  register()  
+						solve("showSystemConfiguration","") //set resVar	
 						//genTimer( actor, state )
 					}
 					//After Lenzi Aug2002

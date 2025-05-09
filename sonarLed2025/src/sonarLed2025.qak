@@ -1,6 +1,23 @@
 System sonarled2025
-mqttBroker "192.168.1.132" : 1883 eventTopic "logkb"
-   
+mqttBroker "192.168.1.214" : 1883 eventTopic "logkb"
+/*
+ * ----------------------------------------------------------------
+ * ATTENZIONE: MODIFICARE GLI IP  ... ANCHE IN logback.xml
+ * 
+ * MODIFICARE subscribeTo sonarsimul for sonardata
+ * 
+ * ALLA FINE GUARDARE il contenuto di app_sonarled2025.log
+ * e i log mediante KIBANA sull'indice INDEX=cell-* (logstash.conf)
+ * 
+ * Per eliminare tutti i logo su logstash eseguire in cygwin64 Terminal
+ * curl -X POST "http://localhost:9200/INDEX/_delete_by_query" -H 'Content-Type: application/json' -d'
+	{
+	  "query": {
+	    "match_all": {}
+	}
+	}'
+ * ----------------------------------------------------------------
+ */   
 /*
 =============================================================================
 Costruire un sistema basato su un sonar e un led che opera come segue.
@@ -54,7 +71,7 @@ QActor mind context ctxsonarled2025{
 		var D = 0  
 		val D1 = 10
 		val D2 = 6
- 	 	val logger = LoggerFactory.getLogger("mind_actor") 
+   	 	val logger = LoggerFactory.getLogger("mind_actor") 
  	 	
  	 	
  	 	fun getCurrentDateTimeString(): String {
@@ -71,7 +88,8 @@ QActor mind context ctxsonarled2025{
 	State s0 initial{
 		delay 1000 //Give time to sonarsensor to start  in order to subscribe
 		println("$name |  start") 
-		subscribeTo sonardevice for sonardata
+		//subscribeTo sonardevice for sonardata
+		subscribeTo sonarsimul for sonardata
  	}
 	Goto work
 	
@@ -85,8 +103,14 @@ QActor mind context ctxsonarled2025{
 		onMsg( sonardata : distance(X) ){
 			[#  D = payloadArg(0).toInt() #]
  			println("$name | handleSonardata D=$D D2=$D2 D1=$D1") color cyan
-			if [#  D < D2  #] { [# machineExec("python ledPython25On.py") #] }
-			if [# D >= D1  #] { [# Runtime.getRuntime().exec("python ledPython25Off.py") #] }
+			if [#  D < D2  #] { 
+				println("$name | ledon") color magenta
+				[# machineExec("python ledPython25On.py") #]
+			}
+			if [# D >= D1  #] { 
+				println("$name | ledoff") color magenta
+				[# Runtime.getRuntime().exec("python ledPython25Off.py") #]
+			}
 			if [# D < D1 && D >= D2 #] { 
 				//println("do blink ... ") color cyan
 				autodispatch doblink : doblink(ok)
@@ -94,12 +118,12 @@ QActor mind context ctxsonarled2025{
 			/* 
 			 * Emette la INFO log di contenuto :mind(distance($D)) e categoria sonarled
 			 */
-			[# logger.info(  sysUtil.logStr(name,"mind(distance($D))","sonarled")  ) #]
+ 			[# logger.info(  sysUtil.logStr(name,"mind(distance($D))","sonarled")  ) #]
 			/*
 			 * Emette un evento di log unibologprolog 
 			 * che può essere gestito da unibologger che percepisce sulla topic logkb
 			 */
-			 emit unibologprolog : unibologprolog($MyName,sonarled,distance($D)) 
+ 			 emit unibologprolog : unibologprolog($MyName,sonarled,distance($D)) 
 		} 
 	} 
 	Transition t0 
@@ -112,8 +136,10 @@ QActor mind context ctxsonarled2025{
 			 * che può essere gestito da unibologger che percepisce sulla topic logkb
 			 */
 	   [# val T = "'"+getCurrentDateTimeString()+"'" #]
-		println("$name | blinking $T")  color cyan
-		emit unibologprolog : unibologprolog($MyName,sonarled, blinksat($T)) 
+		println("$name | blinking $T")  color magenta
+//		emit unibologprolog : unibologprolog($MyName,sonarled, blinksat($T)) 
+ 
+		
 		[#  machineExec("python ledPython25Blink.py") #]
     }
  	Transition t0 //in un sec fa circa 3 blink
@@ -121,8 +147,7 @@ QActor mind context ctxsonarled2025{
 	
  }
 
- 
-/* 
+ /* 
  * Emette uno stream di dati 
  * I subscribers possono esser solo attori locali (come mind)
 */
@@ -170,6 +195,26 @@ QActor sonardevice context ctxsonarled2025{
 	}
 	Goto readSonarData
 }//sonardevice
+
  
 
-
+QActor sonarsimul  context ctxsonarled2025{
+	State s0 initial{
+		
+	}
+	Goto work
+	//------10-----6-----
+	State work{
+		emitlocalstream sonardata      : distance(20)
+	    delay 1000
+		emitlocalstream sonardata      : distance(10)
+	    delay 1000
+		emitlocalstream sonardata      : distance(8)
+	    delay 1000
+		emitlocalstream sonardata      : distance(8)
+	    delay 1000
+		emitlocalstream sonardata      : distance(5)
+	    	
+	}
+}
+ 
