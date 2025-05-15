@@ -1,21 +1,15 @@
 %====================================================================================
 % virtualrobotusage25 description   
 %====================================================================================
-dispatch( move, move(M) ).
-request( step, step(T) ).
-reply( stepdone, stepdone(X) ).  %%for step
-reply( stepfailed, stepfailed(X) ).  %%for step
-event( sonardata, sonar(DISTANCE) ).
-event( obstacle, obstacle(D) ).
-event( vrinfo, vrinfo(S,INFO) ).
-dispatch( vrinfo, vrinfo(A,B) ).
-dispatch( stop, stop(X) ).
-event( sonardata, sonar(DISTANCE) ).
+dispatch( stepdone, stepdone(X) ). %step ok
+dispatch( stepfailed, stepfailed(X) ). %step ko
+event( sonardata, sonar(DISTANCE) ). %emesso dal SONAR
+dispatch( vrinfo, vrinfo(A,B) ). %inviato dal supportp
+event( vrinfo, vrinfo(A,B) ). %emesso dal supportp
+event( obstacle, obstacle(X) ). %emesso dal supportp
 %====================================================================================
 context(ctxvrusage25, "localhost",  "TCP", "8120").
-context(ctxvrqak, "127.0.0.1",  "TCP", "8125").
- qactor( vrqak, ctxvrqak, "external").
-  qactor( bw24core, ctxvrusage25, "it.unibo.bw24core.Bw24core").
- static(bw24core).
-  qactor( bwobserver, ctxvrusage25, "it.unibo.bwobserver.Bwobserver").
- static(bwobserver).
+ qactor( vrbasicmoves, ctxvrusage25, "it.unibo.vrbasicmoves.Vrbasicmoves").
+ static(vrbasicmoves).
+  qactor( perceiver, ctxvrusage25, "it.unibo.perceiver.Perceiver").
+ static(perceiver).

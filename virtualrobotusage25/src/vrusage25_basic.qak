@@ -1,0 +1,122 @@
+System virtualrobotusage25
+/*
+ * vrusage25_basic.qak
+ */
+
+/*
+* ------------------------------------------------------------------------
+* Uso di VrobotLLMoves24 per eseguire mosse elementari
+* 
+* Porre vr.setTrace( true ) per visualizzare le
+* informazioni emesse dal supporto
+* ------------------------------------------------------------------------
+
+ */
+  
+Dispatch stepdone   : stepdone(X)        "step ok"
+Dispatch stepfailed : stepfailed(X)      "step ko"
+Event  sonardata    : sonar( DISTANCE )  "emesso dal SONAR"	   
+Dispatch vrinfo     : vrinfo(A,B)        "inviato dal supportp"
+
+Event vrinfo        : vrinfo(A,B)        "emesso dal supportp"
+Event obstacle      : obstacle(X)		 "emesso dal supportp"
+ 
+Context ctxvrusage25  ip [host="localhost"  port=8120   ]
+
+ QActor vrbasicmoves context ctxvrusage25 withobj vr using "VrobotLLMoves24.create(\"localhost\",myself)" {
+ 	import "main.java.*"
+ 	[# var RSTEP = false; var N=0 #] 
+	State s0 initial{ 
+		println("$name STARTS") color blue 
+		[# vr.setTrace( true ) #]
+		[# vr.halt() #]  //per sbloccare eventuali notallowed
+	}
+	Goto work 
+	  
+	State work{
+		println("$name turnLeft") color blue 
+		[# vr.turnLeft() #]   //synch, no info sent
+		println("$name stap(2500)") color blue 
+		//Goal: colipre il muro wallleft e vedere info di update
+		[# vr.step(2500)  #] 
+ 	}
+ 	Goto perceive
+  
+ 	
+ 	State perceive{
+ 		 
+ 	}
+ 	Transition t0
+		whenEvent vrinfo    -> handleVrinfoEvent
+		whenMsg vrinfo      -> handleVrinfoMsg
+		whenEvent obstacle  -> handleobstacle
+ 		whenEvent sonardata -> handleSonardata
+ 	 
+ 	
+	State handleVrinfoEvent{   
+		printCurrentMessage color blue
+	}	
+  	Goto perceive      
+// 	Transition t0
+//		whenEvent vrinfo      -> handleVrinfo
+
+	State handleVrinfoMsg{   
+		printCurrentMessage color blue
+	}	 
+ 	Goto perceive    
+
+	State handleobstacle{ 
+		printCurrentMessage color blue
+	}	
+  	Goto perceive   
+// 	Transition t0
+//		whenEvent vrinfo      -> handleVrinfo
+ 	 
+	State handleSonardata{
+		printCurrentMessage color blue
+	}	
+  	Goto perceive
+// 	Transition t0
+//		whenMsg vrinfo      -> handleVrinfo
+ }
+ 
+ 
+QActor perceiver context ctxvrusage25{
+	State s0 initial{ 
+		println("$name STARTS") color green 
+	}
+	Goto perceive
+	
+	State perceive{
+		
+	}
+ 	Transition t0
+		whenMsg vrinfo      -> handleVrinfoMsg
+		whenEvent vrinfo    -> handleVrinfoEvent
+		whenEvent obstacle  -> handleobstacle
+		whenEvent sonardata -> handleSonardata
+ 	
+ 	
+	State handleVrinfoMsg{   
+//		println("$name | handleVrinfoMsg $currentMsg") color black
+		printCurrentMessage color black
+	}	 
+ 	Goto perceive    
+	
+	State handleVrinfoEvent{   
+//		println("$name | handleVrinfoEvent $currentMsg") color black
+		printCurrentMessage color black
+	}	 
+ 	Goto perceive    
+
+	State handleobstacle{ 
+		printCurrentMessage color black
+	}	
+ 	Goto perceive  
+ 	 
+	State handleSonardata{
+		printCurrentMessage color black
+	}	
+ 	Goto perceive
+}
+ 

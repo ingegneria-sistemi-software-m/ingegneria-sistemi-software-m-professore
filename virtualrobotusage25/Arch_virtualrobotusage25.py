@@ -26,15 +26,12 @@ with Diagram('virtualrobotusage25Arch', show=False, outformat='png', graph_attr=
      sys = Custom('','./qakicons/system.png')
 ### see https://renenyffenegger.ch/notes/tools/Graphviz/attributes/label/HTML-like/index
      with Cluster('ctxvrusage25', graph_attr=nodeattr):
-          bw24core=Custom('bw24core','./qakicons/symActorWithobjSmall.png')
-          bwobserver=Custom('bwobserver','./qakicons/symActorWithobjSmall.png')
-     with Cluster('ctxvrqak', graph_attr=nodeattr):
-          vrqak=Custom('vrqak(ext)','./qakicons/externalQActor.png')
-     sys >> Edge( label='vrinfo', **evattr, decorate='true', fontcolor='darkgreen') >> bwobserver
-     sys >> Edge( label='sonardata', **evattr, decorate='true', fontcolor='darkgreen') >> bwobserver
-     sys >> Edge( label='obstacle', **evattr, decorate='true', fontcolor='darkgreen') >> bwobserver
-     bw24core >> Edge(color='magenta', style='solid', decorate='true', label='<step<font color="darkgreen"> stepdone stepfailed</font> &nbsp; >',  fontcolor='magenta') >> vrqak
-     vrqak >> Edge(color='blue', style='solid',  decorate='true', label='<vrinfo &nbsp; >',  fontcolor='blue') >> bw24core
-     bw24core >> Edge(color='blue', style='solid',  decorate='true', label='<move &nbsp; >',  fontcolor='blue') >> vrqak
-     bwobserver >> Edge(color='blue', style='solid',  decorate='true', label='<stop &nbsp; >',  fontcolor='blue') >> bw24core
+          vrbasicmoves=Custom('vrbasicmoves','./qakicons/symActorWithobjSmall.png')
+          perceiver=Custom('perceiver','./qakicons/symActorWithobjSmall.png')
+     sys >> Edge( label='vrinfo', **evattr, decorate='true', fontcolor='darkgreen') >> vrbasicmoves
+     sys >> Edge( label='obstacle', **evattr, decorate='true', fontcolor='darkgreen') >> vrbasicmoves
+     sys >> Edge( label='sonardata', **evattr, decorate='true', fontcolor='darkgreen') >> vrbasicmoves
+     sys >> Edge( label='vrinfo', **evattr, decorate='true', fontcolor='darkgreen') >> perceiver
+     sys >> Edge( label='obstacle', **evattr, decorate='true', fontcolor='darkgreen') >> perceiver
+     sys >> Edge( label='sonardata', **evattr, decorate='true', fontcolor='darkgreen') >> perceiver
 diag

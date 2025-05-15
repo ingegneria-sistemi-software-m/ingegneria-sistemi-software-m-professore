@@ -39,14 +39,13 @@ import unibo.basicomm23.ws.WsConnection;
  * ------------------------------------------------------------------------
 */
 public class VrobotHLMoves24 extends ApplAbstractObserver implements IVrobotMoves {
-    protected String vitualRobotIp = "localhost";
     protected Interaction conn;
-    protected int elapsed             = 0;     //modified by update
-    protected String asynchMoveResult = null;  //for observer part
-    protected int threadCount = 1;
     protected ActorBasic owner;
     protected String toApplMsg   ;
     protected boolean tracing         = false;
+    protected String vitualRobotIp    = "localhost";
+    protected int elapsed             = 0;     //modified by update
+    protected String asynchMoveResult = null;  //for observer part
     protected boolean doingStepSynch  = false;
     protected boolean doingStepAsynch = false;
 
@@ -63,8 +62,8 @@ public class VrobotHLMoves24 extends ApplAbstractObserver implements IVrobotMove
     protected void connect(String vitualRobotIp, ActorBasic owner) {
     	this.vitualRobotIp = vitualRobotIp;
     	this.owner         = owner;
-        this.conn = //WsConnection.create(vitualRobotIp+":8091");
-        		ConnectionFactory.createClientSupport(ProtocolType.ws,vitualRobotIp+":8091","");
+        this.conn =  
+        		ConnectionFactory.createClientSupport(ProtocolType.ws,vitualRobotIp+":8091","api/moves");
         ((WsConnection) conn).addObserver(this);
         if( owner != null )
         	toApplMsg = "msg(wenvinfo, dispatch, support, RECEIVER, CONTENT, 0)"
@@ -72,8 +71,7 @@ public class VrobotHLMoves24 extends ApplAbstractObserver implements IVrobotMove
         else
             toApplMsg = "msg(wenvinfo, dispatch, support, RECEIVER, CONTENT, 0)"
             .replace("RECEIVER","alien");       	
-       CommUtils.aboutThreads("     	VRHL24 | CREATED");
-       //CommUtils.outyellow("     VRHL24 | CREATED in " + Thread.currentThread().getName());
+       CommUtils.aboutThreads("     	VRHL24 | CREATED toApplMsg="+toApplMsg);
     }
     
     public void setTrace(boolean v){
@@ -92,7 +90,7 @@ public class VrobotHLMoves24 extends ApplAbstractObserver implements IVrobotMove
         else if( cmd.equals("a") || cmd.equals("l")) turnLeft(  );
         else if( cmd.equals("d") || cmd.equals("r")) turnRight(  );
         else if( cmd.equals("h")  ) halt(  );
-        else if( cmd.equals("p") ) stepAsynch( 350 ); //TODO from file
+        else if( cmd.equals("p") ) stepAsynch( 370 ); //TODO from file
         //else if( cmd.equals("p") ) step( 350 );
     }
 
@@ -153,11 +151,15 @@ public class VrobotHLMoves24 extends ApplAbstractObserver implements IVrobotMove
     
     protected void handleMoveok(String move) {
     	elapsed = getDuration();
-        if( ( move.equals("turnLeft") || move.equals("turnRight")) ){
+     	if( tracing ) 
+     		CommUtils.outmagenta("     VRHL24 | handleMoveok "  + move + " after " + elapsed);
+       if( ( move.equals("turnLeft") || move.equals("turnRight")) ){
             activateWaiting( "true" );
             return;
         }
         if( doingStepAsynch ) {
+        	if( tracing ) 
+        		CommUtils.outblue("     VRHL24 | send a reply stepdone to owner");
         	if(owner!=null) {
         		IApplMessage msg = MsgUtil.buildReply("vrhl24","stepdone","stepdone(ok)",owner.getName());
         		//Invia reply all'owner
@@ -167,18 +169,24 @@ public class VrobotHLMoves24 extends ApplAbstractObserver implements IVrobotMove
         	return;
         }  	
         if( ! doingStepSynch ) {   //DISPATCH
-            String wenvInfo = toApplMsg.replace("wenvinfo","vrinfo") 
+           String wenvInfo = toApplMsg.replace("wenvinfo","vrinfo") 
                     .replace("CONTENT", "vrinfo(" + move + ", elapsed)");
+           if( tracing ) 
+        	   CommUtils.outblue("     VRHL24 | sending to the owner " +wenvInfo);
             IApplMessage msg = new ApplMessage(wenvInfo);
        	    if(owner!=null)  MsgUtil.sendMsg(msg,owner,null); //continuation
         }else {  //move is a forwardcmd for step
-            activateWaiting("true" );
+             activateWaiting("true" );
         }        
     }
     
     protected void handleMoveko(String move) {
     	elapsed = getDuration();
-    	if (move.contains("collision")) {
+    	if( tracing ) 
+    		CommUtils.outmagenta("     VRHL24 | handleMoveko "  + move + " after " + elapsed);
+   	if (move.contains("collision")) {
+   		if( tracing ) 
+   			CommUtils.outblue("     VRHL24 | sending a reply stepfailed to the owner "  );
     		if( doingStepAsynch ) {
             	if(owner!=null) {
             		IApplMessage msg = MsgUtil.buildReply(
@@ -190,13 +198,17 @@ public class VrobotHLMoves24 extends ApplAbstractObserver implements IVrobotMove
             	return;
     		}
             if(  ! doingStepSynch ) {  
-                 String wenvInfo = toApplMsg
+            	if( tracing ) 
+            		CommUtils.outblue("     VRHL24 | sending  to the owner "  );
+                String wenvInfo = toApplMsg
                          .replace("wenvinfo", "vrinfo")  
                          .replace("CONTENT","vrinfo(" + elapsed + ", collision )");
                  IApplMessage msg = new ApplMessage(wenvInfo);  //DISPATCH
                  if(owner!=null)  MsgUtil.sendMsg(msg, owner, null);  
             } else {
-                IApplMessage collisionEvent = CommUtils.buildEvent(
+            	if( tracing ) 
+            		CommUtils.outblue("     VRHL24 | emit event "  );
+               IApplMessage collisionEvent = CommUtils.buildEvent(
                         "vrhl24","obstacle","obstacle(unknown)" );
                 if(owner!=null) MsgUtil.emitLocalEvent(collisionEvent,owner,null);         
                 if(owner!=null) MsgUtil.emitLocalStreamEvent(collisionEvent,owner,null);  
@@ -208,8 +220,8 @@ public class VrobotHLMoves24 extends ApplAbstractObserver implements IVrobotMove
     protected void handleCollision( ) {
     	halt(); //interrompe la move che provocato la collision
         IApplMessage collisionEvent = CommUtils.buildEvent(
-                "vrhlsprt","vrinfo","vrinfo(obstacle,unknown)" );
-        //CommUtils.outred("     VrobotHLMovesActors24 | emit " + collisionEvent);
+                "vrhlsprt","vrinfo","vrinfo(obstacle,collision)" );
+        //if( tracing )  CommUtils.outred("     VrobotHLMovesActors24 | emit " + collisionEvent);
         if(owner!=null) MsgUtil.emitLocalEvent(collisionEvent,owner,null);   
         if(owner!=null) MsgUtil.emitLocalStreamEvent(collisionEvent,owner,null);  
     }
@@ -223,8 +235,8 @@ public class VrobotHLMoves24 extends ApplAbstractObserver implements IVrobotMove
     public void update(String info) {
          try {            
             JSONObject jsonObj = CommUtils.parseForJson(info);
-            if( tracing )              
-            CommUtils.outblue(
+            if( tracing ) 
+            	CommUtils.outgreen(
                 "     VRHL24 | update:" + info
                         + " jsonObj=" + jsonObj + " doingStep=" + doingStepSynch
                         + " " + Thread.currentThread().getName());    //Grizzly            
@@ -249,8 +261,8 @@ public class VrobotHLMoves24 extends ApplAbstractObserver implements IVrobotMove
             	handleCollision();
                return;
             }          	 
-            if (info.contains("_notallowed")) {
-                CommUtils.outred("     VRHL24 | update WARNING!!! _notallowed unexpected in " + info);
+            if (info.contains("_notallowed") || info.contains("interrupted")) {
+                CommUtils.outred("     VRHL24 | WARNING!!! wrong in " + info + " thus HALT");
                 halt();
                 return;
             }
@@ -303,10 +315,10 @@ public class VrobotHLMoves24 extends ApplAbstractObserver implements IVrobotMove
     @Override
     public void stepAsynch(int time) {
         try {
-        	//CommUtils.outred("     VRHL24 | stepAsynch");
         	doingStepAsynch = true;
             startTimer(); //per getDuration()
-            if( tracing ) CommUtils.outyellow("     VRHL24 | stepAsynch" );
+            if( tracing ) 
+            	CommUtils.outyellow("     VRHL24 | stepAsynch" );
             conn.forward(VrobotMsgs.forwardcmd.replace("TIME", "" + time));
         } catch (Exception e) {
             e.printStackTrace();
@@ -328,36 +340,67 @@ public class VrobotHLMoves24 extends ApplAbstractObserver implements IVrobotMove
             while (asynchMoveResult == null) {
                 wait();
             }
-            if( tracing ) CommUtils.outyellow("     VRHL24 | requestSynch RESUMES moveResult=" + asynchMoveResult);
+            if( tracing ) 
+            	CommUtils.outyellow("     VRHL24 | requestSynch RESUMES moveResult=" + asynchMoveResult);
             return asynchMoveResult;
         }
     }
     protected void activateWaiting(String endmove){
         synchronized (this) {  //sblocca request sincrona per checkRobotAtHome
-            //CommUtils.outmagenta("activateWaiting ... ");
+        	if( tracing ) 
+        		CommUtils.outmagenta("     VRHL24 | activateWaiting ... " + endmove);
             asynchMoveResult = endmove;
             notifyAll();
         }
     }
+    
+    public void testBasicMoves() throws Exception {
+    	CommUtils.outgreen("testBasicMoves");
+        move("a");
+        move("d");
+        CommUtils.delay(500);
+        move("w");
+        CommUtils.delay(1000);
+        move("h");
+        CommUtils.delay(1000);
+        move("s");
+        CommUtils.delay(1000);
+        move("h");
+   	
+    }
 
+    public void testStep() throws Exception{
+    	CommUtils.outgreen("testStep");
+    	step(370);
+    }
+    
+    public void testStepAsynch() throws Exception{
+    	CommUtils.outgreen("testStepAsynch");
+    	stepAsynch(370);
+    }
+    public void testStepAsynchAndOtherMoves() throws Exception{
+    	CommUtils.outgreen("do stepAsynch");
+    	stepAsynch(370);
+//       	CommUtils.outgreen("do move(a) ");
+//       	move("a");
+    	//stepAsynch(370);
+    }
     
     /*
      * A main just to test ...
      */
     public static void main(String[] args) throws Exception {
         CommUtils.aboutThreads("Before start - ");
-        VrobotHLMoves24 appl = VrobotHLMoves24.create("localhost",null); //new VrobotHLMovesActors24("localhost",null);
-        appl.move("a");
-        appl.move("d");
-        CommUtils.delay(500);
-        appl.move("w");
-        CommUtils.delay(1000);
-        appl.move("h");
-        CommUtils.delay(1000);
-        appl.move("s");
-        CommUtils.delay(1000);
-        appl.move("h");
+        ActorBasic owner = null;
+        VrobotHLMoves24 appl = VrobotHLMoves24.create("localhost",owner); 
+//        appl.setTrace(true);
+//         appl.testBasicMoves();
+//         appl.testStep();
+//         appl.testStepAsynch();
+         appl.testStepAsynchAndOtherMoves();
         CommUtils.aboutThreads("At end - ");
+        CommUtils.delay(1500);
+        System.exit(0);
     }
 }
 

@@ -5,16 +5,20 @@ System virtualrobotusage25
 
 /*
  * Accede al virtual robot usando mosse di basso livello 
- * + step sincrono del POJO VrobotLLMoves24
+ * + step asincrono del POJO VrobotHLMoves24
  * 
  * Percorre il boundary della stanza (SUPPOSTO PRIVO DI OSTACOLI)
  * e si ferma per 2 secs quando rilevato dal SONAR
  * 
- * Da conforntare con BoundaryWalkNaiveUsingWs
+ * Da conforntare con vrusage25A
  */
   
-Dispatch stepdone   : stepdone(X)        "step ok"
-Dispatch stepfailed : stepfailed(X)      "step ko"
+ 
+
+Request step       : step(TIME)   
+Reply stepdone     : stepdone(V)                 for step
+Reply stepfailed   : stepfailed(DURATION, CAUSE) for step
+
 Event  sonardata    : sonar( DISTANCE )  "emesso dal SONAR"	   
 Dispatch vrinfo     : vrinfo(A,B)        "inviato dal supportp"
 
@@ -23,9 +27,12 @@ Event obstacle      : obstacle(X)		 "emesso dal supportp"
  
 Context ctxvrusage25  ip [host="localhost"  port=8120   ]
 
- QActor vrboundary context ctxvrusage25 withobj vr using "VrobotLLMoves24.create(\"localhost\",myself)" {
+ QActor vrboundary context ctxvrusage25 withobj vr using "VrobotHLMoves24.create(\"localhost\",myself)" {
  	import "main.java.*"
- 	[# var RSTEP = false; var N=0 #] 
+ 	
+ 	[#  var N=0; 
+ 		var StepCount = 0
+ 	#] 
 	State s0 initial{ 
 		println("$name STARTS") color blue 
 		//[# vr.setTrace( true ) #]
@@ -35,21 +42,21 @@ Context ctxvrusage25  ip [host="localhost"  port=8120   ]
 	 
 	State doboundary{
 		delay 200
- 		[# RSTEP = vr.step(350) #]  
- 		//se RSTEP = false emette vrinfo(obstacle,unknown) percepito da vrobserver
-		//println("$name | RSTEP=$RSTEP") color blue
-		if [# RSTEP #]{ autodispatch stepdone : stepdone(1) }	 
-		else{ autodispatch stepfailed : stepfailed(1) }
+		[# StepCount++ #]
+		//STEP ASINCRONO => non più autodispatch: il supporto invia una reply
+		println("stepAsynch $StepCount") color blue
+ 		[#  vr.stepAsynch(370) #]  
 	} 
 	Transition t0 
-	    whenEvent sonardata -> handleSonardata
-	    whenMsg stepdone    -> doboundary
-	    whenMsg stepfailed  -> turnAndgo
+	    whenEvent sonardata   -> handleSonardata
+	    whenReply stepdone    -> doboundary
+	    whenReply stepfailed  -> turnAndgo
  
 	    
 	State turnAndgo{
 		[# N = N + 1 #]
- 		[# vr.turnLeft() #]
+		println("turn N=$N") color blue
+ 		[# vr.turnLeft() #] //oppure [# vr.move("l") #]
 		if [# N == 4 #]{
 			[# System.exit(0) #]
 		}  
@@ -62,12 +69,12 @@ Context ctxvrusage25  ip [host="localhost"  port=8120   ]
 	State handleSonardata{
 		printCurrentMessage color cyan
 		delay 200
-		[# vr.step(350) #]     //mi sposto da sotto il sonar se no vengono RIGENERATI eventi
+		[#  vr.stepAsynch(370) #]     //mi sposto da sotto il sonar se no vengono RIGENERATI eventi
 		delay 2000  //pause
 	} 
 	Transition t0 
- 	    whenMsg stepdone    -> doboundary       //quello in sospeso
-	    whenMsg stepfailed  -> turnAndgo
+ 	    whenReply stepdone    -> doboundary       //quello in sospeso
+	    whenReply stepfailed  -> turnAndgo
 
 }
 

@@ -18,7 +18,11 @@ import unibo.basicomm23.utils.CommUtils;
 import unibo.basicomm23.utils.ConnectionFactory;
 import unibo.basicomm23.ws.WsConnection;
 
-
+/*
+ * ================================================================
+ * Muove il robot inviando messaggi cril sulla connessioneWS
+ * ================================================================
+*/
 
  
 
