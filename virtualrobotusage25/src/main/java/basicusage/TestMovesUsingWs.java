@@ -24,10 +24,7 @@ import unibo.basicomm23.ws.WsConnection;
  * ================================================================
 */
 
- 
-
- 
-public class TestMovesUsingWs extends ApplAbstractObserver{
+ public class TestMovesUsingWs extends ApplAbstractObserver{
      private  JSONParser simpleparser = new JSONParser();
 	 private  String turnrightcmd  = "{\"robotmove\":\"turnRight\"    , \"time\": \"300\"}";
 	 private  String turnleftcmd   = "{\"robotmove\":\"turnLeft\"     , \"time\": \"300\"}";
@@ -67,7 +64,7 @@ public class TestMovesUsingWs extends ApplAbstractObserver{
         long duration = System.currentTimeMillis() - startTime;
         try {
             //{"collision":"true ","move":"..."} or {"sonarName":"sonar2","distance":19,"axis":"x"}
-        	CommUtils.outmagenta("TestMovesUsingWs | onMessage:" + message + " duration="+duration);
+        	CommUtils.outmagenta("TestMovesUsingWs | update:" + message + " duration="+duration);
             JSONObject jsonObj = (JSONObject) simpleparser.parse(message);
             //CommUtils.outblue("TestMovesUsingWs | jsonObj:" + jsonObj);
             if (jsonObj.get("endmove") != null ) {
@@ -150,7 +147,7 @@ public class TestMovesUsingWs extends ApplAbstractObserver{
     public void doBasicMoves() {
         callWS(  haltcmd ) ; //halt asynch non manda enmove
         CommUtils.delay(20);
-     CommUtils.waitTheUser("hit to turn");
+        CommUtils.waitTheUser("hit to turn");
  	
 		callWS(  turnleftcmd ) ;
 		CommUtils.outblue("turnLeft msg sent"  );		
@@ -179,10 +176,10 @@ MAIN
         try{
     		CommUtils.aboutThreads("Before start - ");
             TestMovesUsingWs appl = new TestMovesUsingWs("localhost:8091");
-            appl.doBasicMoves();
+//            appl.doBasicMoves();
 //            appl.doForward();
 //            appl.doCollision();
-//            appl.doNotAllowed();
+             appl.doNotAllowed();
 //            appl.doHalt();
        		CommUtils.aboutThreads("At end - ");
        		System.exit(0);

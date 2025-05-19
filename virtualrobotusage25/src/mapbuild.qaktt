@@ -1,0 +1,88 @@
+System virtualrobotusage25
+
+/*  
+========================================
+mapbuild.qak
+========================================
+*/   
+/*
+ * Costruisce la mappa di una stanza con bordi privi di ostacoli
+ * usando VrobotLLMoves24.java e map = RoomMap(NR,NC) 
+ * 
+ * La mappa (RETTANGOLARE) è definita dalla classe RoomMap.java
+ *   
+ * Scrive il risultato in due files:
+ * - mapProlog.txt ( map.saveRoomMapProlog() )
+ * - mapnaive.txt ( map.saveRoomMap() che fa anche mapnaive.bin )
+ */ 
+Dispatch stepdone   : stepdone(X)     //"automsg"
+Dispatch stepfailed : stepfailed(X)   //"automsg"
+Dispatch vrinfo     : vrinfo(A,B)     //"from VrobotLLMoves24"
+
+Context ctxvrusage25  ip [host="localhost" port=8720     ]
+
+QActor mapbuilder context ctxvrusage25 withobj vr 
+                    using "VrobotLLMoves24.create(\"localhost\",myself)"{ 
+	import "main.java.VrobotLLMoves24"
+	import "main.resources.map.RoomMap" 
+	[# var N  = 0 
+	   var NR = 1
+	   var NC = 1
+	   var firstcolumn  = true
+	   var firstrow     = false 
+	   
+	   val MapName      = "mapnaive"
+	#] 
+	        
+	
+	State s0 initial{ 
+		println("$name STARTS $vr") color blue
+		//[# vr.setTrace(true) vr.connect();  #]
+ 		[# vr.halt();   #]
+	}
+	Goto doMap
+
+	
+	State doMap{ 
+		delay 200
+  		[# var RSTEP = vr.step(350) #]  //se RSTEP = false emette vrinfo(obstacle,unknown) 
+		//println("$name | RSTEP=$RSTEP") color blue
+		if [# RSTEP #]{ 
+			if [# firstcolumn #]{ [# NR++ #] }
+			if [# firstrow #]{    [# NC++ #] }
+			autodispatch stepdone : stepdone(1)
+		}	 
+		else{ autodispatch stepfailed : stepfailed(1) }
+	} 
+	Transition t0 
+	    whenMsg stepdone    -> doMap 
+	    whenMsg stepfailed  -> turnAndgo
+   
+ 
+	State turnAndgo{ 
+		if [# ! firstcolumn #]{ [# NR++ #] }
+		if [# ! firstrow #]{ [# NC++ #] }
+		println("$name | N=$N, NC=$NC, NR=$NR") color cyan
+		if [# ! firstrow #]{ [# firstrow = true #] }
+		[# firstcolumn = false #] 
+		[# N = N + 1 #]
+ 		[# vr.turnLeft() #] 
+ 		println("$name | N=$N, NC=$NC, NR=$NR") color cyan
+		if [# N == 2 #]{
+			println("$name | N=$N, NC=$NC, NR=$NR") color yellow
+			[# val map = RoomMap(NR,NC)    #]
+			[# map.setRobot( NR-1,NC-1 )   #]
+			[# val MS  = map.toString()    #]
+			[# map.saveRoomMap(MapName, MS ) #]    //SAVE MAP  
+			[# val MP  = map.toProlog()    #]  
+			//println(MP)
+			[# map.saveRoomMapProlog("mapProlog", MP) #]
+			println("$name | MAP: ") color yellow
+			println("$MS ") color yellow
+			delay 1000
+			[# System.exit(0) #]
+		}   
+	} 
+	Goto doMap     
+ 	  
+}

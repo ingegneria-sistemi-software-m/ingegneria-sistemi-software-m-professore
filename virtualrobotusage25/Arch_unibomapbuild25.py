@@ -21,10 +21,10 @@ evattr = {
     'color': 'darkgreen',
     'style': 'dotted'
 }
-with Diagram('virtualrobotusage25Arch', show=False, outformat='png', graph_attr=graphattr) as diag:
+with Diagram('unibomapbuild25Arch', show=False, outformat='png', graph_attr=graphattr) as diag:
   with Cluster('env'):
      sys = Custom('','./qakicons/system.png')
 ### see https://renenyffenegger.ch/notes/tools/Graphviz/attributes/label/HTML-like/index
-     with Cluster('ctxvrusage25', graph_attr=nodeattr):
+     with Cluster('ctxmapbuild', graph_attr=nodeattr):
           mapbuilder=Custom('mapbuilder','./qakicons/symActorWithobjSmall.png')
 diag
