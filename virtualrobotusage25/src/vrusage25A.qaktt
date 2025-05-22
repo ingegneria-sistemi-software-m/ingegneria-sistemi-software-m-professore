@@ -11,8 +11,8 @@ System virtualrobotusage25
  * e si ferma per 2 secs quando rilevato dal SONAR
  * 
  * Da conforntare con BoundaryWalkNaiveUsingWs
- */
-  
+ */ 
+   
 Dispatch stepdone   : stepdone(X)        "step ok"
 Dispatch stepfailed : stepfailed(X)      "step ko"
 Event  sonardata    : sonar( DISTANCE )  "emesso dal SONAR"	   
@@ -25,7 +25,10 @@ Context ctxvrusage25  ip [host="localhost"  port=8120   ]
 
  QActor vrboundary context ctxvrusage25 withobj vr using "VrobotLLMoves24.create(\"localhost\",myself)" {
  	import "main.java.*"
- 	[# var RSTEP = false; var N=0 #] 
+ 	[# var RSTEP = false; var N=0; var Bottom=true #] 
+ 	
+ 
+ 	
 	State s0 initial{ 
 		println("$name STARTS") color blue 
 		//[# vr.setTrace( true ) #]
@@ -60,21 +63,22 @@ Context ctxvrusage25  ip [host="localhost"  port=8120   ]
 	 * in questo stato c'è un dispatch stepdone/stepfailed  in coda 
 	 */
 	State handleSonardata{
-		printCurrentMessage color cyan
-		delay 200
-		[# vr.step(350) #]     //mi sposto da sotto il sonar se no vengono RIGENERATI eventi
-		delay 2000  //pause
+		println("$name |  handleSonardata ")
+		   [# vr.halt() #]
+	 	   [# vr.forward(350) #]	  		
+		   println("$name |  PAUSE with autodispatch")
+		   delay 2000  //pause
 	} 
 	Transition t0 
  	    whenMsg stepdone    -> doboundary       //quello in sospeso
 	    whenMsg stepfailed  -> turnAndgo
 
 }
-
  
+
 QActor vrobserver context ctxvrusage25{
 	State s0 initial{ 
-		println("$name | READY") color blue
+		println("		$name | READY") color blue
 	}
 	Goto work
 	
@@ -87,17 +91,17 @@ QActor vrobserver context ctxvrusage25{
 		whenEvent sonardata -> handleSonardata
 	
 	State handleVrinfo{   
-		printCurrentMessage color green
+		println("		$name | $currentMsg") color green
 	}	
  	Goto work   
 
 	State handleobstacle{ 
-		printCurrentMessage color magenta
+		println("		$name | $currentMsg")  color magenta
 	}	
  	Goto work  
  	 
 	State handleSonardata{
-		printCurrentMessage color black
+		println("		$name | $currentMsg")  color black
 	}	
  	Goto work
  }

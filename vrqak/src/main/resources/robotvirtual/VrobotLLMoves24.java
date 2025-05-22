@@ -118,18 +118,19 @@ public class VrobotLLMoves24 extends ApplAbstractObserver implements IVrobotLLMo
     
     protected void handleSonar(JSONObject jsonObj) {
         if (jsonObj.get("sonarName") != null) { //defensive
-        	if( tracing ) CommUtils.outred("     VRLL24 | handleSonar " + jsonObj);
+        	//if( tracing ) 
+        		CommUtils.outred("     VRLL24 | handleSonar " + jsonObj);
             long d = (long) jsonObj.get("distance") ;
             if( d < 0 ) d = -d;
-            IApplMessage sonarEvent = CommUtils.buildEvent( "VRLL24","sonardata","sonar(" + d + " )");
+            IApplMessage sonarEvent = CommUtils.buildEvent( "VRLL24","sonardata","sonar(" + d + ")");
             emitInfo(sonarEvent);
          }
     }
     
     protected void handleMoveok(String move) {
     	elapsed = getDuration();
-        if( tracing )              
-        CommUtils.outgreen("     VRLL24 | handleMoveok:" + move + " elapsed=" + elapsed );               
+        //if( tracing )              
+        	CommUtils.outgreen("     VRLL24 | handleMoveok:" + move + " elapsed=" + elapsed + " doingStepSynch="+doingStepSynch);               
        if( ( move.equals("turnLeft") || move.equals("turnRight")) ){
             activateWaiting( move,"true" );
             return;
@@ -285,14 +286,16 @@ public class VrobotLLMoves24 extends ApplAbstractObserver implements IVrobotLLMo
     }
 
     protected void emitInfo(IApplMessage info) {
-    	if( tracing ) CommUtils.outmagenta("     VRLL24  | emitInfoooo " + info );
+//    	if( tracing ) 
+    		CommUtils.outmagenta("     VRLL24  | emitInfoooo emitLocalEvent " + info );
         //if(owner!=null) MsgUtil.emitLocalStreamEvent(info,owner,null);  
-        //if(owner!=null) MsgUtil.emitLocalEvent(info,owner,null);   
-    	if(owner!=null) owner.emit( owner.getContext(), info, null );
+        if(owner!=null) MsgUtil.emitLocalEvent(info,owner,null);   
+    	//if(owner!=null) owner.emit( owner.getContext(), info, null );
     }
     
     protected void sendInfo(IApplMessage msg) {
-    	if(owner!=null && tracing)  MsgUtil.sendMsg(msg,owner,null); //null:continuation
+    	//if(owner!=null && tracing)  MsgUtil.sendMsg(msg,owner,null); //null:continuation
+    	if(owner!=null  )  MsgUtil.sendMsg(msg,owner,null); 
     }
     
     /*

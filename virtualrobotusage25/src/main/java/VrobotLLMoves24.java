@@ -125,10 +125,11 @@ public class VrobotLLMoves24 extends ApplAbstractObserver implements IVrobotLLMo
     
     protected void handleSonar(JSONObject jsonObj) {
         if (jsonObj.get("sonarName") != null) { //defensive
-        	if( tracing ) CommUtils.outred("     VRLL24 | handleSonar " + jsonObj);
+        	//if( tracing ) 
+        		CommUtils.outred("     VRLL24 | handleSonar " + jsonObj);
             long d = (long) jsonObj.get("distance") ;
             if( d < 0 ) d = -d;
-            IApplMessage sonarEvent = CommUtils.buildEvent( "VRLL24","sonardata","sonar(" + d + " )");
+            IApplMessage sonarEvent = CommUtils.buildEvent( "VRLL24","sonardata","sonar(" + d + ")");
             emitInfo(sonarEvent);
          }
     }

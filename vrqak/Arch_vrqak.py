@@ -27,7 +27,6 @@ with Diagram('vrqakArch', show=False, outformat='png', graph_attr=graphattr) as 
 ### see https://renenyffenegger.ch/notes/tools/Graphviz/attributes/label/HTML-like/index
      with Cluster('ctxvrqak', graph_attr=nodeattr):
           vrqak=Custom('vrqak','./qakicons/symActorWithobjSmall.png')
-          obs=Custom('obs','./qakicons/symActorWithobjSmall.png')
-     vrqak >> Edge( label='sonardata', **eventedgeattr, decorate='true', fontcolor='red') >> vrqak
-     vrqak >> Edge(color='blue', style='solid',  decorate='true', label='<vrinfo &nbsp; >',  fontcolor='blue') >> obs
+     vrqak >> Edge( label='sonarval', **eventedgeattr, decorate='true', fontcolor='red') >> sys
+     sys >> Edge( label='sonardata', **evattr, decorate='true', fontcolor='darkgreen') >> vrqak
 diag

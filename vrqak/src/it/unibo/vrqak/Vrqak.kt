@@ -36,9 +36,6 @@ class Vrqak ( name: String, scope: CoroutineScope, isconfined: Boolean=false, is
 				state("s0") { //this:State
 					action { //it:State
 						CommUtils.outblue("$name STARTS")
-						 vr.setTrace(true)  
-						subscribeToLocalActor("vrqak") 
-						CommUtils.outblue("$name subscribe to myself done")
 						//genTimer( actor, state )
 					}
 					//After Lenzi Aug2002
@@ -73,15 +70,16 @@ class Vrqak ( name: String, scope: CoroutineScope, isconfined: Boolean=false, is
 				}	 
 				state("handleSonarData") { //this:State
 					action { //it:State
-						CommUtils.outmagenta("$name in ${currentState.stateName} | $currentMsg | ${Thread.currentThread().getName()} n=${Thread.activeCount()}")
+						CommUtils.outblack("$name in ${currentState.stateName} | $currentMsg | ${Thread.currentThread().getName()} n=${Thread.activeCount()}")
 						 	   
 						if( checkMsgContent( Term.createTerm("sonar(DISTANCE)"), Term.createTerm("sonar(D)"), 
 						                        currentMsg.msgContent()) ) { //set msgArgList
 								 var D = payloadArg(0)  
-								 val sonarEvent = "sonardata(" +  D + ")"  
-								CommUtils.outmagenta("$name | handleSonarData $sonarEvent")
+								 val sonarEvent = "sonardataaaaaa(" +  D + ")"  
 								updateResourceRep( "$sonarEvent"  
 								)
+								CommUtils.outblack("$name | EMIT (publish) sonarval ---------------------------------- ")
+								emit("sonarval", "distance($D)" ) 
 						}
 						//genTimer( actor, state )
 					}
@@ -98,7 +96,7 @@ class Vrqak ( name: String, scope: CoroutineScope, isconfined: Boolean=false, is
 						                        currentMsg.msgContent()) ) { //set msgArgList
 								 val Move = payloadArg(0);   
 								if(  Move == "h"  
-								 ){ vr.halt()  
+								 ){ vr.halt()     
 								}
 								if(  Move == "w"  
 								 ){ vr.step(150)  
@@ -157,11 +155,14 @@ class Vrqak ( name: String, scope: CoroutineScope, isconfined: Boolean=false, is
 				}	 
 				state("handleVrinfoMsgReply") { //this:State
 					action { //it:State
-						CommUtils.outred("$name | handleVrinfoMsgReply $currentMsg")
+						CommUtils.outcyan("$name in ${currentState.stateName} | $currentMsg | ${Thread.currentThread().getName()} n=${Thread.activeCount()}")
+						 	   
+						CommUtils.outred("$name | handleVrinfoMsgReply $currentMsg doingAsynchStep=$doingAsynchStep")
 						if( checkMsgContent( Term.createTerm("vrinfo(SOURCE,INFO)"), Term.createTerm("vrinfo(S,elapsed)"), 
 						                        currentMsg.msgContent()) ) { //set msgArgList
 								if(  doingAsynchStep  
-								 ){answer("step", "stepdone", "stepdone(ok)"   )  
+								 ){CommUtils.outyellow("$name | reply asynchstep done")
+								answer("step", "stepdone", "stepdone(ok)"   )  
 								 doingAsynchStep = false  
 								}
 								else
@@ -172,7 +173,8 @@ class Vrqak ( name: String, scope: CoroutineScope, isconfined: Boolean=false, is
 						                        currentMsg.msgContent()) ) { //set msgArgList
 								 val T = payloadArg(0)  
 								if(  doingAsynchStep  
-								 ){answer("step", "stepfailed", "stepfailed($T,collision)"   )  
+								 ){CommUtils.outyellow("$name | reply asynchstep ko")
+								answer("step", "stepfailed", "stepfailed($T,collision)"   )  
 								 doingAsynchStep = false  
 								}
 								else

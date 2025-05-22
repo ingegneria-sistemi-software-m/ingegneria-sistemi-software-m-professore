@@ -1,6 +1,6 @@
 System virtualrobotusage25
 /*
- * vrusage25A.qak
+ * vrusage25B.qak
  */
 
 /*
@@ -20,18 +20,19 @@ Reply stepdone     : stepdone(V)                 for step
 Reply stepfailed   : stepfailed(DURATION, CAUSE) for step
 
 Event  sonardata    : sonar( DISTANCE )  "emesso dal SONAR"	   
-Dispatch vrinfo     : vrinfo(A,B)        "inviato dal supportp"
+Dispatch vrinfo     : vrinfo(A,B)        "inviato dal supporto"
 
-Event vrinfo        : vrinfo(A,B)        "emesso dal supportp"
-Event obstacle      : obstacle(X)		 "emesso dal supportp"
- 
+Event vrinfo        : vrinfo(A,B)        "emesso dal supporto"
+Event obstacle      : obstacle(X)		 "emesso dal supporto"
+  
+
 Context ctxvrusage25  ip [host="localhost"  port=8120   ]
 
  QActor vrboundary context ctxvrusage25 withobj vr using "VrobotHLMoves24.create(\"localhost\",myself)" {
  	import "main.java.*"
  	
  	[#  var N=0; 
- 		var StepCount = 0
+ 		var StepCount = 0 
  	#] 
 	State s0 initial{ 
 		println("$name STARTS") color blue 
@@ -39,7 +40,39 @@ Context ctxvrusage25  ip [host="localhost"  port=8120   ]
 		[# vr.halt() #]  //per sbloccare eventuali notallowed
 	}
 	Goto doboundary
-	 
+//	Goto test
+	
+	
+	
+	State test{
+//		[#  vr.move("w") #]
+//		println("$name | w ")
+//		delay 400
+//		println("$name | h ")
+//		[# vr.move("h") #]		
+
+[#  vr.forward(350) #]  //azione che potrebbe fallire
+//SE OK Il supporto invia msg(vrinfo,dispatch,support,vrboundary,vrinfo(moveForward,358),0)
+//SE KO Il supporto invia msg(vrinfo,dispatch,support,vrboundary,vrinfo(281,collision),0)
+delay 250
+[# vr.halt() #]
+//Il supporto invia msg(vrinfo,dispatch,support,vrboundary,vrinfo(270,interrupted),0)
+[#  vr.forward(350) #]
+//Il supporto invia 
+//msg(vrinfo,dispatch,support,vrboundary,vrinfo(moveForward,359),0)
+//OPPURE (se vicino a un ostacolo)
+//msg(vrinfo,dispatch,support,vrboundary,vrinfo(248,collision),0) 
+	}
+	Transition t0 
+ 		whenEvent sonardata  -> handleSonardata 
+
+	 State hsd{
+	 	printCurrentMessage color red
+	 }
+ 	 Goto test
+	
+//------------------------------------	
+	
 	State doboundary{
 		delay 200
 		[# StepCount++ #]
@@ -48,9 +81,10 @@ Context ctxvrusage25  ip [host="localhost"  port=8120   ]
  		[#  vr.stepAsynch(370) #]  
 	} 
 	Transition t0 
-	    whenEvent sonardata   -> handleSonardata
+  	    whenEvent sonardata   -> handleSonardata
 	    whenReply stepdone    -> doboundary
 	    whenReply stepfailed  -> turnAndgo
+ 
  
 	    
 	State turnAndgo{
@@ -63,25 +97,37 @@ Context ctxvrusage25  ip [host="localhost"  port=8120   ]
 	}
 	Goto doboundary
 	    
+	    
+//	State waitsometime{
+//		delay 2000
+//	}
+//	Transition t0 
+//	    whenReply stepdone    -> doboundary
+//	    whenReply stepfailed  -> turnAndgo
+	
 	/*
-	 * in questo stato c'è un dispatch stepdone/stepfailed  in coda 
+	 * in questo stato INTERROMPO lo stepAsynch in corso
+	 * (il supporto NON MANDA messaggi all'owner)
+	 * e ne faccio un altro per togliermi da sotto il SONAR
 	 */
 	State handleSonardata{
-		printCurrentMessage color cyan
-		delay 200
-		[#  vr.stepAsynch(370) #]     //mi sposto da sotto il sonar se no vengono RIGENERATI eventi
+		println("$name |  handleSonardata ")
+		[# vr.move("h")        #]
+ 		[# vr.stepAsynch(350)  #]
+		println("$name |  PAUSE after stepAsynch")
 		delay 2000  //pause
 	} 
 	Transition t0 
- 	    whenReply stepdone    -> doboundary       //quello in sospeso
-	    whenReply stepfailed  -> turnAndgo
+ 	    whenReply stepdone    -> doboundary  //quello in sospeso
+	    whenReply stepfailed  -> turnAndgo   
 
 }
 
+/*  
  
 QActor vrobserver context ctxvrusage25{
 	State s0 initial{ 
-		println("$name | READY") color blue
+		println("		$name | READY") color blue
 	}
 	Goto work
 	
@@ -94,20 +140,20 @@ QActor vrobserver context ctxvrusage25{
 		whenEvent sonardata -> handleSonardata
 	
 	State handleVrinfo{   
-		printCurrentMessage color green
+		println("		$name | $currentMsg")  color green
 	}	
  	Goto work   
 
 	State handleobstacle{ 
-		printCurrentMessage color magenta
+		println("		$name | $currentMsg")  color magenta
 	}	
  	Goto work  
  	 
 	State handleSonardata{
-		printCurrentMessage color black
+		println("		$name | $currentMsg")  color black
 	}	
  	Goto work
  }
  
-
+*/
  

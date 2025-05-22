@@ -1,4 +1,5 @@
 System vrqak
+mqttBroker "192.168.1.132" : 1883 eventTopic "vrevents"  
 /*  
 ========================================
 vrqak.qak
@@ -6,9 +7,10 @@ vrqak.qak
 */    
 /*
  * PROPEDEUTICO a basicrobot
- * Usa VrobotLLMoves24
- * Risponde a 
- *      Dispatch move : move(MOVE)
+ * Usa VrobotLLMoves24  
+ * Realizza uno step asincorno come in VroboHLMoves24
+ * Risponde ai segeunti messaggi:
+ *      Dispatch move : move(MOVE) MOVE= w | a | d | h | p
  *      Request  step
  *      Request cmd
  * 
@@ -25,7 +27,8 @@ Reply cmdfailed : cmdfailed(T,CAUSE)  for cmd
  
 Dispatch vrinfo : vrinfo(SOURCE,INFO)  //Inivato da VR
  
-Event  sonardata: sonar( DISTANCE ) 	    
+Event  sonarval : distance( DISTANCE ) 	    "emesso in out"	
+Event  sonardata: sonar( DISTANCE ) 	    "emesso dal SONAR"	
 
 Request step    : step(TIME)	
 Reply stepdone  : stepdone(V)                 for step
@@ -36,50 +39,47 @@ Context ctxvrqak  ip [host="localhost" port=8125]
 
 QActor vrqak context ctxvrqak withobj vr using "VrobotLLMoves24.create(\"localhost\",myself)"{  
 	import "main.resources.robotvirtual.VrobotLLMoves24"
-	//import "main.resources.gui.*" 
 	[# var doingAsynchStep = false  #]
 	State s0 initial{
 		println("$name STARTS") color blue
-		//[# GuiUtils.showSystemInfo() #]
-		[# vr.setTrace(true) #]
-		//subscribeTo vrqak for vrinfo
-		subscribeTo vrqak for sonardata
-		println("$name subscribe to myself done") color blue
-		//[# VrobotHLCmdGuiLocal(vr) #] //just to have a console ...
+//		[# vr.setTrace(true) #] 
+//		subscribeTo vrqak for sonardata
+		//println("$name subscribe to myself done") color blue
 	} 
 	Goto work
 	
 	State work{
-		println("$name | work") color blue
+		println("$name | work") color blue 
 	}
 	Transition t0
 	   whenMsg     halt  -> dohalt
 	   whenMsg     move  -> domove
-	   whenRequest cmd  -> domoverequest
+	   whenRequest cmd   -> domoverequest
 	   whenRequest step -> handleAsynchStep
+
 
     State dohalt{   	
     	printCurrentMessage color red
     	[# vr.halt() #]
     }
     Goto work
+    
 	/*
 	 * Durante un movimento è stato rilveato un segnale dal sonar
 	 */
- 
 	State handleSonarData{ 
-		printCurrentMessage color magenta   
+		printCurrentMessage color black  
 		onMsg( sonardata : sonar(D) ){
 			[# var D = payloadArg(0) #]
 			//emitlocalstream sonardata : sonar($D)  //vengono accodati tutti ??
-			[# val sonarEvent = "sonardata(" +  D + ")" #]
-			println("$name | handleSonarData $sonarEvent") color magenta 
+			[# val sonarEvent = "sonardataaaaaa(" +  D + ")" #]
 			updateResource  [# "$sonarEvent" #]       
 //			updateResource  [# "nonews" #]     //last info: per evitare che CoAP ripeta il dato
-			
-//			emit sonardata :  distance($D)  
-			//questo contesto NON SA che esiste ctxvrusage25 => evento non propagato
-		}
+			println("$name | EMIT (publish) sonarval ---------------------------------- ") color black 
+//			[#  mqtt.publish("vrevents", "msg(sonarval,event,vrqak,ANY,distance(4),0)" ) #]
+   			emit sonarval :  distance($D)  
+			//questo contesto NON SA che esiste ctxvrusage25 => evento non propagato in assenza di MQTT
+		} 
 	} 
 	Transition t0 whenMsg vrinfo -> handleVrinfoMsgReply  
 
@@ -88,7 +88,7 @@ QActor vrqak context ctxvrqak withobj vr using "VrobotLLMoves24.create(\"localho
 		//println("$name | domove") color yellow
 		onMsg( move : move(M) ){
 			[# val Move = payloadArg(0);  #]
-			if [# Move == "h" #] { [# vr.halt() #]     }
+			if [# Move == "h" #] { [# vr.halt()    #]  }
 			if [# Move == "w" #] { [# vr.step(150) #]  }
 			if [# Move == "p" #] { [# vr.step(350) #]  }  //synch
 			if [# Move == "a" || Move == "l" #]{ [# vr.turnLeft() #]  }
@@ -113,13 +113,20 @@ QActor vrqak context ctxvrqak withobj vr using "VrobotLLMoves24.create(\"localho
 	}
 	Transition t0 
 		whenEvent sonardata -> handleSonarData 
-		whenMsg vrinfo -> handleVrinfoMsgReply
+		whenMsg vrinfo      -> handleVrinfoMsgReply
   
+	/*
+        --------------------------------------------
+        GESTIONE DELLE INFO DEL SUPPORTO
+        --------------------------------------------
+	*/
     
 	State handleVrinfoMsgReply{
-		println("$name | handleVrinfoMsgReply $currentMsg") color red
-		onMsg( vrinfo : vrinfo( S,elapsed )){
+		printCurrentMessage
+		println("$name | handleVrinfoMsgReply $currentMsg doingAsynchStep=$doingAsynchStep") color red
+		onMsg( vrinfo : vrinfo( S,elapsed)){
 			if [# doingAsynchStep #]{  
+				println("$name | reply asynchstep done") color yellow
 				replyTo step with stepdone : stepdone(ok)
 				[# doingAsynchStep = false #]
 			} 
@@ -128,6 +135,7 @@ QActor vrqak context ctxvrqak withobj vr using "VrobotLLMoves24.create(\"localho
 		onMsg( vrinfo : vrinfo(T,collision)){
 			[# val T = payloadArg(0) #]
 			if [# doingAsynchStep #]{ 
+				println("$name | reply asynchstep ko") color yellow
 				replyTo step with stepfailed : stepfailed($T,collision)
 				[# doingAsynchStep = false #]
 			} 
@@ -135,7 +143,7 @@ QActor vrqak context ctxvrqak withobj vr using "VrobotLLMoves24.create(\"localho
 				println("$name | reply cmdfailed after $T") color yellow
 				replyTo cmd with cmdfailed : cmdfailed($T,collision)
 			}
-		}
+		} 
 	}	
 	Goto work
 
@@ -158,6 +166,7 @@ QActor vrqak context ctxvrqak withobj vr using "VrobotLLMoves24.create(\"localho
 /*
  * Test for updatereourc
  */
+ /* 
 QActor obs context ctxvrqak{
 	State s0 initial{
 		observeResource vrqak msgid vrinfo
@@ -176,3 +185,4 @@ QActor obs context ctxvrqak{
     }
     Goto work
 }
+*/

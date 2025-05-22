@@ -1,0 +1,148 @@
+System /*-trace*/ virtualrobotusage25
+mqttBroker "192.168.1.132" : 1883 eventTopic "vrevents"  
+/*
+ * vrusage25vrqak.qak
+ */
+
+/*
+ * Accede al virtual robot usando il micro-servizio vrqak (non-discoverable)
+ *  
+ * 
+ */
+  
+ 
+Dispatch move   : move(M)  "M= w | a | d | h | p"
+Dispatch halt   : halt(X)
+
+Request step       : step(TIME)   
+Reply stepdone     : stepdone(V)                 for step
+Reply stepfailed   : stepfailed(DURATION, CAUSE) for step
+
+Event  sonardata   : sonar( DISTANCE ) 	    "emesso dal SONAR"	
+Event  sonarval    : distance( DISTANCE )  "emesso dal vrqak"	   
+Dispatch vrinfo    : vrinfo(A,B)        "inviato dal supporto"
+
+//Event vrinfo        : vrinfo(A,B)        "emesso dal supporto remoto"
+//Event obstacle      : obstacle(X)		 "emesso dal supporto remoto"
+
+ 
+Context ctxvrusage25  ip [host="localhost"  port=8120   ]
+Context ctxvrqak      ip [host="127.0.0.1"  port=8125   ]
+
+ExternalQActor vrqak context ctxvrqak
+
+ QActor vrboundary context ctxvrusage25   {
+ 	import "main.java.*"
+ 	
+ 	[#  var N=0; 
+ 		var StepCount = 0 
+ 	#]  
+	State s0 initial{ 
+		println("$name STARTS") color blue 
+ 	}
+	Goto doboundary
+//  	Goto testmoves
+
+// ---------------------------------------------------------------
+	State testmoves{
+		forward vrqak -m move : move(l)
+		forward vrqak -m move : move(r)
+		forward vrqak -m move : move(w)
+		forward vrqak -m move : move(l)
+		forward vrqak -m move : move(l)
+		forward vrqak -m move : move(w)
+		forward vrqak -m move : move(r)
+		forward vrqak -m move : move(p)  //evento emesso dopo un pò		
+	}
+	Transition t0 
+		whenTime 200        -> check
+ 		whenEvent sonarval  -> handlesonar 
+ 		whenEvent sonardata -> handlesonar 
+	
+	State check{
+		println("$name | chceck")
+	}
+	Transition t0 		 
+ 		whenEvent sonarval  -> handlesonar 
+	
+//---------------------------------------------------------	
+	State test{
+		delay 200
+		forward vrqak -m move : move(l)
+		request vrqak -m step : step(370)
+	}
+	Transition t0 
+ 		whenEvent sonarval    -> handlesonar 
+  	    whenReply stepdone    -> anotherstep
+	    whenReply stepfailed  -> hsd
+
+	 State handlesonar{
+	 	printCurrentMessage color red
+	 	delay 2000
+	 }
+	Transition t0 
+  	    whenReply stepdone    -> anotherstep
+	    whenReply stepfailed  -> hsd
+				
+	 State anotherstep{
+	 	delay 400
+	 	request vrqak -m step : step(370)
+	 }
+	Transition t0 
+		whenEvent sonarval  -> hsd 
+		whenReply stepdone   -> hsd
+
+	 
+	 State hsd{
+	 	printCurrentMessage color red
+	 }
+	Transition t0 
+		whenEvent sonarval  -> hsd 
+	
+//------------------------------------	
+
+
+/*
+ * -------------------------------------------------------
+ * BUSINESS LOGIC
+ * -------------------------------------------------------
+ */
+	State doboundary{ 
+        delay 200	//avoid toofast trip	  
+		[# StepCount++ #]
+		request vrqak -m step : step(370)
+		println("stepAsynch $StepCount") color blue 		 
+	} 
+	Transition t0 
+		whenEvent sonarval    -> handlesonarval 
+	    whenReply stepdone    -> doboundary
+	    whenReply stepfailed  -> turnAndgo
+ 
+ 
+	    
+	State turnAndgo{
+		[# N = N + 1 #]
+		println("turn N=$N") color blue
+        forward vrqak -m move : move(l)
+		if [# N == 4 #]{
+			delay 500 //La rotazione richiede tempo ....
+			[# System.exit(0) #]
+		}  
+	}
+	Goto doboundary
+	
+	/*
+	 */
+	State handlesonarval{
+		println("$name |  PAUSE ")
+		delay 2000  //pause
+	} 
+	Transition t0 
+ 	    whenReply stepdone    -> doboundary  //quello in sospeso
+	    whenReply stepfailed  -> turnAndgo   
+
+}
+ 
+ 
+ 
+ 
