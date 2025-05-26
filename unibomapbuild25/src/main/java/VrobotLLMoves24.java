@@ -53,13 +53,11 @@ public class VrobotLLMoves24 extends ApplAbstractObserver implements IVrobotLLMo
     public VrobotLLMoves24(String vitualRobotIp, ActorBasic owner) {
     	this.vitualRobotIp = vitualRobotIp;
     	this.owner         = owner;
-    	
-    	//connect(vitualRobotIp, owner);
+    	connect();
     }
     
     public void connect() {
-//    	this.vitualRobotIp = vitualRobotIp;
-//    	this.owner         = owner;
+    	if( conn != null ) return; //defensive, since already connected
     	try {
        	    CommUtils.outyellow("     VRLL24 | connecting .... "  );
 	        conn =  ConnectionFactory.createClientSupport(ProtocolType.ws,vitualRobotIp+":8091","");
@@ -97,7 +95,8 @@ public class VrobotLLMoves24 extends ApplAbstractObserver implements IVrobotLLMo
 
     @Override
     public void forward(int time) throws Exception {
-    	if( tracing ) CommUtils.outgreen("     VRLL24 | forward " + time);
+     	if( tracing ) 
+    		CommUtils.outgreen("     VRLL24 | forward " + time);
         startTimer();
         conn.forward(VrobotMsgs.forwardcmd.replace("TIME", "" + time));
     }
@@ -192,9 +191,9 @@ public class VrobotLLMoves24 extends ApplAbstractObserver implements IVrobotLLMo
             JSONObject jsonObj = CommUtils.parseForJson(info);
             
             if( tracing )              
-            CommUtils.outgreen(
+            CommUtils.outyellow(
                 "     VRLL24 | update:" + info
-                        + " jsonObj=" + jsonObj + " doingStep=" + doingStepSynch
+                        + " jsonObj=" + jsonObj + " doingStepSynch=" + doingStepSynch
                         + " " + Thread.currentThread().getName());    //Grizzly            
             if (jsonObj == null) {
             	CommUtils.outred("     VRLL24 | update ERROR Json:" + info);
@@ -257,7 +256,7 @@ public class VrobotLLMoves24 extends ApplAbstractObserver implements IVrobotLLMo
  */
 
     @Override
-    public boolean step(long time) throws Exception {
+    public boolean step(int time) throws Exception {
         doingStepSynch = true;
         String cmd    = VrobotMsgs.forwardcmd.replace("TIME", "" + time);
         String result = requestSynch(cmd);
@@ -302,7 +301,8 @@ public class VrobotLLMoves24 extends ApplAbstractObserver implements IVrobotLLMo
     }
     
     protected void sendInfo(IApplMessage msg) {
-    	if(owner!=null && tracing)  MsgUtil.sendMsg(msg,owner,null); //null:continuation
+    	//if(owner!=null && tracing)  MsgUtil.sendMsg(msg,owner,null); //null:continuation
+    	if(owner!=null)  MsgUtil.sendMsg(msg,owner,null); 
     }
     
     /*

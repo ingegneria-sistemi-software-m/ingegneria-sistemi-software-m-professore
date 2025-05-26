@@ -1,0 +1,94 @@
+System unibomapbuild25
+
+/*  
+========================================
+mapbuildnaive.qak
+========================================
+*/   
+/*
+ * Costruisce la mappa di una stanza con bordi privi di ostacoli
+ * usando VrobotLLMoves24.java  
+ * 
+ * La mappa (RETTANGOLARE) è definita dalla classe RoomMapNaive.java
+ *   
+ * Scrive il risultato in due files:
+ * - mapProlog.txt ( map.saveRoomMapProlog() )
+ * - mapnaive.txt ( map.saveRoomMap() che fa anche mapnaive.bin )
+ */ 
+Dispatch stepdone   : stepdone(X)     //"automsg"
+Dispatch stepfailed : stepfailed(X)   //"automsg"
+Dispatch vrinfo     : vrinfo(A,B)     //"from VrobotLLMoves24"
+
+Context ctxmapbuild  ip [host="localhost" port=8720     ]
+
+QActor mapbuilder context ctxmapbuild withobj vr 
+                    using "VrobotLLMoves24.create(\"localhost\",myself)"{ 
+	import "main.java.VrobotLLMoves24"
+	import "main.resources.mapnaive.*" 
+	[# var N  = 0  
+	   var NR = 1
+	   var NC = 1
+	   var firstcolumn  = true
+	   var firstrow     = false 
+	   
+	   val MapName      = "mapnaive"
+	#] 
+	        
+	
+	State s0 initial{ 
+		println("-------------------------------------------------") color magenta
+		println("mapbuildnaive.qak") color magenta
+		println("-------------------------------------------------") color magenta
+		println("$name STARTS ") color blue
+		//[# vr.setTrace(true)  #]
+ 		[# vr.halt();   #]
+	}
+	Goto doMap
+
+	
+	State doMap{
+		delay 200
+  		[# var RSTEP = vr.step(350) #]  //se RSTEP = false emette vrinfo(obstacle,unknown) 
+  		[# RobotDir.setDir(RobotDir.Direction.DOWN)     #]
+		//println("$name | RSTEP=$RSTEP") color blue
+		if [# RSTEP #]{ 
+			if [# firstcolumn #]{ [# NR++ #] }
+			if [# firstrow #]{    [# NC++ #] }
+			autodispatch stepdone : stepdone(1)
+		}	 
+		else{ autodispatch stepfailed : stepfailed(1) }
+	} 
+	Transition t0 
+	    whenMsg stepdone    -> doMap 
+	    whenMsg stepfailed  -> turnAndgo
+   
+ 
+	State turnAndgo{ 
+		if [# ! firstcolumn #]{ [# NR++ #] }
+		if [# ! firstrow #]{ [# NC++ #] }
+		println("$name | turn when N=$N, NC=$NC, NR=$NR direction=${RobotDir.getDir()}") color green
+		if [# ! firstrow #]{ [# firstrow = true #] }
+		[# firstcolumn = false   #] 
+		[# N = N + 1             #]
+ 		[# vr.turnLeft()         #] 
+ 		[#  RobotDir.setDir(RobotDir.Direction.RIGHT)  #]
+ 		println("$name | N=$N, NC=$NC, NR=$NR") color cyan
+		if [# N == 2 #]{
+			println("$name | N=$N, NC=$NC, NR=$NR") color yellow
+			
+			[# val map = RoomMapNaive(NR,NC)    #]
+			
+			[# map.setRobot( NR-1,NC-1 )   #]
+			[# val MS  = map.toString()    #]
+			[# map.saveRoomMap(MapName, MS ) #]    //SAVE MAP  
+			[# val MP  = map.toProlog()    #]  
+			[# map.saveRoomMapProlog("mapProlog", MP) #]
+			//println(MP)
+ 			[# map.showMap()  #]
+			delay 1000
+			[# System.exit(0) #]
+		}   
+	} 
+	Goto doMap      
+ 	  
+}

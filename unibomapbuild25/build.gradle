@@ -38,12 +38,7 @@ repositories {
     flatDir {   dirs '../unibolibs'	 }
 }
 
-/*
-javafx {
-    version = "11"
-    modules =  ["javafx.controls", "javafx.fxml", "javafx.web", "javafx.graphics"]
-}
-*/
+
 
 dependencies {
     // Align versions of all Kotlin components
@@ -69,6 +64,7 @@ dependencies {
 
 	//SOCKET.IO  
     implementation group: 'org.java-websocket', name: 'Java-WebSocket', version: '1.6.0'	
+
 	//HTTP
     implementation 'org.apache.httpcomponents:httpclient:4.5'
 

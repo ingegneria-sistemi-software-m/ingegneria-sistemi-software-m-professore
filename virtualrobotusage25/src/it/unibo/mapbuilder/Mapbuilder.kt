@@ -39,6 +39,12 @@ class Mapbuilder ( name: String, scope: CoroutineScope, isconfined: Boolean=fals
 			   var firstrow     = false 
 			   
 			   val MapName      = "mapnaive"
+			   
+			   lateinit var map: RoomMap
+			   
+			   var CurR = 0
+			   var CurC = 0
+			   var CN   = 0
 		return { //this:ActionBasciFsm
 				state("s0") { //this:State
 					action { //it:State
@@ -59,7 +65,7 @@ class Mapbuilder ( name: String, scope: CoroutineScope, isconfined: Boolean=fals
 						 ){if(  firstcolumn  
 						 ){ NR++  
 						}
-						if(  firstrow  
+						if(  firstrow     
 						 ){ NC++  
 						}
 						forward("stepdone", "stepdone(1)" ,name ) 
@@ -80,7 +86,7 @@ class Mapbuilder ( name: String, scope: CoroutineScope, isconfined: Boolean=fals
 						if(  ! firstcolumn  
 						 ){ NR++  
 						}
-						if(  ! firstrow  
+						if(  ! firstrow     
 						 ){ NC++  
 						}
 						CommUtils.outcyan("$name | N=$N, NC=$NC, NR=$NR")
@@ -88,21 +94,20 @@ class Mapbuilder ( name: String, scope: CoroutineScope, isconfined: Boolean=fals
 						 ){ firstrow = true  
 						}
 						 firstcolumn = false  
-						 N = N + 1  
-						 vr.turnLeft()  
+						 N = N + 1            
+						 vr.turnLeft()        
 						CommUtils.outcyan("$name | N=$N, NC=$NC, NR=$NR")
 						if(  N == 2  
 						 ){CommUtils.outyellow("$name | N=$N, NC=$NC, NR=$NR")
-						 val map = RoomMap(NR,NC)     
-						 map.setRobot( NR-1,NC-1 )    
-						 val MS  = map.toString()     
+						 map = RoomMap(NR,NC)           
+						 map.setRobot( NR-1,NC-1 )      
+						 val MS  = map.toString()       
 						 map.saveRoomMap(MapName, MS )  
-						 val MP  = map.toProlog()     
+						 val MP  = map.toProlog()       
 						 map.saveRoomMapProlog("mapProlog", MP)  
 						CommUtils.outyellow("$name | MAP: ")
-						CommUtils.outyellow("$MS ")
+						CommUtils.outblue("$MS ")
 						delay(1000) 
-						 System.exit(0)  
 						}
 						//genTimer( actor, state )
 					}

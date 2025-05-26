@@ -5,41 +5,53 @@ System unibomapbuild25
 mapbuild.qak
 ========================================
 */   
+/*
+ 
+ */ 
 Dispatch stepdone   : stepdone(X)     //"automsg"
 Dispatch stepfailed : stepfailed(X)   //"automsg"
 Dispatch vrinfo     : vrinfo(A,B)     //"from VrobotLLMoves24"
 
 Context ctxmapbuild  ip [host="localhost" port=8720     ]
 
-QActor mapbuilder context ctxmapbuild withobj vr using "VrobotLLMoves24.create(\"localhost\",myself)"{ 
+QActor mapbuilder context ctxmapbuild withobj vr 
+                    using "VrobotLLMoves24.create(\"localhost\",myself)"{ 
 	import "main.java.VrobotLLMoves24"
-	import "main.resources.map.RoomMap" 
-	[# var N  = 0 
+	import "main.resources.map.*" 
+	[# var N  = 0  
 	   var NR = 1
 	   var NC = 1
 	   var firstcolumn  = true
 	   var firstrow     = false 
+	   
+	   val MapName      = "map"
+	   
+	   val map        = RoomMap.getRoomMap()
+ 
 	#] 
 	        
 	
 	State s0 initial{ 
 		println("$name STARTS $vr") color blue
-		//[# GuiUtils.showSystemInfo() #]
 		//[# vr.setTrace(true)  #]
  		[# vr.connect(); vr.halt();   #]
-// 		delay 1500
-// 		[# vr.turnLeft(); vr.forward(1000) #]
- 		 
+		[# val M = map.toString() #]
+		println("$M") color cyan
 	}
 	Goto doMap
+
 	
 	State doMap{
 		delay 200
-  		[# var RSTEP = vr.step(370) #]  //se RSTEP = false emette vrinfo(obstacle,unknown) 
+  		[# var RSTEP = vr.step(350) #]  //se RSTEP = false emette vrinfo(obstacle,unknown) 
 		//println("$name | RSTEP=$RSTEP") color blue
 		if [# RSTEP #]{ 
 			if [# firstcolumn #]{ [# NR++ #] }
 			if [# firstrow #]{    [# NC++ #] }
+//			[# map.put(NR,NC,Box(false, false, true)) #]
+[# map.doMove("w") #]
+		[# val M = map.toString() #]
+		println("$M") color cyan
 			autodispatch stepdone : stepdone(1)
 		}	 
 		else{ autodispatch stepfailed : stepfailed(1) }
@@ -47,6 +59,14 @@ QActor mapbuilder context ctxmapbuild withobj vr using "VrobotLLMoves24.create(\
 	Transition t0 
 	    whenMsg stepdone    -> doMap 
 	    whenMsg stepfailed  -> turnAndgo
+	    
+	State temp{
+		[# val MAP = map.toString() #]
+		println("$name | temppp") color green
+		println("$MAP") color green
+		
+		[# System.exit(0) #]
+	}
    
  
 	State turnAndgo{ 
@@ -57,22 +77,23 @@ QActor mapbuilder context ctxmapbuild withobj vr using "VrobotLLMoves24.create(\
 		[# firstcolumn = false #] 
 		[# N = N + 1 #]
  		[# vr.turnLeft() #] 
+[# map.doMove("l") #]
  		println("$name | N=$N, NC=$NC, NR=$NR") color cyan
-		if [# N == 2 #]{
+		if [# N == 4 #]{
 			println("$name | N=$N, NC=$NC, NR=$NR") color yellow
-			[# val map = RoomMap(NR,NC)    #]
-			[# map.setRobot( NR-1,NC-1 )   #]
+			//[# val map = RoomMap(NR,NC)    #]
+			//[# map.setRobot( NR-1,NC-1 )   #]
 			[# val MS  = map.toString()    #]
-			[# map.saveRoomMap("map", MS ) #]  
-			[# val MP  = map.toProlog()    #]  
-			//println(MP)
-			[# map.saveRoomMapProlog("mapProlog", MP) #]
-			println("$name | MAP: ") color yellow
-			println("$MS ") color yellow
+			[# map.saveRoomMap(MapName, MS ) #]    //SAVE MAP  
+//			[# val MP  = map.toProlog()    #]  
+//			//println(MP)
+//			[# map.saveRoomMapProlog("mapProlog", MP) #]
+//			println("$name | MAP: ") color yellow
+//			println("$MS ") color yellow
 			delay 1000
 			[# System.exit(0) #]
 		}   
 	} 
-	Goto doMap    
- 	  
+	Goto doMap     
+   	  
 }

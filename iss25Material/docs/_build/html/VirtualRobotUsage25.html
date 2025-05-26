@@ -100,19 +100,11 @@ ne realizzano il significato in termni di struttura, interazione e funzionamento
 <p>Nel seguito, introduciamo i seguenti componenti:</p>
 </section>
 <section id="vrobotllmoves24-robot-come-pojo-a-eventi-qak">
-<<<<<<< HEAD
 <h2>VrobotLLMoves24: Robot come POJO a eventi qak<a class="headerlink" href="#vrobotllmoves24-robot-come-pojo-a-eventi-qak" title="Link to this heading">¶</a></h2>
 <table class="docutils align-default" style="width: 100%">
 <colgroup>
 <col style="width: 20.0%" />
 <col style="width: 80.0%" />
-=======
-<h2>VrobotLLMoves24: Robot come POJO a eventi qak<a class="headerlink" href="#vrobotllmoves24-robot-come-pojo-a-eventi-qak" title="Permalink to this heading">¶</a></h2>
-<table class="docutils align-default" style="width: 100%">
-<colgroup>
-<col style="width: 20%" />
-<col style="width: 80%" />
->>>>>>> f1315657568d70d86448a8abf7caa83dd0448658
 </colgroup>
 <tbody>
 <tr class="row-odd"><td><p><a class="reference internal" href="#vrobotllmoves24"><span class="std std-ref">VrobotLLMoves24</span></a></p></td>
@@ -148,24 +140,15 @@ generati.</p></li>
 </table>
 </section>
 <section id="vrobothlmoves24-robot-come-pojo-a-eventiqak-e-stepasynch">
-<<<<<<< HEAD
 <h2>VrobotHLMoves24: Robot come POJO a eventiqak e stepAsynch<a class="headerlink" href="#vrobothlmoves24-robot-come-pojo-a-eventiqak-e-stepasynch" title="Link to this heading">¶</a></h2>
 <table class="docutils align-default" style="width: 100%">
 <colgroup>
 <col style="width: 20.0%" />
 <col style="width: 80.0%" />
-=======
-<h2>VrobotHLMoves24: Robot come POJO a eventiqak e stepAsynch<a class="headerlink" href="#vrobothlmoves24-robot-come-pojo-a-eventiqak-e-stepasynch" title="Permalink to this heading">¶</a></h2>
-<table class="docutils align-default" style="width: 100%">
-<colgroup>
-<col style="width: 20%" />
-<col style="width: 80%" />
->>>>>>> f1315657568d70d86448a8abf7caa83dd0448658
 </colgroup>
 <tbody>
 <tr class="row-odd"><td><p><a class="reference internal" href="#vrobothlmoves24"><span class="std std-ref">VrobotHLMoves24</span></a></p></td>
 <td><p>un POJO che opera come <a class="reference internal" href="#vrobotllmoves24"><span class="std std-ref">VrobotLLMoves24</span></a> con le segeunti differenze:</p>
-<<<<<<< HEAD
 <ul>
 <li><p>Implementa la interfaccia <code class="docutils literal notranslate"><span class="pre">IVrobotMoves</span></code></p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">public</span> <span class="n">interface</span> <span class="n">IVrobotMoves</span> <span class="p">{</span>
@@ -259,101 +242,6 @@ dell’area in cui il robot è chiamato a muoversi.</p></li>
 <section id="vrobotllmoves24">
 <h2>VrobotLLMoves24<a class="headerlink" href="#vrobotllmoves24" title="Link to this heading">¶</a></h2>
 <ul>
-=======
-<ul>
-<li><p>Implementa la interfaccia <code class="docutils literal notranslate"><span class="pre">IVrobotMoves</span></code></p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">public</span> <span class="n">interface</span> <span class="n">IVrobotMoves</span> <span class="p">{</span>
-  <span class="o">//</span><span class="n">Ispirate</span> <span class="n">da</span> <span class="n">VirtualRobot23</span>
-    <span class="n">public</span> <span class="n">void</span> <span class="n">turnLeft</span><span class="p">()</span> <span class="n">throws</span> <span class="ne">Exception</span><span class="p">;</span>
-    <span class="n">public</span> <span class="n">void</span> <span class="n">turnRight</span><span class="p">()</span> <span class="n">throws</span> <span class="ne">Exception</span><span class="p">;</span>
-    <span class="n">public</span> <span class="n">void</span> <span class="n">forward</span><span class="p">(</span> <span class="nb">int</span> <span class="n">time</span> <span class="p">)</span> <span class="n">throws</span> <span class="ne">Exception</span><span class="p">;</span>
-    <span class="n">public</span> <span class="n">void</span> <span class="n">backward</span><span class="p">(</span> <span class="nb">int</span> <span class="n">time</span> <span class="p">)</span> <span class="n">throws</span> <span class="ne">Exception</span><span class="p">;</span>
-    <span class="n">public</span> <span class="n">void</span> <span class="n">halt</span><span class="p">()</span> <span class="n">throws</span> <span class="ne">Exception</span><span class="p">;</span>
-
-  <span class="o">//</span><span class="n">Nuove</span> <span class="n">operazioni</span>
-    <span class="n">public</span> <span class="n">boolean</span> <span class="n">step</span><span class="p">(</span><span class="n">long</span> <span class="n">time</span><span class="p">)</span> <span class="n">throws</span> <span class="ne">Exception</span><span class="p">;</span>
-  <span class="n">public</span> <span class="n">void</span> <span class="n">stepAsynch</span><span class="p">(</span><span class="nb">int</span> <span class="n">time</span><span class="p">)</span> <span class="n">throws</span> <span class="ne">Exception</span><span class="p">;</span>
-
-  <span class="o">//</span><span class="n">Aril</span> <span class="p">(</span><span class="n">Abstract</span> <span class="n">Robot</span> <span class="n">Interaction</span> <span class="n">Lanaguage</span><span class="p">)</span>
-  <span class="o">//</span><span class="n">cmd</span><span class="o">=</span><span class="n">w</span> <span class="o">|</span> <span class="n">s</span> <span class="o">|</span> <span class="n">l</span> <span class="o">|</span> <span class="n">r</span> <span class="o">|</span> <span class="n">h</span><span class="s2">&quot;</span>
-  <span class="n">public</span> <span class="n">void</span> <span class="n">move</span><span class="p">(</span><span class="n">String</span> <span class="n">cmd</span> <span class="p">)</span> <span class="n">throws</span> <span class="ne">Exception</span><span class="p">;</span>
-<span class="p">}</span>
-</pre></div>
-</div>
-</li>
-<li><p>introduce comandi <span class="slide3">move</span> che formano <a class="reference internal" href="#il-linguaggio-aril"><span class="std std-ref">Il linguaggio aril</span></a>
-(<strong>Abstract Robot Interaction Language</strong>)</p></li>
-<li><p>definisce la nuova ‘mossa’ <span class="slide3">stepAsynch</span>  basato sulle seguente specifica logica:
-(si veda l’esempio <a class="reference external" href="../../../../virtualrobotusage25/src/vrusage25B.qaktt">vrusage25B.qak</a>):</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Request</span> <span class="n">step</span>       <span class="p">:</span> <span class="n">step</span><span class="p">(</span><span class="n">TIME</span><span class="p">)</span>
-<span class="n">Reply</span> <span class="n">stepdone</span>     <span class="p">:</span> <span class="n">stepdone</span><span class="p">(</span><span class="n">V</span><span class="p">)</span>                 <span class="k">for</span> <span class="n">step</span>
-<span class="n">Reply</span> <span class="n">stepfailed</span>   <span class="p">:</span> <span class="n">stepfailed</span><span class="p">(</span><span class="n">DURATION</span><span class="p">,</span> <span class="n">CAUSE</span><span class="p">)</span> <span class="k">for</span> <span class="n">step</span>
-</pre></div>
-</div>
-<p>Poichè il componente è un POJO, le <span class="slide3">reply</span> sono emesse in forma di <strong>Dispatch</strong>
-inviati all’onwer (se eisie).</p>
-</li>
-</ul>
-</td>
-</tr>
-</tbody>
-</table>
-</section>
-<section id="vrqak-robot-come-microservizio-base">
-<h2>vrqak: Robot come microservizio-base<a class="headerlink" href="#vrqak-robot-come-microservizio-base" title="Permalink to this heading">¶</a></h2>
-<table class="docutils align-default" style="width: 100%">
-<colgroup>
-<col style="width: 20%" />
-<col style="width: 80%" />
-</colgroup>
-<tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#il-microservizio-vrqak24"><span class="std std-ref">vrqak</span></a></p></td>
-<td><p>un MICROSERVIZIO che:</p>
-<ul class="simple">
-<li><p>permette l’uso remoto del <a class="reference internal" href="VirtualRobot23.html#virtualrobot23"><span class="std std-ref">VirtualRobot23</span></a>
-attraverso invio di messaggi</p></li>
-<li><p>opera come una <span class="remark">risorsa osservabile</span>
-che permette ai clienti di percepire informazioni di stato su robot
-e sull’ambiente in cui il robot opera.</p></li>
-</ul>
-</td>
-</tr>
-</tbody>
-</table>
-</section>
-<section id="basicrobot24-robot-come-agente-evoluto">
-<h2>BasicRobot24: Robot come agente evoluto<a class="headerlink" href="#basicrobot24-robot-come-agente-evoluto" title="Permalink to this heading">¶</a></h2>
-<table class="docutils align-default" style="width: 100%">
-<colgroup>
-<col style="width: 20%" />
-<col style="width: 80%" />
-</colgroup>
-<tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="BasicRobot24.html#basicrobot24"><span class="std std-ref">BasicRobot24</span></a></p></td>
-<td><p>un AGENTE SITUATO che  realizza  un robot che:</p>
-<ul class="simple">
-<li><p>risulta indipendente dalla tecnologia
-con cui è realizzato uno specifico DDR robot (virtuale o reale)
-attraverso l’uso di adapter e di un file di configurazione</p></li>
-<li><p>estende in modo rilevante l’<a class="reference internal" href="BasicRobot24.html#br24-le-funzioni"><span class="std std-ref">insieme di funzioni</span></a>
-che è capace di eseguire, includendo sequenze di movimenti, posizionamenti
-del robot ed esecuzione di piani di movimento mediante un <a class="reference internal" href="Planner.html#planner"><span class="std std-ref">Planner</span></a> interno.</p></li>
-<li><p>richiede la conoscenza di una <a class="reference internal" href="BasicRobot24.html#br24-e-le-mappatura-dell-ambiente"><span class="std std-ref">mappa</span></a>
-dell’area in cui il robot è chiamato a muoversi.</p></li>
-</ul>
-</td>
-</tr>
-</tbody>
-</table>
-<section id="ai-overview-dei-componenti-robot">
-<h3>AI-Overview dei componenti-robot<a class="headerlink" href="#ai-overview-dei-componenti-robot" title="Permalink to this heading">¶</a></h3>
-<p>Per un ulteriore sommario (prodotto dalla AI), si veda: <a class="reference internal" href="VirtualRobotUsage25Survey.html#virtualrobotusage25survey"><span class="std std-ref">VirtualRobotUsage25Survey</span></a>.</p>
-</section>
-</section>
-<section id="vrobotllmoves24">
-<h2>VrobotLLMoves24<a class="headerlink" href="#vrobotllmoves24" title="Permalink to this heading">¶</a></h2>
-<ul>
->>>>>>> f1315657568d70d86448a8abf7caa83dd0448658
 <li><p>Definiamo un adapter (<a class="reference internal" href="#vrobotllmoves24"><span class="std std-ref">VrobotLLMoves24</span></a>) che converta comandi di movimento in comandi per il robot in
 <a class="reference internal" href="VirtualRobot23.html#comandi-base-per-il-robot-in-cril"><span class="std std-ref">cril</span></a>
 e che trasformi i messaggi di stato in eventi applicativi.</p>
@@ -366,11 +254,7 @@ e che trasformi i messaggi di stato in eventi applicativi.</p>
 </ul>
 </section>
 <section id="esempi-di-uso-di-vrobotllmoves24">
-<<<<<<< HEAD
 <h2>Esempi di uso di VrobotLLMoves24<a class="headerlink" href="#esempi-di-uso-di-vrobotllmoves24" title="Link to this heading">¶</a></h2>
-=======
-<h2>Esempi di uso di VrobotLLMoves24<a class="headerlink" href="#esempi-di-uso-di-vrobotllmoves24" title="Permalink to this heading">¶</a></h2>
->>>>>>> f1315657568d70d86448a8abf7caa83dd0448658
 <p>Progetto <span class="slide3">virtualrobotusage25</span></p>
 <ul>
 <li><p>Gli esempi sono elencati in ordine crescente di ‘astrazione’.</p></li>
@@ -392,11 +276,7 @@ che  permettere l’uso remoto del robot da parte di componenti applicativi
 mediante <a class="reference internal" href="#il-linguaggio-aril"><span class="std std-ref">Il linguaggio aril</span></a>.</p></li>
 </ul>
 <section id="robot-come-agente-che-provoca-eventi">
-<<<<<<< HEAD
 <h3>Robot come agente che provoca eventi<a class="headerlink" href="#robot-come-agente-che-provoca-eventi" title="Link to this heading">¶</a></h3>
-=======
-<h3>Robot come agente che provoca eventi<a class="headerlink" href="#robot-come-agente-che-provoca-eventi" title="Permalink to this heading">¶</a></h3>
->>>>>>> f1315657568d70d86448a8abf7caa83dd0448658
 <table class="docutils align-default" style="width: 100%">
 <colgroup>
 <col style="width: 40.0%" />
@@ -429,19 +309,11 @@ mosse-base che provocano l’emissione delle seguenti info:</p>
 </table>
 </section>
 <section id="robot-come-agente-proattivo-reattivo">
-<<<<<<< HEAD
 <h3>Robot come agente proattivo-reattivo<a class="headerlink" href="#robot-come-agente-proattivo-reattivo" title="Link to this heading">¶</a></h3>
 <table class="docutils align-default" style="width: 100%">
 <colgroup>
 <col style="width: 40.0%" />
 <col style="width: 60.0%" />
-=======
-<h3>Robot come agente proattivo-reattivo<a class="headerlink" href="#robot-come-agente-proattivo-reattivo" title="Permalink to this heading">¶</a></h3>
-<table class="docutils align-default" style="width: 100%">
-<colgroup>
-<col style="width: 40%" />
-<col style="width: 60%" />
->>>>>>> f1315657568d70d86448a8abf7caa83dd0448658
 </colgroup>
 <tbody>
 <tr class="row-odd"><td><p><a class="reference external" href="../../../../virtualrobotusage25/src/vrusage25A.qaktt">vrusage25A.qak</a></p></td>
@@ -458,7 +330,7 @@ fermandolo per <code class="docutils literal notranslate"><span class="pre">2</s
 </div>
 <p>L’owner usa il comando  <span class="slide3">step sincrono</span> e invia un <code class="docutils literal notranslate"><span class="pre">autodispatch</span></code> alla
 ricezione del risultato.</p>
-<p><span class="slide2">OSSERVO CHE</span> la reattività richiede che l’agente non esegua azioni che lo rendono
+<p><span class="slidekp">OSSERVO CHE</span> la reattività richiede che l’agente non esegua azioni che lo rendono
 insensibile agli eventi. Per questo una mossa <strong>step</strong> a tempo limitato è opportuna.</p>
 </td>
 </tr>
@@ -471,7 +343,7 @@ l’invio all’owner di un messaggio di <strong>reply</strong> da parte del sup
 <span class="n">Reply</span> <span class="n">stepfailed</span>   <span class="p">:</span> <span class="n">stepfailed</span><span class="p">(</span><span class="n">DURATION</span><span class="p">,</span> <span class="n">CAUSE</span><span class="p">)</span> <span class="k">for</span> <span class="n">step</span>  <span class="o">//</span><span class="n">emesoo</span> <span class="n">dal</span> <span class="n">supporto</span>
 </pre></div>
 </div>
-<p><span class="slide2">OSSERVO CHE</span>
+<p><span class="slidekp">OSSERVO CHE</span>
 <strong>stepAsynch</strong> ‘libera’ l’owner dall’onere di generare <code class="docutils literal notranslate"><span class="pre">autodispatch</span></code> al termine di uno <strong>step sincrono</strong>
 e rende l’owner capace di gestire allarmi che sorgono durante la esecuzione di uno <em>step</em>.</p>
 <p>Concettualmente, una invocazione <span class="slide3">stepAsynch(370)`</span> è una <strong>request</strong> al supporto,
@@ -492,13 +364,47 @@ che includa anche la gestione di uno specifico robot fisico.
 </li>
 <li><p>Usiamo il <strong>nuovoadapter</strong> (<a class="reference internal" href="#vrobothlmoves24"><span class="std std-ref">VrobotHLMoves24</span></a>)</p></li>
 </ul>
+<p><span class="slidekp">1- OSSERVO CHE</span>: l’analisi e la progettazione del (micro)servizio cominciano
+dalla <span class="slide3">specifica della interazione</span> tramite messaggi. Ad esempio:</p>
+<table class="docutils align-default" style="width: 100%">
+<colgroup>
+<col style="width: 50.0%" />
+<col style="width: 50.0%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><div class="highlight-default notranslate"><div class="highlight"><pre><span></span>/*!*/ Dispatch move : move(M)
+
+/*2*/ Request step     :step(TIME)
+/*2a*/ Reply stepdone  :stepdone(V)          for step
+/*2b*/ Reply stepfailed:stepfailed(T, CAUSE) for step
+
+/*3*/ Event  sonarval : distance( DISTANCE )
+</pre></div>
+</div>
+</td>
+<td><ol class="arabic simple">
+<li><p>Comando in <a class="reference internal" href="#il-linguaggio-aril"><span class="std std-ref">aril</span></a>: <code class="docutils literal notranslate"><span class="pre">M</span> <span class="pre">=</span> <span class="pre">w|s|a|d|p</span></code></p></li>
+<li><p>Comando ASINCRONO con due possibili risposte</p></li>
+<li><p>Evento emesso dal servizio per segnalare che il <code class="docutils literal notranslate"><span class="pre">SONAR</span></code> (di <strong>WEnnv</strong>)
+ha calacolato la distanza di un ostacolo mobile (il robot)</p></li>
+</ol>
+</td>
+</tr>
+</tbody>
+</table>
+<p><span class="slidekp">2- OSSERVO CHE</span>: la specifica dei messaggi di interazione corrisponde alla specifica
+di una <span class="slide3">Interface</span> di un POJO:</p>
+<p><span class="slidekp">3- OSSERVO CHE</span>: in accordo con Alan Kay, possiamo dire che :slide3`Languages are like wings and chains.`</p>
+<p>In effetti,
+il linguaggio Qak <span class="remark">abilita</span> alla costruzione di (modelli di) sistemi distributi (nascondendo dettagli rilevanti come
+la realizzazione delle comunicazioni locali e remote tra attori) mentre <span class="remark">costringe</span> il programmatore a impostare
+il codice come un Aitoma a Stati Finiti. Questa <span class="remark">costrizione è voluta</span> per ‘indirizzare’ lo sviluppatore del software
+a una impostazione ‘pulita’ del codice (e prima ancora dei suoi pensieri …).</p>
+<p><span class="slidekp">4- OSSERVO CHE</span>: la costruzione di un (micro)servizio in linguaggio Qak consente di utilizzare questo componente
+<span class="slide3">anche a livello locale</span>. Si veda come esempio: <a class="reference external" href="../../../../unibomapbuild25/src/mapobstconservice.qaktt">mapobstconservice.qak</a> in <a class="reference internal" href="RoomMap.html#mappa-usando-un-servizio-locale"><span class="std std-ref">RobotMap</span></a></p>
 </section>
 <section id="vrobothlmoves24">
-<<<<<<< HEAD
 <h3>VrobotHLMoves24<a class="headerlink" href="#vrobothlmoves24" title="Link to this heading">¶</a></h3>
-=======
-<h3>VrobotHLMoves24<a class="headerlink" href="#vrobothlmoves24" title="Permalink to this heading">¶</a></h3>
->>>>>>> f1315657568d70d86448a8abf7caa83dd0448658
 <p>Questo adapter opera come <a class="reference internal" href="#vrobotllmoves24"><span class="std std-ref">VrobotLLMoves24</span></a> con due differenze:</p>
 <blockquote>
 <div><ul>
@@ -528,282 +434,22 @@ con cui esprimere i comandi-base di spostamento con la sintassi che segue:</p>
 <span class="n">l</span><span class="p">,</span><span class="n">a</span><span class="p">:</span>  <span class="n">gira</span> <span class="n">a</span> <span class="n">sinistra</span> <span class="n">di</span> <span class="mi">90</span> <span class="n">per</span> <span class="mi">300</span> <span class="n">msec</span>
 <span class="n">r</span><span class="p">,</span><span class="n">d</span><span class="p">:</span>  <span class="n">gira</span> <span class="n">a</span> <span class="n">destra</span> <span class="n">di</span> <span class="mi">90</span> <span class="n">per</span> <span class="mi">300</span> <span class="n">msec</span>
 <span class="n">p</span><span class="p">:</span> <span class="n">step</span> <span class="n">asincrono</span> <span class="n">per</span> <span class="mi">370</span> <span class="n">msec</span>
-
-
-<span class="n">Dispatch</span> <span class="n">cmd</span> <span class="p">:</span> <span class="n">cmd</span><span class="p">(</span> <span class="n">M</span> <span class="p">)</span> <span class="s2">&quot;aril M=MOVE</span>
 </pre></div>
 </div>
 </section>
 </section>
 <section id="mappa-della-stanza">
 <h2>Mappa della stanza<a class="headerlink" href="#mappa-della-stanza" title="Link to this heading">¶</a></h2>
-<table class="docutils align-default" style="width: 100%">
-<colgroup>
-<col style="width: 65.0%" />
-<col style="width: 35.0%" />
-</colgroup>
-<tbody>
-<tr class="row-odd"><td><p>Il concetto di <span class="slide2">posizione</span> viene formalizato introducendo una coppia di coordinate cartesiane che identifica
-una cella della mappa.</p></td>
-<td><a class="reference internal image-reference" href="_images/griglia.PNG"><img alt="_images/griglia.PNG" class="align-center" src="_images/griglia.PNG" style="width: 100%;" />
-</a>
-</td>
-</tr>
-</tbody>
-</table>
-<p>Muovere il robot con mossa <code class="docutils literal notranslate"><span class="pre">step(T)</span></code> con tempo <code class="docutils literal notranslate"><span class="pre">T</span></code> tale da spostare il robot (con velocità prefissata)
-di uno spazio <code class="docutils literal notranslate"><span class="pre">D</span></code>, permette di costruire una <span class="slide2">mappa della stanza</span> formata da celle quadrate <code class="docutils literal notranslate"><span class="pre">DxD</span></code>.
-Ad esempio:</p>
-<table class="docutils align-default" style="width: 100%">
-<colgroup>
-<col style="width: 40.0%" />
-<col style="width: 60.0%" />
-</colgroup>
-<tbody>
-<tr class="row-odd"><td><div class="highlight-default notranslate"><div class="highlight"><pre><span></span>  <span class="mi">0</span>  <span class="mi">1</span>  <span class="mi">2</span>  <span class="mi">3</span>  <span class="mi">4</span>  <span class="mi">5</span>  <span class="mi">6</span>  <span class="mi">7</span>  <span class="n">x</span>
-<span class="mi">0</span> <span class="o">|</span><span class="n">r</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span>
-<span class="mi">1</span> <span class="o">|</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span>
-<span class="mi">2</span> <span class="o">|</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span>
-<span class="mi">3</span> <span class="o">|</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span>
-<span class="mi">4</span> <span class="o">|</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span>
-<span class="mi">5</span> <span class="o">|</span><span class="n">X</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span>
-<span class="n">y</span>
-</pre></div>
-</div>
-</td>
-<td><ul class="simple">
-<li><p><strong>0</strong> denota una cella mai percorsa</p></li>
-<li><p><strong>1</strong> denota una cella libreria</p></li>
-<li><p><strong>X</strong> denota una cella occupata da un ostacolo</p></li>
-<li><p><strong>r</strong> denota la posizione corrente del robot</p></li>
+<p>Un (micro)servizio relativo al robot potrebbe/dovrebbe incudere anche comandi per</p>
+<ul class="simple">
+<li><p>posizionare il robot in uno specifico punto della stanza</p></li>
+<li><p>muovere il robot da un punto A a un punto B della stanza (liberi da ostacoli)</p></li>
 </ul>
-</td>
-</tr>
-</tbody>
-</table>
-<section id="rappresentazione-della-mappa-in-java">
-<h3>Rappresentazione della mappa in Java<a class="headerlink" href="#rappresentazione-della-mappa-in-java" title="Link to this heading">¶</a></h3>
-<section id="robotdir">
-<h4>RobotDir<a class="headerlink" href="#robotdir" title="Link to this heading">¶</a></h4>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">package</span> <span class="n">main</span><span class="o">.</span><span class="n">resources</span><span class="o">.</span><span class="n">map</span><span class="p">;</span>
-
-<span class="n">public</span> <span class="k">class</span> <span class="nc">RobotDir</span> <span class="p">{</span>
-
-  <span class="n">public</span> <span class="n">static</span> <span class="n">Direction</span> <span class="n">curDiretion</span><span class="p">;</span>
-
-  <span class="n">public</span> <span class="n">static</span> <span class="n">enum</span> <span class="n">Direction</span> <span class="p">{</span><span class="n">DOWN</span><span class="p">,</span> <span class="n">LEFT</span><span class="p">,</span> <span class="n">UP</span><span class="p">,</span> <span class="n">RIGHT</span><span class="p">}</span>
-
-  <span class="n">public</span> <span class="n">static</span> <span class="n">void</span> <span class="n">setDir</span><span class="p">(</span> <span class="n">Direction</span> <span class="nb">dir</span> <span class="p">)</span> <span class="p">{</span>
-    <span class="n">curDiretion</span> <span class="o">=</span> <span class="nb">dir</span><span class="p">;</span>
-  <span class="p">}</span>
-  <span class="n">public</span> <span class="n">static</span> <span class="n">Direction</span> <span class="n">getDir</span><span class="p">(</span>   <span class="p">)</span> <span class="p">{</span>
-    <span class="k">return</span> <span class="n">curDiretion</span> <span class="p">;</span>
-  <span class="p">}</span>
-
-  <span class="n">public</span> <span class="n">static</span> <span class="n">boolean</span> <span class="n">goingUp</span><span class="p">()</span> <span class="p">{</span>
-    <span class="k">return</span> <span class="n">curDiretion</span> <span class="o">==</span> <span class="n">Direction</span><span class="o">.</span><span class="n">UP</span><span class="p">;</span>
-  <span class="p">}</span>
-  <span class="n">public</span> <span class="n">static</span> <span class="n">boolean</span> <span class="n">goingDown</span><span class="p">()</span> <span class="p">{</span>
-    <span class="k">return</span> <span class="n">curDiretion</span> <span class="o">==</span> <span class="n">Direction</span><span class="o">.</span><span class="n">DOWN</span><span class="p">;</span>
-  <span class="p">}</span>
-  <span class="n">public</span> <span class="n">static</span> <span class="n">boolean</span> <span class="n">goingLeft</span><span class="p">()</span> <span class="p">{</span>
-    <span class="k">return</span> <span class="n">curDiretion</span> <span class="o">==</span> <span class="n">Direction</span><span class="o">.</span><span class="n">LEFT</span><span class="p">;</span>
-  <span class="p">}</span>
-  <span class="n">public</span> <span class="n">static</span> <span class="n">boolean</span> <span class="n">goingRight</span><span class="p">()</span> <span class="p">{</span>
-    <span class="k">return</span> <span class="n">curDiretion</span> <span class="o">==</span> <span class="n">Direction</span><span class="o">.</span><span class="n">RIGHT</span><span class="p">;</span>
-  <span class="p">}</span>
-<span class="p">}</span>
-</pre></div>
-</div>
-</section>
-<section id="robotmap">
-<h4>RobotMap<a class="headerlink" href="#robotmap" title="Link to this heading">¶</a></h4>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">package</span> <span class="n">main</span><span class="o">.</span><span class="n">resources</span><span class="o">.</span><span class="n">map</span><span class="p">;</span>
-
-<span class="kn">import</span> <span class="nn">java.io.FileInputStream</span><span class="p">;</span>
-<span class="kn">import</span> <span class="nn">java.io.FileOutputStream</span><span class="p">;</span>
-<span class="kn">import</span> <span class="nn">java.io.FileWriter</span><span class="p">;</span>
-<span class="kn">import</span> <span class="nn">java.io.ObjectInputStream</span><span class="p">;</span>
-<span class="kn">import</span> <span class="nn">java.io.ObjectOutputStream</span><span class="p">;</span>
-<span class="kn">import</span> <span class="nn">java.io.PrintWriter</span><span class="p">;</span>
-<span class="kn">import</span> <span class="nn">java.io.Serializable</span><span class="p">;</span>
-
-<span class="kn">import</span> <span class="nn">unibo.basicomm23.utils.CommUtils</span><span class="p">;</span>
-
-<span class="n">public</span> <span class="k">class</span> <span class="nc">RoomMap</span> <span class="n">implements</span> <span class="n">Serializable</span><span class="p">{</span>
-  <span class="n">public</span> <span class="n">static</span> <span class="n">final</span> <span class="n">long</span> <span class="n">serialVersionUID</span> <span class="o">=</span> <span class="mi">1</span><span class="n">L</span><span class="p">;</span>
-  <span class="n">public</span> <span class="n">static</span> <span class="n">enum</span> <span class="n">cellvalue</span> <span class="p">{</span><span class="n">UNKNOWN</span><span class="p">,</span> <span class="n">OBSTACLE</span><span class="p">,</span> <span class="n">FREE</span><span class="p">,</span> <span class="n">ROBOT</span><span class="p">}</span>
-  <span class="n">private</span> <span class="nb">int</span> <span class="n">nr</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-  <span class="n">private</span> <span class="nb">int</span> <span class="n">nc</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-  <span class="n">private</span> <span class="n">cellvalue</span> <span class="p">[][]</span> <span class="n">roomMap</span><span class="p">;</span>
-
-
-  <span class="n">public</span> <span class="n">RoomMap</span><span class="p">(</span> <span class="nb">int</span> <span class="n">nr</span><span class="p">,</span> <span class="nb">int</span> <span class="n">nc</span><span class="p">)</span> <span class="p">{</span>
-    <span class="n">this</span><span class="o">.</span><span class="n">nr</span><span class="o">=</span><span class="n">nr</span><span class="p">;</span>
-    <span class="n">this</span><span class="o">.</span><span class="n">nc</span><span class="o">=</span><span class="n">nc</span><span class="p">;</span>
-    <span class="n">roomMap</span> <span class="o">=</span> <span class="n">new</span> <span class="n">cellvalue</span><span class="p">[</span><span class="n">nr</span><span class="p">][</span><span class="n">nc</span><span class="p">];</span>
-    <span class="n">clear</span><span class="p">();</span>
-  <span class="p">}</span>
-
-  <span class="o">/*</span>
-  <span class="o">*</span> <span class="n">v</span> <span class="o">=</span> <span class="mi">0</span> <span class="p">:</span> <span class="n">UNKNOWN</span>
-  <span class="o">*</span> <span class="n">v</span> <span class="o">=</span> <span class="mi">1</span> <span class="p">:</span> <span class="n">obstacle</span>
-  <span class="o">*</span> <span class="n">v</span> <span class="o">=</span> <span class="mi">2</span> <span class="p">:</span> <span class="n">free</span>
-  <span class="o">*</span> <span class="n">v</span> <span class="o">=</span> <span class="mi">3</span> <span class="p">:</span> <span class="n">robot</span>
-  <span class="o">*/</span>
-  <span class="n">public</span> <span class="n">void</span> <span class="n">setPos</span><span class="p">(</span><span class="nb">int</span> <span class="n">x</span><span class="p">,</span> <span class="nb">int</span> <span class="n">y</span><span class="p">,</span> <span class="n">cellvalue</span> <span class="n">v</span><span class="p">)</span> <span class="p">{</span>
-    <span class="n">roomMap</span><span class="p">[</span><span class="n">x</span><span class="p">][</span><span class="n">y</span><span class="p">]</span> <span class="o">=</span> <span class="n">v</span><span class="p">;</span>
-  <span class="p">}</span>
-
-  <span class="n">public</span> <span class="nb">int</span> <span class="n">getNr</span><span class="p">()</span> <span class="p">{</span>
-    <span class="k">return</span> <span class="n">nr</span><span class="p">;</span>
-  <span class="p">}</span>
-
-  <span class="n">public</span> <span class="nb">int</span> <span class="n">getNc</span><span class="p">()</span> <span class="p">{</span>
-    <span class="k">return</span> <span class="n">nc</span><span class="p">;</span>
-  <span class="p">}</span>
-
-  <span class="n">public</span> <span class="n">void</span> <span class="n">clear</span><span class="p">()</span> <span class="p">{</span>
-    <span class="k">for</span><span class="p">(</span> <span class="nb">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">i</span><span class="o">&lt;</span><span class="n">nr</span><span class="p">;</span><span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
-      <span class="k">for</span><span class="p">(</span> <span class="nb">int</span> <span class="n">j</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">j</span><span class="o">&lt;</span><span class="n">nc</span><span class="p">;</span><span class="n">j</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
-        <span class="n">roomMap</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">cellvalue</span><span class="o">.</span><span class="n">UNKNOWN</span><span class="p">;</span>
-      <span class="p">}</span>
-    <span class="p">}</span>
-  <span class="p">}</span>
-
-  <span class="n">public</span> <span class="n">boolean</span> <span class="n">typeOfCell</span><span class="p">(</span> <span class="nb">int</span> <span class="n">x</span><span class="p">,</span> <span class="nb">int</span> <span class="n">y</span><span class="p">,</span> <span class="n">cellvalue</span> <span class="n">v</span> <span class="p">)</span> <span class="p">{</span>
-    <span class="k">return</span> <span class="n">roomMap</span><span class="p">[</span><span class="n">x</span><span class="p">][</span><span class="n">y</span><span class="p">]</span> <span class="o">==</span> <span class="n">v</span><span class="p">;</span>
-  <span class="p">}</span>
-
-  <span class="n">public</span> <span class="n">void</span> <span class="n">setCell</span><span class="p">(</span> <span class="nb">int</span> <span class="n">x</span><span class="p">,</span> <span class="nb">int</span> <span class="n">y</span><span class="p">,</span> <span class="n">cellvalue</span> <span class="n">v</span> <span class="p">)</span> <span class="p">{</span>
-    <span class="n">roomMap</span><span class="p">[</span><span class="n">x</span><span class="p">][</span><span class="n">y</span><span class="p">]</span> <span class="o">=</span> <span class="n">v</span><span class="p">;</span>
-  <span class="p">}</span>
-  <span class="n">public</span> <span class="n">void</span> <span class="n">setCellClean</span><span class="p">(</span> <span class="nb">int</span> <span class="n">x</span><span class="p">,</span> <span class="nb">int</span> <span class="n">y</span>  <span class="p">)</span> <span class="p">{</span>
-    <span class="n">roomMap</span><span class="p">[</span><span class="n">x</span><span class="p">][</span><span class="n">y</span><span class="p">]</span> <span class="o">=</span> <span class="n">cellvalue</span><span class="o">.</span><span class="n">FREE</span><span class="p">;</span>
-  <span class="p">}</span>
-  <span class="n">public</span> <span class="n">void</span> <span class="n">setRobot</span><span class="p">(</span> <span class="nb">int</span> <span class="n">x</span><span class="p">,</span> <span class="nb">int</span> <span class="n">y</span>  <span class="p">)</span> <span class="p">{</span>
-    <span class="n">roomMap</span><span class="p">[</span><span class="n">x</span><span class="p">][</span><span class="n">y</span><span class="p">]</span> <span class="o">=</span> <span class="n">cellvalue</span><span class="o">.</span><span class="n">ROBOT</span><span class="p">;</span>
-  <span class="p">}</span>
-  <span class="n">public</span> <span class="n">void</span> <span class="n">setFree</span><span class="p">(</span> <span class="nb">int</span> <span class="n">x</span><span class="p">,</span> <span class="nb">int</span> <span class="n">y</span>  <span class="p">)</span> <span class="p">{</span>
-    <span class="n">roomMap</span><span class="p">[</span><span class="n">x</span><span class="p">][</span><span class="n">y</span><span class="p">]</span> <span class="o">=</span> <span class="n">cellvalue</span><span class="o">.</span><span class="n">FREE</span><span class="p">;</span>
-  <span class="p">}</span>
-  <span class="n">public</span> <span class="n">void</span> <span class="n">setObstacle</span><span class="p">(</span> <span class="nb">int</span> <span class="n">x</span><span class="p">,</span> <span class="nb">int</span> <span class="n">y</span>  <span class="p">)</span> <span class="p">{</span>
-    <span class="n">roomMap</span><span class="p">[</span><span class="n">x</span><span class="p">][</span><span class="n">y</span><span class="p">]</span> <span class="o">=</span> <span class="n">cellvalue</span><span class="o">.</span><span class="n">OBSTACLE</span><span class="p">;</span>
-  <span class="p">}</span>
-  <span class="n">public</span> <span class="n">String</span> <span class="n">toString</span><span class="p">()</span> <span class="p">{</span>
-    <span class="n">StringBuilder</span> <span class="n">sb</span> <span class="o">=</span> <span class="n">new</span> <span class="n">StringBuilder</span><span class="p">();</span>
-    <span class="k">for</span><span class="p">(</span> <span class="nb">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">i</span><span class="o">&lt;</span><span class="n">nr</span><span class="p">;</span><span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
-      <span class="n">sb</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;|&quot;</span><span class="p">);</span>
-      <span class="k">for</span><span class="p">(</span> <span class="nb">int</span> <span class="n">j</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">j</span><span class="o">&lt;</span><span class="n">nc</span><span class="p">;</span><span class="n">j</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
-        <span class="k">if</span> <span class="p">(</span><span class="n">typeOfCell</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">,</span><span class="n">cellvalue</span><span class="o">.</span><span class="n">ROBOT</span><span class="p">))</span> <span class="n">sb</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;r, &quot;</span><span class="p">);</span>
-        <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">typeOfCell</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">,</span><span class="n">cellvalue</span><span class="o">.</span><span class="n">OBSTACLE</span><span class="p">))</span> <span class="n">sb</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;X, &quot;</span><span class="p">);</span>
-        <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">typeOfCell</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">,</span><span class="n">cellvalue</span><span class="o">.</span><span class="n">UNKNOWN</span><span class="p">))</span> <span class="n">sb</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;0, &quot;</span><span class="p">);</span>
-        <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">typeOfCell</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">,</span><span class="n">cellvalue</span><span class="o">.</span><span class="n">FREE</span><span class="p">))</span> <span class="n">sb</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;1, &quot;</span><span class="p">);</span>
-      <span class="p">}</span>
-      <span class="n">sb</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">);</span>
-    <span class="p">}</span>
-    <span class="k">return</span> <span class="n">sb</span><span class="o">.</span><span class="n">toString</span><span class="p">();</span>
-  <span class="p">}</span>
-
-  <span class="n">public</span> <span class="n">String</span> <span class="n">toProlog</span><span class="p">()</span> <span class="p">{</span>
-    <span class="n">StringBuilder</span> <span class="n">sb</span> <span class="o">=</span> <span class="n">new</span> <span class="n">StringBuilder</span><span class="p">();</span>
-    <span class="k">for</span><span class="p">(</span> <span class="nb">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">i</span><span class="o">&lt;</span><span class="n">nr</span><span class="p">;</span><span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
-      <span class="k">for</span><span class="p">(</span> <span class="nb">int</span> <span class="n">j</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">j</span><span class="o">&lt;</span><span class="n">nc</span><span class="p">;</span><span class="n">j</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
-        <span class="n">sb</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;cell(&quot;</span><span class="p">);</span>
-        <span class="n">sb</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="o">+</span><span class="n">i</span><span class="o">+</span><span class="s2">&quot;,&quot;</span><span class="o">+</span><span class="n">j</span><span class="o">+</span><span class="s2">&quot;,&quot;</span><span class="p">);</span>
-        <span class="k">if</span> <span class="p">(</span><span class="n">typeOfCell</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">,</span><span class="n">cellvalue</span><span class="o">.</span><span class="n">ROBOT</span><span class="p">))</span> <span class="n">sb</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;r&quot;</span><span class="p">);</span>
-        <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">typeOfCell</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">,</span><span class="n">cellvalue</span><span class="o">.</span><span class="n">OBSTACLE</span><span class="p">))</span> <span class="n">sb</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;X&quot;</span><span class="p">);</span>
-        <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">typeOfCell</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">,</span><span class="n">cellvalue</span><span class="o">.</span><span class="n">UNKNOWN</span><span class="p">))</span> <span class="n">sb</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;0&quot;</span><span class="p">);</span>
-        <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">typeOfCell</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">,</span><span class="n">cellvalue</span><span class="o">.</span><span class="n">FREE</span><span class="p">))</span> <span class="n">sb</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;1&quot;</span><span class="p">);</span>
-        <span class="n">sb</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;).</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">);</span>
-      <span class="p">}</span>
-    <span class="p">}</span>
-    <span class="k">return</span> <span class="n">sb</span><span class="o">.</span><span class="n">toString</span><span class="p">();</span>
-  <span class="p">}</span>
-
-  <span class="n">public</span> <span class="n">void</span> <span class="n">showMap</span><span class="p">()</span> <span class="p">{</span>
-    <span class="n">String</span> <span class="n">mapStr</span> <span class="o">=</span> <span class="n">toString</span><span class="p">();</span>
-    <span class="n">mapStr</span> <span class="o">=</span> <span class="n">mapStr</span> <span class="o">+</span> <span class="s2">&quot; DIR-&gt;&quot;</span> <span class="o">+</span> <span class="n">RobotDir</span><span class="o">.</span><span class="n">getDir</span><span class="p">();</span>
-    <span class="n">CommUtils</span><span class="o">.</span><span class="n">outyellow</span><span class="p">(</span><span class="n">mapStr</span><span class="p">);</span>
-
-  <span class="p">}</span>
-
-  <span class="n">public</span> <span class="n">static</span> <span class="n">RoomMap</span> <span class="n">loadRoomMap</span><span class="p">(</span> <span class="n">String</span> <span class="n">fname</span> <span class="p">){</span>
-        <span class="k">try</span><span class="p">{</span>
-            <span class="n">ObjectInputStream</span> <span class="n">inps</span> <span class="o">=</span> <span class="n">new</span> <span class="n">ObjectInputStream</span><span class="p">(</span><span class="n">new</span> <span class="n">FileInputStream</span><span class="p">(</span><span class="n">fname</span><span class="o">+</span><span class="s2">&quot;.bin&quot;</span><span class="p">));</span>
-            <span class="n">RoomMap</span> <span class="nb">map</span>  <span class="o">=</span> <span class="p">(</span><span class="n">RoomMap</span><span class="p">)</span><span class="n">inps</span><span class="o">.</span><span class="n">readObject</span><span class="p">();</span>
-            <span class="n">CommUtils</span><span class="o">.</span><span class="n">outyellow</span><span class="p">(</span><span class="s2">&quot;loadRoomMap DONE from &quot;</span><span class="o">+</span><span class="n">fname</span><span class="p">);</span>
-            <span class="o">//</span><span class="n">RoomMap</span><span class="o">.</span><span class="n">setRoomMap</span><span class="p">(</span> <span class="nb">map</span> <span class="p">);</span>
-            <span class="n">inps</span><span class="o">.</span><span class="n">close</span><span class="p">();</span>
-            <span class="k">return</span> <span class="nb">map</span><span class="p">;</span>
-        <span class="p">}</span><span class="n">catch</span><span class="p">(</span><span class="ne">Exception</span> <span class="n">e</span><span class="p">){</span>
-          <span class="n">CommUtils</span><span class="o">.</span><span class="n">outred</span><span class="p">(</span><span class="s2">&quot;loadRoomMap FAILURE &quot;</span><span class="o">+</span> <span class="n">e</span><span class="o">.</span><span class="n">getMessage</span><span class="p">());</span>
-          <span class="k">return</span> <span class="n">null</span><span class="p">;</span>
-        <span class="p">}</span>
-  <span class="p">}</span>
-
-  <span class="n">public</span>  <span class="n">void</span> <span class="n">saveRoomMap</span><span class="p">(</span>  <span class="n">String</span> <span class="n">fname</span><span class="p">,</span> <span class="n">String</span> <span class="nb">map</span>  <span class="p">)</span> <span class="n">throws</span> <span class="ne">Exception</span> <span class="p">{</span>
-      <span class="n">CommUtils</span><span class="o">.</span><span class="n">outyellow</span><span class="p">(</span><span class="s2">&quot;saveRoomMap in &quot;</span><span class="o">+</span> <span class="n">fname</span> <span class="p">);</span>
-        <span class="n">PrintWriter</span> <span class="n">pw</span> <span class="o">=</span> <span class="n">new</span> <span class="n">PrintWriter</span><span class="p">(</span> <span class="n">new</span> <span class="n">FileWriter</span><span class="p">(</span><span class="n">fname</span><span class="o">+</span><span class="s2">&quot;.txt&quot;</span><span class="p">)</span> <span class="p">);</span>
-        <span class="n">pw</span><span class="o">.</span><span class="n">print</span><span class="p">(</span> <span class="nb">map</span> <span class="p">);</span>
-        <span class="n">pw</span><span class="o">.</span><span class="n">close</span><span class="p">();</span>
-
-        <span class="n">ObjectOutputStream</span> <span class="n">os</span> <span class="o">=</span> <span class="n">new</span> <span class="n">ObjectOutputStream</span><span class="p">(</span> <span class="n">new</span> <span class="n">FileOutputStream</span><span class="p">(</span><span class="n">fname</span><span class="o">+</span><span class="s2">&quot;.bin&quot;</span><span class="p">)</span> <span class="p">);</span>
-        <span class="n">os</span><span class="o">.</span><span class="n">writeObject</span><span class="p">(</span> <span class="n">this</span> <span class="p">);</span>
-        <span class="n">os</span><span class="o">.</span><span class="n">flush</span><span class="p">();</span>
-        <span class="n">os</span><span class="o">.</span><span class="n">close</span><span class="p">();</span>
-  <span class="p">}</span>
-
-  <span class="n">public</span>  <span class="n">void</span> <span class="n">saveRoomMapProlog</span><span class="p">(</span>  <span class="n">String</span> <span class="n">fname</span><span class="p">,</span> <span class="n">String</span> <span class="nb">map</span>  <span class="p">)</span> <span class="n">throws</span> <span class="ne">Exception</span> <span class="p">{</span>
-      <span class="n">CommUtils</span><span class="o">.</span><span class="n">outyellow</span><span class="p">(</span><span class="s2">&quot;saveRoomMap in &quot;</span><span class="o">+</span> <span class="n">fname</span> <span class="p">);</span>
-        <span class="n">PrintWriter</span> <span class="n">pw</span> <span class="o">=</span> <span class="n">new</span> <span class="n">PrintWriter</span><span class="p">(</span> <span class="n">new</span> <span class="n">FileWriter</span><span class="p">(</span><span class="n">fname</span><span class="o">+</span><span class="s2">&quot;.txt&quot;</span><span class="p">)</span> <span class="p">);</span>
-        <span class="n">pw</span><span class="o">.</span><span class="n">print</span><span class="p">(</span> <span class="nb">map</span> <span class="p">);</span>
-        <span class="n">pw</span><span class="o">.</span><span class="n">close</span><span class="p">();</span>
-  <span class="p">}</span>
-<span class="p">}</span>
-</pre></div>
-</div>
-<p><span class="slide1">Costruzione di una prima mappa della stanza</span></p>
-<<<<<<< HEAD
-=======
-</section>
->>>>>>> f1315657568d70d86448a8abf7caa83dd0448658
-</section>
-</section>
-<section id="mapbuild">
-<h2>mapbuild<a class="headerlink" href="#mapbuild" title="Permalink to this heading">¶</a></h2>
-<p><a class="reference external" href="../../../../virtualrobotusage25/src/mapbuild.qaktt">mapbuild.qak</a></p>
-<section id="un-agente-con-movimenti-di-precisione">
-<h3>Un agente con movimenti di precisione<a class="headerlink" href="#un-agente-con-movimenti-di-precisione" title="Permalink to this heading">¶</a></h3>
-<p>Con riferimento ad una ROOM come quella di figura, fare in modo che robot si sposti:</p>
-<ol class="arabic">
-<li><p>dalla HOME a INPUT DOOR e poi</p></li>
-<li><p>da INPUT DOOR allo SLOT2</p>
-<a class="reference internal image-reference" href="_images/tf25sceneNewAnnotated.jpg"><img alt="_images/tf25sceneNewAnnotated.jpg" class="align-center" src="_images/tf25sceneNewAnnotated.jpg" style="width: 80%;" /></a>
-</li>
-</ol>
-</section>
-</section>
-<section id="mapbuild-una-prima-mappa">
-<h2>mapbuild: una prima mappa<a class="headerlink" href="#mapbuild-una-prima-mappa" title="Link to this heading">¶</a></h2>
-<p><a class="reference external" href="../../../../virtualrobotusage25/src/mapbuild.qaktt">mapbuild.qak</a></p>
-<section id="robot-come-agente-evoluto">
-<h3>Robot come agente evoluto<a class="headerlink" href="#robot-come-agente-evoluto" title="Link to this heading">¶</a></h3>
-<p>Con riferimento ad una stanza come quella di figura, fare in modo che robot sia capace di spostiarsi
-da un punto <code class="docutils literal notranslate"><span class="pre">A</span></code> a un punto <code class="docutils literal notranslate"><span class="pre">B</span></code> della stanza. Ad esempio:</p>
-<ol class="arabic">
-<li><p>dalla <code class="docutils literal notranslate"><span class="pre">HOME</span></code> a <code class="docutils literal notranslate"><span class="pre">IOPORT</span></code> e poi</p></li>
-<li><p>da <code class="docutils literal notranslate"><span class="pre">IOPORT</span></code> allo <code class="docutils literal notranslate"><span class="pre">SLOT2</span></code></p>
-<a class="reference internal image-reference" href="_images/tf25sceneNewAnnotated.jpg"><img alt="_images/tf25sceneNewAnnotated.jpg" class="align-center" src="_images/tf25sceneNewAnnotated.jpg" style="width: 80%;" />
-</a>
-</li>
-</ol>
-</section>
-</section>
-<section id="mappa-di-una-stanza-con-ostacoli">
-<h2>Mappa di una stanza con ostacoli<a class="headerlink" href="#mappa-di-una-stanza-con-ostacoli" title="Link to this heading">¶</a></h2>
-<p><span class="slide3">Progetto unibomapbuilder25</span></p>
-<p>Introduzione all’uso di un <a class="reference internal" href="Planner.html#planner"><span class="std std-ref">Planner</span></a></p>
+<p>Un premessa utile al raggiungimento di questi obiettivi è la costruzione di una
+<strong>rappresentazione a livello software della stanza</strong>.</p>
+<p><span class="slidekp">OSSERVO CHE</span> la rappresentazione software di entità “del mondo reale” quali la stanza o il robot
+conduce rapidamente all’idea del <span class="slide3">Gemello digitale</span> (si veda <a class="reference external" href="https://en.wikipedia.org/wiki/Digital_twin">Digital twin</a>).</p>
+<p>Per la costruzione di una mappa, si veda <a class="reference internal" href="RoomMap.html#roommap"><span class="std std-ref">RoomMap</span></a>.</p>
 </section>
 </section>
 
@@ -835,26 +481,7 @@ da un punto <code class="docutils literal notranslate"><span class="pre">A</span
 <li><a class="reference internal" href="#il-linguaggio-aril">Il linguaggio aril</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#mappa-della-stanza">Mappa della stanza</a><ul>
-<li><a class="reference internal" href="#rappresentazione-della-mappa-in-java">Rappresentazione della mappa in Java</a><ul>
-<li><a class="reference internal" href="#robotdir">RobotDir</a></li>
-<li><a class="reference internal" href="#robotmap">RobotMap</a></li>
-</ul>
-</li>
-</ul>
-</li>
-<<<<<<< HEAD
-<li><a class="reference internal" href="#mapbuild-una-prima-mappa">mapbuild: una prima mappa</a><ul>
-<li><a class="reference internal" href="#robot-come-agente-evoluto">Robot come agente evoluto</a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#mappa-di-una-stanza-con-ostacoli">Mappa di una stanza con ostacoli</a></li>
-=======
-<li><a class="reference internal" href="#mapbuild">mapbuild</a><ul>
-<li><a class="reference internal" href="#un-agente-con-movimenti-di-precisione">Un agente con movimenti di precisione</a></li>
-</ul>
-</li>
->>>>>>> f1315657568d70d86448a8abf7caa83dd0448658
+<li><a class="reference internal" href="#mappa-della-stanza">Mappa della stanza</a></li>
 </ul>
 </li>
 </ul>

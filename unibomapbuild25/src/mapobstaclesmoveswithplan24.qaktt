@@ -1,0 +1,218 @@
+System unibomapbuild25
+
+/*
+========================================
+mapobstacleshlmoves.qak
+========================================
+*/ 
+/*
+ * GOAL: costruire una mappa 'mentale' della room
+ * 
+ * USA: 
+ *  - VrobotHLMoves24 per esplorare il mondo con il virtualrobot
+ *  - planner         per costruire la mappa
+ * 
+ * ASSUNZIONI: 
+ *  - virtualrobot attivo
+ *  - bordo superiore della room libero
+ *  - step = 340
+ * 
+ * RISULTATO:
+ *  - memorizza la mappa con nome MapName="map2025partial"
+ *    in due file: uno di tipo .txt e uno di tipo bin 
+ * 
+ * FUNZIONAMETO:
+ *  - Percorro una colonna tenendo conto del numero di stepok
+ *  - Al primo ostacolo mi giro e torno su di stepok passi
+ * 
+ * PER Cambiare la scena:
+ * docker cp sceneConfig.js 87c9eb2e0989:/home/node/WEnv/WebGLScene/sceneConfig.js
+ */
+
+Request step       : step( TIME )	//logically done by the support VrobotHLMoves24      
+Reply stepdone     : stepdone(V)                 for step
+Reply stepfailed   : stepfailed(DURATION, CAUSE) for step
+
+Context ctxmapbuild ip [host="localhost" port=8032]
+ 
+/*   
+ * ------------------------------------------------------------------
+ * ASSUNZIONE: bordo superiore libero
+ * ------------------------------------------------------------------
+*/     
+QActor mapbuilder  context ctxmapbuild withobj vr
+			using "VrobotHLMoves24.create(\"localhost\",myself)"{   
+import  "main.java.*"
+import  "unibo.planner23.*"
+[#
+val planner     = Planner23Util()
+
+var stepok      = 0
+var CurPlan    = ""
+var CurMove    = ""
+var Athome     = false 
+var StepInPlan = false
+
+var Step       = 340
+
+val MapName    = "map2025partial"
+#]   
+
+	State activate initial {
+		[# planner.initAI()                #]  
+		[# planner.showCurrentRobotState() #]
+	} 
+	Goto coverNextColumn
+
+	State coverNextColumn{  
+		println("$name | coverNextColumn")	color blue	  
+   		[# vr.stepAsynch(Step) #]
+	}
+	Transition t0  whenReply stepdone   -> coverColumn   
+				   whenReply stepfailed -> backtop
+	  			   
+	State coverColumn{  		   
+   		[# stepok = stepok + 1
+   		   planner.updateMap(  "w", "" ) 		
+   		#]
+   		println("coverColumn stepok=$stepok")
+     	delay 300 
+   		[# vr.stepAsynch(Step) #]
+ 	}
+	Transition t0  whenReply stepdone   -> coverColumn
+ 	               whenReply stepfailed -> backtop  
+ 
+	State backtop{  	
+		printCurrentMessage	   color blue
+		[#  planner.updateMapObstacleOnCurrentDirection() #]   		
+		println("backtop")
+   			[# vr.turnLeft() #]
+			[#  planner.updateMap(  "l", "" )  #]   			
+   			delay 300 
+            [# vr.move("l") #]
+			[#  planner.updateMap(  "l", "" )  #]   			
+   			delay 300      			
+    		[# planner.showCurrentRobotState() #]
+        	//[# val MAP = planner.getMapOneLine() #]
+			[# vr.stepAsynch(Step) #]
+	}	
+   	Transition t0  whenReply stepdone   -> gototop
+ 	               whenReply stepfailed -> turnAndStep  
+ 
+/*
+ * Il ritorno a home puo' provocare un hit su wallup
+ */ 
+ 	State gototop{
+ 		[# planner.updateMap(  "w", "" ) 
+ 		   stepok = stepok - 1 
+ 		#]
+ 		println("gototop stepok=$stepok")	
+ 		delay 300 
+// 		request basicrobot -m step : step(Step)  
+        [# vr.stepAsynch(Step) #]
+ 	}
+  	Transition t0  
+  		whenReply stepdone and [# stepok > 0 #]  -> gototop
+		whenReply stepdone and [# stepok == 0 #] -> turnAndStep
+		whenReply stepfailed -> turnAndStep
+
+ 	
+ 	State turnAndStep{
+		[# vr.move("r") #]
+		[#  planner.updateMap(  "r", "" )  #]   			
+   		delay 300 			
+   		[# vr.stepAsynch(Step) #]
+ 	}
+  	Transition t0  
+  		whenReply stepdone   -> posForNextColumn
+		whenReply stepfailed -> endOfWork
+ 	
+ 	State posForNextColumn{
+ 		[# planner.updateMap(  "w", "" ) #]
+   		[# vr.move("r") #]
+		[#  planner.updateMap(  "r", "" )  #]   	
+		println("posForNextColumn stepok=$stepok")		
+   		[# planner.showCurrentRobotState() #]		
+ 		//[# CommUtils.waitTheUser("...")	 #]
+   		delay 800 	//to be removed	 
+	}
+ 	Goto coverNextColumn
+ 	 
+ 	
+	State endOfWork{  		 
+		println("$name | endOfWork") 
+   		[#  planner.showCurrentRobotState()	#]
+   		println("$name | endOfWork")		
+	}	
+ 	Goto backToHome
+ 	
+/*
+ * Posizionare il robot in HOMWE
+ */
+	State backToHome{  		
+		println("$name | ++++ going backToHome ++++ ")   color magenta
+   		[#   
+    		planner.setGoal(0,0)
+   			CurPlan = planner.doPlanCompact()  				 		
+   		#]
+   		println("$name | ++++ going backToHome CurPlan=$CurPlan  ")   color cyan   		 
+	}	
+	Goto execThePlan
+	
+ 	State execThePlan{
+		println("$name | execThePlan CurPlan=$CurPlan") color yellow
+		if [# CurPlan.length > 0 #]{
+			[#  CurMove = ""+CurPlan[0]; 
+				CurPlan = CurPlan.drop(1) 
+			#]
+		}else{ [# CurMove="" #] }
+	}
+	Goto doMove if [# (CurMove.length > 0) #] else endOfPlan
+	
+	State doMove{
+		println("$name | domove $CurMove") color cyan
+		delay 500
+		if [# CurMove == "w" #]{ 
+ 			[# StepInPlan = true  #]
+        } 
+		if [# CurMove == "l" #]{ 
+			[# vr.move("l") #]
+			[#  planner.updateMap(  "l", "" )  #]  
+			[# planner.setTheDirection("l") #]
+			[# StepInPlan = false #]
+        }
+		if [# CurMove == "r" #]{ 
+			[# vr.move("r") #]
+			[#  planner.updateMap(  "r", "" )  #] 
+			[# planner.setTheDirection("r") #]
+			[# StepInPlan = false  #]			
+        }        
+        [# planner.showCurrentRobotState() #]
+	}
+	Goto dostep if [# StepInPlan #] else execThePlan 
+ 
+    State dostep{
+		[# vr.stepAsynch(Step) #]
+    }
+	Transition t0  
+ 		whenReply stepdone   -> stepcompleted   
+	    whenReply stepfailed -> stepcompleted //IGNORO planko per irrilevanza
+
+	State stepcompleted{ //Per aggiornare la mappa
+		println("$name | stepcompleted") color red
+ 		[# planner.updateMap(  "w", "" ) #]  	
+	}   
+	Goto execThePlan
+	
+	State endOfPlan{ 
+		[# vr.move("l") #]
+		[#  planner.updateMap(  "l", "" )  #]  
+		[# planner.setTheDirection("d") #]
+ 		[# planner.showCurrentRobotState() #]
+		[# Athome = planner.atHome() #]
+		println("$name | endOfPlan with Athome=$Athome ") color magenta
+		[# planner.saveRoomMap(MapName) #]
+		
+	}
+ 
+}

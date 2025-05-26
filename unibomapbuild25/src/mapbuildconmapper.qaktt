@@ -1,0 +1,113 @@
+System unibomapbuild25
+
+/*  
+========================================
+mapbuildconmapper.qak
+========================================
+*/   
+
+/*
+ *  GOAL: costruire una mappa 'mentale' della room
+ * 
+ * USA: 
+ *  - VrobotHLMoves24 per esplorare il mondo con il virtualrobot
+ *  - RobotMapper per costruire l'immagine mentale
+ * 
+ * ASSUNZIONI: 
+ *  - virtualrobot attivo
+ *  - bordi privi di oscaoli
+ *  - step = 350
+ * 
+ * RISULTATO:
+ *  - memorizza la mappa con nome MapName="mapemptyroom"
+ *    in due file: uno di tipo .txt e uno di tipo bin 
+ * 
+ * FUNZIONAMENTO:
+ *  - Percorre i bordi
+ * 	- Aggiorna di volta in volta la mappa mentale con il RobotMapper
+ */ 
+ 
+Dispatch stepdone   : stepdone(X)     //"automsg"
+Dispatch stepfailed : stepfailed(X)   //"automsg"
+Dispatch vrinfo     : vrinfo(A,B)     //"from VrobotLLMoves24"
+
+Context ctxmapbuild  ip [host="localhost" port=8720     ]
+
+QActor mapbuilder context ctxmapbuild withobj vr 
+                    using "VrobotLLMoves24.create(\"localhost\",myself)"{ 
+	import "main.java.VrobotLLMoves24"
+	import "main.resources.map.*" 
+	[# var N       = 0 
+ 	   val MapName = "mapemptyroom"	   
+	   val mapper  = RobotMapper()
+	   val STEP    = 350
+	#] 
+	         
+	 
+	State s0 initial{ 
+		println("-------------------------------------------------") color magenta
+		println("mapbuildconmapper.qak") color magenta
+		println("-------------------------------------------------") color magenta
+		println("$name STARTS ") color blue
+		//[# vr.setTrace(true)  #]
+ 		[# vr.halt()               #]
+		[#  mapper.showMentalMap() #]
+	}
+	Goto doMap
+//	Goto mapusage
+
+	
+	State doMap{
+		delay 500
+  		[# var RSTEP = vr.step(STEP) #]  //se RSTEP = false emette vrinfo(obstacle,unknown) 
+		//println("$name | RSTEP=$RSTEP") color blue
+		if [# RSTEP #]{  
+			[# mapper.doMove("w")       #]
+			[# mapper.showMentalMap()   #]
+			autodispatch stepdone : stepdone(1)
+		}	 
+		else{ autodispatch stepfailed : stepfailed(1) }
+	} 
+	Transition t0 
+	    whenMsg stepdone    -> doMap 
+	    whenMsg stepfailed  -> turnAndgo
+	    
+ 
+	State turnAndgo{ 
+		[# N = N + 1          #]
+ 		[# vr.turnLeft()      #] 
+		[# mapper.doMove("l") #]		
+		println("$name | N=$N ") color yellow
+		[# mapper.showCurrentRobotState() #]
+//		[# mapper.saveRoomMap( MapName  ) #]    //SAVE MAP  
+//		[# val MP  = map.toProlog()    #]  
+//		//println(MP)
+//		[# map.saveRoomMapProlog("mapProlog", MP) #]
+		delay 500 
+	} 
+	Goto doMap  if [# N < 4 #] else enodwork
+   	
+   	
+   	State enodwork{
+   		println("$name | ENDS")
+   		[#  mapper.saveRoomMap( MapName  ) #] 
+   		[# 	System.exit(0)                 #]
+   	}
+   	
+   	/*
+   	 * For testing mapper.loadRoomMap
+   	 */
+   	State mapusage{
+   		[# mapper.loadRoomMap(MapName) #] 
+   		//[# mapper.loadRoomMap("map2025all") #]
+   		//unibo.planner23.model.RoomMap cannot be cast to class main.resources.map.RoomMap
+   		[# mapper.showMentalMap() #]
+			[# val Path ="[w,w,lw]"  #]
+			println("$name | doing $Path]") color magenta
+			[# mapper.doPathOnMap(Path) #]
+			[# mapper.showCurrentRobotState() #]			
+			
+			[# System.exit(0) #]
+   		
+   	}
+}

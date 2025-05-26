@@ -1,0 +1,288 @@
+System unibomapbuild25
+
+/*
+========================================
+mapobstaclesrobot.qak
+
+Utilizza basicrobot con engagement
+========================================
+*/
+/*
+ * Percorro una colonna tenendo conto del numero di stepok
+ * Al primo ostacolo mi giro e torno su di stepok passi
+ * 
+ * docker cp sceneConfig.js 87c9eb2e0989:/home/node/WEnv/WebGLScene/sceneConfig.js
+ */
+Dispatch cmd       : cmd(MOVE)     
+ 
+Request engage        : engage(ARG,STEPTIME)	
+Reply   engagedone    : engagedone(ARG)
+Reply   engagerefused : engagerefused(ARG)
+Dispatch disengage    : disengage(ARG)
+
+Request step       : step( TIME )	
+Reply stepdone     : stepdone(V)  for step
+Reply stepfailed   : stepfailed(DURATION, CAUSE) for step
+
+Dispatch move      : cmd( MOVE )     
+
+Dispatch cmd      : cmd( MOVE )   
+Dispatch halt      : halt(X) 
+
+Event alarm        : alarm(X)
+
+Request  doplan   : doplan( PATH, OWNER )
+Reply doplandone  : doplandone( ARG )    	for doplan
+Reply doplanfailed : doplanfailed  ( ARG )  for doplan
+
+Request moverobot    :  moverobot(TARGETX, TARGETY)
+Reply moverobotdone  :  moverobotok(ARG)    for moverobot
+Reply moverobotfailed:  moverobotfailed(PLANDONE, PLANTODO) for moverobot
+
+Event mapinfo      : mapinfo(X)
+
+Context ctxmapbuild ip [host="localhost" port=8032]
+Context ctxbasicrobot    ip [host="127.0.0.1"  port=8020   ]
+
+//ExternalQActor basicrobot context ctxbasicrobot  
+ExternalQActor basicrobot context ctxbasicrobot
+
+/*   
+ * ------------------------------------------------------------------
+ * mapqak22
+ * ASSUNZIONE: bordo superiore libero
+ * ------------------------------------------------------------------
+*/     
+QActor mapbuilder  context ctxmapbuild{   
+	import  "unibo.planner23.*"
+[#
+val MaxNumStep  = 6
+var NumStep     = 0
+var stepok      = 0
+val planner     = Planner23Util()
+
+ 
+var CurPlan   = ""
+var StepInPlan = false
+var CurMove    = ""
+var Athome     = false 
+var PlanForHome=false
+#]   
+
+	State activate initial {
+		//printCurrentMessage
+		[# NumStep     = 0;
+           planner.initAI()
+           
+        #]  
+//        connectToMqttBroker "wss://test.mosquitto.org:8081" clientid "mapnat"
+		request basicrobot -m engage : engage($MyName,340) 
+	} 
+//	Goto coverNextColumn
+	Transition t0 //whenTime 2000           -> work
+	              whenReply engagedone    -> coverNextColumn
+	              whenReply engagerefused -> waittoengage
+
+	State waittoengage {
+		printCurrentMessage color red
+	}
+
+	State coverNextColumn{  
+		println("$name | coverNextColumn")	color blue	  
+   		request basicrobot -m step : step(350)	
+	}
+	Transition t0  whenReply stepdone   -> coverColumn   
+				   whenReply stepfailed -> backHome
+	  			   
+	State coverColumn{  		   
+   		//printCurrentMessage
+   		[# stepok = stepok + 1
+   		   planner.updateMap(  "w", "" ) 		
+   		#]
+   		println("coverColumn stepok=$stepok NumStep=$NumStep")
+     	delay 300 
+   		request basicrobot -m step : step(340)
+ 	}
+	Transition t0  whenReply stepdone -> coverColumn
+ 	               whenReply stepfailed -> backHome // and [# NumStep <  MaxNumStep #] 
+ 
+	State backHome{  	
+		printCurrentMessage	   color blue
+		[#  planner.updateMapObstacleOnCurrentDirection()
+ 		#]   		
+		println("backHome")
+   			forward basicrobot -m cmd : cmd(l)
+			[#  planner.updateMap(  "l", "" )  #]   			
+   			delay 300 
+   			forward basicrobot -m cmd : cmd(l)
+			[#  planner.updateMap(  "l", "" )  #]   			
+   			delay 300  
+    			
+    		[# planner.showCurrentRobotState() #]
+        [# val MAP = planner.getMapOneLine() #]
+//        publish "unibodisiplan" -m mapinfo : mapinfo($MAP)
+    	request basicrobot -m step : step(340)   
+	}	
+   	Transition t0  whenReply stepdone -> gotoHome
+ 	               whenReply stepfailed -> turnAndStep //endOfWork
+ 
+/*
+ * Il ritorno a home puo' provocare un hit su wallup
+ */ 
+ 	State gotoHome{
+ 		[# planner.updateMap(  "w", "" ) 
+ 		   stepok = stepok - 1 
+ 		#]
+ 		println("gotoHome stepok=$stepok")	
+ 		delay 300 
+ 		request basicrobot -m step : step(340)  
+ 	}
+// 	Goto gotoHome if [# stepok > 0 #] else turnAndStep  //WRONG
+  	Transition t0  whenReply stepdone and [# stepok > 0 #]  -> gotoHome
+  	               whenReply stepdone and [# stepok == 0 #] -> turnAndStep
+  				   whenReply stepfailed -> turnAndStep
+
+ 	
+ 	State turnAndStep{
+   		forward basicrobot -m cmd : cmd(r)
+		[#  planner.updateMap(  "r", "" )  #]   			
+   		delay 300 			
+   		request basicrobot -m step : step(340)  //step laterale
+ 	}
+  	Transition t0  whenReply stepdone -> posForNextColumn
+  				   whenReply stepfailed -> endOfWork
+ 	
+ 	State posForNextColumn{
+ 		[# planner.updateMap(  "w", "" ) #]
+   		forward basicrobot -m cmd : cmd(r)
+		[#  planner.updateMap(  "r", "" )  #]   	
+		println("posForNextColumn stepok=$stepok")		
+   		[# planner.showCurrentRobotState() #]		
+ 		//[# unibo.actor22comm.utils.CommUtils.waitTheUser("posForNextColumn")	 #]
+   		delay 1300 		 
+	}
+ 	Goto coverNextColumn
+ 	 
+ 	
+	State endOfWork{  		 
+		println("$name | endOfWork") 
+   		[#  //planner.updateMapObstacleOnCurrentDirection() 
+   			//planner.getDir(   )   
+   			planner.showCurrentRobotState()
+   			planner.saveRoomMap("map2025")
+   			 	
+    		#]
+   		println("$name | endOfWork")		
+	}	
+ 	Goto backToHome
+ 	
+/*
+ * Posizionare il robot in HOMWE
+ */
+	State backToHome{  		
+		println("$name | ++++ going backToHome ++++ ")   color magenta
+   		[#   
+    		planner.setGoal(0,0)
+   			PlanForHome = true
+   			CurPlan = planner.doPlanCompact()  	
+			 		
+   		#]
+   		println("$name | ++++ going backToHome CurPlan=$CurPlan  ")   color cyan
+   		//request basicrobot -m doplan : doplan($CurPlan,330)
+   		//request basicrobot -m moverobot : moverobot(0,0)
+   		 
+	}	
+	Goto execThePlan
+	
+/* 	
+	Transition t0
+		whenReply moverobotdone     -> robotathome
+		whenReply moverobotfailed  -> wrongsituation
+//	Transition t0 
+//		whenReply doplandone  -> robotathome
+//		whenReply doplanfailed   -> wrongsituation
+		
+	State robotathome{
+		println("$name | ++++ robotathome ++++ ")   color magenta
+		
+		[# planner.showCurrentRobotState()  #]
+	}
+	State wrongsituation{
+		println("$name | ++++ wrongsituation ++++ ")   color red
+		[# planner.showCurrentRobotState()  #]
+	}
+	
+	
+}
+* */
+ 
+
+	
+
+	State execThePlan{
+		println("$name | execThePlan CurPlan=$CurPlan") color yellow
+		if [# CurPlan.length > 0 #]{
+			[#  CurMove = ""+CurPlan[0]; 
+				CurPlan = CurPlan.drop(1) 
+			#]
+		    //println("$name | execThePlan CurMove=$CurMove") color blue		
+		}else{ [# CurMove="" #] }
+	}
+	Goto doMove if [# (CurMove.length > 0) #] else endOfPlan
+	
+	State doMove{
+		println("$name | domove $CurMove") color cyan
+		delay 100
+		if [# CurMove == "w" #]{ 
+ 			[# StepInPlan = true  #]
+        } 
+		if [# CurMove == "l" #]{ 
+			//forward vrqak -m move : move( l )
+			forward basicrobot -m cmd : cmd(a)
+			[#  planner.updateMap(  "l", "" )  #]  
+			[# planner.setTheDirection("l") #]
+			[# StepInPlan = false #]
+        }
+		if [# CurMove == "r" #]{ 
+			//forward vrqak -m move : move( r )
+			forward basicrobot -m cmd : cmd(d)
+			[#  planner.updateMap(  "r", "" )  #] 
+			[# planner.setTheDirection("r") #]
+			[# StepInPlan = false  #]
+			
+        }        
+        [# planner.showCurrentRobotState() #]
+	}
+	Goto dostep if [# StepInPlan #] else execThePlan 
+ 
+    State dostep{
+ 		request basicrobot -m step : step(350)
+    }
+	Transition t0  
+ 		whenReply stepdone   -> stepcompleted   
+	    whenReply stepfailed -> stepcompleted //planko
+
+	State stepcompleted{ //Per aggiornare la mappa
+		println("$name | stepcompleted") color red
+	    //Sarebbe bene che fosse vrqak aad ggiornasse la mappa ...
+ 		[# planner.updateMap(  "w", "" ) #]  	
+	}   
+	Goto execThePlan
+	
+	State endOfPlan{
+			forward basicrobot -m cmd : cmd(a)
+			[#  planner.updateMap(  "l", "" )  #]  
+			[# planner.setTheDirection("d") #]
+ 		[# planner.showCurrentRobotState() #]
+		[# Athome = planner.atHome() #]
+		println("$name | endOfPlan with Athome=$Athome ") color magenta
+		[# planner.saveRoomMap("map2025ok") #]
+	}
+	//Goto work if [# !Athome #] else tuneAtHome
+
+	State planko{
+		println("$name | planko with CurPlan=$CurPlan ") color red
+		[# planner.showCurrentRobotState() #]
+	}	
+	
+}

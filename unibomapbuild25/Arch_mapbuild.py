@@ -27,4 +27,8 @@ with Diagram('mapbuildArch', show=False, outformat='png', graph_attr=graphattr) 
 ### see https://renenyffenegger.ch/notes/tools/Graphviz/attributes/label/HTML-like/index
      with Cluster('ctxmapbuild', graph_attr=nodeattr):
           mapbuilder=Custom('mapbuilder','./qakicons/symActorWithobjSmall.png')
+     with Cluster('ctxbasicrobot', graph_attr=nodeattr):
+          basicrobot=Custom('basicrobot(ext)','./qakicons/externalQActor.png')
+     mapbuilder >> Edge(color='magenta', style='solid', decorate='true', label='<engage &nbsp; step<font color="darkgreen"> stepdone stepfailed</font> &nbsp; >',  fontcolor='magenta') >> basicrobot
+     mapbuilder >> Edge(color='blue', style='solid',  decorate='true', label='<cmd &nbsp; >',  fontcolor='blue') >> basicrobot
 diag

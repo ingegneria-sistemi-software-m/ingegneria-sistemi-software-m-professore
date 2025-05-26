@@ -1,0 +1,124 @@
+System unibomapbuild25
+
+/*  
+========================================
+mapbuild.qak
+========================================
+*/   
+/*
+ * Costruisce la mappa di una stanza con bordi privi di ostacoli
+ * usando VrobotLLMoves24.java e map = RoomMap(NR,NC) 
+ * 
+ * La mappa (RETTANGOLARE) è definita dalla classe RoomMap.java
+ *   
+ * Scrive il risultato in due files:
+ * - mapProlog.txt ( map.saveRoomMapProlog() )
+ * - map.txt ( map.saveRoomMap() che fa anche map.bin )
+ */ 
+//Dispatch stepdone   : stepdone(X)     //"automsg"
+//Dispatch stepfailed : stepfailed(X)   //"automsg"
+//Dispatch vrinfo     : vrinfo(A,B)     //"from VrobotLLMoves24"
+
+
+Dispatch move      : cmd( MOVE )     
+
+Dispatch cmd      : cmd( MOVE )   
+Dispatch halt      : halt(X) 
+
+Request step       : step( TIME )	
+Reply stepdone     : stepdone(V)  for step
+Reply stepfailed   : stepfailed(DURATION, CAUSE) for step
+
+Event alarm        : alarm(X)
+Event mapinfo      : mapinfo(X)
+
+Request  doplan   : doplan( PATH, OWNER )
+Reply doplandone  : doplandone( ARG )    for doplan
+Reply doplanfail  : doplanfail( ARG )    for doplan
+
+Request engage        : engage(OWNER, STEPTIME)	
+Reply   engagedone    : engagedone(ARG)    for engage
+Reply   engagerefused : engagerefused(ARG) for engage
+Dispatch disengage    : disengage(ARG)
+
+Context ctxmapbuild  ip [host="localhost" port=8720     ]
+Context ctxbasicrobot  ip [host="127.0.0.1"  port=8020  ]
+
+ExternalQActor basicrobot context ctxbasicrobot
+
+QActor mapbuilder context ctxmapbuild withobj vr 
+                    using "VrobotLLMoves24.create(\"localhost\",myself)"{ 
+	import "main.java.VrobotLLMoves24"
+	import "main.resources.map.RoomMap" 
+	[# var N  = 0 
+	   var NR = 1
+	   var NC = 1
+	   var firstcolumn  = true
+	   var firstrow     = false 
+	#] 
+	        
+	
+	State s0 initial{ 
+		println("$name STARTS $vr") color blue
+		//[# vr.setTrace(true)  #]
+ 		[# vr.connect(); vr.halt();   #]
+	}
+    Goto  engage  
+	
+	State engage{
+		println("$name | $MyName engaging ... ") color yellow 
+		request basicrobot -m engage : engage($MyName,350)
+	}
+	Transition t0 whenReply engagedone  ->  test     //    explore test
+ 	              whenReply engagerefused -> endofwork
+	
+	State endofwork{ 
+		println("$name | BYE ") color blue
+	}
+
+//-------------------------------------------------------------------------	
+	State test{
+		println("$name | testtttttttttttttttt ") color blue
+		delay 1000
+//		forward basicrobot -m cmd : cmd( h )
+////   		forward basicrobot -m cmd : cmd(l) 
+//  		delay 1000
+//		println("$name | testtttttttttttttttt w ") color blue
+//    	forward basicrobot -m cmd : cmd( w ) //forever ...
+//		delay 350 
+// 		println("$name | testtttttttttttttttt h ") color blue
+// 		forward basicrobot -m cmd : cmd( h )
+//// 		delay 1000
+////    		forward basicrobot -m cmd : cmd(r) 
+//		
+//		delay 1000
+//		[# System.exit(0) #]
+		request basicrobot -m step : step(350)
+//		forward basicrobot -m disengage : disengage($MyName)
+	}
+	Transition t0 
+		whenReply stepdone -> ok1
+		whenReply stepfailed -> ko1
+		
+	State ok1{
+		printCurrentMessage
+		println("$name | ok1 disengage") color blue
+		//forward basicrobot -m disengage : disengage($MyName)
+	}
+	Goto test
+	
+	State ko1{
+		printCurrentMessage
+		println("$name | ko1 disengage") color blue
+		forward basicrobot -m disengage : disengage($MyName)
+	}
+	Goto endtest
+	
+	State endtest{
+		[# System.exit(0) #]
+	}
+//-------------------------------------------------------------------------	
+	
+   
+ 	  
+}

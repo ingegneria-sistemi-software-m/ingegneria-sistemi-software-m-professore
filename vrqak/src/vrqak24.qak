@@ -1,5 +1,5 @@
 System vrqak
-mqttBroker "192.168.1.132" : 1883 eventTopic "vrevents"  
+mqttBroker "192.168.1.68" : 1883 eventTopic "vrevents"  
 /*  
 ========================================
 vrqak.qak
@@ -19,7 +19,7 @@ vrqak.qak
  */  
  
 Dispatch halt   : halt(X)
-Dispatch move   : move(M)
+Dispatch move   : move(M) "M = w|s|a|d|p   mosse aril"
  
 Request  cmd    : cmd(MOVE,T)  "MOVE = w|s|a|d|p   mosse del virtual robot"
 Reply cmddone   : cmddone(R)          for cmd

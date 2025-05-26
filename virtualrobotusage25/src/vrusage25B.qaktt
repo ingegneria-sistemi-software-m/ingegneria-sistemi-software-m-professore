@@ -39,7 +39,7 @@ Context ctxvrusage25  ip [host="localhost"  port=8120   ]
 		//[# vr.setTrace( true ) #]
 		[# vr.halt() #]  //per sbloccare eventuali notallowed
 	}
-	Goto doboundary
+ 	Goto doboundary
 //	Goto test
 	
 	
@@ -51,25 +51,27 @@ Context ctxvrusage25  ip [host="localhost"  port=8120   ]
 //		println("$name | h ")
 //		[# vr.move("h") #]		
 
-[#  vr.forward(350) #]  //azione che potrebbe fallire
+[#  vr.forward(1350) #]  //azione che potrebbe fallire
 //SE OK Il supporto invia msg(vrinfo,dispatch,support,vrboundary,vrinfo(moveForward,358),0)
 //SE KO Il supporto invia msg(vrinfo,dispatch,support,vrboundary,vrinfo(281,collision),0)
-delay 250
+delay 150
 [# vr.halt() #]
 //Il supporto invia msg(vrinfo,dispatch,support,vrboundary,vrinfo(270,interrupted),0)
 [#  vr.forward(350) #]
-//Il supporto invia 
+//Il supporto invia  
 //msg(vrinfo,dispatch,support,vrboundary,vrinfo(moveForward,359),0)
 //OPPURE (se vicino a un ostacolo)
 //msg(vrinfo,dispatch,support,vrboundary,vrinfo(248,collision),0) 
 	}
-	Transition t0 
- 		whenEvent sonardata  -> handleSonardata 
-
+	Transition t0  
+ 		whenEvent sonardata  -> hsd//handleSonardata 
+ 
 	 State hsd{
 	 	printCurrentMessage color red
 	 }
- 	 Goto test
+	Transition t0  
+ 		whenEvent sonardata  -> hsd//handleSonardata 
+// 	 Goto test
 	
 //------------------------------------	
 	

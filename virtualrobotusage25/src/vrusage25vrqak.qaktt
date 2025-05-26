@@ -1,5 +1,5 @@
 System /*-trace*/ virtualrobotusage25
-mqttBroker "192.168.1.132" : 1883 eventTopic "vrevents"  
+mqttBroker "192.168.1.68" : 1883 eventTopic "vrevents"  
 /*
  * vrusage25vrqak.qak
  */
@@ -118,8 +118,7 @@ ExternalQActor vrqak context ctxvrqak
 	    whenReply stepdone    -> doboundary
 	    whenReply stepfailed  -> turnAndgo
  
- 
-	    
+ 	    
 	State turnAndgo{
 		[# N = N + 1 #]
 		println("turn N=$N") color blue
@@ -135,6 +134,8 @@ ExternalQActor vrqak context ctxvrqak
 	 */
 	State handlesonarval{
 		println("$name |  PAUSE ")
+//		forward vrqak -m halt : halt(pause)
+//		request vrqak -m step : step(370)
 		delay 2000  //pause
 	} 
 	Transition t0 

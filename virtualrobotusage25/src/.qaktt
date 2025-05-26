@@ -1,0 +1,159 @@
+System virtualrobotusage25
+/*
+ * vrusage25B.qak
+ */
+
+/*
+ * Accede al virtual robot usando mosse di basso livello 
+ * + step asincrono del POJO VrobotHLMoves24
+ * 
+ * Percorre il boundary della stanza (SUPPOSTO PRIVO DI OSTACOLI)
+ * e si ferma per 2 secs quando rilevato dal SONAR
+ * 
+ * Da conforntare con vrusage25A
+ */
+  
+ 
+
+Request step       : step(TIME)   
+Reply stepdone     : stepdone(V)                 for step
+Reply stepfailed   : stepfailed(DURATION, CAUSE) for step
+
+Event  sonardata    : sonar( DISTANCE )  "emesso dal SONAR"	   
+Dispatch vrinfo     : vrinfo(A,B)        "inviato dal supporto"
+
+Event vrinfo        : vrinfo(A,B)        "emesso dal supporto"
+Event obstacle      : obstacle(X)		 "emesso dal supporto"
+  
+
+Context ctxvrusage25  ip [host="localhost"  port=8120   ]
+
+ QActor vrboundary context ctxvrusage25 withobj vr using "VrobotHLMoves24.create(\"localhost\",myself)" {
+ 	import "main.java.*"
+ 	
+ 	[#  var N=0; 
+ 		var StepCount = 0 
+ 	#] 
+	State s0 initial{ 
+		println("$name STARTS") color blue 
+		//[# vr.setTrace( true ) #]
+		[# vr.halt() #]  //per sbloccare eventuali notallowed
+	}
+	Goto doboundary
+//	Goto test
+	
+	
+	
+	State test{
+//		[#  vr.move("w") #]
+//		println("$name | w ")
+//		delay 400
+//		println("$name | h ")
+//		[# vr.move("h") #]		
+
+[#  vr.forward(350) #]  //azione che potrebbe fallire
+//SE OK Il supporto invia msg(vrinfo,dispatch,support,vrboundary,vrinfo(moveForward,358),0)
+//SE KO Il supporto invia msg(vrinfo,dispatch,support,vrboundary,vrinfo(281,collision),0)
+delay 250
+[# vr.halt() #]
+//Il supporto invia msg(vrinfo,dispatch,support,vrboundary,vrinfo(270,interrupted),0)
+[#  vr.forward(350) #]
+//Il supporto invia 
+//msg(vrinfo,dispatch,support,vrboundary,vrinfo(moveForward,359),0)
+//OPPURE (se vicino a un ostacolo)
+//msg(vrinfo,dispatch,support,vrboundary,vrinfo(248,collision),0) 
+	}
+	Transition t0 
+ 		whenEvent sonardata  -> handleSonardata 
+
+	 State hsd{
+	 	printCurrentMessage color red
+	 }
+ 	 Goto test
+	
+//------------------------------------	
+	
+	State doboundary{
+		delay 200
+		[# StepCount++ #]
+		//STEP ASINCRONO => non più autodispatch: il supporto invia una reply
+		println("stepAsynch $StepCount") color blue
+ 		[#  vr.stepAsynch(370) #]  
+	} 
+	Transition t0 
+  	    whenEvent sonardata   -> handleSonardata
+	    whenReply stepdone    -> doboundary
+	    whenReply stepfailed  -> turnAndgo
+ 
+ 
+	    
+	State turnAndgo{
+		[# N = N + 1 #]
+		println("turn N=$N") color blue
+ 		[# vr.turnLeft() #] //oppure [# vr.move("l") #]
+		if [# N == 4 #]{
+			[# System.exit(0) #]
+		}  
+	}
+	Goto doboundary
+	    
+	    
+//	State waitsometime{
+//		delay 2000
+//	}
+//	Transition t0 
+//	    whenReply stepdone    -> doboundary
+//	    whenReply stepfailed  -> turnAndgo
+	
+	/*
+	 * in questo stato INTERROMPO lo stepAsynch in corso
+	 * (il supporto NON MANDA messaggi all'owner)
+	 * e ne faccio un altro per togliermi da sotto il SONAR
+	 */
+	State handleSonardata{
+		println("$name |  handleSonardata ")
+		[# vr.move("h")        #]
+ 		[# vr.stepAsynch(350)  #]
+		println("$name |  PAUSE after stepAsynch")
+		delay 2000  //pause
+	} 
+	Transition t0 
+ 	    whenReply stepdone    -> doboundary  //quello in sospeso
+	    whenReply stepfailed  -> turnAndgo   
+
+}
+
+/*  
+ 
+QActor vrobserver context ctxvrusage25{
+	State s0 initial{ 
+		println("		$name | READY") color blue
+	}
+	Goto work
+	
+	State work{
+		
+	}
+	Transition t0
+		whenEvent vrinfo    -> handleVrinfo
+		whenEvent obstacle   -> handleobstacle
+		whenEvent sonardata -> handleSonardata
+	
+	State handleVrinfo{   
+		println("		$name | $currentMsg")  color green
+	}	
+ 	Goto work   
+
+	State handleobstacle{ 
+		println("		$name | $currentMsg")  color magenta
+	}	
+ 	Goto work  
+ 	 
+	State handleSonardata{
+		println("		$name | $currentMsg")  color black
+	}	
+ 	Goto work
+ }
+ 
+*/
+ 

@@ -1,4 +1,4 @@
-package main.resources.map;
+package main.resources.mapnaive;
 
 public class RobotDir {
 	

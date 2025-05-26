@@ -1,9 +1,9 @@
 %====================================================================================
 % vrqak description   
 %====================================================================================
-mqttBroker("192.168.1.132", "1883", "vrevents").
+mqttBroker("192.168.1.68", "1883", "vrevents").
 dispatch( halt, halt(X) ).
-dispatch( move, move(M) ).
+dispatch( move, move(M) ). %M = w|s|a|d|p   mosse aril
 request( cmd, cmd(MOVE,T) ). %MOVE = w|s|a|d|p   mosse del virtual robot
 reply( cmddone, cmddone(R) ).  %%for cmd
 reply( cmdfailed, cmdfailed(T,CAUSE) ).  %%for cmd

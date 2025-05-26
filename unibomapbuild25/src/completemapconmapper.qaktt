@@ -1,0 +1,240 @@
+System unibomapbuild25
+
+/*
+========================================
+completemapconmapper.qak
+========================================
+*/ 
+
+/*
+ * GOAL: costruire una mappa 'mentale' della room
+ * 
+ * USA: 
+ *  - VrobotHLMoves24 per esplorare il mondo con il virtualrobot
+ *  - mapper          per costruire la mappa 
+ *  - PlanAima con riferimento al mapper
+ *  - la mappa parziale map25new
+ * 
+ * ASSUNZIONI: 
+ *  - virtualrobot attivo
+ *  - bordo superiore della room libero
+ *  - step = 340
+ * 
+ * RISULTATO:
+ *  - memorizza la mappa con nome MapName="map25complete"
+ *    in due file: uno di tipo .txt e uno di tipo bin 
+ * 
+ * FUNZIONAMENTO:
+ * Per ogni cella non ancora esplorata di posizione P nella mappa parzile
+ *   - costruisce un piano per portare il robot da HOME a P
+ *   - esegue il piano. Se questo ha sucesso, marca la cella come libera, 
+ *     se no, costruisce ed esegue un piano per tornare in HOME
+ * 
+ * PER Cambiare la scena:
+ * docker cp sceneConfig.js 87c9eb2e0989:/home/node/WEnv/WebGLScene/sceneConfig.js
+ */
+
+Request step       : step( TIME )	//logically done by the support VrobotHLMoves24      
+Reply stepdone     : stepdone(V)                 for step
+Reply stepfailed   : stepfailed(DURATION, CAUSE) for step
+
+
+Dispatch goon      : goon(X)
+
+Context ctxmapbuild ip [host="localhost" port=8032]
+ 
+/*   
+ * ------------------------------------------------------------------
+ * ASSUNZIONE: bordo superiore libero
+ * ------------------------------------------------------------------
+*/     
+QActor mapbuilder  context ctxmapbuild withobj vr
+			using "VrobotHLMoves24.create(\"localhost\",myself)"{   
+import  "main.java.*"
+import "main.resources.map.*" 
+[#
+ 
+
+var stepok      = 0   
+var CurPlan    = ""
+var CurMove    = ""
+var Athome     = false 
+var StepInPlan = false
+
+var Step       = 340
+val mapper     = RobotMapper()
+val MapName    = "map25new"
+val MapAllName = "map25complete_x"
+  
+lateinit var planner:PlanAima 
+
+
+var GoingHome = false 
+#]   
+
+	State activate initial {
+		 
+		println("-------------------------------------------------") color magenta
+		println("completemapconmapper.qak") color magenta
+		println("-------------------------------------------------") color magenta
+		[# mapper.loadRoomMap("map25new") #]
+		[# mapper.showCurrentRobotState() #]
+		
+		[# planner    = PlanAima(mapper) #]
+	} 
+	Goto work
+	
+	
+	State work{
+		[# CurPlan = planner.planForNextDirtyCompact()  #]
+		[# GoingHome = false                            #]
+ 		println("$name | CurPlan=$CurPlan GoingHome=$GoingHome") color blue		
+ 		if [# CurPlan.length == 0 #]{
+ 			[# mapper.saveRoomMap( MapAllName )  #]
+ 			[# System.exit(0)                    #]
+ 		} 
+ 		println("$name | work wait goon .............. ") color black
+	}
+ 	Goto execThePlan
+//     Transition t0
+//     	whenMsg goon -> execThePlan
+	 
+	
+	
+ 	State execThePlan{
+		println("$name | execThePlan CurPlan=$CurPlan GoingHome=$GoingHome") color yellow
+		if [# CurPlan.length > 0 #]{
+			[#  CurMove = ""+CurPlan[0]; 
+				CurPlan = CurPlan.drop(1) 
+			#]
+		}else{ [# CurMove="" #] }
+	}
+	Goto doMove if [# (CurMove.length > 0) #] else endOfPlan
+	
+	State doMove{
+		println("$name | domove $CurMove") color cyan
+		delay 500
+		if [# CurMove == "w" #]{ 
+ 			[# StepInPlan = true  #]
+        } 
+		if [# CurMove == "l" #]{ 
+			[# vr.move("l") #]
+			[# mapper.doMove(  "l", "" )  #]  
+			[# StepInPlan = false #]
+        }
+		if [# CurMove == "r" #]{ 
+			[# vr.move("r") #]
+			[#  mapper.doMove(  "r", "" )  #] 
+			[# StepInPlan = false  #]			
+        }        
+	}
+	Goto dostep if [# StepInPlan #] else execThePlan 
+ 
+    State dostep{
+		[# vr.stepAsynch(Step) #]
+    }
+	Transition t0  
+ 		whenReply stepdone   -> stepcompleted   
+	    whenReply stepfailed -> planko  
+
+	State stepcompleted{ //Per aggiornare la mappa
+		println("$name | stepcompleted") color blue
+ 		[# mapper.doMove(  "w", "" ) #]  	
+	}   
+	Goto execThePlan
+	
+	//Posizione trovate libera
+	State endOfPlan{
+		println("$name | endOfPlan") color magenta
+		[# mapper.showCurrentRobotState()   #]
+  	} 
+	Goto work if [# ! GoingHome #] else endwork 
+	
+	State planko{
+		println("$name | planko with CurPlan=$CurPlan GoingHome=$GoingHome") color red
+		[# mapper.updateMapObstacleOnCurrentDirection() #]  
+		[# mapper.showCurrentRobotState() #]
+	}
+	Goto backtohome  if [# ! GoingHome #] else ignoreHit   
+	
+	State backtohome{
+		println("$name | going backtohome ") color green
+		//[# mapper.updateMapObstacleOnCurrentDirection() #]  
+		//[# mapper.showCurrentRobotState()               #]
+		[# planner.setGoal(0,0)               #]
+		[# CurPlan = planner.doPlanCompact()  #]		
+		println("$name | tohome CurPlan=$CurPlan  ") color magenta
+		[# GoingHome = true                   #]
+	}
+	Goto execThePlan
+
+	State ignoreHit{
+		[# main.resources.UserControl.doBeeps() #]
+		println("$name | ignoreHit GoingHome=$GoingHome") color red
+		//metto la cella ok
+		[# mapper.doMove(  "w", "" ) #] 
+		//[# planner.saveRoomMap( "${MapAllName}ignoreHit")  #]
+	}
+	Goto execThePlan
+	
+	
+	State endwork{
+		println("$name | endwork since athome ") color blue
+//		[# System.exit(0) #]
+ 	}
+	Goto tuneAtHome
+	
+	
+    State tuneAtHome{
+    	delay 500
+    	 
+    	[# val Dir = mapper.getDirection(); var res = false #]
+    	println("$name | tuneAtHome Dir=$Dir") color magenta
+    	if [# Dir == "upDir" #]{
+    		println("$name | tuneAtHome upDir ") color yellow
+    		[# res = vr.step( 300 ) #]
+    		println("$name | tuneAtHome updDir res=$res ") color yellow
+    		[# vr.move( "l" )       #]
+    		[# mapper.doMove( "l" ) #]
+    		[# res = vr.step( 300 ) #]
+    		println("$name | tuneAtHome updDir res=$res ") color yellow
+    		//delay 300
+//    		[# vr.move( "r" ) #]
+//    		[# vr.step( 300 ) #]
+//    		[# vr.move( "l" ) #]
+    		[# vr.move( "l" )       #]
+    		[# mapper.doMove( "l" ) #]
+    		println("$name |  ${mapper.getDirection()}" )
+    	}  
+    	if [# Dir == "leftDir" #]{
+     		[# res = vr.step( 300 ) #]
+    		println("$name | tuneAtHome leftDir res=$res ") color yellow
+    		//delay 300
+    		[# vr.move( "r" )       #]
+    		[# mapper.doMove( "r" ) #]
+    		[# vr.step( 300 )       #]
+     		println("$name | tuneAtHome leftDir res=$res ") color yellow
+    		//delay 300
+    		[# vr.move( "l" ) #]
+    		[# vr.move( "l" )       #]
+    		[# vr.move( "l" ) #]
+    		[# vr.move( "l" )       #]
+    		 
+    	}  
+    	[# mapper.showCurrentRobotState() #]
+ 
+//     	delay 1000
+        println("$name | tuneAtHome wait goon .............. ") color black
+     } 
+//     Goto work
+     Transition t0
+     	whenMsg goon -> work
+
+
+	State strange{
+		[# mapper.showCurrentRobotState() #]	
+		
+		[# System.exit(0) #]
+	}
+ 	
+}

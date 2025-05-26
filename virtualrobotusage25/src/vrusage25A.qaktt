@@ -64,7 +64,7 @@ Context ctxvrusage25  ip [host="localhost"  port=8120   ]
 	 */
 	State handleSonardata{
 		println("$name |  handleSonardata ")
-		   [# vr.halt() #]
+		   [# vr.halt()       #]
 	 	   [# vr.forward(350) #]	  		
 		   println("$name |  PAUSE with autodispatch")
 		   delay 2000  //pause

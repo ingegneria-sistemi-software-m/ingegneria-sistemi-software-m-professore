@@ -9,5 +9,5 @@ public interface IVrobotLLMoves {
     public void halt() throws Exception;
 
     //Nuove operazioni
-    public boolean step(long time) throws Exception;
+    public boolean step(int time) throws Exception;
 }

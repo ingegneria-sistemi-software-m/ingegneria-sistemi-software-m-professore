@@ -19,6 +19,8 @@ Dispatch stepdone   : stepdone(X)     //"automsg"
 Dispatch stepfailed : stepfailed(X)   //"automsg"
 Dispatch vrinfo     : vrinfo(A,B)     //"from VrobotLLMoves24"
 
+Dispatch mapdone : mapdone(X)   //"automsg"
+
 Context ctxvrusage25  ip [host="localhost" port=8720     ]
 
 QActor mapbuilder context ctxvrusage25 withobj vr 
@@ -32,6 +34,12 @@ QActor mapbuilder context ctxvrusage25 withobj vr
 	   var firstrow     = false 
 	   
 	   val MapName      = "mapnaive"
+	   
+	   lateinit var map: RoomMap
+	   
+	   var CurR = 0
+	   var CurC = 0
+	   var CN   = 0
 	#] 
 	        
 	
@@ -47,9 +55,9 @@ QActor mapbuilder context ctxvrusage25 withobj vr
 		delay 200
   		[# var RSTEP = vr.step(350) #]  //se RSTEP = false emette vrinfo(obstacle,unknown) 
 		//println("$name | RSTEP=$RSTEP") color blue
-		if [# RSTEP #]{ 
+		if [# RSTEP #]{ 			 
 			if [# firstcolumn #]{ [# NR++ #] }
-			if [# firstrow #]{    [# NC++ #] }
+			if [# firstrow    #]{ [# NC++ #] }
 			autodispatch stepdone : stepdone(1)
 		}	 
 		else{ autodispatch stepfailed : stepfailed(1) }
@@ -61,28 +69,52 @@ QActor mapbuilder context ctxvrusage25 withobj vr
  
 	State turnAndgo{ 
 		if [# ! firstcolumn #]{ [# NR++ #] }
-		if [# ! firstrow #]{ [# NC++ #] }
+		if [# ! firstrow    #]{ [# NC++ #] }
 		println("$name | N=$N, NC=$NC, NR=$NR") color cyan
 		if [# ! firstrow #]{ [# firstrow = true #] }
 		[# firstcolumn = false #] 
-		[# N = N + 1 #]
- 		[# vr.turnLeft() #] 
+		[# N = N + 1           #]
+ 		[# vr.turnLeft()       #] 
  		println("$name | N=$N, NC=$NC, NR=$NR") color cyan
 		if [# N == 2 #]{
 			println("$name | N=$N, NC=$NC, NR=$NR") color yellow
-			[# val map = RoomMap(NR,NC)    #]
-			[# map.setRobot( NR-1,NC-1 )   #]
-			[# val MS  = map.toString()    #]
+			[# map = RoomMap(NR,NC)          #]
+			[# map.setRobot( NR-1,NC-1 )     #]
+			[# val MS  = map.toString()      #]
 			[# map.saveRoomMap(MapName, MS ) #]    //SAVE MAP  
-			[# val MP  = map.toProlog()    #]  
+			[# val MP  = map.toProlog()      #]  
 			//println(MP)
 			[# map.saveRoomMapProlog("mapProlog", MP) #]
 			println("$name | MAP: ") color yellow
-			println("$MS ") color yellow
+			println("$MS ") color blue
 			delay 1000
-			[# System.exit(0) #]
+//			[# System.exit(0) #]
 		}   
 	} 
 	Goto doMap     
- 	  
+
+/* 	
+	State setmapbetter{
+		[# CurR = NR; CurC = NC; CN = N #]
+		[# vr.turnLeft()            #]
+		[# var RSTEP = vr.step(350) #]
+		[# CN = CN - 1              #]
+		if [# RSTEP #]{ 
+			[# map.setCellClean()   #]
+			autodispatch stepdone : stepdone(1)
+		}else{ 
+			[# vr.turnLeft()        #]
+			if [# CN == 0 #] { autodispatch mapdone : mapdone(1)}
+			else{ autodispatch stepdone : stepdone(2) }
+		}		
+	}
+	Transition t0 
+	    whenMsg stepdone -> doMap 
+	    whenMsg mapdone  -> mapupdated
+	    
+	State mapupdated{ 
+		[# val MS  = map.toString()      #]
+		println("$MS ") color blue
+	}
+*/  	  
 }

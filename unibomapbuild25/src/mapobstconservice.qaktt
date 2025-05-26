@@ -1,0 +1,347 @@
+System unibomapbuild25
+
+/*
+========================================
+mapobstconservice.qak
+========================================
+*/ 
+
+Dispatch halt   : halt(X)
+Dispatch move   : move(M) "M = w|s|a|d|p   mosse aril"
+ 
+Request  cmd    : cmd(MOVE,T)  "MOVE = w|s|a|d|p   mosse del virtual robot"
+Reply cmddone   : cmddone(R)          for cmd
+Reply cmdfailed : cmdfailed(T,CAUSE)  for cmd
+ 
+Dispatch vrinfo : vrinfo(SOURCE,INFO)  //Inivato da VR
+ 
+Event  sonarval : distance( DISTANCE ) 	    "emesso in out"	
+Event  sonardata: sonar( DISTANCE ) 	    "emesso dal SONAR"	
+
+Request step    : step(TIME)	
+Reply stepdone  : stepdone(V)                 for step
+Reply stepfailed: stepfailed(DURATION, CAUSE) for step
+
+//--------------------------------------
+Dispatch init    : init(DREAMING) "DREAMING=true=>non real move"
+
+Context ctxmapbuild  ip [host="localhost" port=8125]
+
+/*
+ * vrqak inglobato ed esteso con mapper
+ */
+QActor robotservice context ctxmapbuild withobj vr using "VrobotLLMoves24.create(\"localhost\",myself)"{  
+	import "main.java.VrobotLLMoves24"
+	[# var doingAsynchStep = false 
+//	   val mapper          = RobotMapper() 
+	   var dreaming        = false
+	#]
+	
+	State s0 initial{
+		println("$name STARTS") color green
+//		[# vr.connect()      #]
+//		[# vr.setTrace(true) #] 
+//		subscribeTo robotservice for sonardata
+		//println("$name subscribe to myself done") color blue
+	} 
+	Transition t0 
+		whenMsg init -> handleInit
+		
+	State handleInit{
+		printCurrentMessage color green
+		[# dreaming = false #]
+		onMsg( init : init(true)){
+			println("$name | is dreaming ... ") color green
+			[# dreaming = true #]
+		}
+	}
+	Goto work
+	
+	State work{
+		println("$name | work") color blue 
+	}
+	Transition t0
+	   whenMsg     halt  -> dohalt
+	   whenMsg     move  -> domove
+	   whenRequest cmd   -> domoverequest
+	   whenRequest step -> handleAsynchStep
+
+
+    State dohalt{   	
+    	printCurrentMessage color red
+    	[# vr.halt() #]
+    }
+    Goto work
+    
+	State domove{
+		printCurrentMessage color yellow
+		//println("$name | domove") color yellow
+		onMsg( move : move(M) ){
+			[# val Move = payloadArg(0);  #]
+			if [# Move == "h" #] { [# vr.halt()    #]  }
+			if [# Move == "w" #] { [# vr.step(150) #]  }
+			if [# Move == "p" #] { [# vr.step(350) #]  }  //synch
+			if [# Move == "a" || Move == "l" #]{ [# vr.turnLeft() #]  }
+			if [# Move == "d" || Move == "r" #]{ [# vr.turnRight() #] }
+		}
+	}
+	Goto work	   
+
+	State domoverequest{
+		printCurrentMessage color blue
+		//
+		onMsg( cmd : cmd(M,T) ){
+			[# val Move = payloadArg(0); val T = payloadArg(1).toInt() #]
+			println("$name | domoverequest $Move $T") color blue
+			if [# Move == "h" #] { [# vr.halt() #]     }
+			if [# Move == "p" #] { [# vr.step(T.toLong()) #]    }  //synch
+			if [# Move == "w" #] { [# vr.forward(T) #] }
+			if [# Move == "s" #] { [# vr.backward(T) #]}
+			if [# Move == "a" || Move == "l" #]{ [# vr.turnLeft() #]  }
+			if [# Move == "d" || Move == "r" #]{ [# vr.turnRight() #] }
+		}
+	}
+	Transition t0 
+		whenEvent sonardata -> handleSonarData 
+		whenMsg vrinfo      -> handleVrinfoMsgReply
+
+	State handleSonarData{ 
+		printCurrentMessage color black  
+		onMsg( sonardata : sonar(D) ){
+			[# var D = payloadArg(0) #]
+			//emitlocalstream sonardata : sonar($D)  //vengono accodati tutti ??
+			[# val sonarEvent = "sonardataaaaaa(" +  D + ")" #]
+			updateResource  [# "$sonarEvent" #]       
+//			updateResource  [# "nonews" #]     //last info: per evitare che CoAP ripeta il dato
+			println("$name | EMIT (publish) sonarval ---------------------------------- ") color black 
+//			[#  mqtt.publish("vrevents", "msg(sonarval,event,vrqak,ANY,distance(4),0)" ) #]
+   			emit sonarval :  distance($D)  
+			//questo contesto NON SA che esiste ctxvrusage25 => evento non propagato in assenza di MQTT
+		} 
+	} 
+	Transition t0 whenMsg vrinfo -> handleVrinfoMsgReply  
+    
+	/*
+        --------------------------------------------
+        GESTIONE DELLE INFO DEL SUPPORTO
+        --------------------------------------------
+	*/
+    
+	State handleVrinfoMsgReply{
+		//printCurrentMessage color green
+		//println("$name | handleVrinfoMsgReply $currentMsg doingAsynchStep=$doingAsynchStep") color red
+		onMsg( vrinfo : vrinfo( S,elapsed)){
+			if [# doingAsynchStep #]{  
+				println("$name | reply asynchstep  ") color yellow
+				replyTo step with stepdone : stepdone(ok)
+				//[# mapper.doMove("w")      #]
+				[# doingAsynchStep = false #]
+			} 
+			else {replyTo cmd with cmddone : cmddone(elapsed)}
+		}
+		onMsg( vrinfo : vrinfo(T,collision)){
+			[# val T = payloadArg(0) #]
+			if [# doingAsynchStep #]{ 
+				println("$name | reply asynchstep ko") color yellow
+				replyTo step with stepfailed : stepfailed($T,collision)
+				[# doingAsynchStep = false #]
+			} 
+			else {
+				println("$name | reply cmdfailed after $T") color yellow
+				replyTo cmd with cmdfailed : cmdfailed($T,collision)
+			}
+		} 
+	}	
+	Goto work
+
+  	 
+	State handleAsynchStep{
+		//println("$name | handleAsynchStep $currentMsg") color magenta
+		[# doingAsynchStep = true  #]
+		onMsg( step:step(T)){
+			[# vr.forward(payloadArg(0).toInt() ) #]
+		}
+	}	
+	Transition t0
+	    whenEvent sonardata  -> handleSonarData  
+	    whenMsg   vrinfo     -> handleVrinfoMsgReply
+	    whenMsg halt         -> dohalt  //inviato per resettare
+    
+	
+	
+}//robotservice	
+
+
+/*   
+ * ------------------------------------------------------------------
+ * ASSUNZIONE: bordo superiore libero
+ * ------------------------------------------------------------------
+*/     
+QActor mapbuilder  context ctxmapbuild {   
+import  "main.java.*"
+import "main.resources.map.*" 
+[#
+ 
+
+var stepok      = 0
+var CurPlan    = ""
+var CurMove    = ""
+var Athome     = false 
+var StepInPlan = false
+
+var Step       = 340
+val mapper     = RobotMapper()
+val MapName    = "mapmentalfirst"
+#]   
+
+	State activate initial {
+		forward robotservice -m init : init(false)
+		delay 1000 //give robotservice time to init ...
+	} 
+	Goto coverNextColumn
+
+	State coverNextColumn{  
+		println("$name | coverNextColumn")	color blue	  
+   		//[# vr.stepAsynch(Step) #]
+   		request robotservice -m step : step( $Step )
+	}
+	Transition t0  whenReply stepdone   -> coverColumn   
+				   whenReply stepfailed -> backtop
+	  			   
+	State coverColumn{  		   
+   		[# stepok = stepok + 1
+		   mapper.doMove("w")
+   		#]
+   		println("coverColumn stepok=$stepok")
+     	delay 300 
+   		//[# vr.stepAsynch(Step) #]
+   		request robotservice -m step : step( $Step )
+ 	}
+	Transition t0  whenReply stepdone   -> coverColumn
+ 	               whenReply stepfailed -> backtop  
+ 
+	State backtop{  	
+		printCurrentMessage	   color blue
+ 		[#  mapper.updateMapObstacleOnCurrentDirection() #]   		 
+		println("backtop")
+   			//[# vr.turnLeft() #]
+			forward robotservice -m move : move(l)
+			[# mapper.doMove("l") #]		
+   			delay 300 
+            //[# vr.move("l") #]
+	  	    forward robotservice -m move : move(l)
+			[# mapper.doMove("l") #]				
+   			delay 300      			
+    		[# mapper.showCurrentRobotState() #]
+ 			//[# vr.stepAsynch(Step) #]
+			request robotservice -m step : step( $Step )
+	}	
+   	Transition t0  whenReply stepdone   -> gototop
+ 	               whenReply stepfailed -> turnAndStep  
+ 
+/*
+ * Il ritorno a home puo' provocare un hit su wallup
+ */ 
+ 	State gototop{
+ 		[#  
+		   mapper.doMove("w")
+ 		   stepok = stepok - 1 
+ 		#]
+ 		println("gototop stepok=$stepok")	
+ 		delay 300 
+        //[# vr.stepAsynch(Step) #]
+        request robotservice -m step : step( $Step )
+ 	}
+  	Transition t0  
+  		whenReply stepdone and [# stepok > 0 #]  -> gototop
+		whenReply stepdone and [# stepok == 0 #] -> turnAndStep
+		whenReply stepfailed -> turnAndStep
+
+ 	
+ 	State turnAndStep{
+		//[# vr.move("r") #]
+        forward robotservice -m move : move(r)   	
+		[# mapper.doMove("r") #]		
+   		delay 300 			
+   		//[# vr.stepAsynch(Step) #]
+   		request robotservice -m step : step( $Step )
+ 	}
+  	Transition t0  
+  		whenReply stepdone   -> posForNextColumn
+		whenReply stepfailed -> endOfWork
+ 	
+ 	State posForNextColumn{
+ 
+		[# mapper.doMove("w") #]
+
+   		//[# vr.move("r") #]
+   		forward robotservice -m move : move(r)	
+		[# mapper.doMove("r") #]
+		println("posForNextColumn stepok=$stepok")		
+   		[# mapper.showCurrentRobotState() #]		
+ 		//[# CommUtils.waitTheUser("...")	 #]
+   		delay 500 	 
+	}
+ 	Goto coverNextColumn
+ 	 
+ 	
+	State endOfWork{  		 
+		println("$name | endOfWork") 
+   		[#  mapper.showCurrentRobotState()	#]
+   		[# mapper.saveRoomMap( MapName  )   #]
+   		println("$name | endOfWork")		
+	}	
+  	Goto turn180
+  	
+  	State turn180{
+  		//Mi giro e poi vado avanti
+  		println("$name | turn r")
+   		//[# vr.move("r")       #]
+   		forward robotservice -m move : move(r)
+  		[# mapper.doMove("r") #]
+    	[#  mapper.showCurrentRobotState()	#]
+		delay 300 
+ 		println("$name | turn r")
+  		//[# vr.move("r")       #]
+  		forward robotservice -m move : move(l)
+  		[# mapper.doMove("r") #]
+      	[#  mapper.showCurrentRobotState()	#]
+  		delay 300 	
+  		println("$name | w")  		
+  		//[# vr.stepAsynch(Step)  #]
+  		request robotservice -m step : step( $Step )
+  		
+  	}
+  	Transition t0
+   		whenReply stepdone   -> backToHome
+		whenReply stepfailed -> strange
+  	
+  	State backToHome{
+  		[# mapper.doMove("w")   #]
+   		delay 200
+  		//[# vr.stepAsynch(Step)  #]
+  		request robotservice -m step : step( $Step )
+  	}
+  	Transition t0
+   		whenReply stepdone  -> backToHome
+		whenReply stepfailed -> turnAndStop
+		
+	State 	turnAndStop{
+  		//[# vr.move("l")       #]
+  		forward robotservice -m move : move(l)
+  		[# mapper.doMove("l") #]
+		[# mapper.showCurrentRobotState() #]	
+		
+		[# mapper.saveRoomMap( "map25new"  )   #] 
+		
+		[# mapper.nextDirty( ) #]
+		
+		[# System.exit(0) #]
+	}
+	
+	State strange{
+		[# mapper.showCurrentRobotState() #]	
+		
+		[# System.exit(0) #]
+	}
+}

@@ -1,10 +1,11 @@
 %====================================================================================
 % unibomapbuild25 description   
 %====================================================================================
-dispatch( stepdone, stepdone(X) ).
-dispatch( stepfailed, stepfailed(X) ).
-dispatch( vrinfo, vrinfo(A,B) ).
+request( step, step(TIME) ).
+reply( stepdone, stepdone(V) ).  %%for step
+reply( stepfailed, stepfailed(DURATION,CAUSE) ).  %%for step
+dispatch( goon, goon(X) ).
 %====================================================================================
-context(ctxmapbuild, "localhost",  "TCP", "8720").
+context(ctxmapbuild, "localhost",  "TCP", "8032").
  qactor( mapbuilder, ctxmapbuild, "it.unibo.mapbuilder.Mapbuilder").
  static(mapbuilder).

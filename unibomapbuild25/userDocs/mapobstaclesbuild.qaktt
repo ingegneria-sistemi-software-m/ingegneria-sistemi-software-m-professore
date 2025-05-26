@@ -1,0 +1,263 @@
+System unibomapbuild25
+
+/*  
+========================================
+mapobstackesbuild.qak
+========================================
+*/  
+
+/*
+ */ 
+Dispatch stepdone   : stepdone(X)     //"automsg"
+Dispatch stepfailed : stepfailed(X)   //"automsg"
+Dispatch workdone   : workdone(X)     //"automsg"
+Dispatch vrinfo     : vrinfo(A,B)     //"from VrobotLLMoves24"
+Dispatch lastcol    : lastcol(X)
+
+Context ctxmapbuild  ip [host="localhost" port=8720     ]
+
+QActor mapbuilder  context ctxmapbuild withobj vr
+			using "VrobotLLMoves24.create(\"localhost\",myself)"{ 
+	import "main.java.VrobotLLMoves24" 
+	import "main.resources.map.RoomMap" 
+	import "main.resources.map.RobotDir" 
+	import "main.resources.map.RobotDir.Direction" 
+
+[#
+val MaxNumStep  = 6  
+var NumStep     = 0
+var stepok      = 0
+lateinit var map : RoomMap
+var NR = 0
+var NC = 0
+	   var RobotPosX = 0  
+	   var RobotPosY = 0
+	   var goingDown = true
+	   var goingLeft = false
+#]   
+
+	State activate initial {
+		//printCurrentMessage
+		[# vr.connect(); vr.halt();   #]
+
+		[# NumStep     = 0;
+           RobotDir.setDir(Direction.DOWN)    
+        #]  
+        //Parte dalla mappa della stanza vuota
+		[#  map = RoomMap.loadRoomMap("map") #]
+		[#  map.clear()    #]
+		[#  map.setRobot(RobotPosX,RobotPosY) #]
+		[#  map.showMap()  #]
+		[#  NR= map.getNr(); NC=map.getNc()  #]
+	} 
+ 	Goto coverNextColumn
+ 
+	State coverNextColumn{  
+		println("$name | coverNextColumn $RobotPosX, $RobotPosY NR=$NR, NC=$NC")	color blue	  
+		if [# RobotPosY == NC #]{  //L'ultima colla è vuota ma meglio percorrerla
+			autodispatch workdone : workdone(1)
+		}
+		else{
+			[# map.setRobot(RobotPosX,RobotPosY) #]
+			[# map.showMap()  #]
+			[# var RSTEP = vr.step(350) #]
+			if [# RSTEP #]{ 
+				autodispatch stepdone : stepdone(1)
+			}	 
+			else{ autodispatch stepfailed : stepfailed(1) }
+   		}
+	}  
+	Transition t0  
+	    whenMsg workdone    -> enofwork  
+		whenMsg stepdone   -> coverColumn   
+	    whenMsg stepfailed -> backHome
+	  			   
+	  			   
+	State enofwork{
+		println("$name| ENDS")
+	}
+	
+	State coverColumn{  		   
+   		//printCurrentMessage
+ 			if [# RobotDir.goingDown() #] { 
+				[# map.setFree(RobotPosX,RobotPosY) #]
+				[# RobotPosX++ #]
+				[# map.setRobot(RobotPosX,RobotPosY) #]
+				[# map.showMap()  #]
+			}
+            if [# RobotDir.goingUp() #] {
+				[# map.setFree(RobotPosX,RobotPosY) #]
+				[# RobotPosX-- #]
+				[# map.setRobot(RobotPosX,RobotPosY) #]
+				[# map.showMap()  #]				 
+			}
+			if [# RobotDir.goingLeft() #] {
+				[# map.setFree(RobotPosX,RobotPosY) #]
+				[# RobotPosY-- #]
+				[# map.setRobot(RobotPosX,RobotPosY) #]
+				[# map.showMap()  #]									
+			}
+			if [# RobotDir.goingRight() #] {
+				[# map.setFree(RobotPosX,RobotPosY) #]
+				[# RobotPosY++ #]
+				[# map.setRobot(RobotPosX,RobotPosY) #]
+				[# map.showMap()  #]													
+			}			
+ 	    	println("coverColumn $RobotPosX, $RobotPosY")
+     	delay 300 
+   		//request vrqak -m step : step(350)
+		[# var RSTEP = vr.step(350) #]
+		if [# RSTEP #]{ 
+			autodispatch stepdone : stepdone(1)
+		}	 
+		else{ autodispatch stepfailed : stepfailed(1) }
+ 	}   
+	Transition t0   
+		whenMsg stepdone -> coverColumn
+ 	     whenMsg stepfailed -> backHome // and [# NumStep <  MaxNumStep #] 
+
+	State coverColumnBack{  		   
+   		println("$name | coverColumnBack RobotDir=${RobotDir.curDiretion}") color green
+ 			if [# RobotDir.goingDown() #] { 
+				[# map.setFree(RobotPosX,RobotPosY) #]
+				[# RobotPosX++ #]
+				[# map.setRobot(RobotPosX,RobotPosY) #]
+				[# map.showMap()  #]
+			}
+            if [# RobotDir.goingUp() #] {
+				[# map.setFree(RobotPosX,RobotPosY) #]
+				[# RobotPosX-- #]
+				[# map.setRobot(RobotPosX,RobotPosY) #]
+				[# map.showMap()  #]				 
+			}
+			if [# RobotDir.goingLeft() #] {
+				[# map.setFree(RobotPosX,RobotPosY) #]
+				[# RobotPosY-- #]
+				[# map.setRobot(RobotPosX,RobotPosY) #]
+				[# map.showMap()  #]									
+			}
+			if [# RobotDir.goingRight() #] {
+				[# map.setFree(RobotPosX,RobotPosY) #]
+				[# RobotPosY++ #]
+				[# map.setRobot(RobotPosX,RobotPosY) #]
+				[# map.showMap()  #]													
+			}			
+ 	    	println("coverColumnBack $RobotPosX, $RobotPosY") color green
+     	delay 300 
+   		//request vrqak -m step : step(350)
+		[# var RSTEP = vr.step(350) #]
+		if [# RSTEP #]{ 
+			autodispatch stepdone : stepdone(1)
+		}	 
+		else{ autodispatch stepfailed : stepfailed(1) }
+ 	}   
+	Transition t0  
+		 whenMsg stepdone   -> coverColumnBack
+ 	     whenMsg stepfailed -> turnRightAndStep 
+
+
+	State backHome{  	
+		println("$name | backHome $RobotPosX,$RobotPosY")  color blue
+		if [# RobotPosX < NR-1 #]{ //OSTACOLO
+			[# map.setObstacle(RobotPosX+1,RobotPosY) #]
+		}
+		//printCurrentMessage	 color yellow
+//		println("$name | backHome $RobotPosX,$RobotPosY")  color blue
+   		//forward vrqak -m cmd : cmd(l)
+   		[# vr.turnLeft() #] 
+// 		[# map.setFree(RobotPosX,RobotPosY) #] //cella prima del fallimento
+//		//cella con ostacolo ???
+//				if [# RobotDir.goingDown() #] { [# RobotPosX++  #] }
+//				if [# RobotDir.goingRight() #] { [# RobotPosY++ #] }
+//				if [# RobotDir.goingUp()   && RobotPosX > 0  #] { [# RobotPosX-- #] }
+//				if [# RobotDir.goingLeft() && RobotPosY > 0  #] { [# RobotPosY-- #] }
+//  		//Il robot è nella cella con ostacolo		
+// 		[# map.setRobot(RobotPosX,RobotPosY) #]
+   			delay 300 
+//   		forward vrqak -m cmd : cmd(l)
+   			[# vr.turnLeft() #] 
+			//[#  planner.updateMap(  "l", "" )  #]   			
+		//[# map.setFree(RobotPosX,RobotPosY) #] //cella prima del fallimento
+		//cella con ostacolo ???
+		if [# RobotDir.goingDown() #] { [# RobotDir.setDir(Direction.UP)  #] }
+				else { if [# RobotDir.goingRight() #] { [# RobotDir.setDir(Direction.LEFT) #] }  
+				       else { if [# RobotDir.goingUp()   && RobotPosX > 0  #] { [# RobotDir.setDir(Direction.DOWN) #] }  
+				              else { if [# RobotDir.goingLeft() && RobotPosY > 0  #] { [# RobotDir.setDir(Direction.RIGHT) #] } }				              
+				              }  				              
+				        }
+  		//Il robot è nella cella con ostacolo		
+ 		//[# map.setRobot(RobotPosX,RobotPosY) #]
+   			delay 300      			
+//    		request vrqak -m step : step(350)   
+		[# var RSTEP = vr.step(350) #]
+		if [# RSTEP #]{ 
+			autodispatch stepdone : stepdone(1)
+		}	 
+		else{ autodispatch stepfailed : stepfailed(1) }
+	}	
+   	Transition t0  
+   		whenMsg stepdone   -> coverColumnBack  
+ 	    whenMsg stepfailed -> turnRightAndStep  
+
+/*
+ * Il ritorno a home puo' provocare un hit su wallup
+ */ 
+ 	State gotoHome{
+ 		[#  
+ 		   //stepok = stepok - 1 
+ 		#]
+ 		println("gotoHome stepok=$stepok")	
+ 		delay 300 
+// 		request vrqak -m step : step(350)  
+		[# var RSTEP = vr.step(350) #]
+		if [# RSTEP #]{ 
+			autodispatch stepdone : stepdone(1)
+		}	 
+		else{ autodispatch stepfailed : stepfailed(1) }
+ 	}
+  	Transition t0  
+  		whenMsg stepdone   -> gotoHome 	     
+  		whenMsg stepfailed -> turnRightAndStep
+
+ 	
+ 	State turnRightAndStep{
+ 		println("$name | turnRightAndStep $RobotPosX,  $RobotPosY") color blue
+   		//forward vrqak -m cmd : cmd(r)
+   		[# vr.turnRight() #] 
+    	delay 300 			
+//  	request vrqak -m step : step(350)  //step laterale
+		[# var RSTEP = vr.step(350) #]
+		if [# RSTEP #]{ 
+			autodispatch stepdone : stepdone(1)
+		}else{ autodispatch stepfailed : stepfailed(1) }
+ 	}
+  	Transition t0  
+  		whenMsg stepdone   -> posForNextColumn 
+  		whenMsg stepfailed -> endOfWork
+ 	
+ 	State posForNextColumn{
+ 		[# map.setFree(RobotPosX,RobotPosY) #]
+        [# RobotPosY++ #]    //step laterale
+   		//forward vrqak -m cmd : cmd(r)
+   		[# vr.turnRight() #] 
+ 		println("$name | posForNextColumn ")		
+ 		[# RobotDir.setDir(Direction.DOWN) #]
+    	delay 1300 		 
+	}
+ 	Goto coverNextColumn
+ 	
+ 	
+	State endOfWork{  		
+		if [# RobotPosY == NC-2 #] { 
+			println("$name | last column ")	color magenta
+			
+			autodispatch lastcol : lastcol($NC)
+		}
+   		else{ println("$name | END ")	color magenta }
+  	}	
+  	Transition t0
+  	  whenMsg  lastcol -> posForNextColumn
+  	  
+  	
+  	
+}
