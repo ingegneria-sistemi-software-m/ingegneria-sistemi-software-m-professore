@@ -1,23 +1,26 @@
+
 <!DOCTYPE html>
 
-<html lang="en" data-content_root="./">
+<html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
     <title>Vrqak24 &#8212; iss25 1.0 documentation</title>
-    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=649a27d8" />
-    <link rel="stylesheet" type="text/css" href="_static/sphinxdoc.css?v=34905f61" />
-    <link rel="stylesheet" type="text/css" href="_static/custom.css?v=87712ff3" />
-    <script src="_static/documentation_options.js?v=f2a433a1"></script>
-    <script src="_static/doctools.js?v=9bcbadda"></script>
-    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinxdoc.css" />
+    <link rel="stylesheet" type="text/css" href="_static/custom.css" />
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="_static/doctools.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="RaspberryStartingVideo" href="RaspberryStartingVideo.html" />
     <link rel="prev" title="VrobotLLMoves24" href="VrobotLLMoves24.html" /> 
   </head><body>
-    <div class="related" role="navigation" aria-label="Related">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -40,8 +43,8 @@
           <div class="body" role="main">
             
   <section id="vrqak24">
-<h1>Vrqak24<a class="headerlink" href="#vrqak24" title="Link to this heading">¶</a></h1>
-<p><span class="slide3">progetto vrqak</span> in <a class="reference internal" href="VirtualRobotUsage25.html#virtualrobotusage25"><span class="std std-ref">VirtualRobotUsage25</span></a></p>
+<h1>Vrqak24<a class="headerlink" href="#vrqak24" title="Permalink to this heading">¶</a></h1>
+<p><span class="slide3">Progetto vrqak</span></p>
 <p>Vogliamo realizzare un actor che funga da <span class="slide2">servizio di accesso</span> all’uso di un virtual robot.</p>
 <p>A differenza di <a class="reference internal" href="VirtualRobotUsage25.html#vrobothlmoves24"><span class="std std-ref">VrobotHLMoves24</span></a> (che è un POJO) il componente <a class="reference external" href="../../../../vrqak/src/vrqak24.qak">vrqak24.qak</a> è impostato come
 un micro-servizio  che permette l’uso remoto
@@ -54,11 +57,11 @@ ma chiediamogli anche la <span class="xref std std-ref">sua opinione specifica i
 riportate,  come fatto in <a class="reference external" href="../../../../virtualrobotusage/src/main/resources/robotvirtual/VrobotHLMoves24.java">VrobotHLMoves24</a> (per un esempio d’uso si veda <a class="reference external" href="../../../../virtualrobotusage/src/vrobotusagehl.qaktt">vrobotusagehl.qak</a>).</p></li>
 </ul>
 <section id="vrqak24-comandi">
-<h2>Vrqak24-comandi<a class="headerlink" href="#vrqak24-comandi" title="Link to this heading">¶</a></h2>
+<h2>Vrqak24-comandi<a class="headerlink" href="#vrqak24-comandi" title="Permalink to this heading">¶</a></h2>
 <table class="docutils align-default" style="width: 100%">
 <colgroup>
-<col style="width: 50.0%" />
-<col style="width: 50.0%" />
+<col style="width: 50%" />
+<col style="width: 50%" />
 </colgroup>
 <tbody>
 <tr class="row-odd"><td><ul class="simple">
@@ -101,7 +104,7 @@ riportate,  come fatto in <a class="reference external" href="../../../../virtua
 </table>
 </section>
 <section id="vrqak24-step">
-<h2>Vrqak24-step<a class="headerlink" href="#vrqak24-step" title="Link to this heading">¶</a></h2>
+<h2>Vrqak24-step<a class="headerlink" href="#vrqak24-step" title="Permalink to this heading">¶</a></h2>
 <p>Lo step asincrono viene gestito come segue:</p>
 <ol class="arabic simple">
 <li><p>si tiene traccia della rchiesta ponendo la variabile <code class="docutils literal notranslate"><span class="pre">doingAsynchStep</span> <span class="pre">=</span> <span class="pre">true</span></code></p></li>
@@ -110,8 +113,8 @@ riportate,  come fatto in <a class="reference external" href="../../../../virtua
 </ol>
 <table class="docutils align-default" style="width: 100%">
 <colgroup>
-<col style="width: 50.0%" />
-<col style="width: 50.0%" />
+<col style="width: 50%" />
+<col style="width: 50%" />
 </colgroup>
 <tbody>
 <tr class="row-odd"><td><ol class="arabic simple">
@@ -167,21 +170,20 @@ Goto work
 </table>
 </section>
 <section id="vrqak24-percezioni">
-<h2>Vrqak24-percezioni<a class="headerlink" href="#vrqak24-percezioni" title="Link to this heading">¶</a></h2>
+<h2>Vrqak24-percezioni<a class="headerlink" href="#vrqak24-percezioni" title="Permalink to this heading">¶</a></h2>
 <table class="docutils align-default" style="width: 100%">
 <colgroup>
-<col style="width: 50.0%" />
-<col style="width: 50.0%" />
+<col style="width: 50%" />
+<col style="width: 50%" />
 </colgroup>
 <tbody>
-<tr class="row-odd"><td><a class="reference internal image-reference" href="_images/vrqak.png"><img alt="_images/vrqak.png" class="align-center" src="_images/vrqak.png" style="width: 100%;" />
-</a>
+<tr class="row-odd"><td><a class="reference internal image-reference" href="_images/vrqak.png"><img alt="_images/vrqak.png" class="align-center" src="_images/vrqak.png" style="width: 100%;" /></a>
 </td>
-<td><p>Il servizio utilizza il supporto <a class="reference internal" href="VirtualRobotUsage25.html#vrobotllmoves24"><span class="std std-ref">VrobotLLMoves24</span></a>, di cui gestisce i seguenti messaggi:</p>
+<td><p>Il servizio utilizza il supporto <a class="reference internal" href="VrobotLLMoves24.html#id1"><span class="std std-ref">VrobotLLMoves24</span></a>, di cui gestisce i seguenti messaggi:</p>
 <table class="docutils align-default" style="width: 100%">
 <colgroup>
-<col style="width: 60.0%" />
-<col style="width: 40.0%" />
+<col style="width: 60%" />
+<col style="width: 40%" />
 </colgroup>
 <tbody>
 <tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">Dispatch</span> <span class="pre">vrinfo:vrinfo(A,B)</span></code></p></td>
@@ -197,7 +199,7 @@ Goto work
 </tbody>
 </table>
 <ul class="simple">
-<li><p>Osserviamo che il servizio <span class="blue">vrqak</span> percepisce gli eventi emessi da <a class="reference internal" href="VirtualRobotUsage25.html#vrobotllmoves24"><span class="std std-ref">VrobotLLMoves24</span></a>, ma questi eventi
+<li><p>Osserviamo che il servizio <span class="blue">vrqak</span> percepisce gli eventi emessi da <a class="reference internal" href="VrobotLLMoves24.html#id1"><span class="std std-ref">VrobotLLMoves24</span></a>, ma questi eventi
 <span class="slide2">non vengono propagati</span> ai clienti del servizio, in quanto i contesti-qak di tali clienti (ammesso che ci siano)
 non sono noti al servizio stesso.</p></li>
 <li><p>Perchè i clienti possano ricevere infromazioni emesse dai SONAR dell’anìbiente WEnv, occorre
@@ -211,7 +213,7 @@ MQTT (con topic <span class="brown">vrevents</span>)</p></li>
 </ul>
 </section>
 <section id="vrqak24-osservabilita">
-<h2>Vrqak24-osservabilità<a class="headerlink" href="#vrqak24-osservabilita" title="Link to this heading">¶</a></h2>
+<h2>Vrqak24-osservabilità<a class="headerlink" href="#vrqak24-osservabilita" title="Permalink to this heading">¶</a></h2>
 <p>Il servizio costituisce una <span class="slide2">risorsa osservabile</span> rispetto agli eventi  <code class="docutils literal notranslate"><span class="pre">sonardata</span></code>.
 Quando percepisce uno di tali eventi, emette (usando <a class="reference internal" href="QakActors25Actors.html#operazioni-relative-alla-osservabilita"><span class="std std-ref">updateresource</span></a>)
 una stringa della forma:</p>
@@ -233,17 +235,35 @@ una stringa della forma:</p>
 <p>Si noti che, per ogni evento <code class="docutils literal notranslate"><span class="pre">sonardata</span></code> percepito, la stringa che riporta la distanza rilevata
 viene emessa solo una volta, in quanto seguita poi dalla emissione della stringa <code class="docutils literal notranslate"><span class="pre">nonews</span></code>
 che un osservatore ignorerà.</p>
-<p>Per un esempio, si veda: <a class="reference external" href="../../../../virtualrobotusage25/src/main/java/observer/VraqakObserver.java">VraqakObserver.java</a></p>
 </section>
-<section id="vrqak24-applicazioni">
-<h2>Vrqak24-applicazioni<a class="headerlink" href="#vrqak24-applicazioni" title="Link to this heading">¶</a></h2>
-<ul class="simple">
-<li><p>Si veda <a class="reference external" href="../../../../virtualrobotusage25/src/vrusage25vrqak.qaktt">vrusage25vrqak.qak</a></p></li>
-</ul>
+<section id="varqak-esempi-di-uso">
+<h2>Varqak Esempi di uso<a class="headerlink" href="#varqak-esempi-di-uso" title="Permalink to this heading">¶</a></h2>
+<p><span class="slide3">Progetto vrqak</span></p>
+<table class="docutils align-default" style="width: 100%">
+<colgroup>
+<col style="width: 30%" />
+<col style="width: 70%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference external" href="../../../../virtualrobotusage25/src/vrusage25vrqak.qaktt">vrusage25vrqak.qak</a></p></td>
+<td><p>Accede al virtual robot usando il micro-servizio vrqak come
+<a class="reference internal" href="QakActors25Demo.html#demoresource-qak"><span class="std std-ref">ExternalQActor</span></a></p>
+<ol class="arabic simple">
+<li><p>esegue una serie di mosse di prova</p></li>
+<li><p>muove il virtualrobot lungo il bordo della stanza</p></li>
+</ol>
+</td>
+</tr>
+<tr class="row-even"><td><p><a class="reference external" href="../../../../virtualrobotusage25/src/main/java/observer/VraqakObserver.java">VraqakObserver.java</a></p></td>
+<td><p>Osserva il servizio vrqak come risorsa CoAP che viene aggiornata con
+la primitiva qak <a class="reference internal" href="QakActors25Actors.html#operazioni-relative-alla-osservabilita"><span class="std std-ref">updateResource</span></a>.</p></td>
+</tr>
+</tbody>
+</table>
 <p><span class="slide">Oltre il servizio vrqak24</span></p>
 </section>
 <section id="vrqak24-verso-basicrobot">
-<h2>Vrqak24-verso basicrobot<a class="headerlink" href="#vrqak24-verso-basicrobot" title="Link to this heading">¶</a></h2>
+<h2>Vrqak24-verso basicrobot<a class="headerlink" href="#vrqak24-verso-basicrobot" title="Permalink to this heading">¶</a></h2>
 <p>Il servizio <strong>vrqak</strong> può costituire il punto di partenza per la realizzazione di un servizio più esteso,
 che includa nuove funzionalità ed anche la gestione di uno specifico robot fisico.
 (d’ora in poi denominato <span class="slide3">basicrobot</span>).</p>
@@ -255,7 +275,7 @@ che includa nuove funzionalità ed anche la gestione di uno specifico robot fisi
           </div>
         </div>
       </div>
-      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
   <div>
     <h3><a href="index.html">Table of Contents</a></h3>
@@ -265,7 +285,7 @@ che includa nuove funzionalità ed anche la gestione di uno specifico robot fisi
 <li><a class="reference internal" href="#vrqak24-step">Vrqak24-step</a></li>
 <li><a class="reference internal" href="#vrqak24-percezioni">Vrqak24-percezioni</a></li>
 <li><a class="reference internal" href="#vrqak24-osservabilita">Vrqak24-osservabilità</a></li>
-<li><a class="reference internal" href="#vrqak24-applicazioni">Vrqak24-applicazioni</a></li>
+<li><a class="reference internal" href="#varqak-esempi-di-uso">Varqak Esempi di uso</a></li>
 <li><a class="reference internal" href="#vrqak24-verso-basicrobot">Vrqak24-verso basicrobot</a></li>
 </ul>
 </li>
@@ -289,7 +309,7 @@ che includa nuove funzionalità ed anche la gestione di uno specifico robot fisi
             rel="nofollow">Show Source</a></li>
     </ul>
    </div>
-<search id="searchbox" style="display: none" role="search">
+<div id="searchbox" style="display: none" role="search">
   <h3 id="searchlabel">Quick search</h3>
     <div class="searchformwrapper">
     <form class="search" action="search.html" method="get">
@@ -297,13 +317,13 @@ che includa nuove funzionalità ed anche la gestione di uno specifico robot fisi
       <input type="submit" value="Go" />
     </form>
     </div>
-</search>
+</div>
 <script>document.getElementById('searchbox').style.display = "block"</script>
         </div>
       </div>
       <div class="clearer"></div>
     </div>
-    <div class="related" role="navigation" aria-label="Related">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -320,8 +340,8 @@ che includa nuove funzionalità ed anche la gestione di uno specifico robot fisi
       </ul>
     </div>
     <div class="footer" role="contentinfo">
-    &#169; Copyright 2025, Antonio Natali.
-      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.1.3.
+        &#169; Copyright 2025, Antonio Natali.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 5.0.2.
     </div>
   </body>
 </html>
