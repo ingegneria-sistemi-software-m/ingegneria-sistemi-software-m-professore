@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="./">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>DomainDrivenDesign &#8212; iss25 1.0 documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=649a27d8" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinxdoc.css?v=34905f61" />
+    <link rel="stylesheet" type="text/css" href="_static/custom.css?v=87712ff3" />
+    <script src="_static/documentation_options.js?v=f2a433a1"></script>
+    <script src="_static/doctools.js?v=9bcbadda"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="Related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="nav-item nav-item-0"><a href="index.html">iss25 1.0 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">DomainDrivenDesign</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="domaindrivendesign">
+<h1>DomainDrivenDesign<a class="headerlink" href="#domaindrivendesign" title="Link to this heading">¶</a></h1>
+<p>Nella ‘battaglia’ tra <a class="reference internal" href="RiferimentiBase.html#processi-bottomup-e-topdown"><span class="std std-ref">Processi BottomUp e TopDown</span></a> nello sviluppo del software,</p>
+<p>sembra che in molti ambiti applicativi stia
+<span class="slide1">prevalendo il TopDown</span>.</p>
+<table class="docutils align-default" style="width: 100%">
+<colgroup>
+<col style="width: 50.0%" />
+<col style="width: 50.0%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><a class="reference internal image-reference" href="_images/DDDEvans.jpg"><img alt="_images/DDDEvans.jpg" class="align-center" src="_images/DDDEvans.jpg" style="width: 50%;" />
+</a>
+<p>ISBN-13 : 978-0321125217</p>
+</td>
+<td><a class="reference internal image-reference" href="_images/DDDVernon.jpg"><img alt="_images/DDDVernon.jpg" class="align-center" src="_images/DDDVernon.jpg" style="width: 50%;" />
+</a>
+<p>ISBN-13 : 978-0321834577</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p><span class="slide3">Domanda a Gemini (29/5/2025)</span></p>
+<p>Vorrei un quandro di riferimento al Domain Driven Design e a come questo paradigmi viene oggi usato per la progettazione e costruzione di sistemi software basati su microservizi</p>
+<hr class="docutils" />
+<p>Il Domain-Driven Design (DDD) è un approccio alla progettazione e costruzione di software che pone l’enfasi sulla comprensione profonda del dominio di business. Non è una tecnologia o un framework, ma una filosofia e un insieme di principi e pattern che aiutano gli sviluppatori a creare software che rifletta accuratamente la complessità del mondo reale che intende servire.</p>
+<section id="quadro-di-riferimento-del-domain-driven-design-ddd">
+<h2>Quadro di Riferimento del Domain-Driven Design (DDD)<a class="headerlink" href="#quadro-di-riferimento-del-domain-driven-design-ddd" title="Link to this heading">¶</a></h2>
+<p>Il DDD opera su due livelli principali:</p>
+<section id="strategic-design-progettazione-strategica">
+<h3>Strategic Design (Progettazione Strategica)<a class="headerlink" href="#strategic-design-progettazione-strategica" title="Link to this heading">¶</a></h3>
+<p>Si concentra sulla visione d’insieme del dominio e su come suddividerlo in aree gestibili. Gli elementi chiave includono:</p>
+<ul class="simple">
+<li><p><span class="blue">Dominio</span>: Il campo di conoscenza e attività su cui il software opera. È il problema di business che il software deve risolvere.</p></li>
+<li><p><span class="blue">Modello (Domain Model)</span>: Un sistema di astrazioni che descrive specifici aspetti del dominio. È il cuore del DDD e serve come blueprint per il software.</p></li>
+<li><p><span class="blue">Linguaggio Ubiquo (Ubiquitous Language)</span>: Un linguaggio comune e condiviso tra sviluppatori ed esperti di dominio. È fondamentale per evitare ambiguità e incomprensioni e viene utilizzato sia nelle discussioni che nel codice.</p></li>
+<li><p><span class="blue">Contesto Delimitato (Bounded Context)</span>: Un confine logico e coerente all’interno del quale un modello di dominio specifico ha un significato ben definito e non ambiguo. Al di fuori di questo contesto, i termini potrebbero avere significati diversi. I Bounded Contexts aiutano a gestire la complessità suddividendo un dominio ampio in parti più piccole e gestibili.</p></li>
+<li><p><span class="blue">Mappa di Contesto (Context Map)</span>: Una rappresentazione visiva delle relazioni e delle interazioni tra i diversi Contesti Delimitati. Aiuta a comprendere come le diverse parti del sistema comunicano e dipendono l’una dall’altra.</p></li>
+</ul>
+</section>
+<section id="tactical-design-progettazione-tattica">
+<h3>Tactical Design (Progettazione Tattica)<a class="headerlink" href="#tactical-design-progettazione-tattica" title="Link to this heading">¶</a></h3>
+<p>Fornisce strumenti e pattern pratici per tradurre la comprensione del dominio in codice. Gli elementi chiave includono:</p>
+<ul class="simple">
+<li><p><span class="blue">Entità (Entities)</span>: Oggetti che hanno un’identità persistente e un ciclo di vita nel dominio, indipendentemente dai loro attributi. Ad esempio, un “Cliente” o un “Ordine”.</p></li>
+<li><p><span class="blue">Value Objects</span>: Oggetti che non hanno un’identità propria, ma sono definiti unicamente dai loro attributi. Sono immutabili. Ad esempio, un “Indirizzo” o un “Intervallo di Date”.</p></li>
+<li><p><span class="blue">Aggregati (Aggregates)</span>: Un cluster di oggetti (Entità e Value Objects) che vengono trattati come un’unica unità per la consistenza dei dati. C’è una “Radice dell’Aggregato” (Aggregate Root) che è l’unica Entità a cui si può accedere dall’esterno dell’Aggregato. Questo garantisce che le regole di business siano rispettate. Ad esempio, un “Ordine” con le sue “Voci d’Ordine” potrebbe essere un Aggregato.</p></li>
+<li><p><span class="blue">Servizi di Dominio (Domain Services)</span>: Operazioni o comportamenti che non appartengono naturalmente a nessuna Entità o Value Object specifica, ma che rappresentano una logica di business importante che coinvolge più oggetti di dominio.</p></li>
+<li><p><span class="blue">Repository</span>: Meccanismi che astraggono il modo in cui gli Aggregati vengono recuperati e salvati nella persistenza. Permettono al dominio di non preoccuparsi dei dettagli tecnici di accesso ai dati.</p></li>
+<li><p><span class="blue">Eventi di Dominio (Domain Events)</span>: Un qualcosa che è accaduto nel dominio e che gli esperti di dominio considerano significativo. Gli eventi di dominio vengono utilizzati per notificare ad altre parti del sistema (all’interno dello stesso Contesto Delimitato o in contesti diversi) che qualcosa di importante è successo, permettendo la reazione a tali eventi.</p></li>
+</ul>
+</section>
+</section>
+<section id="ddd-e-microservizi">
+<h2>DDD e Microservizi<a class="headerlink" href="#ddd-e-microservizi" title="Link to this heading">¶</a></h2>
+<p>Il Domain-Driven Design e l’architettura a Microservizi sono due paradigmi che si completano a vicenda in modo potente, sebbene il DDD non sia esclusivo dei microservizi e possa essere applicato anche a monolitici. L’allineamento tra DDD e microservizi è quasi naturale, in quanto entrambi promuovono la scomposizione di sistemi complessi in parti più piccole e gestibili.</p>
+<p>Ecco come il DDD viene usato nella progettazione e costruzione di sistemi software basati su microservizi:</p>
+<section id="definizione-dei-confini-dei-microservizi-tramite-i-contesti-delimitati">
+<h3>Definizione dei Confini dei Microservizi tramite i Contesti Delimitati:<a class="headerlink" href="#definizione-dei-confini-dei-microservizi-tramite-i-contesti-delimitati" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p><span class="blue">Principio</span>: Il concetto di Contesto Delimitato (Bounded Context) è il pilastro fondamentale per la scomposizione di un’architettura monolitica in microservizi.</p></li>
+<li><p><span class="blue">Applicazione</span>: Ogni microservizio idealmente incapsula un singolo Contesto Delimitato. Questo significa che ogni microservizio ha il suo modello di dominio interno, il suo linguaggio ubiquo e la sua logica di business specifica e coerente. Questa corrispondenza assicura che ogni microservizio abbia un ambito ben definito e una responsabilità chiara.</p></li>
+<li><p><span class="blue">Benefici</span>: Riduce la complessità, minimizza le dipendenze tra i servizi, permette a team indipendenti di lavorare su microservizi diversi senza interferenze eccessive e facilita lo sviluppo, il deployment e lo scaling indipendenti.</p></li>
+</ul>
+</section>
+<section id="linguaggio-ubiquo-e-chiarezza-della-comunicazione">
+<h3>Linguaggio Ubiquo e Chiarezza della Comunicazione:<a class="headerlink" href="#linguaggio-ubiquo-e-chiarezza-della-comunicazione" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p><span class="blue">Principio</span>: Mantenere un linguaggio comune e coerente.</p></li>
+<li><p><span class="blue">Applicazione</span>: All’interno di ogni microservizio (che corrisponde a un Bounded Context), il linguaggio ubiquo è strettamente applicato. Questo garantisce che tutti nel team (sviluppatori, tester, esperti di dominio) utilizzino la stessa terminologia e comprendano i concetti nello stesso modo.</p></li>
+<li><p><span class="blue">Benefici</span>: Previene ambiguità, riduce la confusione e migliora l’efficienza della comunicazione e dello sviluppo.</p></li>
+</ul>
+</section>
+<section id="aggregati-come-unita-di-consistenza-e-confinamento-dei-dati">
+<h3>Aggregati come Unità di Consistenza e Confinamento dei Dati:<a class="headerlink" href="#aggregati-come-unita-di-consistenza-e-confinamento-dei-dati" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p><span class="blue">Principio</span>: Gli Aggregati sono unità per la manipolazione dei dati e la gestione della consistenza.</p></li>
+<li><p><span class="blue">Applicazione</span>: All’interno di un microservizio, gli Aggregati sono fondamentali per mantenere la consistenza transazionale e l’integrità dei dati. Ogni microservizio possiede i dati relativi ai suoi Aggregati, spesso con un proprio database. Le operazioni di modifica su un Aggregato avvengono come un’unica transazione atomica.</p></li>
+<li><p><span class="blue">Benefici</span>: Promuove l’autonomia dei dati per ogni microservizio, riducendo la necessità di transazioni distribuite complesse e migliorando la resilienza.</p></li>
+</ul>
+</section>
+<section id="eventi-di-dominio-per-la-comunicazione-tra-microservizi-consistenza-finale">
+<h3>Eventi di Dominio per la Comunicazione tra Microservizi (Consistenza Finale)<a class="headerlink" href="#eventi-di-dominio-per-la-comunicazione-tra-microservizi-consistenza-finale" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p><span class="blue">Principio</span>: Gli Eventi di Dominio rappresentano fatti significativi accaduti nel dominio.</p></li>
+<li><p><span class="blue">Applicazione</span>: Quando un Aggregato all’interno di un microservizio cambia stato (e questo è un evento di dominio), il microservizio può pubblicare un Evento di Integrazione (che è un tipo specifico di Evento di Dominio, ma destinato alla comunicazione tra contesti). Altri microservizi interessati possono sottoscrivere questi eventi e reagire di conseguenza.</p></li>
+<li><p><span class="blue">Benefici</span>: Favorisce la coesione all’interno del microservizio e il disaccoppiamento tra microservizi, promuovendo la consistenza finale (eventual consistency). Questo è cruciale in un’architettura distribuita, dove le transazioni atomiche attraverso più servizi sono complesse e sconsigliate. Event Storming è una tecnica DDD utile per identificare questi eventi.</p></li>
+</ul>
+</section>
+<section id="mappe-di-contesto-per-gestire-le-relazioni-tra-microservizi">
+<h3>Mappe di Contesto per Gestire le Relazioni tra Microservizi:<a class="headerlink" href="#mappe-di-contesto-per-gestire-le-relazioni-tra-microservizi" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p><span class="blue">Principio</span>: Comprendere e visualizzare le relazioni tra i Contesti Delimitati.</p></li>
+<li><p><span class="blue">Applicazione</span>: Una Context Map diventa essenziale per documentare e gestire le interazioni e le dipendenze tra i diversi microservizi. Aiuta a identificare pattern di integrazione (es. Partner, Customer/Supplier, Anti-Corruption Layer, Shared Kernel) e a capire come i cambiamenti in un microservizio possano influenzare gli altri.</p></li>
+<li><p><span class="blue">Benefici</span>: Migliora la comprensione dell’architettura complessiva, facilita la collaborazione tra i team che sviluppano diversi microservizi e aiuta a prevenire integrazioni caotiche.</p></li>
+</ul>
+<p>In sintesi, il DDD fornisce la metodologia per definire i confini logici dei microservizi, mentre l’architettura a microservizi fornisce l’implementazione fisica di questi confini. Il DDD aiuta a garantire che i microservizi siano allineati ai requisiti di business, siano coesi internamente e disaccoppiati esternamente, portando a sistemi software più manutenibili, scalabili e facili da evolvere.</p>
+</section>
+</section>
+<section id="modellazione-del-dominio">
+<h2>Modellazione del dominio<a class="headerlink" href="#modellazione-del-dominio" title="Link to this heading">¶</a></h2>
+<p><span class="slide3">Domanda a Gemini (29/5/2025)</span>
+Vorrei capire come posso costruire un modello del dominio, inteso come cuore di un approccio Domain Driven Design alla costruzioe di un sistema software, quando i componenti del sistema sono microservizi. Mi pare che l’uso di UML non sia adeguato</p>
+<p>Hai assolutamente ragione a mettere in discussione il ruolo tradizionale di UML nell’applicazione del Domain-Driven Design (DDD) a un’architettura di microservizi. Sebbene UML possa ancora essere utile per la progettazione di basso livello all’interno di un singolo microservizio, spesso risulta inadeguato quando si cerca di modellare il dominio nel suo complesso attraverso confini distribuiti. Il cuore di un approccio DDD, soprattutto con i microservizi, non sta nei rigidi diagrammi di classe per l’intero sistema, ma nella comprensione e nella definizione chiara dei contesti delimitati e delle loro interazioni.</p>
+<p>Ecco come creare un modello di dominio in un contesto di microservizi, passando dal tradizionale UML a tecniche più efficaci, collaborative e comunicative:</p>
+<section id="concentrarsi-sui-contesti-delimitati-non-su-un-singolo-modello-unificato">
+<h3>1. Concentrarsi sui contesti delimitati, non su un singolo modello unificato<a class="headerlink" href="#concentrarsi-sui-contesti-delimitati-non-su-un-singolo-modello-unificato" title="Link to this heading">¶</a></h3>
+<p>Il più grande cambiamento di paradigma è riconoscere che con i microservizi non esiste un unico modello di dominio unificato per l’intero sistema. Invece, il dominio viene scomposto in più modelli più piccoli e coerenti, ciascuno residente nel proprio contesto delimitato .</p>
+<ul class="simple">
+<li><p><span class="blue">Contesto Limitato</span>: questo è il concetto centrale. Definisce un confine entro il quale un particolare modello di dominio è coerente e applicabile. Al di fuori di questo confine, termini e concetti potrebbero avere significati diversi. Ogni microservizio (o un piccolo gruppo coeso di microservizi) dovrebbe idealmente corrispondere a un singolo Contesto Limitato.</p></li>
+</ul>
+<blockquote>
+<div><ul class="simple">
+<li><p><strong>Esempio</strong>: un “Prodotto” nel CatalogContesto Limitato potrebbe avere attributi come name, description, SKU. Lo stesso “Prodotto” nel Order FulfillmentContesto Limitato potrebbe interessare solo SKU, quantity, e delivery_status. Sono modelli diversi della stessa entità del mondo reale, coerenti solo all’interno dei propri confini.</p></li>
+</ul>
+</div></blockquote>
+</section>
+<section id="enfatizzare-la-comunicazione-e-la-collaborazione-comprensione-condivisa">
+<h3>2. Enfatizzare la comunicazione e la collaborazione (comprensione condivisa)<a class="headerlink" href="#enfatizzare-la-comunicazione-e-la-collaborazione-comprensione-condivisa" title="Link to this heading">¶</a></h3>
+<p>Poiché il “modello” è ora distribuito, la vera sfida diventa mantenere una comprensione condivisa tra i team. È qui che l’enfasi si sposta dai diagrammi formali a tecniche collaborative ed espressive.</p>
+<ul class="simple">
+<li><p><span class="blue">Linguaggio onnipresente</span>: questo rimane fondamentale. Per ogni Bounded Context, definire esplicitamente e utilizzare in modo coerente un linguaggio concordato sia dagli esperti del settore che dagli sviluppatori. Questo linguaggio dovrebbe riflettersi direttamente nel codice (nomi delle classi, nomi dei metodi, nomi delle variabili).</p></li>
+<li><p><span class="blue">Mappatura del contesto</span>: è fondamentale per visualizzare le relazioni tra diversi contesti delimitati. Mostra come interagiscono, quali contesti dipendono da altri e quali modelli di comunicazione vengono utilizzati.</p>
+<ul>
+<li><p><span class="blue">Tecniche per la mappatura del contesto</span>:</p>
+<ul>
+<li><p><span class="blue">Disegnare sulle lavagne interattive</span>: semplice, veloce e collaborativo.</p></li>
+<li><p><span class="blue">Miro/Whimsical/Excalidraw</span>: strumenti di lavagna collaborativa online.</p></li>
+<li><p><span class="blue">Modello C4</span>: sebbene non sia strettamente riservato a DDD, l’attenzione rivolta alle visualizzazioni di contesto, contenitore, componente e codice può essere adattata per mostrare i Bounded Context come “sistemi” o “contenitori” e le relative relazioni.</p></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="tecniche-di-modellazione-all-interno-di-un-contesto-delimitato">
+<h3>3. Tecniche di modellazione all’interno di un contesto delimitato<a class="headerlink" href="#tecniche-di-modellazione-all-interno-di-un-contesto-delimitato" title="Link to this heading">¶</a></h3>
+<p>Per il funzionamento interno di un singolo microservizio (ad esempio all’interno di un Bounded Context), i tradizionali blocchi di costruzione DDD sono ancora molto rilevanti e possono essere modellati in modo efficace senza un UML pesante.</p>
+<ul class="simple">
+<li><p><span class="blue">Event Storming</span>: questa è probabilmente la tecnica più potente per avviare un processo DDD in un contesto di microservizi.</p>
+<ul>
+<li><p>Come funziona: un workshop collaborativo (fisico o virtuale) che coinvolge esperti del settore e sviluppatori. I post-it vengono utilizzati per identificare:</p>
+<ul>
+<li><p><span class="blue">Eventi di dominio (arancione)</span>: qualcosa di significativo accaduto in passato (ad esempio, OrderPlaced, PaymentReceived).</p></li>
+<li><p><span class="blue">Comandi (blu)</span>: intenzione di fare qualcosa (ad esempio, PlaceOrder, ProcessPayment).</p></li>
+<li><p><span class="blue">Aggregati (giallo)</span>: cluster di oggetti trattati come un’unica unità per le modifiche dei dati, garantendo la coerenza transazionale (ad esempio, Order, Customer).</p></li>
+<li><p><span class="blue">Leggi modelli/proiezioni (verde)</span>: dati ottimizzati per le query.</p></li>
+<li><p><span class="blue">Politiche (Rosa)</span>: Reazioni agli eventi.</p></li>
+</ul>
+</li>
+<li><p><span class="remark">Vantaggioc per i microservizi</span>: l’Event Storming rivela in modo naturale i confini dei servizi (spesso incentrati su aggregati o gruppi di eventi/comandi correlati), i flussi di eventi tra i servizi e identifica i contesti delimitati .</p></li>
+</ul>
+</li>
+<li><p><span class="blue">Aggregati e radici degli aggregati</span>: definisci chiari confini transazionali. La radice degli aggregati è l’unico punto di ingresso per le interazioni esterne. Questo informa direttamente l’API pubblica del tuo microservizio.</p></li>
+<li><p><span class="blue">Entità e oggetti valore</span>: utilizzali per modellare i componenti all’interno di un aggregato.</p></li>
+<li><p><span class="blue">Eventi di dominio</span>: modellano in modo esplicito gli eventi significativi. Questi diventano il mezzo principale di comunicazione asincrona tra i microservizi.</p></li>
+<li><p><span class="blue">Collaborazioni tra servizi</span>: concentrarsi sul modo in cui interagiscono i servizi (chiamate API sincrone, messaggistica di eventi asincroni) anziché solo sulle classi esistenti.</p></li>
+</ul>
+</section>
+<section id="andare-oltre-uml-per-la-progettazione-a-livello-di-sistema">
+<h3>4. Andare oltre UML per la progettazione a livello di sistema<a class="headerlink" href="#andare-oltre-uml-per-la-progettazione-a-livello-di-sistema" title="Link to this heading">¶</a></h3>
+<p>Invece di UML per il livello macro:</p>
+<ul class="simple">
+<li><p><span class="blue">Mappe di contesto</span>: rappresentano visivamente i contesti delimitati e le loro relazioni (ad esempio, Cliente-Fornitore, Conformista, Livello anticorruzione, Kernel condiviso). In questo modo si evidenziano dipendenze e strategie di integrazione.</p></li>
+<li><p><span class="blue">Diagrammi di flusso degli eventi</span>: illustrano la sequenza degli eventi e come si propagano tra i servizi. Questo è fondamentale per comprendere i flussi di lavoro distribuiti e la coerenza finale.</p></li>
+<li><p><span class="blue">Specifiche API</span>: utilizzare OpenAPI/Swagger (per REST) ​​o Protobuf (per gRPC) per definire rigorosamente i contratti dell’API pubblica di ciascun microservizio. Si tratta di una documentazione eseguibile del modello di dominio esposto dal servizio.</p></li>
+<li><p><span class="blue">Architecture Decision Records (ADR)</span>: Documentare le decisioni architetturali significative, in particolare in merito ai confini dei servizi, ai modelli di comunicazione e ai modelli di coerenza dei dati. Ciò contribuisce a mantenere il contesto e la coerenza nel tempo.</p></li>
+</ul>
+</section>
+<section id="raffinamento-iterativo-e-progettazione-evolutiva">
+<h3>5. Raffinamento iterativo e progettazione evolutiva<a class="headerlink" href="#raffinamento-iterativo-e-progettazione-evolutiva" title="Link to this heading">¶</a></h3>
+<p>La modellazione del dominio nei microservizi è raramente un’attività di “grande progettazione iniziale”. È iterativa.</p>
+<ul class="simple">
+<li><p><span class="blue">Inizia dalle cose semplici</span>: comincia con una conoscenza approfondita del dominio principale.</p></li>
+<li><p><span class="blue">Evoluzione dei confini</span>: man mano che si implementa e si impara, si potrebbe scoprire che i confini del servizio devono essere modificati. DDD incoraggia questo refactoring.</p></li>
+<li><p><span class="blue">Sviluppo basato sui test (TDD)</span> e sviluppo basato sul comportamento (BDD): queste pratiche aiutano a consolidare l’Ubiquitous Language e a garantire che il codice rifletta accuratamente il comportamento del dominio, perfezionando implicitamente il modello.</p></li>
+</ul>
+<p>In sintesi, per i microservizi con DDD:</p>
+<ul class="simple">
+<li><p><span class="blue">Abbandonate il modello di dominio monolitico</span>. Abbracciate più contesti delimitati .</p></li>
+<li><p><span class="blue">Dare priorità alla comprensione condivisa</span> attraverso la mappatura del linguaggio e del contesto onnipresenti .</p></li>
+<li><p><span class="blue">Utilizzare Event Storming</span> come potente strumento collaborativo per scoprire eventi di dominio, comandi e potenziali limiti di servizio.</p></li>
+<li><p><span class="blue">Modella all’interno</span> di ciascun contesto delimitato utilizzando elementi costitutivi DDD quali aggregati, entità e oggetti valore.</p></li>
+<li><p><span class="blue">Sostituire l’UML</span> a livello di sistema con diagrammi di flusso degli eventi e specifiche API rigorose .</p></li>
+</ul>
+<p>Questo approccio consente di rappresentare accuratamente il modello di dominio, di evolversi insieme all’azienda e di supportare lo sviluppo e l’implementazione indipendenti propri di un’architettura di microservizi.</p>
+<p>Questo cambiamento di prospettiva da un modello singolo e unificato a modelli distribuiti e specifici al contesto è in linea con la tua comprensione dei microservizi?</p>
+<hr class="docutils" />
+<p><span class="slide3">Domanda a Gemini (29/5/2025)</span>
+Si grazie, ma vorrei sapere si ci sono tools o linguaggi che mi possono aiutare in questo nuovo approocio.</p>
+<p>Sì, assolutamente! Hai toccato un punto cruciale. L’evoluzione dell’approccio al Domain-Driven Design (DDD) con i microservizi ha portato alla nascita e all’adozione di nuovi strumenti e linguaggi che si allontanano dai tradizionali diagrammi UML per favorire una modellazione più dinamica, collaborativa e orientata al codice.</p>
+<p>Ecco un elenco di tool e linguaggi che ti possono aiutare in questo “nuovo approccio”:</p>
+</section>
+<section id="strumenti-per-la-collaborazione-e-il-domain-discovery-pre-coding-collaborazione-iniziale">
+<h3>1. Strumenti per la Collaborazione e il Domain Discovery (Pre-coding/Collaborazione Iniziale)<a class="headerlink" href="#strumenti-per-la-collaborazione-e-il-domain-discovery-pre-coding-collaborazione-iniziale" title="Link to this heading">¶</a></h3>
+<p>Questi strumenti sono fondamentali per le fasi iniziali di scoperta del dominio e definizione dei Bounded Contexts, spesso in workshop con gli esperti di dominio.</p>
+<ul class="simple">
+<li><p><span class="blue">Miro / Mural / Whimsical / Excalidraw (Strumenti per lavagna online)</span>:</p>
+<ul>
+<li><p><span class="remark">Perché</span>: Sono eccellenti per condurre Event Storming, Context Mapping, Value Stream Mapping e altre sessioni di modellazione collaborativa. Permettono a team distribuiti di lavorare insieme in tempo reale, utilizzando “sticky notes” digitali, frecce, forme, proprio come una lavagna fisica.</p></li>
+<li><p><span class="remark">Vantaggio</span>: Sono molto visivi e flessibili, incoraggiando la discussione e l’esplorazione del dominio senza le rigidità di un linguaggio di modellazione formale come UML.</p></li>
+</ul>
+</li>
+<li><p><span class="blue">Modello C4 (Concetto, Strumento, non uno strumento specifico)</span>:</p>
+<ul>
+<li><p><span class="remark">Perché</span>: Non è un tool specifico, ma un approccio alla documentazione dell’architettura software. Si concentra su diverse “livelli” di astrazione:</p>
+<ul>
+<li><p>Context: Mostra il sistema software nel suo ambiente.</p></li>
+<li><p>Container: Scompone il sistema in “container” (applicazioni, database, file system, ecc. - che in microservizi sono spesso i microservizi stessi).</p></li>
+<li><p>Component: Scompone i container in componenti (moduli, classi importanti).</p></li>
+<li><p>Code: Dettagli del codice (che qui potresti usare in modo limitato, solo per gli Aggregati chiave).</p></li>
+</ul>
+</li>
+<li><p><span class="remark">Vantaggio</span>: È ottimo per rappresentare i Bounded Contexts (livello Container o System) e le loro interazioni in modo chiaro e comprensibile, rendendo esplicite le dipendenze tra microservizi. Puoi disegnarlo con Miro/Whimsical o tool specifici come Structurizr.</p></li>
+</ul>
+</li>
+<li><p><span class="blue">Narrazione di dominio</span>:</p>
+<ul>
+<li><p><span class="remark">Perché</span>: Un approccio leggero e collaborativo per modellare processi di business complessi e scenari utente, utilizzando un linguaggio semplice e simboli grafici minimali. Aiuta a far emergere il vocabolario del dominio.</p></li>
+<li><p><span class="remark">Vantaggio</span>: Concentra l’attenzione sul “cosa succede” nel dominio, rivelando naturalmente eventi, attori e oggetti che si prestano bene alla modellazione orientata agli eventi di DDD.</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="strumenti-per-la-definizione-dei-contratti-e-api-design-time">
+<h3>2. Strumenti per la Definizione dei Contratti e API (Design Time)<a class="headerlink" href="#strumenti-per-la-definizione-dei-contratti-e-api-design-time" title="Link to this heading">¶</a></h3>
+<p>Una volta identificate le boundary dei microservizi e le interazioni, è fondamentale definire i contratti di comunicazione.</p>
+<ul class="simple">
+<li><p><span class="blue">Specifiche OpenAPI (ex-Swagger)</span>:</p>
+<ul>
+<li><p><span class="remark">Perché</span>: Per le API RESTful sincrone, OpenAPI è lo standard de-facto. Ti permette di definire in modo formale (YAML o JSON) gli endpoint, i tipi di dati, i parametri, i modelli di risposta di ogni microservizio.</p></li>
+<li><p><span class="remark">Vantaggio</span>: Genera documentazione interattiva (Swagger UI), permette la validazione delle richieste, e può essere usato per generare automaticamente client SDK e server stubs in vari linguaggi. È cruciale per la API First Design che è fondamentale in microservizi.</p></li>
+</ul>
+</li>
+<li><p><span class="blue">gRPC + buffer di protocollo (Protobuf)</span>:</p>
+<ul>
+<li><p><span class="remark">Perché</span>: Per comunicazioni sincrone ad alta performance o per scenari dove la definizione del contratto è estremamente rigorosa e cross-linguaggio. Protobuf ti permette di definire schemi di dati e RPC (Remote Procedure Calls) in un linguaggio neutrale.</p></li>
+<li><p><span class="remark">Vantaggio</span>: Genera codice fortemente tipizzato per client e server in molti linguaggi, garantendo coerenza e performance. Riduce la serializzazione/deserializzazione overhead rispetto al JSON.</p></li>
+</ul>
+</li>
+<li><p><span class="blue">Schema Apache Avro / JSON</span>:</p>
+<ul>
+<li><p><span class="remark">Perché</span>: Per la definizione di schemi di Domain Events (messaggi asincroni) che passano tra microservizi via Kafka o altri message broker.</p></li>
+<li><p><span class="remark">Vantaggio</span>: Garantiscono che i producer e i consumer degli eventi abbiano una comprensione condivisa della struttura del messaggio, permettendo l’evoluzione dello schema e la retrocompatibilità. Spesso usati con un Schema Registry (es. Confluent Schema Registry).</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="strumenti-e-metodologie-di-implementazione-code-time">
+<h3>3. Strumenti e Metodologie di Implementazione (Code Time)<a class="headerlink" href="#strumenti-e-metodologie-di-implementazione-code-time" title="Link to this heading">¶</a></h3>
+<p>Questi sono più legati alla programmazione vera e propria all’interno di ciascun microservizio.</p>
+<ul class="simple">
+<li><p><span class="blue">Frameworks che Supportano DDD Patterns</span>:</p>
+<ul>
+<li><p><span class="blue">Spring Boot / Quarkus (Java)</span>: Forniscono un eccellente supporto per costruire microservizi, inclusi moduli per la persistenza (Spring Data JPA), messaging (Spring Cloud Stream), e strumenti per la reattività (Spring WebFlux).</p></li>
+<li><p><span class="blue">NestJS (Node.js)</span>: Un framework per Node.js che incoraggia una struttura modulare e architetturale simile a Spring, adatta per DDD.</p></li>
+<li><p><span class="blue">Clean Architecture / Hexagonal Architecture</span>: Non sono tools, ma pattern architetturali che promuovono la separazione delle preoccupazioni e mantengono il dominio al centro, rendendo più facile implementare Aggregati, Entità e Value Objects in modo pulito.</p></li>
+</ul>
+</li>
+<li><p><span class="blue">Linguaggi di Programmazione</span>:</p>
+<ul>
+<li><p><span class="blue">Linguaggi Staticamente Tipizzati (Java, C#, Go, TypeScript)</span>: Tendono ad essere favoriti per i microservizi in ambienti industriali grazie alla maggiore sicurezza del tipo, all’assistenza dell’IDE e alla refactoring più semplice, che supportano bene l’evoluzione del Domain Model nel codice.</p></li>
+<li><p><span class="blue">Linguaggi che supportano Event Sourcing / CQRS</span>: Alcuni linguaggi o framework hanno un migliore supporto per pattern come Event Sourcing (dove lo stato di un Aggregato è derivato da una sequenza di eventi) e Command Query Responsibility Segregation (CQRS), che sono spesso usati in contesti di microservizi basati su eventi.</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="strumenti-per-la-gestione-e-il-monitoraggio-runtime">
+<h3>4. Strumenti per la Gestione e il Monitoraggio (Runtime)<a class="headerlink" href="#strumenti-per-la-gestione-e-il-monitoraggio-runtime" title="Link to this heading">¶</a></h3>
+<p>Anche se non direttamente per la “costruzione del modello”, questi sono essenziali per validare che il modello distribuito funzioni come previsto.</p>
+<ul class="simple">
+<li><p><span class="blue">Tracciamento distribuito (OpenTelemetry, Jaeger, Zipkin)</span>:</p>
+<ul>
+<li><p><span class="remark">Perché</span>: Con microservizi, una singola richiesta utente attraversa molti servizi. Il tracing ti permette di visualizzare il flusso di esecuzione tra i diversi Bounded Contexts, identificando colli di bottiglia o errori. Questo ti aiuta a capire come il tuo modello distribuito si comporta in produzione.</p></li>
+</ul>
+</li>
+<li><p><span class="blue">Monitoraggio e avvisi (Prometheus, Grafana, ELK Stack)</span>:</p>
+<ul>
+<li><p><span class="remark">Perché</span>: Ogni microservizio espone metriche e log. Questi strumenti ti permettono di aggregare e visualizzare lo stato di salute di ogni componente, fornendo insight su come le interazioni tra i servizi stiano avvenendo.</p></li>
+</ul>
+</li>
+<li><p><span class="blue">Service Mesh (Istio, Linkerd)</span>:</p>
+<ul>
+<li><p><span class="remark">Perché</span>: Anche se non un tool di modellazione, un service mesh implementa funzionalità di network che erano tradizionalmente “cablati” nel codice dei servizi (come retries, circuit breakers, traffic routing). Questo permette ai tuoi microservizi di concentrarsi sul loro Domain Model, delegando le preoccupazioni di rete al mesh.</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="conclusione">
+<h3>Conclusione:<a class="headerlink" href="#conclusione" title="Link to this heading">¶</a></h3>
+<p>L’approccio al DDD con microservizi si sposta da “disegnare tutto prima” a “scoprire, modellare, implementare e iterare”. I tool riflettono questo cambiamento:</p>
+<ul class="simple">
+<li><p><span class="blue">Collaborazione</span>: Strumenti di lavagna virtuale per Event Storming e Context Mapping.</p></li>
+<li><p><span class="blue">Contratti</span>: Linguaggi di specifica API (OpenAPI, Protobuf, Avro) per definire l’interfaccia tra Bounded Contexts.</p></li>
+<li><p><span class="blue">Codice</span>: Framework e pratiche che supportano la pulizia e la coerenza del modello all’interno di ogni microservizio.</p></li>
+<li><p><span class="blue">Operazioni</span>: Strumenti di observability per validare il comportamento del sistema distribuito in tempo reale.</p></li>
+</ul>
+<p>Questi strumenti, combinati con una forte enfasi sulla comunicazione e la comprensione del dominio, sono le “ali” che ti permettono di costruire sistemi microservizi complessi in modo efficace.</p>
+</section>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+  <div>
+    <h3><a href="index.html">Table of Contents</a></h3>
+    <ul>
+<li><a class="reference internal" href="#">DomainDrivenDesign</a><ul>
+<li><a class="reference internal" href="#quadro-di-riferimento-del-domain-driven-design-ddd">Quadro di Riferimento del Domain-Driven Design (DDD)</a><ul>
+<li><a class="reference internal" href="#strategic-design-progettazione-strategica">Strategic Design (Progettazione Strategica)</a></li>
+<li><a class="reference internal" href="#tactical-design-progettazione-tattica">Tactical Design (Progettazione Tattica)</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#ddd-e-microservizi">DDD e Microservizi</a><ul>
+<li><a class="reference internal" href="#definizione-dei-confini-dei-microservizi-tramite-i-contesti-delimitati">Definizione dei Confini dei Microservizi tramite i Contesti Delimitati:</a></li>
+<li><a class="reference internal" href="#linguaggio-ubiquo-e-chiarezza-della-comunicazione">Linguaggio Ubiquo e Chiarezza della Comunicazione:</a></li>
+<li><a class="reference internal" href="#aggregati-come-unita-di-consistenza-e-confinamento-dei-dati">Aggregati come Unità di Consistenza e Confinamento dei Dati:</a></li>
+<li><a class="reference internal" href="#eventi-di-dominio-per-la-comunicazione-tra-microservizi-consistenza-finale">Eventi di Dominio per la Comunicazione tra Microservizi (Consistenza Finale)</a></li>
+<li><a class="reference internal" href="#mappe-di-contesto-per-gestire-le-relazioni-tra-microservizi">Mappe di Contesto per Gestire le Relazioni tra Microservizi:</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#modellazione-del-dominio">Modellazione del dominio</a><ul>
+<li><a class="reference internal" href="#concentrarsi-sui-contesti-delimitati-non-su-un-singolo-modello-unificato">1. Concentrarsi sui contesti delimitati, non su un singolo modello unificato</a></li>
+<li><a class="reference internal" href="#enfatizzare-la-comunicazione-e-la-collaborazione-comprensione-condivisa">2. Enfatizzare la comunicazione e la collaborazione (comprensione condivisa)</a></li>
+<li><a class="reference internal" href="#tecniche-di-modellazione-all-interno-di-un-contesto-delimitato">3. Tecniche di modellazione all’interno di un contesto delimitato</a></li>
+<li><a class="reference internal" href="#andare-oltre-uml-per-la-progettazione-a-livello-di-sistema">4. Andare oltre UML per la progettazione a livello di sistema</a></li>
+<li><a class="reference internal" href="#raffinamento-iterativo-e-progettazione-evolutiva">5. Raffinamento iterativo e progettazione evolutiva</a></li>
+<li><a class="reference internal" href="#strumenti-per-la-collaborazione-e-il-domain-discovery-pre-coding-collaborazione-iniziale">1. Strumenti per la Collaborazione e il Domain Discovery (Pre-coding/Collaborazione Iniziale)</a></li>
+<li><a class="reference internal" href="#strumenti-per-la-definizione-dei-contratti-e-api-design-time">2. Strumenti per la Definizione dei Contratti e API (Design Time)</a></li>
+<li><a class="reference internal" href="#strumenti-e-metodologie-di-implementazione-code-time">3. Strumenti e Metodologie di Implementazione (Code Time)</a></li>
+<li><a class="reference internal" href="#strumenti-per-la-gestione-e-il-monitoraggio-runtime">4. Strumenti per la Gestione e il Monitoraggio (Runtime)</a></li>
+<li><a class="reference internal" href="#conclusione">Conclusione:</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  </div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/DomainDrivenDesign.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="Related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="nav-item nav-item-0"><a href="index.html">iss25 1.0 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">DomainDrivenDesign</a></li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+    &#169; Copyright 2025, Antonio Natali.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.1.3.
+    </div>
+  </body>
+</html>
