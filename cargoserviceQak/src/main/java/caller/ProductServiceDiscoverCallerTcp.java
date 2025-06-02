@@ -1,16 +1,5 @@
 package main.java.caller;
 
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
-
-import com.netflix.appinfo.ApplicationInfoManager;
-import com.netflix.appinfo.EurekaInstanceConfig;
-import com.netflix.appinfo.InstanceInfo;
-import com.netflix.appinfo.MyDataCenterInstanceConfig;
-import com.netflix.discovery.DefaultEurekaClientConfig;
-import com.netflix.discovery.DiscoveryClient;
 /*
  * ---------------------------------------------
  * WARNING:
@@ -18,8 +7,9 @@ import com.netflix.discovery.DiscoveryClient;
  *      configurare eureka-client.properties
  * ---------------------------------------------
  */
+import com.netflix.appinfo.InstanceInfo;
 import com.netflix.discovery.EurekaClient;
-import main.java.domain.Product;
+ import main.java.domain.Product;
 import unibo.basicomm23.interfaces.IApplMessage;
 import unibo.basicomm23.interfaces.Interaction;
 import unibo.basicomm23.msg.ProtocolType;
@@ -30,28 +20,27 @@ public class ProductServiceDiscoverCallerTcp  {
 	
 //	private String p = "product( '{\"productId\":23,\"name\":\"p23\",\"weight\":230}' )";
 	private EurekaClient eurekaClient;
-//	private String serviceName = "productservice";
+//	private String serviceName = "ctxcargoservice";
 	private Interaction connSupport;
 	
     
 	protected String[] discoverProductService(String serviceName) {
-		try {
-			CommUtils.outcyan("connectService discoverProductService:" + serviceName);
-			/*
-			 * caller creato esplicitamente per poter fare shutdown
-			 */
-		   	eurekaClient  = CommUtils.createEurekaClient(); //Usa il file eureka-client.properties 
-			CommUtils.outcyan("connectService eurekaClient:     " + eurekaClient);
-			String[]  hostPort = CommUtils.discoverService(  eurekaClient, serviceName );
+ 		CommUtils.ckeckEureka( );
+    	//eurekaClient = CommUtils.createEurekaClient( new EurekaServiceConfig()  ); 
+		//DISCOVER
+    	CommUtils.outyellow(" ---------------------------- discoverService ");
+ 		String[]  hostPort = CommUtils.discoverService(  "ctxcargoservice" ); 
+		CommUtils.outyellow(" ---------------------------- discoverService hostPort=" + hostPort);
+ 		if( hostPort != null ) {
 			CommUtils.outcyan("connectService hostPort:     " + hostPort);
 			return hostPort;
-
-		} catch (Exception e) {
-			CommUtils.outred("ERROR:" + e.getMessage());
+		}else {
+			CommUtils.outred("Discoverable " + serviceName + " not found");
 			return null;
-		}
+		}			
 
 	}
+	
 	
 	protected boolean connectToService(String[]  hostPort) {
 		try {
@@ -103,7 +92,7 @@ public class ProductServiceDiscoverCallerTcp  {
 	
 	public void doJob() throws Exception   {
 		CommUtils.outcyan("connectService doJob"  );
-		String[]  hostPort = discoverProductService("productservice");
+		String[]  hostPort = discoverProductService("ctxcargoservice");
 		if( hostPort != null ) {
             useService(hostPort);
             getProduct(2);
@@ -121,7 +110,7 @@ public class ProductServiceDiscoverCallerTcp  {
  		CommUtils.delay(1000); 
     	CommUtils.outblue("ServiceUsage shutting down the EurekaClient after 1 sec delay");
 		connSupport.close();
-        eurekaClient.shutdown();   	
+        if(eurekaClient != null) eurekaClient.shutdown();   	
     }
 	
     protected void deregister() {  //NON FUNZIONA

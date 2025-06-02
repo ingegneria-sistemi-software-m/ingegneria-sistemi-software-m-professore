@@ -192,11 +192,18 @@ distributions {
     }
 } 
 
-task run0(type: JavaExec) {
+task runRegister(type: JavaExec) {
     group = "Execution"
     description = "Run the main class with JavaExecTask"
     classpath = sourceSets.main.runtimeClasspath
     main = 'it.unibo.ctxcargoservice.MainCtxcargoserviceKt'
+}
+
+task runCaller(type: JavaExec) {
+    group = "Execution"
+    description = "Run the main class with JavaExecTask"
+    classpath = sourceSets.main.runtimeClasspath
+    main = 'main.java.caller.ProductServiceDiscoverCallerTcp'
 }
 
 /*

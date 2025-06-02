@@ -1,6 +1,5 @@
 System  cargoservice  
 mqttBroker "localhost" : 1883 eventTopic "cargoevents"     //mosquitto se in docker
-//mqttBroker "test.mosquitto.org" : 1883 eventTopic "cargoevents"   //mosquitto "localhost" : 1883
 //mqttBroker "broker.hivemq.com" : 1883
             
 Request createProduct : product(String)                     //String JSON '{"productId":31,"name":"p31","weight":311}'
@@ -9,7 +8,7 @@ Reply   createdProduct: productid(ID) for createProduct   //String JSON
 Request deleteProduct  : product( ID ) 
 Reply   deletedProduct : product(String) for deleteProduct
 
-Request getProduct : product( ID ) 
+Request getProduct : product( ID )  
 Reply   getProductAnswer: product( JSonString ) for getProduct 
  
 Request getAllProducts : dummy( ID )
@@ -22,7 +21,7 @@ Event   cargoevent : cargoevent( INFO )
 Event   alarm      : alarm(X) //for basicrobot
  
 Context ctxcargoservice ip [ host="localhost" port=8111]
- 
+  
 /*
  * QActor che esegue la richiesta create in modo atomico e FIFO
  * Viene dichiarato per primo in quanto productservice lo delega
@@ -118,36 +117,45 @@ import "main.java.domain.*"
 	val logger = LoggerFactory.getLogger("productservice_actor")  
 	clearlog("./logs/app_cargoservice.log") 
 
-
+//	lateinit var eurekaClient : com.netflix.discovery.DiscoveryClient 
 
 //REGISTER	 
-fun register(){
-// 	  System.setProperty("eureka.client.props", "main/java/eureka-client.properties");
-// 	  System.setProperty("eureka.leaseRenewalIntervalInSeconds", "60");
-// 	  System.setProperty("eureka.instance.nonSecurePort", "8111");
-//	  CommUtils.outgreen("props:"+ System.getProperty("eureka.client.props"));
-//	  CommUtils.outgreen("port :"+ System.getProperty("eureka.instance.nonSecurePort"));
-//	  CommUtils.outgreen("dt   :"+ System.getProperty("eureka.leaseRenewalIntervalInSeconds"));
-    val eurekaOn = CommUtils.getEnvvarValue("EUREKA_CLIENT_SERVICEURL_DEFAULTZONE")
-    val myIp     = CommUtils.getMyPublicip()
-    CommUtils.outblue("eurekaOn=$eurekaOn myIp=$myIp ")
-//	  if( eurekaOn != null) 
-	val discoveryclient = main.java.EurekaServiceConfig.myRegister( main.java.EurekaServiceConfig() )
-	//val discoveryclient = CommUtils.registerService( main.java.EurekaServiceConfig() )
-	CommUtils.outblue("discoveryclient=$discoveryclient ")
-	//discoveryclient=com.netflix.discovery.DiscoveryClient@6def0632
-}
-#]  
-  
+ 
+//fun register(){
+//	CommUtils.ckeckEureka( );
+//// 	  System.setProperty("eureka.client.props", "main/java/eureka-client.properties");
+//// 	  System.setProperty("eureka.leaseRenewalIntervalInSeconds", "60");
+//// 	  System.setProperty("eureka.instance.nonSecurePort", "8111");
+////	  CommUtils.outgreen("props:"+ System.getProperty("eureka.client.props"));
+////	  CommUtils.outgreen("port :"+ System.getProperty("eureka.instance.nonSecurePort"));
+////	  CommUtils.outgreen("dt   :"+ System.getProperty("eureka.leaseRenewalIntervalInSeconds"));
+//    val eurekaOn = CommUtils.getEnvvarValue("EUREKA_CLIENT_SERVICEURL_DEFAULTZONE")
+//    val myIp     = CommUtils.getMyPublicip()
+//    CommUtils.outblue("eurekaOn=$eurekaOn myIp=$myIp ")
+////	  if( eurekaOn != null) 
+//	//val discoveryclient = main.java.EurekaServiceConfig.myRegister( main.java.EurekaServiceConfig() )
+//	val discoveryclient = CommUtils.registerService( main.java.EurekaServiceConfig() )
+//	CommUtils.outblue("discoveryclient=$discoveryclient ")	 
+//}
+ 
+ 
+
+#]    
 	State s0 initial{ 
 		[# val Info = "$name | STARTS delegating createProduct to exec_createdelete" #]
 		
 		//connectToMqttBroker "tcp://localhost:1883"
 		
-        delay 1500 //Give time to other actors to srart before delegate //TODO:wait ...
+        delay 1500 //Give time to other actors to start before delegate //TODO:wait ...
+        println("$name | register ...................... ") color green
         [#   
         	logger.info(  sysUtil.logStr(name,Info,"categ0")  )
-        	register()
+        	val b = CommUtils.ckeckEureka( )
+        	CommUtils.outgreen("$name | register $b ")  
+        	//register()
+        	//eurekaClient = 
+        	CommUtils.registerService( main.java.EurekaServiceConfig() );
+        	//val discoveryclient = CommUtils.registerService( main.java.EurekaServiceConfig() )
         #]
         println("$name | STARTSSSSSSSSSSSSSSSSSSSSS") color green
 		delegate createProduct to exec_createdelete
@@ -249,6 +257,8 @@ import "main.java.domain.*"
  * ------------------------------------------
  * ------------------------------------------
  */ 
+ 
+ /*
  QActor servicefacade context ctxcargoservice{
  	[# var productToCreate = ""#]
   State s0 initial{ 
@@ -344,7 +354,10 @@ import "main.java.domain.*"
 //  }
 //  Goto s0 	
  }
-                        
+ 
+ */
+ 
+                       
 /* 
 QActor mqttreceiver context ctxcargoservice  {
   State s0 initial{ 

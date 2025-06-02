@@ -1,5 +1,6 @@
 package main.java;
 import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.util.concurrent.TimeUnit;
 
 import com.netflix.appinfo.ApplicationInfoManager;
@@ -27,6 +28,12 @@ import unibo.basicomm23.utils.CommUtils;
 public class EurekaServiceConfig extends MyDataCenterInstanceConfig{
 	private int ncalls = 0;
 	//Ottieni il nome dell'applicazione da registrare con Eureka.
+	
+	public EurekaServiceConfig() {
+		CommUtils.outmagenta("EurekaServiceConfig CREATED " + getAppname( ));
+	}
+
+	
 	@Override
 	public String getAppname( ) {
 		return "ctxcargoservice";
@@ -36,18 +43,24 @@ public class EurekaServiceConfig extends MyDataCenterInstanceConfig{
 	@Override
 	public String getHostName(boolean refresh) {
 		
-		String raspAddr = CommUtils.getEnvvarValue("RASP_ADDR");
-		if( raspAddr != null ) return raspAddr;
-		
-		String ip = CommUtils.getMyPublicip(); //localhost()
- 
-		if (ncalls++ % 10 == 0) {
-			CommUtils.outblack("cargoservice EurekaServiceConfig getHostName=" + ip 
-					+ " ncalls=" + ncalls
-					+ " AT:" + TimeUnit.MILLISECONDS.toSeconds(System.currentTimeMillis()));
-		}
-		return ip;
-		//return "localhost";
+//		String raspAddr = CommUtils.getEnvvarValue("RASP_ADDR");
+//		if( raspAddr != null ) return raspAddr;
+//		
+////		String ip = CommUtils.getMyPublicip(); //localhost()
+//		String ip = null;
+//		try {
+//			ip = InetAddress.getLocalHost().getHostAddress();
+//		} catch (UnknownHostException e) {
+// 			e.printStackTrace();
+//		}
+// 
+//		if (ncalls++ % 10 == 0) {
+//			CommUtils.outblack("cargoservice EurekaServiceConfig getHostName=" + ip 
+//					+ " ncalls=" + ncalls
+//					+ " AT:" + TimeUnit.MILLISECONDS.toSeconds(System.currentTimeMillis()));
+//		}
+//// 		return ip;
+ 		return "localhost";
 	}
 
 	/*
@@ -99,28 +112,6 @@ public class EurekaServiceConfig extends MyDataCenterInstanceConfig{
 		return 60;
 	}
 	
-	public static DiscoveryClient myRegister( EurekaInstanceConfig instanceConfig ) {
-		//if( checkEureka() ) {
-	        CommUtils.outcyan("EurekaInstanceConfig | myRegister with  port=" 
-	        		+ instanceConfig.getNonSecurePort()
-					+ " host=" + instanceConfig.getHostName(false)
-					+ " IP=" + instanceConfig.getIpAddress()
-					+ " DT=" + instanceConfig.getLeaseExpirationDurationInSeconds()
-	        		+ " appName=" + instanceConfig.getAppname() );
-//	        EurekaInstanceConfig instanceConfig           = new MyDataCenterInstanceConfig(); //new EurekaUniboServiceConfig();  
-	        ApplicationInfoManager applicationInfoManager = new ApplicationInfoManager(instanceConfig  );
-	        //DefaultEurekaClientConfig contiene le informazioni di configurazione per il client Eureka, 
-	        //come eureka.serviceUrl.defaultZone, e altri dettagli per connettersi al server Eureka
-	        DefaultEurekaClientConfig clientConfig = new  DefaultEurekaClientConfig();
-	        CommUtils.outcyan("myRegister  | region="+clientConfig.getRegion());
-	        //applicationInfoManager.initComponent(instanceConfig);
-	        DiscoveryClient client = new DiscoveryClient(applicationInfoManager, clientConfig);
-	        
-	        applicationInfoManager.setInstanceStatus(InstanceInfo.InstanceStatus.UP);
-	        CommUtils.outcyan("EurekaInstanceConfig | myRegister done"  );
-	        
-	        return client;
 
-	}	
 
 }
