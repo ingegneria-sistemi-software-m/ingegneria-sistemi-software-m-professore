@@ -1,0 +1,291 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>Temafinale25BounddContexts &#8212; iss25 1.0 documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinxdoc.css" />
+    <link rel="stylesheet" type="text/css" href="_static/custom.css" />
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="SpringBootWebSocketSTOMP" href="SpringBootWebSocketSTOMP.html" />
+    <link rel="prev" title="TemaFinaleNote" href="TemaFinaleNote.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="SpringBootWebSocketSTOMP.html" title="SpringBootWebSocketSTOMP"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="TemaFinaleNote.html" title="TemaFinaleNote"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">iss25 1.0 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Temafinale25BounddContexts</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="temafinale25bounddcontexts">
+<h1>Temafinale25BounddContexts<a class="headerlink" href="#temafinale25bounddcontexts" title="Permalink to this heading">¶</a></h1>
+<section id="prima-interazione">
+<h2>Prima interazione<a class="headerlink" href="#prima-interazione" title="Permalink to this heading">¶</a></h2>
+<p>Il testo specifica i requisiti per una applicazione software basata su microservizi. Vorrei che tu mi aiutassi a individuare possibili BoundentContexts, come suggerito dal DDD</p>
+<hr class="docutils" />
+<p>Certamente. Basandoci sulle informazioni fornite nelle fonti riguardo al Domain-Driven Design (DDD) e all’applicazione di questo approccio nella progettazione di sistemi basati su microservizi, possiamo analizzare la descrizione del sistema per la compagnia di spedizioni marittime (-) e individuare possibili Contesti Delimitati (Bounded Contexts).</p>
+<p>Come le fonti indicano, nel DDD, specialmente con i microservizi, non esiste un unico modello di dominio unificato
+per l’intero sistema. Il dominio viene invece scomposto in <strong>modelli più piccoli e coerenti,
+ciascuno residente nel proprio Contesto Delimitato</strong>.</p>
+<p>Un Contesto Delimitato è un confine logico all’interno del quale un modello di dominio specifico ha un significato ben definito
+e non ambiguo.</p>
+<p>La definizione dei confini dei microservizi avviene tipicamente tramite questi Contesti Delimitati, con <strong>ogni microservizio che idealmente incapsula un singolo Contesto Delimitato</strong>.</p>
+<p>Analizzando i requisiti e la descrizione del sistema fornita, possiamo identificare diverse aree di responsabilità o concetti che potrebbero definire confini naturali per i Contesti Delimitati:</p>
+</section>
+<section id="contesto-gestione-carico-loading-management-cargo-process">
+<h2>1.  <strong>Contesto “Gestione Carico” (Loading Management / Cargo Process)</strong><a class="headerlink" href="#contesto-gestione-carico-loading-management-cargo-process" title="Permalink to this heading">¶</a></h2>
+<blockquote>
+<div><ul class="simple">
+<li><p><strong>Responsabilità:</strong> Questo contesto si occuperebbe della <strong>logica di business principale legata al processo di carico</strong>. Gestirebbe la ricezione delle richieste di carico, la validazione di tali richieste (controllo peso massimo, disponibilità slot), l’associazione di un PID a uno slot riservato, la gestione dello stato del processo di carico per una specifica richiesta (es. attesa del prodotto all’IOPort), e il segnalare quando un nuovo carico può essere elaborato.</p></li>
+<li><p><strong>Modello:</strong> Potrebbe includere concetti come <cite>RichiestaCarico</cite> (LoadRequest), <cite>OperazioneCarico</cite> (LoadingOperation) con stati associati (e.g., Accettata, In Attesa, In Corso, Completata), <cite>PrenotazioneSlot</cite> (SlotReservation).</p></li>
+<li><p><strong>Motivazione:</strong> Questa area gestisce il <em>flusso</em> del processo di carico e le relative regole di business che determinano l’accettazione o il rifiuto di una richiesta e l’avanzamento dell’operazione. È un’area critica che necessita di una propria coerenza.</p></li>
+</ul>
+</div></blockquote>
+</section>
+<section id="contesto-inventario-stiva-hold-inventory-slot-management">
+<h2>2.  <strong>Contesto “Inventario Stiva” (Hold Inventory / Slot Management)</strong><a class="headerlink" href="#contesto-inventario-stiva-hold-inventory-slot-management" title="Permalink to this heading">¶</a></h2>
+<blockquote>
+<div><ul class="simple">
+<li><p><strong>Responsabilità:</strong> Questo contesto gestirebbe lo <strong>stato fisico della stiva</strong>. Sarebbe responsabile di tenere traccia degli slot disponibili e occupati, di quale prodotto (identificato dal PID) si trova in quale slot, e di fornire informazioni sullo stato di occupazione della stiva (es. se è piena).</p></li>
+<li><p><strong>Modello:</strong> Potrebbe includere concetti come <cite>Stiva</cite> (Hold), <cite>Slot</cite>, <cite>StatoSlot</cite> (Occupato/Libero), <cite>ProdottoCaricato</cite> (LoadedProduct) che associa un PID a uno Slot.</p></li>
+<li><p><strong>Motivazione:</strong> Questo è un <strong>aggregato</strong> o un cluster di oggetti che necessita di una sua <strong>consistenza interna</strong> per quanto riguarda lo stato degli slot. La sua principale responsabilità è mantenere un modello accurato e coerente della stiva, distinto dalla logica <em>processuale</em> del carico.</p></li>
+</ul>
+</div></blockquote>
+</section>
+<section id="contesto-interazione-fisica-sensori-physical-io-robot-sensor-gateway">
+<h2>3.  <strong>Contesto “Interazione Fisica/Sensori” (Physical IO / Robot/Sensor Gateway)</strong><a class="headerlink" href="#contesto-interazione-fisica-sensori-physical-io-robot-sensor-gateway" title="Permalink to this heading">¶</a></h2>
+<blockquote>
+<div><ul class="simple">
+<li><p><strong>Responsabilità:</strong> Questo contesto si occuperebbe dell’<strong>interfacciamento con i dispositivi fisici</strong>, in particolare il sensore sonar all’IOPort. Sarebbe responsabile di leggere i dati dal sensore, interpretare tali dati per determinare la presenza di un container, e gestire eventi o stati anomali del sensore (es. guasto sonar). Potrebbe anche interfacciarsi con il <cite>cargorobot</cite> per notificare o validare il completamento della movimentazione (sebbene i requisiti non lo dettagliino completamente, “garantire che il container sia posizionato” implica un’interazione o validazione).</p></li>
+<li><p><strong>Modello:</strong> Potrebbe includere concetti come <cite>LetturaSonar</cite> (SonarReading), <cite>StatoIOPort</cite> (IOPortStatus, es. ContainerPresent, Libero), <cite>StatoSensore</cite> (SensorStatus, es. Operativo, Guasto).</p></li>
+<li><p><strong>Motivazione:</strong> Separare la logica di interazione con l’hardware e l’interpretazione dei dati dei sensori dalla logica di business del carico o dalla gestione dell’inventario <strong>isola la complessità tecnica</strong> e le possibili fonti di errore o ritardo derivanti dall’interazione col mondo fisico.</p></li>
+</ul>
+</div></blockquote>
+</section>
+<section id="contesto-visualizzazione-stiva-hold-visualization-reporting">
+<h2>4.  <strong>Contesto “Visualizzazione Stiva” (Hold Visualization / Reporting)</strong><a class="headerlink" href="#contesto-visualizzazione-stiva-hold-visualization-reporting" title="Permalink to this heading">¶</a></h2>
+<blockquote>
+<div><ul class="simple">
+<li><p><strong>Responsabilità:</strong> Questo contesto si occuperebbe di fornire i dati e/o gestire l’interfaccia utente (GUI) per <strong>mostrare lo stato corrente della stiva</strong> in modo dinamico. La sua responsabilità principale è di interrogare i dati rilevanti (probabilmente dal contesto “Inventario Stiva”) e presentarli in un formato adatto all’interfaccia web.</p></li>
+<li><p><strong>Modello:</strong> Potrebbe avere un modello di lettura ottimizzato per le query, che magari aggrega informazioni dagli altri contesti.</p></li>
+<li><p><strong>Motivazione:</strong> In un’architettura a microservizi, spesso si separa la logica di scrittura/transazionale da quella di lettura/querying (pattern CQRS). Questo contesto sarebbe principalmente un <strong>contesto di lettura</strong> focalizzato sulla presentazione dei dati, separato dal contesto “Inventario Stiva” che gestisce lo stato transazionale.</p></li>
+</ul>
+</div></blockquote>
+<p>Questi potenziali Contesti Delimitati definiscono aree del dominio con <strong>confini chiari</strong> e <strong>modelli di dominio specifici</strong>.
+Tra di essi esisterebbero delle <strong>relazioni e interazioni</strong> che andrebbero esplicitate, ad esempio,
+utilizzando una <strong>Mappa di Contesto</strong> (Context Map).</p>
+<ul class="simple">
+<li><p>La “Gestione Carico” dipenderebbe dall‘“Inventario Stiva” per la disponibilità degli slot e dall‘“Interazione Fisica/Sensori”
+per rilevare la presenza del container.</p></li>
+<li><p>La “Visualizzazione Stiva” dipenderebbe dall‘“Inventario Stiva” per ottenere i dati da mostrare.</p></li>
+</ul>
+<p>La comunicazione tra questi contesti avverrebbe idealmente tramite <strong>Eventi di Dominio</strong>. Ad esempio,
+- il contesto “Interazione Fisica/Sensori” potrebbe pubblicare l’evento <cite>ContainerDetectedAtIOPort</cite>, a cui il contesto</p>
+<blockquote>
+<div><p>“Gestione Carico” potrebbe reagire.</p>
+</div></blockquote>
+<ul class="simple">
+<li><p>Il contesto “Gestione Carico” potrebbe pubblicare l’evento <cite>SlotReserved</cite>, e l‘“Inventario Stiva” potrebbe reagire aggiornando il suo stato.</p></li>
+</ul>
+<p>Tecniche come l’<strong>Event Storming</strong>, basate sulla scoperta collaborativa degli eventi significativi nel dominio, sarebbero molto utili per validare questi confini e scoprire ulteriori eventi, comandi e aggregati all’interno di ciascun contesto.</p>
+<p>Questo approccio, che sposta l’attenzione da un singolo modello unificato a modelli distribuiti e specifici al contesto, è in linea con i principi del DDD applicati ai microservizi.</p>
+</section>
+<section id="proposta">
+<h2>Proposta<a class="headerlink" href="#proposta" title="Permalink to this heading">¶</a></h2>
+<p>Io penso che si potrebbe introdurre ache un contesto del tipo “Memorizzazione Prodotto”  per occuparsi della registrazione dei prodotti in un database. Che cosa ne pensi?</p>
+<hr class="docutils" />
+<p>Hai assolutamente colto un punto importante e pertinente. Basandoci sulle informazioni fornite nelle fonti e nella descrizione del sistema, l’idea di considerare un contesto separato per la “Memorizzazione Prodotto” o “Gestione Prodotto” è <strong>molto appropriata</strong> e in linea con i principi del Domain-Driven Design (DDD) applicati ai microservizi.</p>
+<p>Come indicano le fonti, il DDD promuove la scomposizione di un dominio complesso in <strong>Contesti Delimitati (Bounded Contexts)</strong> più piccoli e gestibili. Ogni microservizio idealmente incapsula un singolo Contesto Delimitato, con il proprio modello di dominio interno e logica di business specifica.</p>
+<p>La descrizione del sistema menziona esplicitamente un <strong>`productservice`</strong> che è responsabile della <strong>registrazione dei prodotti container in un database</strong>, specificandone il peso. Questo servizio restituisce un identificatore univoco del prodotto (PID). Successivamente, il <cite>cargoservice</cite> (il sistema che dobbiamo costruire) riceve richieste per caricare container che sono <strong>già stati registrati</strong> in questo <cite>productservice</cite>.</p>
+<p>Questo scenario descrive perfettamente una <strong>separazione naturale delle responsabilità</strong> che si traduce in un Contesto Delimitato distinto:</p>
+</section>
+<section id="contesto-gestione-prodotto-o-catalogo-prodotto-product-management-product-catalog">
+<h2>1.  <strong>Contesto “Gestione Prodotto” o “Catalogo Prodotto” (Product Management / Product Catalog)</strong><a class="headerlink" href="#contesto-gestione-prodotto-o-catalogo-prodotto-product-management-product-catalog" title="Permalink to this heading">¶</a></h2>
+<blockquote>
+<div><ul class="simple">
+<li><p><strong>Responsabilità:</strong> Questo contesto si occuperebbe della <strong>gestione del ciclo di vita dei prodotti</strong> che possono essere caricati sulla nave. La sua responsabilità principale, come descritto, è la <strong>registrazione</strong> dei container, l’associazione di un <strong>PID</strong>, e la memorizzazione degli attributi rilevanti del prodotto, come il <strong>peso</strong>. Potrebbe anche gestire altre informazioni sul prodotto non esplicitate nei requisiti del <cite>cargoservice</cite>, ma rilevanti per il “mondo” dei prodotti (es. tipo di merce, dimensioni complete, ecc.).</p></li>
+<li><p><strong>Modello:</strong> Il modello di dominio all’interno di questo contesto avrebbe concetti centrali come <cite>ProdottoContainer</cite> (Product Container) con attributi come <cite>PID</cite> (Product ID) e <cite>Peso</cite> (Weight). Il linguaggio ubiquo in questo contesto ruoterebbe attorno a termini come “registrazione prodotto”, “peso container”, “PID”, ecc..</p></li>
+<li><p><strong>Motivazione:</strong> Questa è un’area di business distinta. La logica e i dati relativi alla <em>definizione e registrazione</em> di un prodotto sono separati dalla logica e dai dati relativi al suo <em>caricamento</em> effettivo sulla nave. Il <cite>cargoservice</cite> (e i suoi contesti come “Gestione Carico”) <strong>dipendono</strong> da questo contesto per ottenere le informazioni sul prodotto (come il peso per la validazione), ma non sono responsabili della <em>creazione</em> o <em>modifica</em> di tali informazioni. Questo è un esempio classico di una relazione <strong>Customer/Supplier</strong> o <strong>Conformist</strong> in una Mappa di Contesto.</p></li>
+</ul>
+</div></blockquote>
+<p>Separare questa responsabilità in un contesto dedicato (probabilmente implementato come un microservizio separato, il <cite>productservice</cite>) presenta i seguenti vantaggi, in linea con i benefici del DDD con microservizi:</p>
+<ul class="simple">
+<li><p><strong>Riduzione della complessità:</strong> La logica di gestione del prodotto è isolata dal processo di carico principale.</p></li>
+<li><p><strong>Ambiti ben definiti:</strong> Ogni servizio ha un ambito di responsabilità chiaro (uno gestisce i prodotti, l’altro gestisce il carico).</p></li>
+<li><p><strong>Autonomia dei dati:</strong> Il contesto “Gestione Prodotto” possiede e gestisce i dati relativi ai prodotti in modo autonomo.</p></li>
+<li><p><strong>Sviluppo indipendente:</strong> Team diversi potrebbero lavorare sui servizi di Gestione Prodotto e Carico in modo indipendente.</p></li>
+</ul>
+<p>Quindi, sì, la tua intuizione è corretta. La descrizione di un <cite>productservice</cite> dedicato alla registrazione del prodotto suggerisce fortemente l’esistenza (o la necessità) di un Bounded Context separato per la gestione dei prodotti, che è <strong>antecedente o una dipendenza</strong> per il sistema di carico descritto nei requisiti principali del <cite>cargoservice</cite>. Questo contesto si aggiungerebbe a quelli che avevamo identificato in precedenza (“Gestione Carico”, “Inventario Stiva”, “Interazione Fisica/Sensori”, “Visualizzazione Stiva”), e la loro relazione verrebbe esplicitata in una Mappa di Contesto.</p>
+</section>
+<section id="pojo-o-actors">
+<h2>POJO o Actors?<a class="headerlink" href="#pojo-o-actors" title="Permalink to this heading">¶</a></h2>
+<p>Limitiamo l’attenzione al Contesto “gestione Carico”. Sono interssato a individuare i componenti software da introdurre in questo contesto, cercando di capire se sia meglio modellare ciascun componente come un oggetto (Plain Old Java Object) o come un Actor. Mi puoi aiutare?</p>
+<hr class="docutils" />
+<p>Certamente. Concentriamo l’attenzione sul Contesto Delimitato “Gestione Carico” (Loading Management / Cargo Process) che abbiamo precedentemente individuato, basandoci sulla descrizione del sistema e sui principi del Domain-Driven Design (DDD) e del modello ad Attori Qak.</p>
+<p>Come abbiamo discusso, nel DDD, specialmente con l’architettura a microservizi, il dominio complesso viene scomposto in <strong>Contesti Delimitati (Bounded Contexts)</strong>, ognuno con il proprio modello di dominio specifico e coerente. Ogni microservizio idealmente incapsula un singolo Contesto Delimitato. Il Contesto “Gestione Carico” è stato identificato come responsabile della <strong>logica di business legata al processo di carico</strong> [conversazione precedente].</p>
+<p>Basandoci sui requisiti, le responsabilità chiave di questo contesto includono:</p>
+<ul class="simple">
+<li><p>Ricevere e validare le richieste di carico (controllo peso, disponibilità slot).</p></li>
+<li><p>Associare un PID (Product ID) a uno slot riservato.</p></li>
+<li><p>Attendere la consegna fisica del container all’IOPort.</p></li>
+<li><p>Garantire il posizionamento del container nello slot.</p></li>
+<li><p>Gestire lo stato del processo di carico per una richiesta specifica.</p></li>
+<li><p>Non elaborare altre richieste mentre una è in corso.</p></li>
+<li><p>Interagire con altri contesti (Gestione Prodotto per il peso, Inventario Stiva per gli slot, Interazione Fisica/Sensori per la presenza del container).</p></li>
+<li><p>Gestire potenziali errori o stati anomali (es. guasto sensore).</p></li>
+</ul>
+<p>Ora, consideriamo come modellare i componenti software all’interno di questo contesto, scegliendo tra oggetti (Plain Old Java Object - POJO) e Attori, tenendo conto anche dei concetti del modello Qak introdotti dalle fonti.</p>
+<section id="oggetti-pojo">
+<h3><strong>Oggetti (POJO)</strong><a class="headerlink" href="#oggetti-pojo" title="Permalink to this heading">¶</a></h3>
+<p>Nel contesto del DDD, gli oggetti come Entità (Entities), Value Objects e Aggregati (Aggregates) sono elementi fondamentali per modellare il dominio.</p>
+<ul class="simple">
+<li><p><strong>Entità:</strong> Hanno un’identità persistente e un ciclo di vita.</p></li>
+<li><p><strong>Value Objects:</strong> Sono definiti unicamente dai loro attributi e sono immutabili.</p></li>
+<li><p><strong>Aggregati:</strong> Sono cluster di oggetti trattati come un’unica unità per garantire la consistenza dei dati, con una Radice dell’Aggregato (Aggregate Root) come punto di accesso.</p></li>
+</ul>
+<p>All’interno del Contesto “Gestione Carico”, potresti usare POJO per rappresentare:</p>
+<ul class="simple">
+<li><p>La <strong>struttura di una richiesta di carico</strong> (es. un Value Object <cite>LoadRequest</cite> contenente il PID e altri dettagli della richiesta).</p></li>
+<li><p>Il <strong>risultato di una validazione</strong> (es. un Value Object <cite>ValidationResult</cite>).</p></li>
+<li><p>Informazioni sullo <strong>slot riservato</strong> (es. un Value Object <cite>SlotInformation</cite>).</p></li>
+<li><p>Potenziali Entità o Aggregati se il contesto avesse bisogno di mantenere una collezione di dati complessa e coerente legata <em>alla gestione del processo</em>.</p></li>
+</ul>
+<p>Tuttavia, i POJO sono tipicamente <strong>passivi</strong>; rappresentano dati o logica stateless. Non gestiscono autonomamente il loro stato nel tempo in risposta a eventi esterni né hanno una propria coda di messaggi.</p>
+</section>
+<section id="attori-actors">
+<h3><strong>Attori (Actors)</strong><a class="headerlink" href="#attori-actors" title="Permalink to this heading">¶</a></h3>
+<p>Il modello ad Attori, come quello Qak, si basa su componenti <strong>autonomi</strong> che:</p>
+<ul class="simple">
+<li><p>Hanno un proprio flusso di controllo.</p></li>
+<li><p>Mantengono uno <strong>stato interno</strong>.</p></li>
+<li><p>Interagiscono scambiandosi <strong>messaggi</strong> (Dispatch, Request, Reply, Event).</p></li>
+<li><p>Hanno una <strong>coda locale</strong> per i messaggi.</p></li>
+<li><p>Il loro comportamento può essere modellato come un <strong>Automa a Stati Finiti (FSM)</strong>.</p></li>
+</ul>
+<p>Il modello Qak è specificamente inteso come un <strong>linguaggio di modellazione eseguibile</strong> per prototipi di <strong>sistemi distribuiti</strong>, i cui componenti sono attori che si comportano come FSM, in stretta relazione con l’idea di sistemi basati su Microservizi. Gli attori Qak sono raggruppati in contesti che li abilitano all’interazione via rete.</p>
+<p>Considerando i requisiti del Contesto “Gestione Carico”, in particolare la necessità di gestire un <strong>flusso sequenziale</strong> (“altre richieste non sono elaborate”), mantenere uno <strong>stato</strong> del processo (in attesa di richiesta, in validazione, in attesa prodotto, ecc.), e <strong>reagire a eventi esterni</strong> (richiesta utente, rilevamento container dal sensore, potenziale errore sensore), un <strong>Attore</strong> sembra un modello molto più adatto rispetto a un semplice POJO o a un servizio stateless.</p>
+<p>Potresti modellare <strong>un Attore principale</strong> all’interno del Contesto “Gestione Carico” che sia responsabile dell’orchestrazione di <strong>una singola operazione di carico per volta</strong>. Questo Attore:</p>
+<ul class="simple">
+<li><p>Potrebbe essere modellato come un <strong>Automa a Stati Finiti Qak</strong> con stati come <cite>Idle</cite>, <cite>ValidatingRequest</cite>, <cite>ReservingSlot</cite>, <cite>WaitingForContainer</cite>, <cite>LoadingInProgress</cite>, <cite>Completed</cite>, <cite>Rejected</cite>, <cite>HandlingSensorError</cite>.</p></li>
+<li><p>Manterrebbe nel suo stato interno i dati relativi alla richiesta corrente (il PID, lo slot riservato).</p></li>
+<li><p>Reagirebbe a messaggi/eventi: riceverebbe la richiesta di carico (es. un <cite>Request</cite> o <cite>Dispatch</cite> Qak), un evento dal sensore (es. <cite>Event</cite> Qak <cite>ContainerDetectedAtIOPort</cite> [conversazione precedente, 66]), potenziali messaggi di conferma dal robot o di errore dal sensore. Le transizioni di stato sarebbero definite in base a questi messaggi.</p></li>
+<li><p>Eseguirebbe le azioni necessarie in ogni stato, ad esempio inviando messaggi ad Attori in altri contesti (es. un <cite>Request</cite> al Contesto “Gestione Prodotto” per ottenere il peso, un <cite>Request</cite> al Contesto “Inventario Stiva” per prenotare uno slot, un <cite>Dispatch</cite> o <cite>Request</cite> al Contesto “Interazione Fisica/Sensori” o al robot per avviare o confermare l’operazione fisica). Le azioni nello stato di un attore Qak possono essere definite come <cite>AnyAction</cite>.</p></li>
+<li><p>Le validazioni (peso, stiva piena) potrebbero essere implementate come <strong>guardie (guards)</strong> Qak sulle transizioni di stato, basate sulle risposte ricevute dagli altri contesti.</p></li>
+<li><p>La logica per “non elaborare altre richieste” è naturalmente gestita dalla natura sequenziale dell’elaborazione dei messaggi da parte dell’Attore: l’Attore elabora un messaggio dalla sua coda alla volta.</p></li>
+</ul>
+<p><strong>In sintesi:</strong></p>
+<ul class="simple">
+<li><p>Per la <strong>logica di processo stateful</strong> che gestisce il ciclo di vita di una singola operazione di carico e coordina le interazioni con altri componenti/contesti, un <strong>Attore</strong> (come modellato in Qak) è una scelta molto adeguata. La sua natura di FSM, la gestione dello stato interno, la coda di messaggi e la capacità di reagire a eventi si allineano perfettamente con i requisiti di questo processo.</p></li>
+<li><p>Gli <strong>Oggetti (POJO)</strong>, come Value Objects, sarebbero utilizzati <em>all’interno</em> dell’Attore o come parte dei messaggi scambiati, per rappresentare dati immutabili (come i dettagli di una richiesta o di uno slot) o strutture dati semplici.</p></li>
+</ul>
+<p>Questa modellazione si sposa bene con l’approccio Qak che vede il sistema come una <strong>collezione di attori</strong> che interagiscono scambiandosi messaggi, raggruppati in contesti che abilitano l’interazione distribuita.</p>
+</section>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <div>
+    <h3><a href="index.html">Table of Contents</a></h3>
+    <ul>
+<li><a class="reference internal" href="#">Temafinale25BounddContexts</a><ul>
+<li><a class="reference internal" href="#prima-interazione">Prima interazione</a></li>
+<li><a class="reference internal" href="#contesto-gestione-carico-loading-management-cargo-process">1.  <strong>Contesto “Gestione Carico” (Loading Management / Cargo Process)</strong></a></li>
+<li><a class="reference internal" href="#contesto-inventario-stiva-hold-inventory-slot-management">2.  <strong>Contesto “Inventario Stiva” (Hold Inventory / Slot Management)</strong></a></li>
+<li><a class="reference internal" href="#contesto-interazione-fisica-sensori-physical-io-robot-sensor-gateway">3.  <strong>Contesto “Interazione Fisica/Sensori” (Physical IO / Robot/Sensor Gateway)</strong></a></li>
+<li><a class="reference internal" href="#contesto-visualizzazione-stiva-hold-visualization-reporting">4.  <strong>Contesto “Visualizzazione Stiva” (Hold Visualization / Reporting)</strong></a></li>
+<li><a class="reference internal" href="#proposta">Proposta</a></li>
+<li><a class="reference internal" href="#contesto-gestione-prodotto-o-catalogo-prodotto-product-management-product-catalog">1.  <strong>Contesto “Gestione Prodotto” o “Catalogo Prodotto” (Product Management / Product Catalog)</strong></a></li>
+<li><a class="reference internal" href="#pojo-o-actors">POJO o Actors?</a><ul>
+<li><a class="reference internal" href="#oggetti-pojo"><strong>Oggetti (POJO)</strong></a></li>
+<li><a class="reference internal" href="#attori-actors"><strong>Attori (Actors)</strong></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  </div>
+  <div>
+    <h4>Previous topic</h4>
+    <p class="topless"><a href="TemaFinaleNote.html"
+                          title="previous chapter">TemaFinaleNote</a></p>
+  </div>
+  <div>
+    <h4>Next topic</h4>
+    <p class="topless"><a href="SpringBootWebSocketSTOMP.html"
+                          title="next chapter">SpringBootWebSocketSTOMP</a></p>
+  </div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/Temafinale25BounddContexts.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="SpringBootWebSocketSTOMP.html" title="SpringBootWebSocketSTOMP"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="TemaFinaleNote.html" title="TemaFinaleNote"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">iss25 1.0 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Temafinale25BounddContexts</a></li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2025, Antonio Natali.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 5.0.2.
+    </div>
+  </body>
+</html>
