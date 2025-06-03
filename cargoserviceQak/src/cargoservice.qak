@@ -1,4 +1,4 @@
-System  cargoservice  
+System  cargoserviceqak
 mqttBroker "localhost" : 1883 eventTopic "cargoevents"     //mosquitto se in docker
 //mqttBroker "broker.hivemq.com" : 1883
             
