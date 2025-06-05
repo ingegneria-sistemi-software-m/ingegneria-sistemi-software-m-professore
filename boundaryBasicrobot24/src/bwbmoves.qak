@@ -1,0 +1,211 @@
+System bwbscrbt
+/*
+ * bwbmoves.qak
+ * usa basicrobot
+ * 
+ * Percorre il perimetro della stanza e fa una pausa quando rilevato dal sonar
+ */ 
+ 
+ /*
+  * Messaggi di interazione con il basicrobot
+  */
+Request engage        : engage(OWNER, STEPTIME)	
+Reply   engagedone    : engagedone(ARG)    for engage
+Reply   engagerefused : engagerefused(ARG) for engage
+Dispatch disengage    : disengage(ARG)
+
+Dispatch cmd    : cmd( MOVE )  "MOVE = a|d|l|r|h   "
+ 
+Request  cmd    : cmd(MOVE,T)  "MOVE = w|s|p (stepSynch)" 
+Reply cmddone   : cmddone(R)          for cmd
+Reply cmdfailed : cmdfailed(T,CAUSE)  for cmd
+
+Request step       : step(TIME)	
+Reply stepdone     : stepdone(V)                 for step
+Reply stepfailed   : stepfailed(DURATION, CAUSE) for step
+ 
+Request  doplan     : doplan( PATH, STEPTIME )
+Reply doplandone    : doplandone( ARG )    for doplan
+Reply doplanfailed  : doplanfailed( ARG )  for doplan
+
+Request moverobot    :  moverobot(TARGETX, TARGETY)  
+Reply moverobotdone  :  moverobotok(ARG)                    for moverobot
+Reply moverobotfailed:  moverobotfailed(PLANDONE, PLANTODO) for moverobot
+
+Request getrobotstate : getrobotstate(ARG)
+Reply robotstate      : robotstate(POS,DIR)  for getrobotstate
+
+Request getenvmap     : getenvmap(X)
+Reply   envmap        : envmap(MAP)  for getenvmap
+
+Dispatch setrobotstate: setpos(X,Y,D)
+
+Dispatch setdirection : dir( D ) //D =up|down!left|right
+
+Event  sonardata   : sonar( DISTANCE ) 	   
+Event obstacle     : obstacle(X)  
+
+
+ /*
+  * Messaggi per questa applicazione
+  */
+Dispatch brdata      : changed(Y)
+Dispatch coapUpdate  : changed(Y)
+
+Dispatch pause     : pause(X) 
+Dispatch goon      : goon(N)   //for automsg in turnandgo
+
+Dispatch showmap   : showmap(X)
+//----------------------------------------------------------------------
+Context ctxbwbscrbt   ip [host="localhost"     port=8720   ]
+Context ctxbasicrobot ip [host="127.0.0.1"  port=8020   ]  
+
+ExternalQActor basicrobot context ctxbasicrobot   
+ExternalQActor robotpos   context ctxbasicrobot   
+  
+ QActor bwbrcore context ctxbwbscrbt  {
+ 	[# var N = 0 #] 
+	State s0 initial{ 
+		delay 1000
+		println("$name | STARTS") color yellow 
+	}  
+	Goto engage
+	 
+	State engage{
+		delay 2000
+		println("$name | $MyName engaging ... ") color yellow 
+		request basicrobot -m engage : engage($MyName,330)
+	}
+	Transition t0 whenReply engagedone    -> showMap //testMoves  
+ 	              whenReply engagerefused -> end
+
+/*
+ * Muovere il robot senza modificare la mappa mentale
+ */
+  	State testMoves{
+    	println("$name | testMoves") color blue
+ 		forward basicrobot -m cmd : cmd(l) 
+     	delay 500
+     	forward basicrobot -m cmd : cmd(z) 
+    	delay 500
+      	delay 500
+    	forward basicrobot -m cmd : cmd(z) 		    	
+        delay 500
+ 		request basicrobot -m  step : step(350)     	
+ 	}  	
+  	Transition t0 
+  		whenReply stepdone    -> showMap
+  		whenReply stepfailed  -> showMap
+
+ 	
+ 	State showMap{
+  		println("$name | $MyName getenvmap ... ") color yellow 
+  		request basicrobot -m getenvmap : getenvmap(caller)
+   	}
+  	Transition t0 
+  		whenReply envmap  -> showTheMap
+   		
+     State showTheMap{    	
+     	println("$name | showTheMap ") color blue
+    	onMsg( envmap : envmap(MAP) ){
+    		[# val MAP = payloadArg(0).replace("@","\n") #]
+    		println( MAP )
+    	}
+    } 
+   Goto gotoCell
+	 	
+ 
+  	State gotoCell{
+    	println("$name | gotoCell setrobotstate ") color blue
+    	forward basicrobot -m setrobotstate : setpos(0,0,down)
+  		request basicrobot -m  moverobot : moverobot(4,3)
+  	}
+  	Transition t0 
+  		whenReply moverobotdone -> backToHome  
+  		
+ 
+	State backToHome{
+		println("$name | backToHome")
+		forward basicrobot -m setdirection : dir(left)
+		delay 1000 
+		request basicrobot -m  moverobot : moverobot(0,0)
+	}  	
+  	Transition t0 
+  		whenReply moverobotdone -> atHome 
+   	
+   	State atHome{
+   		println("$name | athome") color magenta
+   		forward basicrobot -m setdirection : dir(down)
+   	}
+   	Goto explore
+   	
+   	State explore{
+   		request basicrobot -m doplan : doplan(ww,350)
+   	}
+   	Transition t0
+   		whenReply doplandone   -> imaginedone
+   		whenReply doplanfailed -> disengage
+   		
+   	State imaginedone{
+   		println("$name | where am I ?") color magenta
+   	}
+   	Goto disengage
+   	
+   	State disengage{
+   		println("$name | disengage")
+   		forward basicrobot -m disengage : disengage(ok)
+   		
+   	}
+   	Goto end
+   
+ 	State end{
+		println("$name | ENDS ") color yellow
+		[# System.exit(0) #]
+	}	
+ 
+}	
+
+
+/*
+ * Attore che osserva le modifiche alle risorse basicrobot e robotpos
+ * 
+ */	
+	QActor mapviewer context ctxbwbscrbt{
+		State s0 initial{
+			println("$name | STARTS ") color black
+			observeResource basicrobot 
+			observeResource robotpos 
+		}
+		Goto work
+		
+		State work{
+			
+		}
+		Transition t0
+			whenMsg brdata     -> handleData
+			whenMsg coapUpdate -> handleData
+ 
+			
+		State handleData{
+  			//printCurrentMessage color black
+ 			[# 
+ 				if( currentMsg.msgSender()=="basicrobot") CommUtils.outyellow( currentMsg.msgContent() )
+ 				else if( currentMsg.msgSender()=="robotpos") {
+	 				val m = currentMsg.toString().replace("msg(coapUpdate,dispatch,robotpos,mapviewer,changed","") 
+	 			    if( m.startsWith("(|") ) CommUtils.outblue(m)
+ 			   	}	   
+ 			#]
+
+//WARNING: probleimi Prolog di unificazione
+// 			onMsg( coapUpdate : changed(M) ){
+// 		 		//[# val Data = payloadArg(0) #]		 	
+//  		 		//println("map('$Data')") color blue
+// 		 	}
+		}
+		Transition t0
+			whenMsg brdata     -> handleData
+			whenMsg coapUpdate -> handleData
+ 	}
+
+
+ 
