@@ -1,0 +1,205 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>Il pattern saga &#8212; iss25 1.0 documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinxdoc.css" />
+    <link rel="stylesheet" type="text/css" href="_static/custom.css" />
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="DockerNotes" href="DockerNotes.html" />
+    <link rel="prev" title="Microservizi" href="Microservizi.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="DockerNotes.html" title="DockerNotes"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="Microservizi.html" title="Microservizi"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">iss25 1.0 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Il pattern saga</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="il-pattern-saga">
+<h1>Il pattern saga<a class="headerlink" href="#il-pattern-saga" title="Permalink to this heading">¶</a></h1>
+<p>Il “Saga Pattern” è un modello di progettazione cruciale nelle architetture a microservizi, nato per affrontare il problema della consistenza dei dati nelle transazioni distribuite.</p>
+<p>Nelle architetture monolitiche, le transazioni ACID (Atomicità, Consistenza, Isolamento, Durata) gestite dai database relazionali garantiscono che una serie di operazioni sia completata integralmente o venga completamente annullata (rollback). Questo non è possibile direttamente con i microservizi, perché ogni microservizio possiede il proprio database privato.</p>
+<p>Il Saga Pattern risolve questo problema suddividendo una transazione distribuita complessa e di lunga durata in una sequenza di transazioni locali, ognuna eseguita da un singolo microservizio. Se una qualsiasi delle transazioni locali fallisce, il Saga Pattern attiva una serie di transazioni di compensazione per annullare gli effetti delle transazioni locali precedenti che sono state completate con successo, riportando il sistema a uno stato consistente.</p>
+<section id="come-funziona-il-saga-pattern">
+<h2>Come Funziona il Saga Pattern<a class="headerlink" href="#come-funziona-il-saga-pattern" title="Permalink to this heading">¶</a></h2>
+<p>Immagina un processo di acquisto in un e-commerce, che coinvolge diversi servizi:</p>
+<ol class="arabic simple">
+<li><p>Servizio Ordini: Crea l’ordine.</p></li>
+<li><p>Servizio Pagamenti: Processa il pagamento.</p></li>
+<li><p>Servizio Inventario: Aggiorna lo stock.</p></li>
+<li><p>Servizio Spedizioni: Pianifica la spedizione.</p></li>
+</ol>
+<p>Se il pagamento fallisce, tutte le operazioni precedenti (creazione dell’ordine, riserva dell’inventario) devono essere annullate. Il Saga Pattern gestisce questa orchestrazione.</p>
+</section>
+<section id="componenti-chiave">
+<h2>Componenti Chiave<a class="headerlink" href="#componenti-chiave" title="Permalink to this heading">¶</a></h2>
+<ul class="simple">
+<li><p>Transazione Locale: Una transazione atomica all’interno di un singolo microservizio. Modifica lo stato del database del servizio e pubblica un evento di dominio o invia un comando.</p></li>
+<li><p>Transazione di Compensazione: Un’operazione che annulla gli effetti di una transazione locale precedente.</p></li>
+</ul>
+</section>
+<section id="due-approcci-principali-per-coordinare-le-saga">
+<h2>Due Approcci Principali per Coordinare le Saga<a class="headerlink" href="#due-approcci-principali-per-coordinare-le-saga" title="Permalink to this heading">¶</a></h2>
+<p>Esistono due modi per coordinare le transazioni locali all’interno di una saga:</p>
+<section id="coreografia-choreography-based-saga">
+<h3>1. Coreografia (Choreography-based Saga):<a class="headerlink" href="#coreografia-choreography-based-saga" title="Permalink to this heading">¶</a></h3>
+<p>Funzionamento: Ogni microservizio partecipante alla saga esegue la propria transazione locale e poi pubblica un evento di dominio. Altri microservizi interessati sottoscrivono questi eventi e reagiscono eseguendo le proprie transazioni locali successive. Non c’è un coordinatore centrale esplicito; la logica del flusso è distribuita tra i servizi.</p>
+<p>Vantaggi:</p>
+<ul class="simple">
+<li><p>Decentralizzato: Nessun singolo punto di fallimento per la logica della saga.</p></li>
+<li><p>Disaccoppiato: I servizi sono meno accoppiati tra loro (comunicano tramite eventi).</p></li>
+<li><p>Semplice per flussi brevi: Facile da implementare per saghe con pochi partecipanti.</p></li>
+</ul>
+<p>Svantaggi:</p>
+<ul class="simple">
+<li><p>Difficile da monitorare: La logica della saga è sparsa, rendendo difficile tracciare l’intero flusso o debuggare.</p></li>
+<li><p>Complessità in crescita: Diventa molto difficile da gestire e comprendere con l’aumentare del numero di servizi coinvolti.</p></li>
+<li><p>Dipendenze cicliche: Rischio di creare dipendenze cicliche tra i servizi basate sugli eventi.</p></li>
+</ul>
+</section>
+<section id="orchestrazione-orchestration-based-saga">
+<h3>2. Orchestrazione (Orchestration-based Saga):<a class="headerlink" href="#orchestrazione-orchestration-based-saga" title="Permalink to this heading">¶</a></h3>
+<p>Funzionamento: Un orchestrator centralizzato (un servizio o un modulo dedicato) è responsabile di coordinare l’intero flusso della saga. L’orchestrator invia comandi ai servizi partecipanti, e questi rispondono con eventi o stati. L’orchestrator mantiene lo stato della saga e decide quale sia il passo successivo o quando avviare le transazioni di compensazione.</p>
+<p>Vantaggi:</p>
+<ul class="simple">
+<li><p>Controllo Centralizzato: La logica del flusso è chiara e risiede in un unico punto, facilitando la gestione, il debug e il monitoraggio.</p></li>
+<li><p>Semplifica i servizi: I singoli servizi non devono conoscere l’intero flusso della saga; rispondono solo ai comandi dell’orchestrator.</p></li>
+<li><p>Facilità di gestione degli errori: Le transazioni di compensazione sono gestite in un unico punto.</p></li>
+</ul>
+<p>Svantaggi:</p>
+<ul class="simple">
+<li><p>Singolo punto di errore: L’orchestrator può diventare un collo di bottiglia o un singolo punto di fallimento (anche se può essere reso altamente disponibile).</p></li>
+<li><p>Accoppiamento: L’orchestrator ha una maggiore conoscenza dei servizi coinvolti, portando a un accoppiamento leggermente più stretto.</p></li>
+<li><p>Complessità dell’orchestrator: L’orchestrator stesso può diventare complesso per saghe molto lunghe.</p></li>
+</ul>
+</section>
+</section>
+<section id="quando-usare-il-saga-pattern">
+<h2>Quando Usare il Saga Pattern<a class="headerlink" href="#quando-usare-il-saga-pattern" title="Permalink to this heading">¶</a></h2>
+<ul class="simple">
+<li><p>Quando è necessario garantire la consistenza dei dati in un sistema distribuito che coinvolge più microservizi, ognuno con il proprio database.</p></li>
+<li><p>Quando le transazioni sono di lunga durata e non si vuole bloccare altri microservizi.</p></li>
+<li><p>Quando è necessario poter eseguire il rollback o compensare se una delle operazioni nella sequenza ha esito negativo.</p></li>
+<li><p>Quando non è possibile o desiderabile utilizzare transazioni distribuite two-phase commit (2PC) a causa della complessità, delle prestazioni o della mancanza di supporto da parte dei database.</p></li>
+</ul>
+</section>
+<section id="sfide-e-best-practice">
+<h2>Sfide e Best Practice<a class="headerlink" href="#sfide-e-best-practice" title="Permalink to this heading">¶</a></h2>
+<ul class="simple">
+<li><p>Complessità: Le saghe aggiungono una notevole complessità al sistema. Debuggare e monitorare può essere difficile.</p></li>
+<li><p>Transazioni di Compensazione: Devono essere idempotenti e ben definite per ogni passo della saga.</p></li>
+<li><p>Idempotenza: Ogni operazione eseguita dai servizi nella saga (incluse le compensazioni) dovrebbe essere idempotente, ovvero poter essere richiamata più volte senza produrre effetti collaterali indesiderati.</p></li>
+<li><p>Monitoraggio e Tracing: Essenziale implementare un robusto sistema di logging, metriche e tracing distribuito (es. OpenTelemetry, Jaeger) per seguire il flusso della saga attraverso i vari servizi.</p></li>
+<li><p>Error Handling: Gestire i timeout, i retry e le anomalie (es. “null compensation”, “hanging action”) è cruciale.</p></li>
+<li><p>Test: Le saghe richiedono test di integrazione estensivi per assicurarsi che il flusso, inclusa la compensazione, funzioni correttamente.</p></li>
+<li><p>Workflow Engines: Per saghe complesse e per l’orchestrazione, è consigliabile utilizzare framework dedicati o workflow engines come Temporal.io, Cadence, Apache Camel, Camunda BPM che forniscono astrazioni per definire, eseguire e monitorare workflow distribuiti resilienti.</p></li>
+</ul>
+<p>In sintesi, il Saga Pattern è una soluzione potente e necessaria per gestire la coerenza dei dati in un mondo di microservizi. Richiede un’attenta progettazione, una solida comprensione dei flussi di business e un’infrastruttura di osservabilità robusta per essere implementato con successo.</p>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <div>
+    <h3><a href="index.html">Table of Contents</a></h3>
+    <ul>
+<li><a class="reference internal" href="#">Il pattern saga</a><ul>
+<li><a class="reference internal" href="#come-funziona-il-saga-pattern">Come Funziona il Saga Pattern</a></li>
+<li><a class="reference internal" href="#componenti-chiave">Componenti Chiave</a></li>
+<li><a class="reference internal" href="#due-approcci-principali-per-coordinare-le-saga">Due Approcci Principali per Coordinare le Saga</a><ul>
+<li><a class="reference internal" href="#coreografia-choreography-based-saga">1. Coreografia (Choreography-based Saga):</a></li>
+<li><a class="reference internal" href="#orchestrazione-orchestration-based-saga">2. Orchestrazione (Orchestration-based Saga):</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#quando-usare-il-saga-pattern">Quando Usare il Saga Pattern</a></li>
+<li><a class="reference internal" href="#sfide-e-best-practice">Sfide e Best Practice</a></li>
+</ul>
+</li>
+</ul>
+
+  </div>
+  <div>
+    <h4>Previous topic</h4>
+    <p class="topless"><a href="Microservizi.html"
+                          title="previous chapter">Microservizi</a></p>
+  </div>
+  <div>
+    <h4>Next topic</h4>
+    <p class="topless"><a href="DockerNotes.html"
+                          title="next chapter">DockerNotes</a></p>
+  </div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/Saga.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="DockerNotes.html" title="DockerNotes"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="Microservizi.html" title="Microservizi"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">iss25 1.0 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Il pattern saga</a></li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2025, Antonio Natali.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 5.0.2.
+    </div>
+  </body>
+</html>

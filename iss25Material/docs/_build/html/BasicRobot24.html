@@ -104,26 +104,33 @@ realizzato uno specifico DDR robot (virtuale o reale).</p>
 </div>
 <p><span class="slide">Il progetto unibo.basicrobot24</span></p>
 <p>Il codice è contenuto nel progetto  <a class="reference external" href="../../../../../qak25/unibo.basicrobot24">unibo.basicrobot24</a>, che fornisce il modello eseguibile
-<a class="reference external" href="../../../../../qak25/unibo.basicrobot24/src/basicrobot.qak">basicrobotqak</a>, che include i componenti riportati nella figura (generata) che segue:</p>
-<a class="reference internal image-reference" href="_images/basicrobot24.PNG"><img alt="_images/basicrobot24.PNG" class="align-center" src="_images/basicrobot24.PNG" style="width: 100%;" /></a>
+<a class="reference external" href="../../../../../qak25/unibo.basicrobot24/src/basicrobot.qak">basicrobotqak</a>, che include i componenti riportati nella figura  che segue:</p>
+<a class="reference internal image-reference" href="_images/basicrobot.jpg"><img alt="_images/basicrobot.jpg" class="align-center" src="_images/basicrobot.jpg" style="width: 100%;" /></a>
 <table class="docutils align-default" style="width: 100%">
 <colgroup>
-<col style="width: 60%" />
-<col style="width: 40%" />
+<col style="width: 50%" />
+<col style="width: 50%" />
 </colgroup>
 <tbody>
-<tr class="row-odd"><td><p>Componenti (attori):</p>
-<ul class="simple">
+<tr class="row-odd"><td><ul class="simple">
 <li><p><span class="blue">basicrobot</span>: esegue i comandi di spostamento e altre funzionalità</p></li>
 <li><p><span class="blue">engager</span>: gestisce l’ingaggio del robot</p></li>
 <li><p><span class="blue">planexec</span>: esegue piani di movimento</p></li>
 <li><p><span class="blue">robotpos</span>: realizza il posizionamento del robot in una cella data della mappa</p></li>
 </ul>
-</td>
-<td><p><span class="slide3">I progetti di riferimento</span>:</p>
+<p><span class="slide3">Progetti di riferimento</span>:</p>
 <ul class="simple">
 <li><p><a class="reference external" href="../../../../../qak25/unibo.basicrobot24">unibo.basicrobot24</a></p></li>
-<li></li>
+<li><p><a class="reference internal" href="Planner.html#id1"><span class="std std-ref">Planner23Util</span></a></p></li>
+</ul>
+</td>
+<td><p><span class="slide3">Esempi di uso</span>:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="../../../../../qak25/unibo.basicrobot24/src/main/java/caller/BasicRobotCallerCoap.java">BasicRobotCallerCoap.java</a> : invoca (come) operazioni del bascirobot e visualizza
+le informazioni emesse (con <a class="reference internal" href="QakActors25Actors.html#operazioni-relative-alla-osservabilita"><span class="std std-ref">updateresource</span></a>)
+da  <span class="blue">robotpos</span>;</p></li>
+<li><p><a class="reference external" href="../../../../../qak25/boundaryBasicrobot24/src/bwbmoves.qaktt">bwbmoves.qak</a>: ingaggia il basicrobot e invoca setrobotstate e doplan. Un attore
+osserva le modifiche alle risorse <span class="blue">basicrobot</span> e <span class="blue">robotpos</span>.</p></li>
 </ul>
 </td>
 </tr>
@@ -220,11 +227,11 @@ e <span class="high">engagerefused</span> nel caso di robot già ingaggiato.</p>
 al <span class="blue">basicrobot</span> e
 invia la risposta <span class="high">doplandone</span> in caso di successo. Nel caso di ostacolo o di evento <span class="high">alarm</span>,
 interrompe la esecuzione della sequenza, inviando la risposta <span class="high">doplanfailed</span>.</p>
-<p>Non usa (e quindi non aggiorna) alcuna mappa della stanza.</p>
+<p><span class="slide2">Non usa (e quindi non aggiorna) alcuna mappa della stanza</span>.</p>
 </td>
 </tr>
 <tr class="row-odd"><td><p><span class="blue">robotpos</span></p></td>
-<td><p>Gestisce richieste di posizionamento <span class="high">moverobot</span>. Facendo <a class="reference internal" href="Planner.html#uso-del-planner"><span class="std std-ref">Uso del planner</span></a>, determina un
+<td><p>Gestisce richieste di posizionamento <span class="high">moverobot</span>. Facendo <span class="xref std std-ref">Uso del planner</span>, determina un
 piano di movimento per raggiungere la destinazione, che esegue usando <span class="blue">planexec</span>. Invia
 la risposta <span class="high">moverobotdone</span> in caso di successo oppure <span class="high">moverobotfailed</span> se la esecuzione
 del piano fallisce o viene interrotta.</p>
@@ -389,10 +396,10 @@ PLAN che è stata eseguita prima del fallimento (per allarme o per l’incontro 
 <li><p>Posizionarsi sulla direcory <span class="high">unibo.basicrobot24</span></p></li>
 <li><p>Attivare il VirtualRobot con il comando <span class="high">docker-compose -f virtualRobot23.yaml up</span></p></li>
 <li><p>Attivare il basic robot on il comando <span class="high">gradlew run</span></p></li>
-<li><p>Aprire la pagina HTML <a class="reference external" href="../../../../../planusage24/src/main/resources/MapGui.html">MapGui.html</a> in <a class="reference external" href="../../../../../planusage24">planusage24</a>, che offre una GUI che usa MQTT per inviare comandi
+<li><p>Aprire la pagina HTML <a class="reference external" href="../../../../../qak25/planusage24/src/main/resources/MapGui.html">MapGui.html</a> in <a class="reference external" href="../../../../../qak25/planusage24">planusage24</a>, che offre una GUI che usa MQTT per inviare comandi
 al basicrobot e per ricevere informazioni di stato sia dal basicrobot sia dal planner</p></li>
-<li><p>Attivare <a class="reference internal" href="Planner.html#id4"><span class="std std-ref">mapobstaclesrobot.qak</span></a>  in <a class="reference external" href="../../../../../planusage24">planusage24</a> che usa il <a class="reference internal" href="Planner.html#planner"><span class="std std-ref">Planner</span></a> per esplorazione in colonne vertcali</p></li>
-<li><p>Altro esprimento con <a class="reference external" href="../../../../../planusage24/src/mapobstaclesplan.qaktt">mapobstaclesplan.qak</a> in <a class="reference external" href="../../../../../planusage24">planusage24</a>, che cerca di raggiungere una cella fuori dalla mappa</p></li>
+<li><p>Attivare <a class="reference internal" href="Planner.html#id4"><span class="std std-ref">mapobstaclesrobot.qak</span></a>  in <a class="reference external" href="../../../../../qak25/planusage24">planusage24</a> che usa il <a class="reference internal" href="Planner.html#planner"><span class="std std-ref">Planner</span></a> per esplorazione in colonne vertcali</p></li>
+<li><p>Altro esprimento con <a class="reference external" href="../../../../../qak25/planusage24/src/mapobstaclesplan.qaktt">mapobstaclesplan.qak</a> in <a class="reference external" href="../../../../../qak25/planusage24">planusage24</a>, che cerca di raggiungere una cella fuori dalla mappa</p></li>
 </ol>
 </section>
 <section id="br24-facade">
@@ -424,7 +431,7 @@ si veda <span class="xref std std-ref">RobotFacade24</span></p>
 </div></blockquote>
 <ol class="arabic simple">
 <li><p>Eseguire <code class="docutils literal notranslate"><span class="pre">gradlew</span> <span class="pre">distTar</span></code></p></li>
-<li><p>Eseguire <code class="docutils literal notranslate"><span class="pre">docker</span> <span class="pre">build</span> <span class="pre">-t</span> <span class="pre">basicrobot24:1.0</span> <span class="pre">.</span></code>  <span class="slide2">Notare il punto finale</span></p></li>
+<li><p>Eseguire <code class="docutils literal notranslate"><span class="pre">docker</span> <span class="pre">build</span> <span class="pre">-t</span> <span class="pre">basicrobot24:3.0</span> <span class="pre">.</span></code>  <span class="slide2">Notare il punto finale</span></p></li>
 <li><p>Eseguire</p></li>
 </ol>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">docker</span> <span class="n">run</span> <span class="o">-</span><span class="n">it</span> <span class="o">--</span><span class="n">rm</span> <span class="o">--</span><span class="n">name</span> <span class="n">basicrobot24</span> <span class="o">-</span><span class="n">p8020</span><span class="p">:</span><span class="mi">8020</span><span class="o">/</span><span class="n">tcp</span> <span class="o">-</span><span class="n">p8020</span><span class="p">:</span><span class="mi">8020</span><span class="o">/</span><span class="n">udp</span>  <span class="o">--</span><span class="n">privileged</span> <span class="n">basicrobot24</span><span class="p">:</span><span class="mf">1.0</span>
@@ -439,23 +446,26 @@ si veda <span class="xref std std-ref">RobotFacade24</span></p>
 </pre></div>
 </div>
 </li>
-<li><p>Ricreare l’immagine come descritto in <a class="reference internal" href="#br24-creazione-immagine-docker-locale"><span class="std std-ref">BR24 Creazione immagine docker locale</span></a> partendo dal punto <code class="docutils literal notranslate"><span class="pre">2</span></code>.</p></li>
+<li><p>(Ri)creare l’immagine come descritto in <a class="reference internal" href="#br24-creazione-immagine-docker-locale"><span class="std std-ref">BR24 Creazione immagine docker locale</span></a> .</p></li>
 <li><p>Impostare il file basicrobot24.yaml</p>
 <blockquote>
 <div><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">version</span><span class="p">:</span> <span class="s1">&#39;3&#39;</span>
 <span class="n">services</span><span class="p">:</span>
   <span class="n">wenv</span><span class="p">:</span>
-    <span class="n">image</span><span class="p">:</span> <span class="n">docker</span><span class="o">.</span><span class="n">io</span><span class="o">/</span><span class="n">natbodocker</span><span class="o">/</span><span class="n">virtualrobotdisi23</span><span class="p">:</span><span class="mf">1.0</span>
+    <span class="n">image</span><span class="p">:</span> <span class="n">docker</span><span class="o">.</span><span class="n">io</span><span class="o">/</span><span class="n">natbodocker</span><span class="o">/</span><span class="n">virtualrobotdisi23</span><span class="p">:</span><span class="mf">2.1</span>
     <span class="n">ports</span><span class="p">:</span>
       <span class="o">-</span> <span class="mi">8090</span><span class="p">:</span><span class="mi">8090</span>
       <span class="o">-</span> <span class="mi">8091</span><span class="p">:</span><span class="mi">8091</span><span class="o">/</span><span class="n">tcp</span>
       <span class="o">-</span> <span class="mi">8091</span><span class="p">:</span><span class="mi">8091</span><span class="o">/</span><span class="n">udp</span>
   <span class="n">basicrobot24</span><span class="p">:</span>
-    <span class="c1">#image: docker.io/natbodocker/basicrobot24:1.0  #VERSIONE FINALE</span>
-    <span class="n">image</span><span class="p">:</span> <span class="n">basicrobot24</span><span class="p">:</span><span class="mf">1.0</span>
+    <span class="c1">#image: docker.io/natbodocker/basicrobot24:3.0</span>
+    <span class="n">image</span><span class="p">:</span> <span class="n">basicrobot24</span><span class="p">:</span><span class="mf">3.0</span>
     <span class="n">ports</span><span class="p">:</span>
       <span class="o">-</span> <span class="mi">8020</span><span class="p">:</span><span class="mi">8020</span><span class="o">/</span><span class="n">tcp</span>
       <span class="o">-</span> <span class="mi">8020</span><span class="p">:</span><span class="mi">8020</span><span class="o">/</span><span class="n">udp</span>
+    <span class="n">environment</span><span class="p">:</span>
+      <span class="o">-</span> <span class="n">VIRTUAL_ENV</span><span class="o">=</span><span class="n">wenv</span>   <span class="c1">#Used by uniborobots.robotSupport.create</span>
+      <span class="o">-</span> <span class="n">EUREKA_CLIENT_SERVICEURL_DEFAULTZONE</span><span class="o">=</span><span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">eureka</span><span class="p">:</span><span class="mi">8761</span><span class="o">/</span><span class="n">eureka</span><span class="o">/</span>
     <span class="n">depends_on</span><span class="p">:</span>
       <span class="o">-</span> <span class="n">wenv</span>
 </pre></div>
