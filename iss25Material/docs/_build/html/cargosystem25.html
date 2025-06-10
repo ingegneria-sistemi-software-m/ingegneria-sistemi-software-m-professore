@@ -85,7 +85,7 @@ I prodotti da caricare/scaricare devono essere stati precedentemente registrati 
 <section id="id1">
 <h2>Progetto cargoproduct<a class="headerlink" href="#id1" title="Permalink to this heading">¶</a></h2>
 <p><span class="slide3">Goal</span>: Costruire un applicativo Java che realizza la logica <strong>CRUD</strong> di gestione di prodotti in uno storage
-di diverse forme: inizialmente una semplice lista in memoria volatile, poi un database MongoDB.</p>
+di diverse forme: inizialmente una semplice lista in memoria volatile, poi un database <a class="reference external" href="https://en.wikipedia.org/wiki/MongoDB">MongoDB</a>.</p>
 <blockquote>
 <div><a class="reference internal image-reference" href="_images/ProductServiceLogic.JPG"><img alt="_images/ProductServiceLogic.JPG" class="align-center" src="_images/ProductServiceLogic.JPG" style="width: 60%;" /></a>
 <a class="reference internal image-reference" href="_images/ProductServiceLogicUML1.JPG"><img alt="_images/ProductServiceLogicUML1.JPG" class="align-center" src="_images/ProductServiceLogicUML1.JPG" style="width: 80%;" /></a>
@@ -143,7 +143,7 @@ di diverse forme: inizialmente una semplice lista in memoria volatile, poi un da
 <li><p>Impostazione del Workspace Eclipse e di un progetto Gradle con relativo build file.</p></li>
 <li><p>Adapter (<a class="reference external" href="../../../../cargoproduct/src/main/java/domain/adapter/AdapterStorage.java">AdapterStorage</a>) per rendere la logica applicativa indipendente dai dispositivi
 usati per la persistenza.</p></li>
-<li><p>Predisposizione di <a class="reference external" href="../../../../cargoproduct/src/main/java/domain/adapter/AdapterStorage.java">AdapterStorage</a> per  selezionare la memoria volatile o il database MongoDB
+<li><p>Predisposizione di <a class="reference external" href="../../../../cargoproduct/src/main/java/domain/adapter/AdapterStorage.java">AdapterStorage</a> per  selezionare la memoria volatile o il database <a class="reference external" href="https://en.wikipedia.org/wiki/MongoDB">MongoDB</a>
 usando variabili di ambiente. In assenza, uso del singleton <a class="reference external" href="../../../../cargoproduct/src/main/java/storage/StorageVolatile.java">StorageVolatile</a>.</p></li>
 <li><p>Testing in modo automatizzato con JUnit.</p></li>
 <li><p>Logging locale su file.</p></li>
@@ -209,6 +209,104 @@ evitando la comunicazione via rete tra il RestController della GUI e il serviceq
 </section>
 </section>
 </section>
+<section id="distribuzione-su-docker-di-cargoserviceqak">
+<h1>Distribuzione su docker di cargoserviceqak<a class="headerlink" href="#distribuzione-su-docker-di-cargoserviceqak" title="Permalink to this heading">¶</a></h1>
+<section id="iss2025new-yaml-con-network">
+<h2>iss2025new.yaml con network<a class="headerlink" href="#iss2025new-yaml-con-network" title="Permalink to this heading">¶</a></h2>
+<p>La nuova versione di <a class="reference external" href="../../../../uniboyamls/iss2025new.yaml">iss2025new.yaml</a> dei servizi utili alle applicazioni, include la definizione
+di un <a class="reference internal" href="DockerNotes.html#dockernotes"><span class="std std-ref">docker network</span></a> che fa da ‘collante’ per i nostri (micro)servizi</p>
+<p>La rete (di nome <span class="slide3">iss-network</span>) va creata con il comando:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">docker</span> <span class="n">network</span> <span class="n">create</span> <span class="n">iss</span><span class="o">-</span><span class="n">network</span>
+</pre></div>
+</div>
+</section>
+<section id="products-su-database-mongo">
+<h2>Products su database Mongo<a class="headerlink" href="#products-su-database-mongo" title="Permalink to this heading">¶</a></h2>
+<p>Nella distribuzione finale si vuole inserire i prodotti nel dabase NOSQL <a class="reference external" href="https://en.wikipedia.org/wiki/MongoDB">MongoDB</a> che viene attivato
+come servizio usando il file <a class="reference internal" href="#iss2025new-yaml-con-network"><span class="std std-ref">iss2025new.yaml con network</span></a>.</p>
+<p>Per raggiungere lo scipo, occoore definire la <span class="slide3">variabile di ambiente MOMGO_HOST</span></p>
+<ul>
+<li><p>su Windows:</p>
+<blockquote>
+<div><p>set <code class="docutils literal notranslate"><span class="pre">MONGO_HOSY=localhost</span></code> ad uso di programmi Java locali come <a class="reference external" href="../../../../cargoserviceQak/src/main/java/caller/ProductServiceDiscoverCallerTcp.java">ProductServiceDiscoverCallerTcp</a></p>
+</div></blockquote>
+</li>
+<li><p>con Docker:</p>
+<ul>
+<li><p>nel <a class="reference external" href="../../../../cargoserviceQak/Dockerfile">Dockerfile</a></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">FROM</span> <span class="n">eclipse</span><span class="o">-</span><span class="n">temurin</span><span class="p">:</span><span class="mf">17.0.5_8</span><span class="o">-</span><span class="n">jre</span><span class="o">-</span><span class="n">focal</span> <span class="k">as</span> <span class="n">builder</span>
+<span class="o">...</span>
+<span class="n">ENV</span> <span class="n">MONGO_HOST</span><span class="o">=</span><span class="n">mongodb</span>         <span class="c1">#NOME DEL SERIZIO in iss2025new.yaml</span>
+<span class="n">ENV</span> <span class="n">EUREKA_CLIENT_SERVICEURL_DEFAULTZONE</span><span class="o">=</span><span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">eureka</span><span class="p">:</span><span class="mi">8761</span><span class="o">/</span><span class="n">eureka</span><span class="o">/</span>
+<span class="n">ENV</span> <span class="n">SERVICE_IP</span><span class="o">=</span><span class="mf">192.168.1.132</span>   <span class="c1">#utile per GUI</span>
+<span class="n">ENV</span> <span class="n">SERVICE_URL</span><span class="o">=</span><span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="mf">192.168.1.132</span><span class="p">:</span><span class="mi">8111</span>
+<span class="n">RUN</span> <span class="n">mkdir</span> <span class="n">logs</span>
+</pre></div>
+</div>
+</li>
+<li><p>oppure (meglio) nel file <a class="reference external" href="../../../../cargoserviceQak/cargoserviceqak.yaml">cargoserviceqak.yaml</a></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">services</span><span class="p">:</span>
+  <span class="n">cargoserviceqak</span><span class="p">:</span>
+    <span class="n">container_name</span><span class="p">:</span> <span class="n">cargoserviceqak</span>
+    <span class="n">image</span><span class="p">:</span> <span class="n">cargoserviceqak</span><span class="p">:</span><span class="mf">1.0</span>
+    <span class="n">environment</span><span class="p">:</span>
+      <span class="o">-</span> <span class="n">EUREKA_CLIENT_SERVICEURL_DEFAULTZONE</span><span class="o">=</span><span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">eureka</span><span class="p">:</span><span class="mi">8761</span><span class="o">/</span><span class="n">eureka</span><span class="o">/</span>
+      <span class="o">-</span> <span class="n">MONGO_HOST</span><span class="o">=</span><span class="n">mongodb</span>   <span class="c1">#NOME DEL SERIZIO in iss2025new.yaml</span>
+    <span class="n">ports</span><span class="p">:</span>
+      <span class="o">-</span> <span class="mi">8111</span><span class="p">:</span><span class="mi">8111</span><span class="o">/</span><span class="n">tcp</span>
+      <span class="o">-</span> <span class="mi">8111</span><span class="p">:</span><span class="mi">8111</span><span class="o">/</span><span class="n">udp</span>
+    <span class="n">networks</span><span class="p">:</span>
+      <span class="o">-</span> <span class="n">iss</span><span class="o">-</span><span class="n">network</span>
+<span class="n">networks</span><span class="p">:</span>
+    <span class="n">iss</span><span class="o">-</span><span class="n">network</span><span class="p">:</span>
+      <span class="n">external</span><span class="p">:</span> <span class="n">true</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</li>
+</ul>
+<section id="variabili-di-ambiente">
+<h3>Variabili di ambiente<a class="headerlink" href="#variabili-di-ambiente" title="Permalink to this heading">¶</a></h3>
+<p>La presenza di una variabile di ambiente può essere testata con la funzione</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">CommUtils</span><span class="o">.</span><span class="n">getEnvvarValue</span><span class="p">(</span><span class="s2">&quot;MONGO_HOST&quot;</span><span class="p">);</span>
+<span class="o">//</span><span class="n">oppure</span> <span class="n">direttemente</span> <span class="n">con</span>
+<span class="n">System</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;MONGO_HOST&quot;</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>Ciò viene fatto nell’adapter <a class="reference external" href="../../../../cargoproduct/src/main/java/domain/adapter/AdapterStorage.java">AdapterStorage</a>, che attiva <a class="reference external" href="../../../../cargoproduct/src/main/java/domain/adapter/AdapterStorageMongo.java">AdapterStorageMongo</a> (o altri servizi di supporto alla
+memoriizazione di prodotti se la variabile non esiste).</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">public</span> <span class="n">static</span> <span class="n">AdapterStorage</span> <span class="n">setup</span><span class="p">()</span> <span class="p">{</span>
+  <span class="n">String</span> <span class="n">mongourl</span>       <span class="o">=</span> <span class="n">CommUtils</span><span class="o">.</span><span class="n">getEnvvarValue</span><span class="p">(</span><span class="s2">&quot;MONGO_HOST&quot;</span><span class="p">);</span>
+  <span class="n">String</span> <span class="n">storageramAddr</span> <span class="o">=</span> <span class="n">System</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;STORAGERAM_URL&quot;</span><span class="p">);</span>  <span class="o">//</span><span class="ow">in</span> <span class="n">yaml</span>
+  <span class="k">if</span><span class="p">(</span> <span class="n">storageramAddr</span> <span class="o">!=</span> <span class="n">null</span> <span class="p">)</span> <span class="k">return</span> <span class="n">new</span> <span class="n">AdapterStorageramservice</span><span class="p">(</span> <span class="n">storageramAddr</span> <span class="p">);</span>
+  <span class="k">if</span><span class="p">(</span> <span class="n">mongourl</span> <span class="o">!=</span> <span class="n">null</span> <span class="p">)</span> <span class="k">return</span> <span class="n">new</span> <span class="n">AdapterStorageMongo</span><span class="p">(</span><span class="n">mongourl</span><span class="p">);</span>
+  <span class="n">CommUtils</span><span class="o">.</span><span class="n">outred</span><span class="p">(</span><span class="s2">&quot;WARNING: NO URL for external storage - using StorageVolatile&quot;</span>  <span class="p">);</span>
+  <span class="n">StorageVolatile</span> <span class="n">storage</span> <span class="o">=</span> <span class="n">StorageVolatile</span><span class="o">.</span><span class="n">getStorageSingleton</span><span class="p">();</span>
+  <span class="k">return</span> <span class="n">new</span> <span class="n">AdapterStorageVolatile</span><span class="p">(</span><span class="n">storage</span> <span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>La classe <a class="reference external" href="../../../../cargoproduct/src/main/java/domain/adapter/AdapterStorageMongo.java">AdapterStorageMongo</a> fa riferimento a un database di nome <span class="slide3">cargodb</span> e a collezioni di nome
+<span class="slide3">products</span>.</p>
+</section>
+<section id="id4">
+<h3>MongoDBCompass<a class="headerlink" href="#id4" title="Permalink to this heading">¶</a></h3>
+<p>Il data base può essere consultato usando l’app <a class="reference external" href="https://www.mongodb.com/products/tools/compass">MongoDBCompass</a></p>
+</section>
+</section>
+<section id="i-file-docker-per-il-microservizio-cargoserviceqak">
+<h2>I file docker per il microservizio cargoserviceqak<a class="headerlink" href="#i-file-docker-per-il-microservizio-cargoserviceqak" title="Permalink to this heading">¶</a></h2>
+<ul class="simple">
+<li><p><a class="reference external" href="../../../../cargoserviceQak/Dockerfile">Dockerfile</a> : crea la immagine <strong>cargoserviceqak:1.0</strong></p></li>
+<li><p><a class="reference external" href="../../../../cargoserviceQak/cargoserviceqak.yaml">cargoserviceqak.yaml</a></p></li>
+</ul>
+<p>Un caller esterno in Java</p>
+<ul class="simple">
+<li><p><a class="reference external" href="../../../../cargoserviceQak/src/main/java/caller/ProductServiceDiscoverCallerTcp.java">ProductServiceDiscoverCallerTcp</a></p></li>
+</ul>
+</section>
+</section>
 
 
             <div class="clearer"></div>
@@ -250,6 +348,16 @@ evitando la comunicazione via rete tra il RestController della GUI e il serviceq
 <li><a class="reference internal" href="#key-points-cargoservicem2mqaklocal">Key-points cargoserviceM2MQakLocal</a></li>
 </ul>
 </li>
+</ul>
+</li>
+<li><a class="reference internal" href="#distribuzione-su-docker-di-cargoserviceqak">Distribuzione su docker di cargoserviceqak</a><ul>
+<li><a class="reference internal" href="#iss2025new-yaml-con-network">iss2025new.yaml con network</a></li>
+<li><a class="reference internal" href="#products-su-database-mongo">Products su database Mongo</a><ul>
+<li><a class="reference internal" href="#variabili-di-ambiente">Variabili di ambiente</a></li>
+<li><a class="reference internal" href="#id4">MongoDBCompass</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#i-file-docker-per-il-microservizio-cargoserviceqak">I file docker per il microservizio cargoserviceqak</a></li>
 </ul>
 </li>
 </ul>
