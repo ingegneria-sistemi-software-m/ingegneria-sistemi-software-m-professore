@@ -85,7 +85,7 @@ object robotSupport{
 
 
 	fun move( cmd : String ){ //cmd = w | a | s | d | h
- 		CommUtils.outred("		--- robotSupport | move cmd=$cmd robotKind=$robotKind / $vr"  )
+ 		//CommUtils.outred("		--- robotSupport | move cmd=$cmd robotKind=$robotKind / $vr"  )
 		when( robotKind ){
 			//"mockrobot"  -> { robotMock.mockrobotSupport.move( cmd ) 					  }
 			"virtual"    -> { vr.move(  cmd ) 	  }

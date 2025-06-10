@@ -5,10 +5,10 @@
  */   
     
 System /* -trace -msglog  */ basicrobot24     
-mqttBroker "localhost" : 1883 eventTopic "robotevents" 
+mqttBroker "mosquitto" : 1883 eventTopic "robotevents"  //mosquitto se in docker
 //mqttBroker "test.mosquitto.org" : 1883 eventTopic "cargoevents"   //mosquitto "localhost" : 1883
 //mqttBroker "broker.hivemq.com" : 1883
-   
+    
 Dispatch cmd       	: cmd(MOVE)         
 
 Dispatch end       	: end(ARG)       
@@ -25,7 +25,7 @@ Request  doplan     : doplan( PATH, STEPTIME )
 Reply doplandone    : doplandone( ARG )    for doplan
 Reply doplanfailed  : doplanfailed( ARG )  for doplan
 
-Dispatch setrobotstate: setpos(X,Y,D)
+Dispatch setrobotstate: setpos(X,Y,D) //D =up|down!left|right
 
 Request engage        : engage(OWNER, STEPTIME)	
 Reply   engagedone    : engagedone(ARG)    for engage
@@ -199,11 +199,11 @@ QActor basicrobot context ctxbasicrobot withobj robot using "uniborobots.robotSu
  		delay 2000 //eureka nel container deve essere on NON SERVE usando EUREKA_CLIENT_SERVICEURL_DEFAULTZONE
  		println("$name | registerService +++++++++++   ")
  		
-//REGISTER	
-[#
-	if( CommUtils.getEnvvarValue("EUREKA_CLIENT_SERVICEURL_DEFAULTZONE")!=null)
-	CommUtils.registerService( main.java.EurekaServiceConfig() )
-#]		
+		//REGISTER	only if 
+		[#
+			if( CommUtils.ckeckEureka() )
+			CommUtils.registerService( main.java.EurekaServiceConfig() )
+		#]		
  		 
 //PROVE NQTT
 //  		connectToMqttBroker "wss://test.mosquitto.org:8081" clientid "brnat"
@@ -517,6 +517,7 @@ QActor planexec context ctxbasicrobot withobj robot using "uniborobots.robotSupp
  	Goto work
  	*/
  	State planrefused{
+ 		println("$name | planrefused ") color red
  		replyTo doplan with doplanfailed : doplanfailed( youarenotowner )
  		//TODO: inserire motivazione fallimento ?
  	}
@@ -721,7 +722,7 @@ QActor robotpos context ctxbasicrobot{
 	Goto waitclientrequest
  
 } 	
-
+ 
   
 //Facade robotfacadestart port 8085 usingactor basicrobot inctx ctxbasicrobot  
 //                   appl "main.java.facade24.Facade24Application" 

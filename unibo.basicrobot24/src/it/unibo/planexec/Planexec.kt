@@ -178,6 +178,7 @@ class Planexec ( name: String, scope: CoroutineScope, isconfined: Boolean=false,
 				}	 
 				state("planrefused") { //this:State
 					action { //it:State
+						CommUtils.outred("$name | planrefused ")
 						answer("doplan", "doplanfailed", "doplanfailed(youarenotowner)"   )  
 						//genTimer( actor, state )
 					}

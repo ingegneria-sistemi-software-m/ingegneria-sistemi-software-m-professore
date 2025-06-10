@@ -140,18 +140,19 @@ dependencies {
    
  
     //USER libs for facades
-    implementation name: 'robotfacade24-1.0-plain'
-    implementation name: 'robotfacade24-1.0'
+//    implementation name: 'robotfacade24-1.0-plain'
+//    implementation name: 'robotfacade24-1.0'
 //    implementation name: 'Facade24Start-1.0-plain'
 //    implementation name: 'Facade24Start-1.0'
     
 	/* Librerie spring per il supporto a facade ***************************** */
+	/*
 	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	//depends on spring-boot-starter-logging, which already pulls in spring-jcl for us.
 	//When using starters, Logback is used for logging by default.
 	implementation 'org.springframework.boot:spring-boot-starter-websocket'
-    
+    */
 }
 	
 sourceSets {
@@ -212,7 +213,12 @@ task run0(type: JavaExec) {
     classpath = sourceSets.main.runtimeClasspath
     //main = 'it.unibo.ctxbasicrobot.MainCtxbasicrobotKt'
 }
-
+task runCaller(type: JavaExec) {
+    group = "Execution"
+    description = "Run the main class with JavaExecTask"
+    classpath = sourceSets.main.runtimeClasspath
+    main = 'main.java.caller.BasicrobotDiscoverCallerTcp'
+}
 /*
 //TODO
 tasks.register('copyReport', Copy) {

@@ -1,6 +1,7 @@
 %====================================================================================
 % bwbscrbt description   
 %====================================================================================
+mqttBroker("localhost", "1883", "robotevents").
 request( engage, engage(OWNER,STEPTIME) ).
 reply( engagedone, engagedone(ARG) ).  %%for engage
 reply( engagerefused, engagerefused(ARG) ).  %%for engage
@@ -27,16 +28,13 @@ dispatch( setdirection, dir(D) ).
 event( sonardata, sonar(DISTANCE) ).
 event( obstacle, obstacle(X) ).
 dispatch( brdata, changed(Y) ).
-dispatch( coapUpdate, changed(Y) ).
 dispatch( pause, pause(X) ).
 dispatch( goon, goon(N) ).
-dispatch( showmap, showmap(X) ).
 %====================================================================================
 context(ctxbwbscrbt, "localhost",  "TCP", "8720").
-context(ctxbasicrobot, "127.0.0.1",  "TCP", "8020").
+context(ctxbasicrobot, "discoverable",  "TCP", "8020").
  qactor( basicrobot, ctxbasicrobot, "external").
-  qactor( robotpos, ctxbasicrobot, "external").
   qactor( bwbrcore, ctxbwbscrbt, "it.unibo.bwbrcore.Bwbrcore").
  static(bwbrcore).
-  qactor( mapviewer, ctxbwbscrbt, "it.unibo.mapviewer.Mapviewer").
- static(mapviewer).
+  qactor( bwobserver, ctxbwbscrbt, "it.unibo.bwobserver.Bwobserver").
+ static(bwobserver).

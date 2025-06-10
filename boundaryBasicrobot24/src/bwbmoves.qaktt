@@ -3,7 +3,6 @@ System bwbscrbt
  * bwbmoves.qak
  * usa basicrobot
  * 
- * Percorre il perimetro della stanza e fa una pausa quando rilevato dal sonar
  */ 
  
  /*
@@ -45,7 +44,7 @@ Dispatch setdirection : dir( D ) //D =up|down!left|right
 Event  sonardata   : sonar( DISTANCE ) 	   
 Event obstacle     : obstacle(X)  
 
-
+ 
  /*
   * Messaggi per questa applicazione
   */
@@ -111,7 +110,7 @@ ExternalQActor robotpos   context ctxbasicrobot
     		[# val MAP = payloadArg(0).replace("@","\n") #]
     		println( MAP )
     	}
-    } 
+    }  
    Goto gotoCell
 	 	
  

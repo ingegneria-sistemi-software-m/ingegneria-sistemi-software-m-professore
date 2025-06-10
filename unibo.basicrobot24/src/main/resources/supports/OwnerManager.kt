@@ -8,11 +8,12 @@ object OwnerManager {
     var steptime    = "330"
 
     fun checkOwner(caller: String): Boolean {
-        //CommUtils.outblue("OwnerManager | checkOwner $caller")
+        CommUtils.outblue("OwnerManager | checkOwner $caller")
         if( caller == "planexec" ||
             caller == "robotpos" ||
             caller == "basicrobot" ||    //OCT24 - handlealarmtest24
-            caller ==  consoleName
+            caller ==  consoleName  ||
+            caller.contains("caoproute")
             ) return true
         else return owner == caller
     }

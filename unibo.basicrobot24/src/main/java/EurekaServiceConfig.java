@@ -14,13 +14,13 @@ public class EurekaServiceConfig extends MyDataCenterInstanceConfig{
 	
 	@Override
 	public String getHostName(boolean refresh) {
-		return CommUtils.getMyPublicip();
+		String ip ="";
+		String serviceip = System.getenv("SERVICE_IP") ;
+ 		if( serviceip != null) {
+ 			ip = serviceip;
+ 		}else ip = "192.168.1.18";
+ 		return ip;
 	}
-
-//	@Override
-//	public String getInstanceId( ) {
-//		return "xxx";
-//	}
 
 	@Override
 	public int getNonSecurePort() {

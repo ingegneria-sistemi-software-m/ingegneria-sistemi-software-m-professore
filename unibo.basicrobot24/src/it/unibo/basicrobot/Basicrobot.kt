@@ -63,8 +63,8 @@ class Basicrobot ( name: String, scope: CoroutineScope, isconfined: Boolean=fals
 						delay(2000) 
 						CommUtils.outblack("$name | registerService +++++++++++   ")
 						
-							if( CommUtils.getEnvvarValue("EUREKA_CLIENT_SERVICEURL_DEFAULTZONE")!=null)
-							CommUtils.registerService( main.java.EurekaServiceConfig() )
+									if( CommUtils.ckeckEureka() )
+									CommUtils.registerService( main.java.EurekaServiceConfig() )
 						CommUtils.outmagenta("basicrobot | STARTING Sept 2024 no moves ... ")
 						//genTimer( actor, state )
 					}

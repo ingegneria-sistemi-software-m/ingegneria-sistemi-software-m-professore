@@ -34,7 +34,7 @@ class Bwobserver ( name: String, scope: CoroutineScope, isconfined: Boolean=fals
 				state("s0") { //this:State
 					action { //it:State
 						CommUtils.outgreen("$name | START")
-						observeResource("127.0.0.1","8020","ctxbasicrobot","basicrobot","brdata")
+						observeResource("discoverable","8020","ctxbasicrobot","basicrobot","brdata")
 						//genTimer( actor, state )
 					}
 					//After Lenzi Aug2002
@@ -49,11 +49,13 @@ class Bwobserver ( name: String, scope: CoroutineScope, isconfined: Boolean=fals
 					//After Lenzi Aug2002
 					sysaction { //it:State
 					}	 	 
-					 transition(edgeName="t09",targetState="handlebrdata",cond=whenDispatch("brdata"))
+					 transition(edgeName="t06",targetState="handlebrdata",cond=whenDispatch("brdata"))
 				}	 
 				state("handlebrdata") { //this:State
 					action { //it:State
-						 //val data   = currentMsg.msgContent()  
+						CommUtils.outgreen("$name in ${currentState.stateName} | $currentMsg | ${Thread.currentThread().getName()} n=${Thread.activeCount()}")
+						 	   
+						  
 									PauseSent = false 
 						if( checkMsgContent( Term.createTerm("changed(Y)"), Term.createTerm("changed(M)"), 
 						                        currentMsg.msgContent()) ) { //set msgArgList
@@ -70,9 +72,9 @@ class Bwobserver ( name: String, scope: CoroutineScope, isconfined: Boolean=fals
 					//After Lenzi Aug2002
 					sysaction { //it:State
 					}	 	 
-					 transition(edgeName="t010",targetState="ignoredata",cond=whenDispatchGuarded("brdata",{ PauseSent    
+					 transition(edgeName="t07",targetState="ignoredata",cond=whenDispatchGuarded("brdata",{ PauseSent    
 					}))
-					transition(edgeName="t011",targetState="handlebrdata",cond=whenDispatchGuarded("brdata",{ !PauseSent   
+					transition(edgeName="t08",targetState="handlebrdata",cond=whenDispatchGuarded("brdata",{ !PauseSent   
 					}))
 				}	 
 				state("ignoredata") { //this:State
@@ -83,8 +85,8 @@ class Bwobserver ( name: String, scope: CoroutineScope, isconfined: Boolean=fals
 					//After Lenzi Aug2002
 					sysaction { //it:State
 					}	 	 
-					 transition(edgeName="t012",targetState="ignoredata",cond=whenDispatch("brdata"))
-					transition(edgeName="t013",targetState="work",cond=whenDispatch("goon"))
+					 transition(edgeName="t09",targetState="ignoredata",cond=whenDispatch("brdata"))
+					transition(edgeName="t010",targetState="work",cond=whenDispatch("goon"))
 				}	 
 			}
 		}
