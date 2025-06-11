@@ -1,0 +1,136 @@
+System storageramservice 
+ 
+Dispatch createItem   : item( ITEMID,JSONSTR)
+
+Request getItem       : item(ITEMID)
+Reply   getItemAnswer : item(JSONSTR) for getItem
+
+Dispatch deleteItem      : item(ITEMID)
+ 
+ 
+Request getAllItems       : dummy(ID)
+Reply   getAllItemsAnswer : items( STRING ) for getAllItems
+
+Context ctxstorageram ip [ host="localhost" port=8110]
+      
+QActor storagevolatile context ctxstorageram  
+                           withobj storage using "StorageOnRam()" { 
+import "main.java.storageram.*" 
+ 
+	[#  
+		val logger = LoggerFactory.getLogger("storageactor")  
+		clearlog("./logs/app_storageramsystem.log") 
+	#]
+	State s0 initial{
+	      [#   
+//	        logger.info(  "$name | STARTS" )
+	      #]
+	      println("$name | STARTS")	
+	}
+	Transition t0 
+		whenRequest getItem     -> handle_getItem
+		whenMsg     deleteItem  -> handle_deleteItem
+		whenRequest getAllItems -> handle_allitems
+		whenMsg createItem      -> handle_createItem
+ 
+	State handle_createItem{ 
+		//printCurrentMessage color cyan
+		onMsg( createItem : item( K, V )){  //Non deve conoscere la struttura del dato
+			[#  val K  = payloadArg(0).toInt()
+				val V  = payloadArg(1)    //perde gli apici				
+                val VP = sysUtil.toPrologStr(V)  //rimette gli apici
+			   //CommUtils.outmagenta("payloadArg(1) = $V VP=$VP") 
+               storage.put( K, VP )
+			   logger.info(  "put $VP in $K" ) 
+			#]
+			println("$name |  handle_createItem $VP")  color blue
+		}
+	}
+	Transition t0 
+		whenRequest getItem     -> handle_getItem
+		whenMsg     deleteItem  -> handle_deleteItem
+		whenRequest getAllItems -> handle_allitems
+		whenMsg createItem      -> handle_createItem
+	
+	State handle_getItem{
+		printCurrentMessage color cyan
+		[# var V = "unknown" #]
+		onMsg( getItem : item(ID)){
+			[# 	val K = payloadArg(0).toInt() 
+				CommUtils.outblue("handle_getItem $K")
+				//deve restituire una stringa come contenuto di un IApplMessage
+				//ho già provveduto nel momemto della put
+				V     = storage.get( K )  //potrebbe dare 0 => Product(0) => error
+				CommUtils.outblue("handle_getItem get=$V")
+				logger.info(  "get $V from $K" )
+			#]
+		}		
+		replyTo getItem with getItemAnswer : item( $V ) //arriva a ProductServiceLogic via AdapterStorageramservice/StorageRamCaller
+	}
+	Transition t0 
+		whenRequest getItem     -> handle_getItem
+		whenMsg     deleteItem  -> handle_deleteItem
+		whenRequest getAllItems -> handle_allitems
+		whenMsg createItem      -> handle_createItem
+		
+    State handle_deleteItem{
+ 		printCurrentMessage color red
+		[# var V = "unknown" #]
+		onMsg( deleteItem : item(ID)){
+			[# 	val K = payloadArg(0).toInt() 
+				CommUtils.outblue("handle_deleteItem $K")
+				V     = storage.delete( K ).toString()  //V boolean
+				CommUtils.outblue("handle_deleteItem result:$V")
+				logger.info( "handle_deleteItem result:$V" )
+			#]
+		}		
+    }
+	Transition t0 
+		whenRequest getItem     -> handle_getItem
+		whenMsg     deleteItem  -> handle_deleteItem
+		whenRequest getAllItems -> handle_allitems
+		whenMsg createItem      -> handle_createItem
+	
+	State handle_allitems{
+		printCurrentMessage
+		[# var V = "unknown" #]
+		onMsg( getAllItems : dummy(ID)){
+			[# 	  
+  				V     = storage.getAllItems(   ).toString()  
+				CommUtils.outblue("handle_allitems:$V")
+				//logger.info(  "get $V from $K" )
+			#]
+			replyTo getAllItems with getAllItemsAnswer : products( $V )
+		}		
+	}
+	Transition t0 
+		whenRequest getItem     -> handle_getItem
+		whenMsg     deleteItem  -> handle_deleteItem
+		whenRequest getAllItems -> handle_allitems
+		whenMsg createItem      -> handle_createItem
+
+}//storagevolatile
+
+/* 
+QActor storagecaller context ctxstorageram{
+	State s0 initial{
+		println("$name | STARTS")	
+		[# 
+			val M  = "'{\"productId\":31,\"name\":\"p31\",\"weight\":311}'" 
+			val M1 = "'{\"productId\":31,\"name\":\"p31again\",\"weight\":311}'" 
+		#]
+		forward storagevolatile -m createItem : item( 31,$M )
+		forward storagevolatile -m createItem : item( 31,pluto )  //RISCRIVE
+		request storagevolatile -m getItem : item(31)
+	}
+	Transition t0 
+		whenReply getItemAnswer -> handle_reply
+		
+	State handle_reply{
+		printCurrentMessage color green
+		//[# System.exit(0) #] 
+	}
+	
+}
+
+*/

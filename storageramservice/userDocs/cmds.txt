@@ -1,0 +1,25 @@
+gradlew jar
+copy in cargoservice\applibs
+
+
+docker rmi cargoservice:1.0
+save qak
+gradlew distTar
+docker build -t cargoservice:1.0 .
+docker-compose -f docker-compose-cargosystem.yml  -p cargosystem up
+
+docker rmi storageramservice:1.0
+save qak
+gradlew distTar
+docker build -t storageramservice:1.0 .
+
+
+$ curl -XPOST "http://localhost:9200/cargo-logs-*/_delete_by_query" -H "kbn-xsrf: reporting" -H "Content-Type: application/json" -d'
+{
+  "query": {
+    "match_all": {}
+  }
+}'
+
+
+logger_name : storageram or logger_name : StorageOnRam or  logger_name :  exec_get_*  or  logger_name : createexecutor_actor

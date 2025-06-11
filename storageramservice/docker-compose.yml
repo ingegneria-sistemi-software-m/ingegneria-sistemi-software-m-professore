@@ -1,0 +1,14 @@
+##version: '2.1'
+
+services:
+ 
+  storageramservice:
+    build: ./ 
+    container_name: storageram 
+    environment:
+      - STORAGERAM=true
+    ports:
+      - 8110:8110/tcp
+      - 8110:8110/udp
+
+# docker rmi storageramservice-storageramservice 
