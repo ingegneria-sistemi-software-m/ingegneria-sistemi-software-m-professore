@@ -1,9 +1,9 @@
 System bwbscrbt
-mqttBroker "localhost" : 1883 eventTopic "robotevents"  //mosquitto se in docker
+mqttBroker "localhost" : 1883 eventTopic "robotevents"  //SE definita MQTTBROKER, usa quell'addr
 //mqttBroker "broker.hivemq.com" : 1883
  
 /*
- * bwbscrbt.qak
+ * bwbscrbt.qak 
  * usa basicrobot
  * 
  * Percorre il perimetro della stanza e fa una pausa quando rilevato dal sonar
@@ -47,8 +47,8 @@ Dispatch setdirection : dir( D )
 
 Event  sonardata   : sonar( DISTANCE ) 	   
 Event obstacle     : obstacle(X)  
-
-
+Event info         : info(X)    
+  
  /*
   * Messaggi per questa applicazione
   */
@@ -168,6 +168,7 @@ QActor bwobserver context ctxbwbscrbt{
     }
 	Transition t0
 		whenMsg brdata -> handlebrdata
+		whenEvent info -> handleInfoPerceivedViaMqtt
  
 	State handlebrdata{		 
   		printCurrentMessage color green
@@ -199,6 +200,12 @@ QActor bwobserver context ctxbwbscrbt{
 	    whenMsg goon    -> work //bwbrcore ha ripreso
  
  
+ 
+    State handleInfoPerceivedViaMqtt{
+    	println("$name | handleInfoPerceivedViaMqtt") color magenta
+    	printCurrentMessage
+    }
+    Goto work
 	    
  }
 

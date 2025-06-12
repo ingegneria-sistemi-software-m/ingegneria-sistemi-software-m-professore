@@ -63,7 +63,7 @@ class Basicrobot ( name: String, scope: CoroutineScope, isconfined: Boolean=fals
 						delay(2000) 
 						CommUtils.outblack("$name | registerService +++++++++++   ")
 						
-									if( CommUtils.ckeckEureka() )
+									//if( CommUtils.ckeckEureka() )
 									CommUtils.registerService( main.java.EurekaServiceConfig() )
 						CommUtils.outmagenta("basicrobot | STARTING Sept 2024 no moves ... ")
 						//genTimer( actor, state )
@@ -136,8 +136,12 @@ class Basicrobot ( name: String, scope: CoroutineScope, isconfined: Boolean=fals
 						                        currentMsg.msgContent()) ) { //set msgArgList
 								 CurrentMove = payloadArg(0)  
 								robot.move( payloadArg(0)  )
-								updateResourceRep( "moveactivated(${payloadArg(0)})"  
+								CommUtils.outmagenta("$name | execcmd $CurrentMove - updateResource & publish & emit")
+								updateResourceRep( "moveactivated(${CurrentMove})"  
 								)
+								//val m = MsgUtil.buildEvent(name, "info", "info(done($CurrentMove))" ) 
+								publish(MsgUtil.buildEvent(name,"info","info(done($CurrentMove))").toString(), "unibodisi" )   
+								emit("info", "info(done($CurrentMove))" ) 
 						}
 						}
 						//genTimer( actor, state )

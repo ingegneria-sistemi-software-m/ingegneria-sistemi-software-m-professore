@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="./">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>AppleLLMLImits &#8212; iss25 1.0 documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=649a27d8" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinxdoc.css?v=34905f61" />
+    <link rel="stylesheet" type="text/css" href="_static/custom.css?v=87712ff3" />
+    <script src="_static/documentation_options.js?v=f2a433a1"></script>
+    <script src="_static/doctools.js?v=9bcbadda"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Appunti" href="Appunti.html" />
+    <link rel="prev" title="Viarengo-Hinton" href="Viarengo-Hinton.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="Related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="Appunti.html" title="Appunti"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="Viarengo-Hinton.html" title="Viarengo-Hinton"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">iss25 1.0 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">AppleLLMLImits</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="applellmlimits">
+<h1>AppleLLMLImits<a class="headerlink" href="#applellmlimits" title="Link to this heading">¶</a></h1>
+<p><a class="reference external" href="https://www.ilsoftware.it/apple-svela-la-grande-illusione-del-ragionamento-ai/">https://www.ilsoftware.it/apple-svela-la-grande-illusione-del-ragionamento-ai/</a></p>
+<p>Apple pubblica una ricerca che evidenzia i limiti strutturali dei Large Language Models (LLM). In quali campi eccellono e quando falliscono, con i compiti che richiedono coerenza logica.
+Michele Nasi - Pubblicato il 9 giu 2025</p>
+<section id="apple-svela-la-grande-illusione-del-ragionamento-ai">
+<h2>Apple svela la grande illusione del ragionamento AI<a class="headerlink" href="#apple-svela-la-grande-illusione-del-ragionamento-ai" title="Link to this heading">¶</a></h2>
+<p>Sfide scientifiche - illusione-modelli-AI-ragionamento.webp</p>
+<p>Quando una delle aziende più avanzate nel campo dell’hardware e del machine learning come Apple
+pubblica una ricerca che mette a nudo i limiti strutturali dei Large Language Models (LLM),
+è il momento di prestare attenzione. Il lavoro, co-firmato da ricercatori di spicco,
+mette in discussione le speranze di realizzare un’Intelligenza <span class="blue">Artificiale Generale (AGI)</span>,
+mostrandone le fragilità con esempi concreti. Lo studio della Mela,
+disponibile a <a class="reference external" href="https://ml-site.cdn-apple.com/papers/the-illusion-of-thinking.pdf">https://ml-site.cdn-apple.com/papers/the-illusion-of-thinking.pdf</a>,
+dimostra anche l’illusorietà dei moderni modelli AI basati sul “ragionamento”.</p>
+<p>Il nodo centrale del lavoro di Apple rafforza la tesi portata innanzi da tanti esperti:
+le reti neurali (inclusi i LLM) eccellono nella generalizzazione entro la distribuzione dei dati
+con cui sono state addestrate, ma falliscono al di fuori di essa.</p>
+</section>
+<section id="cosa-significa-generalizzazione-entro-la-distribuzione">
+<h2>Cosa significa “generalizzazione entro la distribuzione”?<a class="headerlink" href="#cosa-significa-generalizzazione-entro-la-distribuzione" title="Link to this heading">¶</a></h2>
+<p>Durante l’addestramento, un LLM riceve un’enorme quantità di testi e dati: libri, articoli, codice, conversazioni, e così via. Tutto questo insieme di dati costituisce una distribuzione, cioè una rappresentazione statistica dei tipi di esempi, strutture, concetti e domande presenti nel materiale.</p>
+<p><span class="blue">“Generalizzare entro la distribuzione”</span> significa che il modello è in grado di:
+riconoscere schemi e strutture comuni nei dati su cui è stato addestrato
+nonché rispondere correttamente a domande, completare frasi, scrivere codice,
+quando le richieste sono simili (statisticamente o concettualmente)
+a ciò che ha già “visto” in fase di addestramento.</p>
+<p>Quando il modello è messo alla prova con problemi, dati o formulazioni diverse, nuove o rare, che non seguono gli stessi schemi presenti nel set di addestramento (cioè fuori distribuzione), le sue prestazioni crollano o diventano inaffidabili.</p>
+<p>I limiti si manifestano in contesti semplici ma emblematici: anche fornendo l’algoritmo di soluzione, i modelli non riescono a seguire in modo corretto i passaggi logici per risolvere il problema.</p>
+<p>Questo, come osserva il co-autore Iman Mirzadeh, non è un problema di conoscenza, ma di processualità: i modelli non riescono a simulare in modo affidabile un comportamento logicamente coerente.</p>
+</section>
+<section id="la-catena-di-pensiero-e-un-illusione">
+<h2>La “catena di pensiero” è un’illusione?<a class="headerlink" href="#la-catena-di-pensiero-e-un-illusione" title="Link to this heading">¶</a></h2>
+<p>Come abbiamo evidenziato in altri articoli, è sempre bene porre il termine “ragionamento” tra virgolette quando si parla di intelligenza artificiale e, nello specifico di modelli generativi.</p>
+<p>In un nostro approfondimento ci siamo chiesti se l’AI possa davvero ragionare: il concetto da tenere a mente è che un modello AI non pensa, non c’è una vera “comprensione” dei testi e del contesto. Un LLM può infatti far leva esclusivamente su una sofisticata manipolazione di rappresentazioni numeriche.</p>
+<p>La <span class="blue">Chain of Thought (CoT o catena di pensiero)</span> è una tecnica avanzata utilizzata nei
+moderni modelli di intelligenza artificiale (AI) per migliorare le capacità di ragionamento complesso.</p>
+<p>Scomponendo problemi elaborati in passaggi logici intermedi, i LLM possono affrontare compiti che richiedono deduzioni articolate, imitando il processo cognitivo umano.</p>
+</section>
+<section id="il-funzionamento-della-catena-di-pensiero">
+<h2>Il funzionamento della catena di pensiero<a class="headerlink" href="#il-funzionamento-della-catena-di-pensiero" title="Link to this heading">¶</a></h2>
+<p>Il processo alla base della CoT, si articola in quattro fasi principali:</p>
+<ul class="simple">
+<li><p><span class="blue">Scomposizione del problema</span>: Il compito è suddiviso in sotto-problemi gestibili. Ad esempio, per risolvere un’equazione matematica, il modello identifica prima le operazioni da eseguire.</p></li>
+<li><p><span class="blue">Ragionamento passo-passo</span>: Il modello genera esplicitamente ogni fase del pensiero.</p></li>
+<li><p><span class="blue">Connessione logica</span>: Ogni passaggio si basa sul precedente, creando un flusso coerente.</p></li>
+<li><p><span class="blue">Conclusione finale</span>: La risposta deriva dalla sintesi dei passaggi intermedi, verificando la coerenza interna.</p></li>
+</ul>
+<p>Nell’articolo sull’intelligenza artificiale spiegata facile abbiamo fornito una serie di esempi
+sulle modalità di “ragionamento” dei moderni LLM.</p>
+</section>
+<section id="apple-il-caso-della-torre-di-hanoi-e-una-vera-disfatta">
+<h2>Apple: il caso della Torre di Hanoi è una vera disfatta<a class="headerlink" href="#apple-il-caso-della-torre-di-hanoi-e-una-vera-disfatta" title="Link to this heading">¶</a></h2>
+<p>I modelli AI che permettono l’uso del “ragionamento” cercano di simulare processi logici step-by-test ma, secondo Apple, non sono all’altezza delle aspettative.</p>
+<p>Il test della Torre di Hanoi, “un classico” anche per chi si occupa di informatica e sviluppo software, è emblematico. Il problema si basa su tre pioli verticali e un certo numero di dischi di dimensioni diverse (di solito 3 o più), impilati in ordine decrescente di grandezza su un piolo.</p>
+<section id="torri-di-hanoi">
+<h3>Torri di Hanoi<a class="headerlink" href="#torri-di-hanoi" title="Link to this heading">¶</a></h3>
+<p>L’obiettivo consiste nel trasferire tutti i dischi dal piolo iniziale al piolo finale, seguendo queste regole:</p>
+<p>Si può spostare un solo disco alla volta.
+Si può prendere solo il disco superiore di una pila.
+Un disco non può mai essere posato sopra uno più piccolo.
+Mentre un bambino di sette anni può risolvere il puzzle con sufficiente pazienza, e mentre un qualsiasi algoritmo ricorsivo lo affronta senza problemi, modelli come Claude e o3-mini falliscono miseramente oltre i 7 dischi. Non solo: anche quando l’algoritmo di risoluzione è fornito esplicitamente al modello, le sue performance comunque non migliorano.</p>
+<p>Potete provare a misurarvi con le Torri di Hanoi facendo riferimento a questa pagina Web:
+<a class="reference external" href="https://www.mathsisfun.com/games/towerofhanoi.html">https://www.mathsisfun.com/games/towerofhanoi.html</a>.
+La difficoltà del problema cresce esponenzialmente con il numero di dischi: il numero minimo di mosse richieste è infatti pari a 2n – 1.</p>
+<p>Il test citato da Apple ben evidenzia che non ci troviamo dinanzi a un semplice problema di calcolo: abbiamo a che fare con un segnale profondo della mancanza di capacità algoritmica interna nei LLM, anche nei più modelli avanzati.</p>
+</section>
+</section>
+<section id="anche-gli-umani-sbagliano-una-tesi-debole">
+<h2>Anche gli umani sbagliano: una tesi debole<a class="headerlink" href="#anche-gli-umani-sbagliano-una-tesi-debole" title="Link to this heading">¶</a></h2>
+<p>Una possibile obiezione rispetto al contenuto dello studio di Apple è che anche gli esseri umani spesso non riescono a risolvere “l’enigma” della Torre di Hanoi già con 8 dischi.</p>
+<p>Tuttavia, non abbiamo costruito i computer per imitare le debolezze umane, bensì per superarle. L’AGI, se deve esistere, non può permettersi di sbagliare un calcolo o una valutazione soltanto perché anche gli umani non riescono.</p>
+<p>Il punto più critico, inoltre, è che gli LLM non riescono ad apprendere algoritmi sottostanti: si limitano a imitarne il comportamento in certi casi, ma non li internalizzano in modo sistematico. Ciò significa che:</p>
+<ul class="simple">
+<li><p>Non sono in grado di estendere in modo robusto una logica a nuovi casi.</p></li>
+<li><p>Possono funzionare su casi facili, inducendo un falso senso di sicurezza.</p></li>
+<li><p>Falliscono nel momento in cui si tenta di scalare la complessità.</p></li>
+</ul>
+</section>
+<section id="il-fenomeno-dell-overthinking">
+<h2>Il fenomeno dell’“overthinking”<a class="headerlink" href="#il-fenomeno-dell-overthinking" title="Link to this heading">¶</a></h2>
+<p>Analizzando le tracce di ragionamento intermedie, utilizzate dai modelli AI, lo studio Apple identifica schemi distinti:</p>
+<ul class="simple">
+<li><p>Nei caso di problemi semplici, i modelli spesso trovano subito la soluzione corretta, ma continuano a esplorare strade sbagliate: un chiaro esempio di “overthinking”.</p></li>
+<li><p>Cimentandosi con problemi di media complessità, la soluzione corretta emerge solo dopo lunghe esplorazioni di percorsi errati.</p></li>
+<li><p>Consegnando al LLM un quesito complessl, non viene trovata alcuna soluzione corretta, neppure parzialmente.</p></li>
+</ul>
+<p>Questi risultati suggeriscono che i moderni LLM sono solo parzialmente capaci di autocorrezioni
+e riflettono un uso inefficiente del tempo di inferenza a loro disposizione.</p>
+</section>
+<section id="le-implicazioni-fidarsi-dei-llm-e-un-rischio-secondo-apple">
+<h2>Le implicazioni: fidarsi dei LLM è un rischio secondo Apple<a class="headerlink" href="#le-implicazioni-fidarsi-dei-llm-e-un-rischio-secondo-apple" title="Link to this heading">¶</a></h2>
+<p>Per il <span class="blue">mondo del business e dell’ingegneria</span>, il paper pubblicato da Apple è un po’ una doccia
+fredda. Se un LLM fallisce con le Torri di Hanoi, figuriamoci con sistemi critici, decisioni legali, controllo di infrastrutture, o modellazione scientifica avanzata.</p>
+<p>Come abbiamo ripetutamente sottolineato, quindi, i moderni modelli AI sono preziosissimi ma vanno sempre usati con la massima cautela. Gli LLM non sostituiscono gli algoritmi convenzionali;  non battono algoritmi tradizionali in ambiti strutturati come scacchi, folding proteico o gestione di database; anche nella scrittura di codice, restano approssimativi e talvolta allucinatori.</p>
+</section>
+<section id="lo-studio-apple-ci-riporta-alla-realta">
+<h2>Lo studio Apple ci riporta alla realtà<a class="headerlink" href="#lo-studio-apple-ci-riporta-alla-realta" title="Link to this heading">¶</a></h2>
+<p>Il campo delle reti neurali è estremamente vasto e i LLM sono solo una delle loro incarnazioni.
+Modelli ibridi neurosimbolici, che integrano logica formale e deep learning,
+potrebbero superare alcuni limiti evidenziati da Apple.
+Ma ciò richiederà <span class="blue">una svolta concettuale</span>; non basta, insomma, scalare solo i parametri.</p>
+<p>Chi crede che modelli come Claude od o3 possano essere il mezzo per arrivare a una AGI trasformativa sta semplicemente ignorando le limitazioni che esistono e sono sotto gli occhi di tutti, per chi non si ferma alla superficie.</p>
+<p>Un’AGI, o <span class="blue">Intelligenza Artificiale Generale</span>, è una forma di intelligenza artificiale in grado di comprendere, imparare e applicare conoscenze a una gamma ampia di compiti cognitivi. È capace di affrontare compiti mai visti prima, adattandosi con flessibilità (generalizzazione forte); apprende senza essere vincolata a compiti specifici o a un addestramento su misura (autonomia cognitiva); può pianificare, riflettere, spiegare le sue decisioni e migliorarsi; integra informazioni da linguaggio, immagini, video, suoni, codice,… (multimodalità); migliora nel tempo attraverso esperienza e feedback (auto-apprendimento continuo).</p>
+<p>Apple certifica che <span class="blue">siamo ancora lontanissimi</span> da tutto questo. E di conseguenza,
+anche un’AGI trasformativa, in grado di trasformare radicalmente economia,
+lavoro, scienza, governance, cultura, e perfino l’evoluzione umana è di là da venire.</p>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+  <div>
+    <h3><a href="index.html">Table of Contents</a></h3>
+    <ul>
+<li><a class="reference internal" href="#">AppleLLMLImits</a><ul>
+<li><a class="reference internal" href="#apple-svela-la-grande-illusione-del-ragionamento-ai">Apple svela la grande illusione del ragionamento AI</a></li>
+<li><a class="reference internal" href="#cosa-significa-generalizzazione-entro-la-distribuzione">Cosa significa “generalizzazione entro la distribuzione”?</a></li>
+<li><a class="reference internal" href="#la-catena-di-pensiero-e-un-illusione">La “catena di pensiero” è un’illusione?</a></li>
+<li><a class="reference internal" href="#il-funzionamento-della-catena-di-pensiero">Il funzionamento della catena di pensiero</a></li>
+<li><a class="reference internal" href="#apple-il-caso-della-torre-di-hanoi-e-una-vera-disfatta">Apple: il caso della Torre di Hanoi è una vera disfatta</a><ul>
+<li><a class="reference internal" href="#torri-di-hanoi">Torri di Hanoi</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#anche-gli-umani-sbagliano-una-tesi-debole">Anche gli umani sbagliano: una tesi debole</a></li>
+<li><a class="reference internal" href="#il-fenomeno-dell-overthinking">Il fenomeno dell’“overthinking”</a></li>
+<li><a class="reference internal" href="#le-implicazioni-fidarsi-dei-llm-e-un-rischio-secondo-apple">Le implicazioni: fidarsi dei LLM è un rischio secondo Apple</a></li>
+<li><a class="reference internal" href="#lo-studio-apple-ci-riporta-alla-realta">Lo studio Apple ci riporta alla realtà</a></li>
+</ul>
+</li>
+</ul>
+
+  </div>
+  <div>
+    <h4>Previous topic</h4>
+    <p class="topless"><a href="Viarengo-Hinton.html"
+                          title="previous chapter">Viarengo-Hinton</a></p>
+  </div>
+  <div>
+    <h4>Next topic</h4>
+    <p class="topless"><a href="Appunti.html"
+                          title="next chapter">Appunti</a></p>
+  </div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/AppleLLMLImits.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="Related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="Appunti.html" title="Appunti"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="Viarengo-Hinton.html" title="Viarengo-Hinton"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">iss25 1.0 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">AppleLLMLImits</a></li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+    &#169; Copyright 2025, Antonio Natali.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.1.3.
+    </div>
+  </body>
+</html>

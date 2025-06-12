@@ -2,7 +2,7 @@ System bwbscrbt
 /*
  * bwbmoves.qak
  * usa basicrobot
- * 
+ *  
  */ 
  
  /*
@@ -57,7 +57,7 @@ Dispatch goon      : goon(N)   //for automsg in turnandgo
 Dispatch showmap   : showmap(X)
 //----------------------------------------------------------------------
 Context ctxbwbscrbt   ip [host="localhost"     port=8720   ]
-Context ctxbasicrobot ip [host="127.0.0.1"  port=8020   ]  
+Context ctxbasicrobot ip [host="discoverable"  port=8020   ]  
 
 ExternalQActor basicrobot context ctxbasicrobot   
 ExternalQActor robotpos   context ctxbasicrobot   
@@ -70,7 +70,7 @@ ExternalQActor robotpos   context ctxbasicrobot
 	}  
 	Goto engage
 	 
-	State engage{
+	State engage{ 
 		delay 2000
 		println("$name | $MyName engaging ... ") color yellow 
 		request basicrobot -m engage : engage($MyName,330)

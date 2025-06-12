@@ -23,7 +23,7 @@ services:
     environment:
       - VIRTUAL_ENV=wenv   #Used by uniborobots.robotSupport.create
       - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://eureka:8761/eureka/
-      - SERVICE_IP=172.31.96.1
+      - SERVICE_IP=192.168.1.19
     depends_on:
       - wenv 
     networks:

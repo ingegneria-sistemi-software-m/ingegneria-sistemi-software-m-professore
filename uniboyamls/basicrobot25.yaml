@@ -13,7 +13,7 @@ services:
   
   basicrobot24:
     container_name: basicrobot24
-    i#mage: docker.io/natbodocker/basicrobot24:3.0
+    #image: docker.io/natbodocker/basicrobot24:3.0
     image: basicrobot24:3.0
     mem_limit: 512m
     ports:
@@ -21,10 +21,13 @@ services:
       - "8020:8020/udp"
       - "8085:8085"
     environment:
-      - VIRTUAL_ENV=wenv   #Used by uniborobots.robotSupport.create
-      - SERVICE_IP=192.168.1.19
+      - VIRTUAL_ENV=wenv              #Used by uniborobots.robotSupport.create
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://eureka:8761/eureka/
+      - SERVICE_HOST=192.168.1.132    #basicrobot24 per app che usano basicrobot in docker
+      - SERVICE_IP=192.168.1.132
+      - MQTTBROKER=mosquitto
     depends_on:
-      - wenv 
+      - wenv  
     networks:
       - iss-network
 

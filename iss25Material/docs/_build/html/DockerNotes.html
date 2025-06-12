@@ -1,26 +1,23 @@
-
 <!DOCTYPE html>
 
-<html lang="en">
+<html lang="en" data-content_root="./">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <title>DockerNotes &#8212; iss25 1.0 documentation</title>
-    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="_static/sphinxdoc.css" />
-    <link rel="stylesheet" type="text/css" href="_static/custom.css" />
-    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
-    <script src="_static/jquery.js"></script>
-    <script src="_static/underscore.js"></script>
-    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
-    <script src="_static/doctools.js"></script>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=649a27d8" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinxdoc.css?v=34905f61" />
+    <link rel="stylesheet" type="text/css" href="_static/custom.css?v=87712ff3" />
+    <script src="_static/documentation_options.js?v=f2a433a1"></script>
+    <script src="_static/doctools.js?v=9bcbadda"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="UsingELK" href="UsingELK.html" />
     <link rel="prev" title="Il pattern saga" href="Saga.html" /> 
   </head><body>
-    <div class="related" role="navigation" aria-label="related navigation">
+    <div class="related" role="navigation" aria-label="Related">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -43,13 +40,13 @@
           <div class="body" role="main">
             
   <section id="dockernotes">
-<h1>DockerNotes<a class="headerlink" href="#dockernotes" title="Permalink to this heading">¶</a></h1>
+<h1>DockerNotes<a class="headerlink" href="#dockernotes" title="Link to this heading">¶</a></h1>
 <p><code class="docutils literal notranslate"><span class="pre">Chiesto</span> <span class="pre">a</span> <span class="pre">Gemini</span> <span class="pre">(2/6/2025)</span></code>
 vorrei chiarire il significato della specifica networks in un file yaml e capire quando si debba usare una network e per quale scopo</p>
 <hr class="docutils" />
 <p>Nel contesto di Docker Compose, la <span class="slide3">sezione networks</span> in un file docker-compose.yaml (o .yml) serve a definire e configurare le reti a cui i tuoi servizi Docker si connetteranno.</p>
 <section id="networks-funzionamento-di-base">
-<h2>networks: Funzionamento di base<a class="headerlink" href="#networks-funzionamento-di-base" title="Permalink to this heading">¶</a></h2>
+<h2>networks: Funzionamento di base<a class="headerlink" href="#networks-funzionamento-di-base" title="Link to this heading">¶</a></h2>
 <p>Per impostazione predefinita, quando utilizzi Docker Compose senza specificare reti,
 Compose crea una rete predefinita (<span class="slide2">bridge network</span>) per la tua applicazione.</p>
 <p>Tutti i servizi definiti <strong>nello stesso file docker-compose.yaml</strong> vengono automaticamente
@@ -66,12 +63,12 @@ al di fuori del file Compose (ad esempio, una rete creata manualmente con
 </ol>
 </section>
 <section id="quando-si-deve-usare-una-network-e-per-quale-scopo">
-<h2>Quando si deve usare una network e per quale scopo?<a class="headerlink" href="#quando-si-deve-usare-una-network-e-per-quale-scopo" title="Permalink to this heading">¶</a></h2>
+<h2>Quando si deve usare una network e per quale scopo?<a class="headerlink" href="#quando-si-deve-usare-una-network-e-per-quale-scopo" title="Link to this heading">¶</a></h2>
 <p>L’uso di reti personalizzate in Docker Compose (e concetti simili in <span class="slide2">Kubernetes</span>)
 è fondamentale per la progettazione di architetture di microservizi robuste, sicure e scalabili.</p>
 <p>Ecco i principali scopi e casi d’uso:</p>
 <section id="isolamento-e-sicurezza">
-<h3>1. Isolamento e Sicurezza:<a class="headerlink" href="#isolamento-e-sicurezza" title="Permalink to this heading">¶</a></h3>
+<h3>1. Isolamento e Sicurezza:<a class="headerlink" href="#isolamento-e-sicurezza" title="Link to this heading">¶</a></h3>
 <ul>
 <li><p><span class="blue">Scopo</span>: Limitare la comunicazione tra servizi solo a ciò che è strettamente necessario, aumentando la sicurezza.</p></li>
 <li><p><span class="blue">Quando usarla</span>: Se hai un’applicazione composta da frontend, backend e database, potresti voler che il frontend comunichi solo con il backend, e il backend solo con il database. Il frontend non dovrebbe avere accesso diretto al database per motivi di sicurezza.</p></li>
@@ -88,7 +85,7 @@ al di fuori del file Compose (ad esempio, una rete creata manualmente con
 <p>In questo modo, solo il servizio app può accedere al db (se il db è configurato per ascoltare sulla db_network), e il web non può raggiungerlo direttamente. L’opzione internal: true sulla db_network può ulteriormente isolare il database dal traffico esterno.</p>
 </section>
 <section id="chiarezza-architetturale">
-<h3>2. Chiarezza Architetturale:<a class="headerlink" href="#chiarezza-architetturale" title="Permalink to this heading">¶</a></h3>
+<h3>2. Chiarezza Architetturale:<a class="headerlink" href="#chiarezza-architetturale" title="Link to this heading">¶</a></h3>
 <ul class="simple">
 <li><p><span class="blue">Scopo</span>: Rendere esplicite le dipendenze di comunicazione tra i servizi, migliorando la comprensione dell’architettura.</p></li>
 <li><p><span class="blue">Quando usarla</span>: In sistemi complessi con molti microservizi, definire chiaramente quali servizi sono su quali reti aiuta a visualizzare e gestire il flusso di traffico.</p></li>
@@ -96,7 +93,7 @@ al di fuori del file Compose (ad esempio, una rete creata manualmente con
 </ul>
 </section>
 <section id="gestione-dell-indirizzamento-ip-e-della-subnet">
-<h3>3. Gestione dell’Indirizzamento IP e della Subnet:<a class="headerlink" href="#gestione-dell-indirizzamento-ip-e-della-subnet" title="Permalink to this heading">¶</a></h3>
+<h3>3. Gestione dell’Indirizzamento IP e della Subnet:<a class="headerlink" href="#gestione-dell-indirizzamento-ip-e-della-subnet" title="Link to this heading">¶</a></h3>
 <ul class="simple">
 <li><p><span class="blue">Scopo</span>: Avere un controllo granulare sugli indirizzi IP e sulle subnet assegnate ai container.</p></li>
 <li><p><span class="blue">Quando usarla</span>: Se hai requisiti specifici per l’indirizzamento IP (ad esempio, per integrazioni con sistemi esterni o per regole di firewall basate su IP).</p></li>
@@ -104,7 +101,7 @@ al di fuori del file Compose (ad esempio, una rete creata manualmente con
 </ul>
 </section>
 <section id="connessione-a-reti-preesistenti-esterni">
-<h3>4. Connessione a Reti Preesistenti/Esterni:<a class="headerlink" href="#connessione-a-reti-preesistenti-esterni" title="Permalink to this heading">¶</a></h3>
+<h3>4. Connessione a Reti Preesistenti/Esterni:<a class="headerlink" href="#connessione-a-reti-preesistenti-esterni" title="Link to this heading">¶</a></h3>
 <ul class="simple">
 <li><p><span class="blue">Scopo</span>: Permettere ai container di un Compose stack di comunicare con container o servizi che non fanno parte dello stesso stack Compose, ma sono sulla stessa rete Docker.</p></li>
 <li><p><span class="blue">Quando usarla</span>: Se hai un database persistente in un container separato o un servizio di caching globale che non vuoi gestire come parte del tuo stack specifico, ma vuoi che i tuoi servizi vi si connettano.</p></li>
@@ -112,7 +109,7 @@ al di fuori del file Compose (ad esempio, una rete creata manualmente con
 </ul>
 </section>
 <section id="multi-host-communication-con-driver-overlay">
-<h3>5. Multi-Host Communication (con driver Overlay):<a class="headerlink" href="#multi-host-communication-con-driver-overlay" title="Permalink to this heading">¶</a></h3>
+<h3>5. Multi-Host Communication (con driver Overlay):<a class="headerlink" href="#multi-host-communication-con-driver-overlay" title="Link to this heading">¶</a></h3>
 <ul class="simple">
 <li><p><span class="blue">Scopo</span>: Consentire ai container distribuiti su più host Docker di comunicare tra loro come se fossero sulla stessa rete locale.</p></li>
 <li><p><span class="blue">Quando usarla</span>: In ambienti Docker Swarm o Kubernetes, dove i container di un’applicazione possono essere schedulati su macchine diverse. Il driver overlay è fondamentale per questo.</p></li>
@@ -133,7 +130,7 @@ al di fuori del file Compose (ad esempio, una rete creata manualmente con
           </div>
         </div>
       </div>
-      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
         <div class="sphinxsidebarwrapper">
   <div>
     <h3><a href="index.html">Table of Contents</a></h3>
@@ -170,7 +167,7 @@ al di fuori del file Compose (ad esempio, una rete creata manualmente con
             rel="nofollow">Show Source</a></li>
     </ul>
    </div>
-<div id="searchbox" style="display: none" role="search">
+<search id="searchbox" style="display: none" role="search">
   <h3 id="searchlabel">Quick search</h3>
     <div class="searchformwrapper">
     <form class="search" action="search.html" method="get">
@@ -178,13 +175,13 @@ al di fuori del file Compose (ad esempio, una rete creata manualmente con
       <input type="submit" value="Go" />
     </form>
     </div>
-</div>
+</search>
 <script>document.getElementById('searchbox').style.display = "block"</script>
         </div>
       </div>
       <div class="clearer"></div>
     </div>
-    <div class="related" role="navigation" aria-label="related navigation">
+    <div class="related" role="navigation" aria-label="Related">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -201,8 +198,8 @@ al di fuori del file Compose (ad esempio, una rete creata manualmente con
       </ul>
     </div>
     <div class="footer" role="contentinfo">
-        &#169; Copyright 2025, Antonio Natali.
-      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 5.0.2.
+    &#169; Copyright 2025, Antonio Natali.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.1.3.
     </div>
   </body>
 </html>

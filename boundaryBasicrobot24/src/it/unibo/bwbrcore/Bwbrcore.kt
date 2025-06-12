@@ -33,6 +33,7 @@ class Bwbrcore ( name: String, scope: CoroutineScope, isconfined: Boolean=false,
 		return { //this:ActionBasciFsm
 				state("s0") { //this:State
 					action { //it:State
+						delay(1000) 
 						CommUtils.outyellow("$name | STARTS")
 						//genTimer( actor, state )
 					}
@@ -51,72 +52,126 @@ class Bwbrcore ( name: String, scope: CoroutineScope, isconfined: Boolean=false,
 					//After Lenzi Aug2002
 					sysaction { //it:State
 					}	 	 
-					 transition(edgeName="t00",targetState="doboundary",cond=whenReply("engagedone"))
+					 transition(edgeName="t00",targetState="showMap",cond=whenReply("engagedone"))
 					transition(edgeName="t01",targetState="end",cond=whenReply("engagerefused"))
 				}	 
-				state("doboundary") { //this:State
+				state("testMoves") { //this:State
 					action { //it:State
-						delay(200) 
+						CommUtils.outblue("$name | testMoves")
+						forward("cmd", "cmd(l)" ,"basicrobot" ) 
+						delay(500) 
+						forward("cmd", "cmd(z)" ,"basicrobot" ) 
+						delay(500) 
+						delay(500) 
+						forward("cmd", "cmd(z)" ,"basicrobot" ) 
+						delay(500) 
 						request("step", "step(350)" ,"basicrobot" )  
 						//genTimer( actor, state )
 					}
 					//After Lenzi Aug2002
 					sysaction { //it:State
 					}	 	 
-					 transition(edgeName="t02",targetState="doboundary",cond=whenReply("stepdone"))
-					transition(edgeName="t03",targetState="turnandgo",cond=whenReply("stepfailed"))
-					interrupthandle(edgeName="t04",targetState="pausetherobot",cond=whenDispatch("pause"),interruptedStateTransitions)
+					 transition(edgeName="t02",targetState="showMap",cond=whenReply("stepdone"))
+					transition(edgeName="t03",targetState="showMap",cond=whenReply("stepfailed"))
 				}	 
-				state("turnandgo") { //this:State
+				state("showMap") { //this:State
 					action { //it:State
-						 N = N + 1  
-						if( checkMsgContent( Term.createTerm("stepfailed(DURATION,CAUSE)"), Term.createTerm("stepfailed(T,C)"), 
+						CommUtils.outyellow("$name | $MyName getenvmap ... ")
+						request("getenvmap", "getenvmap(caller)" ,"basicrobot" )  
+						//genTimer( actor, state )
+					}
+					//After Lenzi Aug2002
+					sysaction { //it:State
+					}	 	 
+					 transition(edgeName="t04",targetState="showTheMap",cond=whenReply("envmap"))
+				}	 
+				state("showTheMap") { //this:State
+					action { //it:State
+						CommUtils.outblue("$name | showTheMap ")
+						if( checkMsgContent( Term.createTerm("envmap(MAP)"), Term.createTerm("envmap(MAP)"), 
 						                        currentMsg.msgContent()) ) { //set msgArgList
-								CommUtils.outyellow("$name | turnandgo after ${payloadArg(0)} since ${payloadArg(1)} N=$N")
+								 val MAP = payloadArg(0).replace("@","\n")  
+								CommUtils.outblack(MAP)
 						}
-						forward("cmd", "cmd(l)" ,"basicrobot" ) 
-						if(  N == 4  
-						 ){delay(500) 
-						forward("disengage", "disengage($MyName)" ,"basicrobot" ) 
-						CommUtils.outyellow("$name | EXIT ")
-						 System.exit(0)  
-						}
-						else
-						 {forward("goon", "goon($N)" ,name ) 
-						 }
 						//genTimer( actor, state )
 					}
 					//After Lenzi Aug2002
 					sysaction { //it:State
 					}	 	 
-					 transition(edgeName="t05",targetState="doboundary",cond=whenDispatch("goon"))
+					 transition( edgeName="goto",targetState="gotoCell", cond=doswitch() )
 				}	 
-				state("stoptherobot") { //this:State
+				state("gotoCell") { //this:State
 					action { //it:State
-						CommUtils.outmagenta("$name in ${currentState.stateName} | $currentMsg | ${Thread.currentThread().getName()} n=${Thread.activeCount()}")
-						 	   
-						forward("cmd", "cmd(h)" ,"basicrobot" ) 
+						CommUtils.outblue("$name | gotoCell setrobotstate ")
+						forward("setrobotstate", "setpos(0,0,down)" ,"basicrobot" ) 
+						request("moverobot", "moverobot(4,3)" ,"basicrobot" )  
 						//genTimer( actor, state )
 					}
 					//After Lenzi Aug2002
 					sysaction { //it:State
 					}	 	 
+					 transition(edgeName="t05",targetState="backToHome",cond=whenReply("moverobotdone"))
 				}	 
-				state("pausetherobot") { //this:State
+				state("backToHome") { //this:State
 					action { //it:State
-						CommUtils.outred("$name | pausetherobot")
-						delay(1500) 
-						forward("goon", "goon(afterdelay)" ,"bwobserver" ) 
-						returnFromInterrupt(interruptedStateTransitions)
+						CommUtils.outblack("$name | backToHome")
+						forward("setdirection", "dir(left)" ,"basicrobot" ) 
+						delay(1000) 
+						request("moverobot", "moverobot(0,0)" ,"basicrobot" )  
 						//genTimer( actor, state )
 					}
 					//After Lenzi Aug2002
 					sysaction { //it:State
 					}	 	 
+					 transition(edgeName="t06",targetState="atHome",cond=whenReply("moverobotdone"))
+				}	 
+				state("atHome") { //this:State
+					action { //it:State
+						CommUtils.outmagenta("$name | athome")
+						forward("setdirection", "dir(down)" ,"basicrobot" ) 
+						//genTimer( actor, state )
+					}
+					//After Lenzi Aug2002
+					sysaction { //it:State
+					}	 	 
+					 transition( edgeName="goto",targetState="explore", cond=doswitch() )
+				}	 
+				state("explore") { //this:State
+					action { //it:State
+						request("doplan", "doplan(ww,350)" ,"basicrobot" )  
+						//genTimer( actor, state )
+					}
+					//After Lenzi Aug2002
+					sysaction { //it:State
+					}	 	 
+					 transition(edgeName="t07",targetState="imaginedone",cond=whenReply("doplandone"))
+					transition(edgeName="t08",targetState="disengage",cond=whenReply("doplanfailed"))
+				}	 
+				state("imaginedone") { //this:State
+					action { //it:State
+						CommUtils.outmagenta("$name | where am I ?")
+						//genTimer( actor, state )
+					}
+					//After Lenzi Aug2002
+					sysaction { //it:State
+					}	 	 
+					 transition( edgeName="goto",targetState="disengage", cond=doswitch() )
+				}	 
+				state("disengage") { //this:State
+					action { //it:State
+						CommUtils.outblack("$name | disengage")
+						forward("disengage", "disengage(ok)" ,"basicrobot" ) 
+						//genTimer( actor, state )
+					}
+					//After Lenzi Aug2002
+					sysaction { //it:State
+					}	 	 
+					 transition( edgeName="goto",targetState="end", cond=doswitch() )
 				}	 
 				state("end") { //this:State
 					action { //it:State
 						CommUtils.outyellow("$name | ENDS ")
+						 System.exit(0)  
 						//genTimer( actor, state )
 					}
 					//After Lenzi Aug2002

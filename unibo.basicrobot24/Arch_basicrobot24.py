@@ -32,6 +32,7 @@ with Diagram('basicrobot24Arch', show=False, outformat='png', graph_attr=graphat
           robotpos=Custom('robotpos','./qakicons/symActorWithobjSmall.png')
      basicrobot >> Edge( label='sonardata', **eventedgeattr, decorate='true', fontcolor='red') >> basicrobot
      sys >> Edge( label='alarm', **evattr, decorate='true', fontcolor='darkgreen') >> basicrobot
+     basicrobot >> Edge( label='info', **eventedgeattr, decorate='true', fontcolor='red') >> sys
      sys >> Edge( label='alarm', **evattr, decorate='true', fontcolor='darkgreen') >> planexec
      basicrobot >> Edge(color='magenta', style='solid', decorate='true', label='<getrobotstate<font color="darkgreen"> robotstate</font> &nbsp; moverobot<font color="darkgreen"> moverobotdone moverobotfailed</font> &nbsp; getenvmap<font color="darkgreen"> envmap</font> &nbsp; >',  fontcolor='magenta') >> robotpos
      basicrobot >> Edge(color='magenta', style='solid', decorate='true', label='<engage<font color="darkgreen"> engagedone engagerefused</font> &nbsp; >',  fontcolor='magenta') >> engager

@@ -15,12 +15,27 @@ public class EurekaServiceConfig extends MyDataCenterInstanceConfig{
 	@Override
 	public String getHostName(boolean refresh) {
 		String ip ="";
-		String serviceip = System.getenv("SERVICE_IP") ;
- 		if( serviceip != null) {
- 			ip = serviceip;
- 		}else ip = "192.168.1.18";
+		String serviceshost = System.getenv("SERVICE_HOST") ;
+ 		if( serviceshost != null) {
+ 			ip = serviceshost;
+ 		}else ip = super.getHostName(refresh);
  		return ip;
 	}
+	
+	
+	/*
+	 * IP con cui si registra il servizio
+	 */
+    @Override
+    public String getIpAddress() {
+        String ipAddress = System.getenv("SERVICE_IP");
+        if (ipAddress != null ) {
+        	//CommUtils.outmagenta("		EurekaServiceConfig getIpAddress=" + ipAddress);
+            return ipAddress;
+         } 
+        return super.getIpAddress();
+    }
+
 
 	@Override
 	public int getNonSecurePort() {
@@ -31,6 +46,8 @@ public class EurekaServiceConfig extends MyDataCenterInstanceConfig{
     Indicates the time in seconds that the eureka server waits since it received
     the last heartbeat before it can remove this instance from its view
     and there by disallowing traffic to this instance.
+    
+    DEFAULT: 90sec
     */
 	@Override
 	public int getLeaseExpirationDurationInSeconds(){
@@ -39,6 +56,8 @@ public class EurekaServiceConfig extends MyDataCenterInstanceConfig{
     /*
     Indicates how often (in seconds) the eureka client needs to send heartbeats
     to eureka server to indicate that it is still alive.
+    
+    DEFAULT: 30 sec
     */ 
 	@Override
 	public int getLeaseRenewalIntervalInSeconds() {
