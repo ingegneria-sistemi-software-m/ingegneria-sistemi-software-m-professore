@@ -117,7 +117,14 @@ ExternalQActor robotpos   context ctxbasicrobot
   	State gotoCell{
     	println("$name | gotoCell setrobotstate ") color blue
     	forward basicrobot -m setrobotstate : setpos(0,0,down)
-  		request basicrobot -m  moverobot : moverobot(4,3)
+ 
+  		forward basicrobot -m cmd : cmd(l) 
+     	delay 500
+  		forward basicrobot -m cmd : cmd(r) 
+     	delay 1500
+ 
+ 
+  		//request basicrobot -m  moverobot : moverobot(4,3)
   	}
   	Transition t0 
   		whenReply moverobotdone -> backToHome  

@@ -104,7 +104,10 @@ class Bwbrcore ( name: String, scope: CoroutineScope, isconfined: Boolean=false,
 					action { //it:State
 						CommUtils.outblue("$name | gotoCell setrobotstate ")
 						forward("setrobotstate", "setpos(0,0,down)" ,"basicrobot" ) 
-						request("moverobot", "moverobot(4,3)" ,"basicrobot" )  
+						forward("cmd", "cmd(l)" ,"basicrobot" ) 
+						delay(500) 
+						forward("cmd", "cmd(r)" ,"basicrobot" ) 
+						delay(1500) 
 						//genTimer( actor, state )
 					}
 					//After Lenzi Aug2002
