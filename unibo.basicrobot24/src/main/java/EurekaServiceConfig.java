@@ -1,4 +1,6 @@
 package main.java;
+import java.util.UUID;
+
 import com.netflix.appinfo.MyDataCenterInstanceConfig;
 
 import unibo.basicomm23.utils.CommUtils;
@@ -62,5 +64,15 @@ public class EurekaServiceConfig extends MyDataCenterInstanceConfig{
 	@Override
 	public int getLeaseRenewalIntervalInSeconds() {
 		return 60*10*6;
+	}
+	
+	@Override 
+	public String getInstanceId() {
+	    // Genera un ID univoco
+	    // Puoi usare l'IP, la porta, e un identificatore casuale
+	    // Oppure semplicemente il nome dell'app + un UUID
+	    return getAppname() + ":" + UUID.randomUUID().toString();
+	    // O se preferisci host:app:port come Spring fa per default:
+	    // return super.getHostName(false) + ":" + getAppname() + ":" + getNonSecurePort();
 	}
 }
