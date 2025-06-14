@@ -29,4 +29,4 @@ Repository del corso Ingegneria dei Sistemi Software a.a. 2024/2025 - DISI - Uni
 <h2 id="Fase2">Fase 4: verso l'applicazione finale</h2> 
 
  *   Bounded Contexts
- * [qakdemo24](iss25Material/docs/_build/html/TemaFinale25.html): TemaFinale25
+ * [TemaFinale25](iss25Material/docs/_build/html/TemaFinale25.html): TemaFinale25
