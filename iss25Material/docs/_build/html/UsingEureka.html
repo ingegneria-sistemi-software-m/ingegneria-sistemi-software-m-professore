@@ -85,10 +85,25 @@ per alcune di queste  proprietà, come il nome host e l’indirizzo IP dell’is
 </ul>
 <p>Il meccanismo di heartbeat e lease è fondamentale per la resilienza e l’accuratezza del Service Discovery:</p>
 <ul class="simple">
-<li><p>Rilevamento Rapido dei Failures: Se un’istanza crasha o diventa irraggiungibile, smette di inviare heartbeat. Eureka la rimuoverà dal registro relativamente in fretta (dopo la durata del lease), impedendo ai client di tentare connessioni a un’istanza “morta”.</p></li>
-<li><p>Evitare Istanza Fantasma: Previene che istanze non più attive rimangano indefinitamente nel registro, causando errori per i client.</p></li>
-<li><p>Scalabilità: Permette a Eureka di gestire un gran numero di istanze in modo efficiente, senza la necessità di un monitoraggio attivo costante da parte del server su ogni singola istanza.</p></li>
+<li><p><em>Rilevamento Rapido dei Failures</em>: Se un’istanza crasha o diventa irraggiungibile, smette di inviare heartbeat. Eureka la rimuoverà dal registro relativamente in fretta (dopo la durata del lease), impedendo ai client di tentare connessioni a un’istanza “morta”.</p></li>
+<li><p><em>Evitare Istanza Fantasma</em>: Previene che istanze non più attive rimangano indefinitamente nel registro, causando errori per i client.</p></li>
+<li><p><em>Scalabilità</em>: Permette a Eureka di gestire un gran numero di istanze in modo efficiente, senza la necessità di un monitoraggio attivo costante da parte del server su ogni singola istanza.</p></li>
 </ul>
+</section>
+<section id="visualizzare-le-istanze-registrate">
+<h2>Visualizzare le istanze registrate<a class="headerlink" href="#visualizzare-le-istanze-registrate" title="Link to this heading">¶</a></h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">localhost</span><span class="p">:</span><span class="mi">8761</span>
+<span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">localhost</span><span class="p">:</span><span class="mi">8761</span><span class="o">/</span><span class="n">eureka</span><span class="o">/</span><span class="n">apps</span>
+</pre></div>
+</div>
+<a class="reference internal image-reference" href="_images/basicrobotOnEureka.jpg"><img alt="_images/basicrobotOnEureka.jpg" class="align-center" src="_images/basicrobotOnEureka.jpg" style="width: 90%;" />
+</a>
+</section>
+<section id="eliminare-una-istanza-registrata">
+<h2>Eliminare una istanza registrata<a class="headerlink" href="#eliminare-una-istanza-registrata" title="Link to this heading">¶</a></h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">curl</span> <span class="o">-</span><span class="n">X</span> <span class="n">DELETE</span> <span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">localhost</span><span class="p">:</span><span class="mi">8761</span><span class="o">/</span><span class="n">eureka</span><span class="o">/</span><span class="n">apps</span><span class="o">/</span><span class="n">CTXBASICROBOT</span><span class="o">/</span><span class="mf">192.168.1.132</span>
+</pre></div>
+</div>
 </section>
 <section id="eurekademo2025">
 <h2>eurekaDemo2025<a class="headerlink" href="#eurekademo2025" title="Link to this heading">¶</a></h2>
@@ -232,6 +247,8 @@ discovery con riferimento al file <a class="reference internal" href="#eureka-cl
 </ul>
 </li>
 <li><a class="reference internal" href="#mydatacenterinstanceconfig">MyDataCenterInstanceConfig</a></li>
+<li><a class="reference internal" href="#visualizzare-le-istanze-registrate">Visualizzare le istanze registrate</a></li>
+<li><a class="reference internal" href="#eliminare-una-istanza-registrata">Eliminare una istanza registrata</a></li>
 <li><a class="reference internal" href="#eurekademo2025">eurekaDemo2025</a><ul>
 <li><a class="reference internal" href="#eureka-con-commutils">Eureka con CommUtils</a></li>
 </ul>
