@@ -24,6 +24,9 @@ Repository del corso Ingegneria dei Sistemi Software a.a. 2024/2025 - DISI - Uni
 
 
 <h2 id="Fase2">Fase 3: attori situati in mondi simulati e/o reali</h2> 
+ * [VirtualRibot23](VirtualRibot23): VirtualRobot
 
+<h2 id="Fase2">Fase 4: verso l'applicazione finale</h2> 
 
-<h2 id="Fase2">Fase 4: verso l'applicazine finale</h2> 
+ *   Bounded Contexts
+ * [qakdemo24](iss25Material/docs/_build/html/TemaFinale25.html): TemaFinale25
