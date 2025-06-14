@@ -2,7 +2,7 @@
 Repository del corso Ingegneria dei Sistemi Software a.a. 2024/2025 - DISI - University of Bologna
   * [Materiale didattico](iss25Material/docs/_build/html)
 
-<h2 id="Fase1">Fase 1</h2>   <!-- comment: ancora personalizzata](https://github.com/anatali/issLab2025/Fase1) -->
+<h2 id="Fase1">Fase 1: sviluppo bottom-up</h2>   <!-- comment: ancora personalizzata](https://github.com/anatali/issLab2025/Fase1) -->
 
 ### Dagli oggetti ai microservizi (in Java)
   * [Articolo sui microservizi](iss25Material/docs/_build/html/_static/msoIEEE.pdf)
@@ -10,6 +10,11 @@ Repository del corso Ingegneria dei Sistemi Software a.a. 2024/2025 - DISI - Uni
   * [conwaygui](conwaygui): Sistema SpringBoot che ingloba [conway25Java](conway25Java) offrendo una GUI come dispositivo di I/O
   * [conway25JavaMqtt](conway25JavaMqtt): GameLife standalone che interagisce via MQTT con il mondo esterno
   * [conwayguialone](conwayguialone): Servizio SpringBoot che offre la GUI per interagire via MQTT con [conway25JavaMqtt](conway25JavaMqtt)  
+
+
+<h2 id="Fase2">Fase 2: sviluppo top-down basato su modelli</h2> 
+
+### Sviluppo top-down basato su modelli
 
 ### Dagli oggetti agli attori 
 
