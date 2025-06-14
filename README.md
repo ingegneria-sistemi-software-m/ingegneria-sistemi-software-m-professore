@@ -25,7 +25,8 @@ Repository del corso Ingegneria dei Sistemi Software a.a. 2024/2025 - DISI - Uni
 
 <h2 id="Fase2">Fase 3: attori situati in mondi simulati e/o reali</h2> 
  
- * [virtualrobotusage25](virtualrobotusage25): virtualrobotusage25 
+ * [virtualrobotusage25](virtualrobotusage25): virtualrobotusage25
+ * [virtualrobotu23 docs](iss25Material/docs/_build/pdfdocs/VirtualRobot23 — iss25 1.0 documentation.pdf): virtualrobot (pdf)
 
 <h2 id="Fase2">Fase 4: verso l'applicazione finale</h2> 
 
