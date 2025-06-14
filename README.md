@@ -14,8 +14,6 @@ Repository del corso Ingegneria dei Sistemi Software a.a. 2024/2025 - DISI - Uni
 
 <h2 id="Fase2">Fase 2: sviluppo top-down basato su modelli</h2> 
 
-### Sviluppo top-down basato su modelli
-
 ### Dagli oggetti agli attori 
 
  * [qakdemo24](qakdemo24): Esempi di uso dei QakActors
@@ -23,3 +21,9 @@ Repository del corso Ingegneria dei Sistemi Software a.a. 2024/2025 - DISI - Uni
  * [conwaycellsqaknaive](conwaycellsqaknaive): un sistema di 4 celle-actor create dinamenicamente
  * [conwaycellsqak](conwaycellsqak): celle per un sistema ConwayLife distribuito con gamemaster (orchestratore)
  * [conwaymasterqak](conwaymasterqak): gamematser per le celle  ConwayLife distribuite
+
+
+<h2 id="Fase2">Fase 3: attori situati in mondi simulati e/o reali</h2> 
+
+
+<h2 id="Fase2">Fase 4: verso l'applicazine finale</h2> 
