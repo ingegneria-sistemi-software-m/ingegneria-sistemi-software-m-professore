@@ -24,7 +24,7 @@ Repository del corso Ingegneria dei Sistemi Software a.a. 2024/2025 - DISI - Uni
 
 
 <h2 id="Fase2">Fase 3: attori situati in mondi simulati e/o reali</h2> 
- * [VirtualRibot23](VirtualRibot23): VirtualRobot
+ * [VirtualRibot23](it.unibo.virtualRobot2023): VirtualRobot
 
 <h2 id="Fase2">Fase 4: verso l'applicazione finale</h2> 
 
